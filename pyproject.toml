@@ -1,0 +1,34 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "load-amm"
+version = "0.0.0"
+description = "Large Open Access Datasets for Atomistic Materials Science (LOAD-AtoMS)"
+readme = "README.md"
+authors = [{ name = "John Gardner", email = "gardner.john97@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["chemistry", "machine learning", "datasets"]
+dependencies = [
+    "ase",
+    "pyyaml",
+]
+requires-python = ">=3.7"
+
+[project.optional-dependencies]
+dev = [
+    "notebook",
+    "pytest",
+    "black",
+    "isort",
+    "pre-commit",
+]
+
+# [project.urls]
+Homepage = "https://github.com/jla-gardner/load-atoms"
