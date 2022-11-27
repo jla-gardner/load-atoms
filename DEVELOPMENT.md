@@ -3,7 +3,7 @@
 ## 1. Clone the repo
 
 ```bash
-git clone [xxx]
+git clone https://github.com/jla-gardner/load-atoms
 ```
 
 ## 2. Install dependencies

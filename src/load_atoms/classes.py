@@ -10,6 +10,7 @@ class Info:
     description: str
     citation: str = None
     license: str = None
+    _download_url: str = None
 
 
 Dataset = Sequence[Atoms]
