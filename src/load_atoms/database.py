@@ -46,5 +46,12 @@ def get_database_entry_for(dataset_id: str) -> DatabaseEntry:
 
 # TODO: implement this
 def print_info_for(db_entry: DatabaseEntry) -> None:
-    """print any license/citation info for a dataset"""
-    pass
+    """print description and any license/citation info for a dataset"""
+    print(db_entry.description)
+    
+    if db_entry.license is not None:
+        print("This dataset is licensed under ", db_entry.license)
+    
+    if db_entry.citation is not None:
+        print("If you use this dataset, please cite the following: ", db_entry.citation)
+
