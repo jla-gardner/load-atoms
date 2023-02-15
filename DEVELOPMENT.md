@@ -33,3 +33,7 @@ To test your installation, run:
 ```bash
 pytest
 ```
+
+## 4. Make your changes
+
+For an overview of the structure of this project, see [HOW-IT-WORKS.md](HOW-IT-WORKS.md).
