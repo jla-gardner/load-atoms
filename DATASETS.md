@@ -14,6 +14,7 @@ Optionally, you can also specify the following fields:
 
 -   `license`: The license under which the dataset is released.
 -   `citation`: A citation for the dataset, if applicable. This should be a BibTeX citation.
+-   `representative structures`: a list of structures that are representative of the dataset. The first 5 of these will be used to generate the dataset thumbnail on the documentation website.
 
 Example:
 
@@ -49,4 +50,6 @@ pytest -k test_database
 
 We add information about the datasets to the documentation, so that users can easily find them. To do this, you need to run the following command in the root directory of the project:
 
-TODO: Add command
+```bash
+python dev/generate_page.py <new-dataset-id>
+```
