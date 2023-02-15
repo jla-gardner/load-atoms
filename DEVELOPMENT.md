@@ -23,15 +23,7 @@ pip install -e ".[dev]"
 ```
 
 This project uses the `black` code formatter, together with `isort` to sort imports.
-These are run as pre-commit hooks. To install these, run:
-
-```bash
-pre-commit autoupdate
-pre-commit install
-```
-
-These will block commits if the code is not formatted correctly - the unformatted files will remain staged, while the formatted files will be unstaged: review and stage the unstaged files, then commit again to proceed.
-For this reason, it is highly recommended that you set up your editor to run `black` and `isort` on save. If using VSCode, installing the `isort` extension, together with the included `.vscode/settings.json` file,is enough to make this happen automatically.
+For this reason, it is highly recommended that you set up your editor to run `black` and `isort` on save. If using VSCode, installing the `isort` extension, together with the included `.vscode/settings.json` file, is enough to make this happen automatically.
 
 ## 3. Test your installation
 

@@ -13,17 +13,17 @@ def pad(s: str, other: str) -> str:
     return "\n".join(other + line for line in s.splitlines())
 
 
-def progress_bar(iterable, N):
+def progress_bar(iterable, N, width=50):
     """own implementation of tqdm for download progress bar"""
 
     def _progress(count, total):
         progress = min(count / total, 1)
 
-        tenths = int(progress * 10)
-        done = DONE * tenths
-        todo = TODO * (10 - tenths)
+        parts = int(progress * width)
+        done = DONE * parts
+        todo = TODO * (width - parts)
 
-        message = f"{progress:6.1%} | [{done}{todo}]"
+        message = f"{progress:6.1%} | {done}{todo}"
         print(message, end="\r")
 
     print()
