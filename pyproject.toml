@@ -19,7 +19,16 @@ dependencies = ["ase", "pyyaml", "requests", "numpy"]
 requires-python = ">=3.7"
 
 [project.optional-dependencies]
-dev = ["notebook", "pytest", "black", "isort"]
+dev = [
+    "notebook",
+    "pytest",
+    "black",
+    "isort",
+    "sphinx",
+    "furo",
+    "nbsphinx",
+    "sphinx-autobuild",
+]
 
 [project.urls]
 Homepage = "https://github.com/jla-gardner/load-atoms"

@@ -14,6 +14,7 @@ class DatabaseEntry:
     description: str
     citation: str = None
     license: str = None
+    representative_structures: List[int] = None
 
     @classmethod
     def from_file(cls, file: Path):
@@ -23,6 +24,8 @@ class DatabaseEntry:
         if "filename" in data:
             data["filenames"] = [data["filename"]]
             del data["filename"]
+
+        data = {k.replace(" ", "_"): v for k, v in data.items()}
 
         return cls(**data)
 
