@@ -1,4 +1,4 @@
-# How to develop locally
+# How to develop `load-atoms` locally
 
 ## 1. Clone the repo
 
@@ -16,7 +16,7 @@ conda create -n load-atoms python=3.8 -y
 conda activate load-atoms
 ```
 
-Once you've created a vritual environment, you can `pip install` this package, together with the necessary development tools, in a local and editable mode using:
+Once you've created a virtual environment, you can `pip install` this package, together with the necessary development tools, in a local and editable mode using:
 
 ```bash
 pip install -e ".[dev]"

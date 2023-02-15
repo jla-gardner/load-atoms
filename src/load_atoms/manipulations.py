@@ -1,4 +1,4 @@
-from typing import Callable, Sequence
+from typing import Callable, Sequence, Union
 
 import numpy as np
 from ase import Atoms
@@ -9,11 +9,13 @@ FilterFunction = Callable[[Atoms], bool]
 
 
 def filter_by(
-    dataset: Dataset, *functions: Sequence[FilterFunction], **kwargs
+    dataset: Union[Dataset, Sequence[Atoms]],
+    *functions: Sequence[FilterFunction],
+    **kwargs
 ) -> Dataset:
     """Filter a dataset by a given property."""
 
-    by_kwargs = [
+    structures_filtered_by_kwargs = [
         structure
         for structure in dataset
         if all(structure.info.get(key, None) == value for key, value in kwargs.items())
@@ -21,7 +23,7 @@ def filter_by(
 
     return [
         structure
-        for structure in by_kwargs
+        for structure in structures_filtered_by_kwargs
         if all(func(structure) for func in functions)
     ]
 

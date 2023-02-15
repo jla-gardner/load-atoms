@@ -3,6 +3,8 @@ from typing import Iterable, List
 from ase import Atoms
 from yaml import dump
 
+from load_atoms.util import intersection
+
 
 class Dataset:
     def __init__(self, structures: Iterable[Atoms], name: str = None):
@@ -23,10 +25,6 @@ class Dataset:
 
     def __repr__(self):
         return summarise_dataset(self.structures, self.name)
-
-
-def intersection(things):
-    return set.intersection(*map(set, things))
 
 
 def summarise_dataset(structures: List[Atoms], name: str = None) -> str:

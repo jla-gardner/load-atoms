@@ -94,4 +94,5 @@ train, val, test = cross_validate(
 
 # Misc
 
--   Add a `load_atoms` command line tool
+-   add a `load_atoms` command line tool
+-   add more tests

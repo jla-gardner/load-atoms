@@ -4,6 +4,8 @@ from typing import List
 
 import yaml
 
+from load_atoms.util import DATASETS_DIR
+
 
 @dataclass
 class DatabaseEntry:
@@ -25,10 +27,9 @@ class DatabaseEntry:
         return cls(**data)
 
 
-DATASET_DIR = Path(__file__).parent / "datasets"
 DATASETS = {
     entry.name: entry
-    for entry in map(DatabaseEntry.from_file, DATASET_DIR.glob("**/*.yaml"))
+    for entry in map(DatabaseEntry.from_file, DATASETS_DIR.glob("**/*.yaml"))
 }
 
 
@@ -43,6 +44,7 @@ def get_database_entry_for(dataset_id: str) -> DatabaseEntry:
     return DATASETS[dataset_id]
 
 
-# TODO: implement this, as per TODO.md
+# TODO: implement this
 def print_info_for(db_entry: DatabaseEntry) -> None:
+    """print any license/citation info for a dataset"""
     pass

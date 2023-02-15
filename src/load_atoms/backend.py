@@ -1,7 +1,7 @@
 """
 The backend is responsible for downloading the datasets when they 
 are first loaded, and for loading these datasets into memory, via
-the `_load_dataset` function. 
+the `load_dataset_for` function. 
 """
 
 from pathlib import Path
@@ -12,7 +12,7 @@ from ase.io import read
 
 from load_atoms.database import DatabaseEntry, get_database_entry_for, print_info_for
 from load_atoms.dataset import Dataset
-from load_atoms.util import BASE_REMOTE_URL, progress_bar
+from load_atoms.util import BASE_REMOTE_URL, DEFAULT_DOWNLOAD_DIR, progress_bar
 
 
 def load_dataset_for(
@@ -21,9 +21,9 @@ def load_dataset_for(
     """Get a dataset from a dataset ID."""
 
     if root is None:
-        root = Path(__file__).parent / "datasets"
+        root = DEFAULT_DOWNLOAD_DIR
     else:
-        root = Path(root) / "datasets"
+        root = Path(root)
 
     db_entry = get_database_entry_for(dataset_id)
 

@@ -1,6 +1,10 @@
 from pathlib import Path
+from typing import Iterable
 
-DATASETS_DIR = Path(__file__).parent / "datasets"
+# this file is at load_atoms/src/load_atoms/util.py
+# the datasets are at load_atoms/datasets
+DATASETS_DIR = Path(__file__).parent.parent.parent / "datasets"
+DEFAULT_DOWNLOAD_DIR = Path.home() / ".load_atoms"
 BASE_REMOTE_URL = (
     "https://github.com/jla-gardner/load-atoms/raw/main/src/load_atoms/datasets/"
 )
@@ -9,8 +13,9 @@ DONE = "█"
 TODO = "░"
 
 
-def pad(s: str, other: str) -> str:
-    return "\n".join(other + line for line in s.splitlines())
+def intersection(things: Iterable[Iterable]):
+    """Get the set intersection of a list of iterables."""
+    return set.intersection(*map(set, things))
 
 
 def progress_bar(iterable, N, width=50):
