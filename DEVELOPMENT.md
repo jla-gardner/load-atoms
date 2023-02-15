@@ -4,6 +4,7 @@
 
 ```bash
 git clone https://github.com/jla-gardner/load-atoms
+cd load-atoms
 ```
 
 ## 2. Install dependencies
