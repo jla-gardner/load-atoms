@@ -96,3 +96,12 @@ train, val, test = cross_validate(
 
 -   add a `load_atoms` command line tool
 -   add more tests
+
+# Datasets
+
+-   carbon dimers
+-   carbon surfaces
+-   carbon films
+-   synthetic carbon
+-   carbon nanotubes
+-   silica synthetic
