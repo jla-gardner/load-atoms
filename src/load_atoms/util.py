@@ -5,9 +5,7 @@ from typing import Iterable
 # the datasets are at load_atoms/datasets
 DATASETS_DIR = Path(__file__).parent.parent.parent / "datasets"
 DEFAULT_DOWNLOAD_DIR = Path.home() / ".load_atoms"
-BASE_REMOTE_URL = (
-    "https://github.com/jla-gardner/load-atoms/raw/main/src/load_atoms/datasets/"
-)
+BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/datasets/"
 
 DONE = "█"
 TODO = "░"
