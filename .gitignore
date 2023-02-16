@@ -3,5 +3,7 @@
 **__pycache__
 **.DS_Store
 **/*.ipynb 
+.pytest_cache
+.vscode
 
 docs/build

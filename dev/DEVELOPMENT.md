@@ -24,7 +24,21 @@ pip install -e ".[dev]"
 ```
 
 This project uses the `black` code formatter, together with `isort` to sort imports.
-For this reason, it is highly recommended that you set up your editor to run `black` and `isort` on save. If using VSCode, installing the `isort` extension, together with the included `.vscode/settings.json` file, is enough to make this happen automatically.
+For this reason, it is highly recommended that you set up your editor to run `black` and `isort` on save. If using VSCode, installing the `isort` extension, together with adding the following to your `.vscode/settings.json` file, is enough to make this happen automatically.
+
+```json
+{
+    ...
+    "python.formatting.provider": "black",
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
+        "editor.formatOnSave": true
+    }
+    ...
+}
+```
 
 ## 3. Test your installation
 
