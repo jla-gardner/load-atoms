@@ -1,5 +1,5 @@
 C-dimers
---------
+========
 
 Carbon dimers with bond lengths ascending from 0.8Å to 3.7Å in incremenets of 0.1Å. Labelled with DFT as taken from the supplementary information of Deringer and Csányi (2017).
 
@@ -16,12 +16,12 @@ Carbon dimers with bond lengths ascending from 0.8Å to 3.7Å in incremenets of 
             C: 100.00%
         properties:
             per atom: (frac_pos, force)
-            per structure: (mix_history_length, smearing_width, task, mixing_scheme, pdos_calculate_weights,
-                opt_strategy, spin_polarized, fix_occupancy, detailed_ct, finite_basis_corr,
-                nneightol, cutoff, elec_energy_tol, max_scf_cycles, mix_charge_amp, castep_file_name,
-                write_checkpoint, calculate_stress, nextra_bands, xc_functional, popn_calculate,
-                cut_off_energy, virNOTUSED, config_type, kpoints_mp_grid, castep_run_time,
-                energy)
+            per structure: (max_scf_cycles, finite_basis_corr, xc_functional, castep_run_time,
+                elec_energy_tol, detailed_ct, popn_calculate, cut_off_energy, opt_strategy,
+                cutoff, task, write_checkpoint, smearing_width, pdos_calculate_weights,
+                energy, config_type, nextra_bands, fix_occupancy, spin_polarized, castep_file_name,
+                mix_charge_amp, calculate_stress, mix_history_length, mixing_scheme, kpoints_mp_grid,
+                virNOTUSED, nneightol)
 
 
 

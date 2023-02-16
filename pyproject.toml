@@ -28,6 +28,7 @@ dev = [
     "furo",
     "nbsphinx",
     "sphinx-autobuild",
+    "sphinx-copybutton",
 ]
 
 [project.urls]

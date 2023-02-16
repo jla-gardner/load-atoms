@@ -40,7 +40,7 @@ def page_content(dataset_id: str) -> str:
 
     summary = str(structures)
 
-    title = db_entry.name + "\n" + "-" * len(db_entry.name)
+    title = db_entry.name + "\n" + "=" * len(db_entry.name)
     visualisations = ""
 
     return PAGE_TEMPLATE.format(
@@ -71,13 +71,6 @@ def build_datasets_index():
     all_documented_datasets = sorted([p.stem for p in all_documented_datasets])
 
     with open(DOC_SOURCE / "datasets.rst", "w") as f:
-        f.write(
-            """\
-Datasets
-========
-
-"""
-        )
         for dataset_id in all_documented_datasets:
             f.write(f".. include:: datasets/{dataset_id}.rst\n")
 

@@ -1,5 +1,5 @@
 C-GAP-17-train
---------------
+==============
 
 Complete training dataset for the C-GAP-17 model. For details, see the supplementary information here: https://www.repository.cam.ac.uk/handle/1810/262814
 
@@ -16,12 +16,12 @@ Complete training dataset for the C-GAP-17 model. For details, see the supplemen
             C: 100.00%
         properties:
             per atom: (frac_pos, force)
-            per structure: (mix_history_length, smearing_width, task, mixing_scheme, pdos_calculate_weights,
-                opt_strategy, spin_polarized, fix_occupancy, finite_basis_corr, detailed_ct,
-                nneightol, cutoff, elec_energy_tol, max_scf_cycles, castep_file_name,
-                write_checkpoint, calculate_stress, nextra_bands, xc_functional, energy,
-                popn_calculate, cut_off_energy, config_type, kpoints_mp_grid, castep_run_time,
-                mix_charge_amp)
+            per structure: (max_scf_cycles, finite_basis_corr, xc_functional, castep_run_time,
+                elec_energy_tol, detailed_ct, popn_calculate, cut_off_energy, opt_strategy,
+                cutoff, task, write_checkpoint, smearing_width, pdos_calculate_weights,
+                energy, config_type, nextra_bands, fix_occupancy, spin_polarized, castep_file_name,
+                mix_charge_amp, calculate_stress, mix_history_length, mixing_scheme, kpoints_mp_grid,
+                nneightol)
 
 
 
