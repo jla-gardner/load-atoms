@@ -1,7 +1,9 @@
 C-GAP-17-train
 ==============
 
-Complete training dataset for the C-GAP-17 model. For details, see the supplementary information here: https://www.repository.cam.ac.uk/handle/1810/262814
+Complete training dataset for the C-GAP-17 model. 
+For details, see the supplementary information here:
+https://www.repository.cam.ac.uk/handle/1810/262814
 
 
 .. code-block:: python
@@ -16,11 +18,21 @@ Complete training dataset for the C-GAP-17 model. For details, see the supplemen
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (energy, config_type, detailed_ct)
+            per structure: (energy, detailed_ct, config_type)
+
+A representative structure from this dataset:
+
+.. raw:: html
+    :file: ../_static/visualisations/x3d.html
+
+.. raw:: html
+   :file: ../_static/visualisations/C-GAP-17-train/1.html
 
 
 
-https://creativecommons.org/licenses/by-nc-sa/4.0/
+This dataset is licensed under the CC BY-NC-SA 4.0 license.
+
+
 
 .. code-block:: bibtex
 
