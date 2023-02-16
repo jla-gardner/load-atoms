@@ -1,4 +1,4 @@
-name: C-dimers
+name: C-GAP-17-dimers
 filename: C-GAP-17-dimers.extxyz
 description: |
     Carbon dimers with bond lengths ascending from 0.8Å to 3.7Å in incremenets of 0.1Å. Labelled with DFT as taken from the supplementary information of Deringer and Csányi (2017).

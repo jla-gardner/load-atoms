@@ -1,120 +1,120 @@
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-284.687571 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=1.castep castep_run_time=31.94 virNOTUSED="117.54616777 -0.0 -0.0 -0.0 5.617e-05 -0.0 -0.0 -0.0 5.617e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000    -146.93508562       0.00000000      -0.00000000
-C        0.80000000       0.00000000       0.00000000       0.04000000       0.00000000       0.00000000     146.93508562      -0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-284.687571 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000    -146.93508562       0.00000000      -0.00000000
+C        0.80000000       0.00000000       0.00000000     146.93508562      -0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-295.888512 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=2.castep castep_run_time=30.34 virNOTUSED="73.87350206 0.0 -0.0 0.0 -0.00089876 -0.0 -0.0 -0.0 -0.00089876" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000     -82.08344243      -0.00000000       0.00000000
-C        0.90000000       0.00000000       0.00000000       0.04500000       0.00000000       0.00000000      82.08344243       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-295.888512 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000     -82.08344243      -0.00000000       0.00000000
+C        0.90000000       0.00000000       0.00000000      82.08344243       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-301.930994 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=3.castep castep_run_time=27.64 virNOTUSED="42.09353701 -0.0 -0.0 -0.0 -0.00106728 -0.0 -0.0 -0.0 -0.00106728" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000     -42.09340866       0.00000000       0.00000000
-C        1.00000000       0.00000000       0.00000000       0.05000000       0.00000000       0.00000000      42.09340866      -0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-301.930994 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000     -42.09340866       0.00000000       0.00000000
+C        1.00000000       0.00000000       0.00000000      42.09340866      -0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-304.838883 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=4.castep castep_run_time=28.23 virNOTUSED="19.96101922 -0.0 -0.0 -0.0 -0.00095494 -0.0 -0.0 -0.0 -0.00095494" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000     -18.14589606       0.00000000      -0.00000000
-C        1.10000000       0.00000000       0.00000000       0.05500000       0.00000000       0.00000000      18.14589606       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-304.838883 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000     -18.14589606       0.00000000      -0.00000000
+C        1.10000000       0.00000000       0.00000000      18.14589606       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-305.901694 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=5.castep castep_run_time=27.83 virNOTUSED="5.56969792 -0.0 -0.0 -0.0 -0.00075833 -0.0 -0.0 -0.0 -0.00075833" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000      -4.64161562       0.00000000       0.00000000
-C        1.20000000       0.00000000       0.00000000       0.06000000       0.00000000       0.00000000       4.64161562      -0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-305.901694 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000      -4.64161562       0.00000000       0.00000000
+C        1.20000000       0.00000000       0.00000000       4.64161562      -0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-305.99288 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=6.castep castep_run_time=27.37 virNOTUSED="-2.6952534 0.0 -0.0 0.0 -0.00053364 -0.0 -0.0 -0.0 -0.00053364" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       2.07330859      -0.00000000       0.00000000
-C        1.30000000       0.00000000       0.00000000       0.06500000       0.00000000       0.00000000      -2.07330859       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-305.99288 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       2.07330859      -0.00000000       0.00000000
+C        1.30000000       0.00000000       0.00000000      -2.07330859       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-305.600275 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=7.castep castep_run_time=36.77 virNOTUSED="-7.49796842 -0.0 -0.0 -0.0 -0.00025278 -0.0 -0.0 -0.0 -0.00025278" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       5.35636559      -0.00000000       0.00000000
-C        1.40000000       0.00000000       0.00000000       0.07000000       0.00000000       0.00000000      -5.35636559       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-305.600275 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       5.35636559      -0.00000000       0.00000000
+C        1.40000000       0.00000000       0.00000000      -5.35636559       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-304.987197 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=8.castep castep_run_time=36.0 virNOTUSED="-9.99889215 -0.0 -0.0 -0.0 -0.00011235 -0.0 -0.0 -0.0 -0.00011235" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       6.66577639       0.00000000       0.00000000
-C        1.50000000       0.00000000       0.00000000       0.07500000       0.00000000       0.00000000      -6.66577639       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-304.987197 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       6.66577639       0.00000000       0.00000000
+C        1.50000000       0.00000000       0.00000000      -6.66577639       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-304.30315 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=9.castep castep_run_time=40.8 virNOTUSED="-11.02564599 -0.0 -0.0 -0.0 0.0 -0.0 -0.0 -0.0 0.0" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       6.89138503      -0.00000000       0.00000000
-C        1.60000000       0.00000000       0.00000000       0.08000000       0.00000000       0.00000000      -6.89138503       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-304.30315 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       6.89138503      -0.00000000       0.00000000
+C        1.60000000       0.00000000       0.00000000      -6.89138503       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-303.625901 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=10.castep castep_run_time=30.1 virNOTUSED="-11.22281238 -0.0 -0.0 -0.0 0.00025278 -0.0 -0.0 -0.0 0.00025278" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       6.60202427       0.00000000       0.00000000
-C        1.70000000       0.00000000       0.00000000       0.08500000       0.00000000       0.00000000      -6.60202427      -0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-303.625901 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       6.60202427       0.00000000       0.00000000
+C        1.70000000       0.00000000       0.00000000      -6.60202427      -0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-302.988171 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=11.castep castep_run_time=27.63 virNOTUSED="-11.06255149 -0.0 0.0 -0.0 0.00047747 -0.0 0.0 -0.0 0.00047747" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       6.14501516      -0.00000000      -0.00000000
-C        1.80000000       0.00000000       0.00000000       0.09000000       0.00000000       0.00000000      -6.14501516       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-302.988171 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       6.14501516      -0.00000000      -0.00000000
+C        1.80000000       0.00000000       0.00000000      -6.14501516       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-302.395652 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=12.castep castep_run_time=30.59 virNOTUSED="-10.8709462 -0.0 -0.0 -0.0 0.00030895 -0.0 -0.0 -0.0 0.00030895" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       5.72214354       0.00000000       0.00000000
-C        1.90000000       0.00000000       0.00000000       0.09500000       0.00000000       0.00000000      -5.72214354      -0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-302.395652 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       5.72214354       0.00000000       0.00000000
+C        1.90000000       0.00000000       0.00000000      -5.72214354      -0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-301.839851 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=13.castep castep_run_time=28.31 virNOTUSED="-10.80693734 -0.0 0.0 -0.0 0.00011235 -0.0 0.0 -0.0 0.00011235" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       5.40346064      -0.00000000      -0.00000000
-C        2.00000000       0.00000000       0.00000000       0.10000000       0.00000000       0.00000000      -5.40346064       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-301.839851 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       5.40346064      -0.00000000      -0.00000000
+C        2.00000000       0.00000000       0.00000000      -5.40346064       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-301.315783 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=14.castep castep_run_time=30.37 virNOTUSED="-10.64909187 -0.0 -0.0 -0.0 2.809e-05 -0.0 -0.0 -0.0 2.809e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       5.07059403       0.00000000       0.00000000
-C        2.10000000       0.00000000       0.00000000       0.10500000       0.00000000       0.00000000      -5.07059403       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-301.315783 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       5.07059403       0.00000000       0.00000000
+C        2.10000000       0.00000000       0.00000000      -5.07059403       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-300.826626 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=15.castep castep_run_time=24.09 virNOTUSED="-10.35943702 -0.0 0.0 -0.0 0.0001966 -0.0 0.0 -0.0 0.0001966" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       4.70936269      -0.00000000       0.00000000
-C        2.20000000       0.00000000       0.00000000       0.11000000       0.00000000       0.00000000      -4.70936269       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-300.826626 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       4.70936269      -0.00000000       0.00000000
+C        2.20000000       0.00000000       0.00000000      -4.70936269       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-300.37425 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=16.castep castep_run_time=23.73 virNOTUSED="-9.97678817 -0.0 0.0 -0.0 0.00028086 -0.0 0.0 -0.0 0.00028086" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       4.33723615      -0.00000000      -0.00000000
-C        2.30000000       0.00000000       0.00000000       0.11500000       0.00000000       0.00000000      -4.33723615       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-300.37425 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       4.33723615      -0.00000000      -0.00000000
+C        2.30000000       0.00000000       0.00000000      -4.33723615       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-299.959034 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=17.castep castep_run_time=29.02 virNOTUSED="-9.52793971 -0.0 -0.0 -0.0 0.0001966 -0.0 -0.0 -0.0 0.0001966" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       3.96998579       0.00000000       0.00000000
-C        2.40000000       0.00000000       0.00000000       0.12000000       0.00000000       0.00000000      -3.96998579      -0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-299.959034 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       3.96998579       0.00000000       0.00000000
+C        2.40000000       0.00000000       0.00000000      -3.96998579      -0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-299.57976 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=18.castep castep_run_time=29.62 virNOTUSED="-9.03957371 -0.0 0.0 -0.0 0.0 -0.0 0.0 -0.0 0.0" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       3.61610537      -0.00000000      -0.00000000
-C        2.50000000       0.00000000       0.00000000       0.12500000       0.00000000       0.00000000      -3.61610537       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-299.57976 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       3.61610537      -0.00000000      -0.00000000
+C        2.50000000       0.00000000       0.00000000      -3.61610537       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-299.235216 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=19.castep castep_run_time=27.31 virNOTUSED="-8.52455374 0.0 -0.0 0.0 0.0 -0.0 -0.0 -0.0 0.0" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       3.27816525      -0.00000000       0.00000000
-C        2.60000000       0.00000000       0.00000000       0.13000000       0.00000000       0.00000000      -3.27816525       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-299.235216 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       3.27816525      -0.00000000       0.00000000
+C        2.60000000       0.00000000       0.00000000      -3.27816525       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-298.923429 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=20.castep castep_run_time=25.46 virNOTUSED="-7.99683872 0.0 -0.0 0.0 0.00014043 -0.0 -0.0 -0.0 0.00014043" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       2.96210319      -0.00000000       0.00000000
-C        2.70000000       0.00000000       0.00000000       0.13500000       0.00000000       0.00000000      -2.96210319       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-298.923429 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       2.96210319      -0.00000000       0.00000000
+C        2.70000000       0.00000000       0.00000000      -2.96210319       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-298.642075 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=21.castep castep_run_time=28.4 virNOTUSED="-7.46971352 -0.0 -0.0 -0.0 0.00011235 -0.0 -0.0 -0.0 0.00011235" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       2.66752389       0.00000000       0.00000000
-C        2.80000000       0.00000000       0.00000000       0.14000000       0.00000000       0.00000000      -2.66752389      -0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-298.642075 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       2.66752389       0.00000000       0.00000000
+C        2.80000000       0.00000000       0.00000000      -2.66752389      -0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-298.38909 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=22.castep castep_run_time=25.11 virNOTUSED="-6.94702596 -0.0 0.0 -0.0 2.809e-05 -0.0 0.0 -0.0 2.809e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       2.39505254      -0.00000000       0.00000000
-C        2.90000000       0.00000000       0.00000000       0.14500000       0.00000000       0.00000000      -2.39505254       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-298.38909 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       2.39505254      -0.00000000       0.00000000
+C        2.90000000       0.00000000       0.00000000      -2.39505254       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-298.162211 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=23.castep castep_run_time=23.33 virNOTUSED="-6.43708963 -0.0 -0.0 -0.0 -0.0 -0.0 -0.0 -0.0 -0.0" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       2.14618159      -0.00000000       0.00000000
-C        3.00000000       0.00000000       0.00000000       0.15000000       0.00000000       0.00000000      -2.14618159       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-298.162211 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       2.14618159      -0.00000000       0.00000000
+C        3.00000000       0.00000000       0.00000000      -2.14618159       0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.959259 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=24.castep castep_run_time=24.64 virNOTUSED="-5.9395113 -0.0 0.0 -0.0 5.617e-05 -0.0 0.0 -0.0 5.617e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.91559853       0.00000000       0.00000000
-C        3.10000000       0.00000000       0.00000000       0.15500000       0.00000000       0.00000000      -1.91559853      -0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.959259 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       1.91559853       0.00000000       0.00000000
+C        3.10000000       0.00000000       0.00000000      -1.91559853      -0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.778456 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=25.castep castep_run_time=31.49 virNOTUSED="-5.45125765 -0.0 -0.0 -0.0 0.0 -0.0 -0.0 -0.0 0.0" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.70331658      -0.00000000      -0.00000000
-C        3.20000000       0.00000000       0.00000000       0.16000000       0.00000000       0.00000000      -1.70331658       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.778456 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       1.70331658      -0.00000000      -0.00000000
+C        3.20000000       0.00000000       0.00000000      -1.70331658       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.617941 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=26.castep castep_run_time=24.34 virNOTUSED="-4.97814255 -0.0 0.0 -0.0 5.617e-05 -0.0 0.0 -0.0 5.617e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.50864402      -0.00000000      -0.00000000
-C        3.30000000       0.00000000       0.00000000       0.16500000       0.00000000       0.00000000      -1.50864402       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.617941 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       1.50864402      -0.00000000      -0.00000000
+C        3.30000000       0.00000000       0.00000000      -1.50864402       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.476232 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=27.castep castep_run_time=31.85 virNOTUSED="-4.51887405 0.0 0.0 0.0 -0.00033704 -0.0 0.0 -0.0 -0.00033704" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.32881481       0.00000000       0.00000000
-C        3.40000000       0.00000000       0.00000000       0.17000000       0.00000000       0.00000000      -1.32881481      -0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.476232 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       1.32881481       0.00000000       0.00000000
+C        3.40000000       0.00000000       0.00000000      -1.32881481      -0.00000000      -0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.351727 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=28.castep castep_run_time=28.14 virNOTUSED="-4.07317126 0.0 -0.0 0.0 -8.426e-05 -0.0 -0.0 -0.0 -8.426e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.16395938       0.00000000      -0.00000000
-C        3.50000000       0.00000000       0.00000000       0.17500000       0.00000000       0.00000000      -1.16395938      -0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.351727 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       1.16395938       0.00000000      -0.00000000
+C        3.50000000       0.00000000       0.00000000      -1.16395938      -0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.242953 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=29.castep castep_run_time=29.65 virNOTUSED="-3.64159593 -0.0 0.0 -0.0 -5.617e-05 -0.0 0.0 -0.0 -5.617e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       1.01134022      -0.00000000      -0.00000000
-C        3.60000000       0.00000000       0.00000000       0.18000000       0.00000000       0.00000000      -1.01134022       0.00000000       0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.242953 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       1.01134022      -0.00000000      -0.00000000
+C        3.60000000       0.00000000       0.00000000      -1.01134022       0.00000000       0.00000000
 2
-Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:frac_pos:R:3:force:R:3 energy=-297.148931 config_type=cluster detailed_ct=dimer task=SinglePoint cut_off_energy="650 eV" spin_polarized=F opt_strategy=speed xc_functional=LDA elec_energy_tol=1e-08 max_scf_cycles=200 fix_occupancy=F smearing_width="0.1 eV" mixing_scheme=Pulay calculate_stress=T finite_basis_corr=automatic popn_calculate=F pdos_calculate_weights=F write_checkpoint=none mix_charge_amp=0.15 mix_history_length=20 nextra_bands=8 kpoints_mp_grid="1 1 1" castep_file_name=30.castep castep_run_time=40.91 virNOTUSED="-3.22765884 -0.0 -0.0 -0.0 -2.809e-05 -0.0 -0.0 -0.0 -2.809e-05" cutoff=-1.0 nneightol=1.2 pbc="T T T"
-C        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.87185922      -0.00000000       0.00000000
-C        3.70000000       0.00000000       0.00000000       0.18500000       0.00000000       0.00000000      -0.87185922       0.00000000      -0.00000000
+Lattice="20.0 0.0 0.0 0.0 15.0 0.0 0.0 0.0 15.0" Properties=species:S:1:pos:R:3:force:R:3 energy=-297.148931 config_type=cluster detailed_ct=dimer pbc="T T T"
+C        0.00000000       0.00000000       0.00000000       0.87185922      -0.00000000       0.00000000
+C        3.70000000       0.00000000       0.00000000      -0.87185922       0.00000000      -0.00000000
