@@ -12,7 +12,7 @@ from ase.data.colors import jmol_colors
 
 
 def visualisation_for(atoms):
-    x3d_style = {"width": "400px", "height": "400px"}
+    x3d_style = {"width": "400px", "height": "300px"}
     x3dstyle = " ".join(f'{k}="{v}";' for k, v in x3d_style.items())
 
     scene = x3d_atoms(atoms)
@@ -110,7 +110,7 @@ def x3d_atoms(atoms):
     # the largest separation between two points in any of x, y or z
     max_dim = max(max_xyz_extent)
     # put the camera twice as far away as the largest extent
-    pos = f"0 0 {max_dim * 2}"
+    pos = f"0 0 {max_dim * 2.5}"
     # NB. viewpoint needs to contain an (empty) child to be valid x3d
     viewpoint = element("viewpoint", position=pos, child=element("group"))
 
@@ -165,22 +165,11 @@ def get_maximum_extent(xyz):
 
 
 X3DOM_template = """\
-<html>
-    <head>
-        <title>ASE atomic visualization</title>
-        <link rel="stylesheet" type="text/css" \
-            href="https://www.x3dom.org/x3dom/release/x3dom.css"></link>
-        <script type="text/javascript" \
-            src="https://www.x3dom.org/x3dom/release/x3dom.js"></script>
-    </head>
-    <body>
-        <X3D {style}>
+<X3D {style}>
 
 <!--Inserting Generated X3D Scene-->
 {scene}
 <!--End of Inserted Scene-->
 
-        </X3D>
-    </body>
-</html>
+</X3D>
 """

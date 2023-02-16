@@ -1,5 +1,8 @@
+import shutil
 import sys
 from pathlib import Path
+
+from x3d import visualisation_for
 
 from load_atoms import dataset
 from load_atoms.database import DATASETS, is_known_dataset
@@ -29,19 +32,47 @@ PAGE_TEMPLATE = """\
 {citation}
 """
 
+VISUALISATION = """\
+A representative structure from this dataset:
+
+.. raw:: html
+    :file: ../_static/visualisations/x3d.html
+
+"""
+
+LICENSE = """\
+This dataset is licensed under the {license} license.
+
+"""
+
 
 def page_content(dataset_id: str) -> str:
     # avoid actually downloading the dataset
     structures = dataset(dataset_id, root=PROJECT_ROOT / "datasets")
-    dataset = DATASETS[dataset_id]
-
-    representative_structures = dataset.representative_structures or [*range(5)]
-    representative_structures = representative_structures[: min(5, len(structures))]
-
+    db_entry = DATASETS[dataset_id]
     summary = str(structures)
 
-    title = dataset.name + "\n" + "=" * len(dataset.name)
+    license = ""
+    if db_entry.license:
+        license = LICENSE.format(license=db_entry.license)
+
+    title = db_entry.name + "\n" + "=" * len(db_entry.name)
+
     visualisations = ""
+    if db_entry.representative_structures:
+        shutil.rmtree(DOC_SOURCE / "_static/visualisations" / dataset_id)
+        visualisations += VISUALISATION
+        for i in db_entry.representative_structures[:1]:
+            # TODO work out how to show more than 1 visualisation without
+            # them breaking onto new lines
+            structures[i].wrap()
+            x3d = visualisation_for(structures[i])
+            ref = f"_static/visualisations/{dataset_id}/{i}.html"
+            fname = DOC_SOURCE / ref
+            fname.parent.mkdir(parents=True, exist_ok=True)
+            with open(fname, "w") as f:
+                f.write(x3d)
+            visualisations += f".. raw:: html\n   :file: ../{ref}\n\n"
 
     return PAGE_TEMPLATE.format(
         title=title,
@@ -49,8 +80,8 @@ def page_content(dataset_id: str) -> str:
         dataset_id=dataset_id,
         summary=pad(summary, indent=4),
         visualisations=visualisations,
-        license=dataset.license,
-        citation=pad(dataset.citation, indent=4),
+        license=license,
+        citation=pad(db_entry.citation, indent=4),
     )
 
 

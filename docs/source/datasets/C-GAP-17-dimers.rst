@@ -16,11 +16,13 @@ Carbon dimers with bond lengths ascending from 0.8Å to 3.7Å in incremenets of 
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (energy, config_type, detailed_ct)
+            per structure: (energy, detailed_ct, config_type)
 
 
 
-https://creativecommons.org/licenses/by-nc-sa/4.0/
+This dataset is licensed under the CC BY-NC-SA 4.0 license.
+
+
 
 .. code-block:: bibtex
 
