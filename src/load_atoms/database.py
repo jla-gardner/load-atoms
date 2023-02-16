@@ -6,6 +6,8 @@ import yaml
 
 from load_atoms.util import DATASETS_DIR
 
+from .validation import In, IsBibTeX, ListOf, OneOf, Optional, Required, Validator
+
 
 @dataclass
 class DatabaseEntry:
@@ -28,6 +30,31 @@ class DatabaseEntry:
         data = {k.replace(" ", "_"): v for k, v in data.items()}
 
         return cls(**data)
+
+
+VALID_LICENSES = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
+
+VALIDATOR = Validator(
+    # --- required fields ---
+    Required("name", str),
+    Required("description", str),
+    OneOf(
+        Required("filename", str),
+        Required("filenames", ListOf(str)),
+    ),
+    # --- optional fields ---
+    Optional("citation", IsBibTeX()),
+    Optional("license", In(VALID_LICENSES)),
+    Optional("representative structures", ListOf(int)),
+    Optional("long description", str),
+    Optional(
+        "properties",
+        Validator(
+            Optional("per atom", dict),
+            Optional("per structure", dict),
+        ),
+    ),
+)
 
 
 DATASETS = {
