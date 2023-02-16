@@ -15,13 +15,8 @@ Complete training dataset for the C-GAP-17 model. For details, see the supplemen
         species:
             C: 100.00%
         properties:
-            per atom: (frac_pos, force)
-            per structure: (max_scf_cycles, finite_basis_corr, xc_functional, castep_run_time,
-                elec_energy_tol, detailed_ct, popn_calculate, cut_off_energy, opt_strategy,
-                cutoff, task, write_checkpoint, smearing_width, pdos_calculate_weights,
-                energy, config_type, nextra_bands, fix_occupancy, spin_polarized, castep_file_name,
-                mix_charge_amp, calculate_stress, mix_history_length, mixing_scheme, kpoints_mp_grid,
-                nneightol)
+            per atom: (force)
+            per structure: (energy, config_type, detailed_ct)
 
 
 

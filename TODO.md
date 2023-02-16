@@ -85,6 +85,13 @@ train, val, test = cross_validate(
 )
 ```
 
+**Datasets should have good descriptions**
+
+i.e. add description of per atom/structure properties in the yaml file
+
+in general add more info to docs,
+and put each dataset on own page
+
 # Website
 
 -   readthedocs
@@ -99,7 +106,6 @@ train, val, test = cross_validate(
 
 # Datasets
 
--   carbon dimers
 -   carbon surfaces
 -   carbon films
 -   synthetic carbon

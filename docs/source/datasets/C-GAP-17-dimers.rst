@@ -1,5 +1,5 @@
-C-dimers
-========
+C-GAP-17-dimers
+===============
 
 Carbon dimers with bond lengths ascending from 0.8Å to 3.7Å in incremenets of 0.1Å. Labelled with DFT as taken from the supplementary information of Deringer and Csányi (2017).
 
@@ -7,21 +7,16 @@ Carbon dimers with bond lengths ascending from 0.8Å to 3.7Å in incremenets of 
 .. code-block:: python
 
     >>> from load_atoms import dataset
-    >>> dataset("C-dimers")
-    C-dimers:
+    >>> dataset("C-GAP-17-dimers")
+    C-GAP-17-dimers:
         counts:
             structures: 30
             atoms: 60
         species:
             C: 100.00%
         properties:
-            per atom: (frac_pos, force)
-            per structure: (max_scf_cycles, finite_basis_corr, xc_functional, castep_run_time,
-                elec_energy_tol, detailed_ct, popn_calculate, cut_off_energy, opt_strategy,
-                cutoff, task, write_checkpoint, smearing_width, pdos_calculate_weights,
-                energy, config_type, nextra_bands, fix_occupancy, spin_polarized, castep_file_name,
-                mix_charge_amp, calculate_stress, mix_history_length, mixing_scheme, kpoints_mp_grid,
-                virNOTUSED, nneightol)
+            per atom: (force)
+            per structure: (energy, config_type, detailed_ct)
 
 
 
