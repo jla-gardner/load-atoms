@@ -33,24 +33,24 @@ PAGE_TEMPLATE = """\
 def page_content(dataset_id: str) -> str:
     # avoid actually downloading the dataset
     structures = dataset(dataset_id, root=PROJECT_ROOT / "datasets")
-    db_entry = DATASETS[dataset_id]
+    dataset = DATASETS[dataset_id]
 
-    representative_structures = db_entry.representative_structures or [*range(5)]
+    representative_structures = dataset.representative_structures or [*range(5)]
     representative_structures = representative_structures[: min(5, len(structures))]
 
     summary = str(structures)
 
-    title = db_entry.name + "\n" + "=" * len(db_entry.name)
+    title = dataset.name + "\n" + "=" * len(dataset.name)
     visualisations = ""
 
     return PAGE_TEMPLATE.format(
         title=title,
-        description=db_entry.description,
+        description=dataset.description,
         dataset_id=dataset_id,
         summary=pad(summary, indent=4),
         visualisations=visualisations,
-        license=db_entry.license,
-        citation=pad(db_entry.citation, indent=4),
+        license=dataset.license,
+        citation=pad(dataset.citation, indent=4),
     )
 
 
