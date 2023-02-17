@@ -1,55 +1,39 @@
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import List
 
 import yaml
 
 from load_atoms.util import DATASETS_DIR
-
-from .validation import In, IsBibTeX, ListOf, OneOf, Optional, Required, Validator
-
-
-@dataclass
-class DatabaseEntry:
-    name: str
-    filenames: List[str]
-    description: str
-    citation: str = None
-    license: str = None
-    representative_structures: List[int] = None
-
-    @classmethod
-    def from_file(cls, file: Path):
-        with open(file) as f:
-            data = yaml.safe_load(f)
-
-        if "filename" in data:
-            data["filenames"] = [data["filename"]]
-            del data["filename"]
-
-        data = {k.replace(" ", "_"): v for k, v in data.items()}
-
-        return cls(**data)
-
+from load_atoms.validation import (
+    AnyOf,
+    Blueprint,
+    IsBibTeX,
+    IsIn,
+    OneOf,
+    Optional,
+    Required,
+)
 
 VALID_LICENSES = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
 
-VALIDATOR = Validator(
+DESCRIPTION_BLUEPRINT = Blueprint(
     # --- required fields ---
+    # -----------------------
     Required("name", str),
     Required("description", str),
     OneOf(
         Required("filename", str),
-        Required("filenames", ListOf(str)),
+        Required("filenames", [str]),
     ),
     # --- optional fields ---
+    # -----------------------
     Optional("citation", IsBibTeX()),
-    Optional("license", In(VALID_LICENSES)),
-    Optional("representative structures", ListOf(int)),
-    Optional("long description", str),
+    Optional("license", IsIn(VALID_LICENSES)),
+    Optional("representative_structures", [int]),
+    Optional("long_description", str),
     Optional(
         "properties",
-        Validator(
+        AnyOf(
             Optional("per atom", dict),
             Optional("per structure", dict),
         ),
@@ -57,9 +41,39 @@ VALIDATOR = Validator(
 )
 
 
+@dataclass
+class DatasetDescription:
+    name: str
+    description: str
+    filename: str = None
+    filenames: list = None
+
+    citation: str = None
+    license: str = None
+    representative_structures: list = None
+    long_description: str = None
+    properties: dict = None
+
+    def __post_init__(self):
+        # validate the data
+        DESCRIPTION_BLUEPRINT.validate(asdict(self))
+
+        # make sure we have a list of filenames
+        if self.filename is not None:
+            assert self.filenames is None
+            self.filenames = [self.filename]
+
+    @classmethod
+    def from_file(cls, path: Path) -> "DatasetDescription":
+        with open(path) as f:
+            data = yaml.safe_load(f)
+        DESCRIPTION_BLUEPRINT.validate(data)
+        return cls(**data)
+
+
+_descriptor_files = list(DATASETS_DIR.glob("**/*.yaml"))
 DATASETS = {
-    entry.name: entry
-    for entry in map(DatabaseEntry.from_file, DATASETS_DIR.glob("**/*.yaml"))
+    entry.name: entry for entry in map(DatasetDescription.from_file, _descriptor_files)
 }
 
 
@@ -68,19 +82,19 @@ def is_known_dataset(dataset_id: str) -> bool:
     return dataset_id in DATASETS
 
 
-def get_database_entry_for(dataset_id: str) -> DatabaseEntry:
+def get_description_of(dataset_id: str) -> DatasetDescription:
     """Get the database entry for a dataset."""
     assert is_known_dataset(dataset_id), f"Dataset {dataset_id} is not known."
     return DATASETS[dataset_id]
 
 
-def print_info_for(db_entry: DatabaseEntry) -> None:
+def print_info_for(dataset: DatasetDescription) -> None:
     """print description and any license/citation info for a dataset"""
-    print(db_entry.description)
+    print(dataset.description)
 
-    if db_entry.license is not None:
-        print("This dataset is licensed under", db_entry.license.strip())
+    if dataset.license is not None:
+        print("This dataset is licensed under", dataset.license.strip())
 
-    if db_entry.citation is not None:
+    if dataset.citation is not None:
         print("If you use this dataset, please cite the following:")
-        print(db_entry.citation.strip())
+        print(dataset.citation.strip())

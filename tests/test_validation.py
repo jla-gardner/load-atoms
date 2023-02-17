@@ -1,13 +1,14 @@
 import pytest
 
 from load_atoms.validation import (
-    In,
+    Blueprint,
     IsBibTeX,
+    IsIn,
     ListOf,
     OneOf,
     Optional,
     Required,
-    Validator,
+    RuleValidationError,
 )
 
 bob = {
@@ -25,6 +26,7 @@ def test_required():
         Required("age", int),  # correct type
         Required("hobbies", ListOf(str)),  # correct type
         Required("age", lambda x: x > 0),  # custom validation
+        Required("age", IsIn([42, 43])),  # custom validation
     ]
 
     false_rules = [
@@ -40,7 +42,7 @@ def test_required():
         assert not rule(bob), f"rule {rule} should have failed"
 
     # test all rules together
-    schema = Validator(*true_rules)
+    schema = Blueprint(*true_rules)
     schema.validate(bob)
 
 
@@ -48,7 +50,7 @@ def test_failure():
     rule = Required("name", int)
     assert not rule(bob)
 
-    validator = Validator(rule)
+    schema = Blueprint(rule)
     # assert that validation fails
-    with pytest.raises(ValueError):
-        validator.validate(bob)
+    with pytest.raises(RuleValidationError):
+        schema.validate(bob)

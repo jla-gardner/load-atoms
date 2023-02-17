@@ -10,7 +10,7 @@ from typing import Tuple, Union
 import requests
 from ase.io import read
 
-from load_atoms.database import DatabaseEntry, get_database_entry_for, print_info_for
+from load_atoms.database import DatasetDescription, get_description_of, print_info_for
 from load_atoms.dataset import Dataset
 from load_atoms.util import BASE_REMOTE_URL, DEFAULT_DOWNLOAD_DIR, progress_bar
 
@@ -25,21 +25,22 @@ def load_dataset_for(
     else:
         root = Path(root)
 
-    db_entry = get_database_entry_for(dataset_id)
+    dataset_description = get_description_of(dataset_id)
 
-    download_if_needed(db_entry, root)
-    print_info_for(db_entry)
+    download_if_needed(dataset_description, root)
+    print_info_for(dataset_description)
 
     all_structures = []
-    for filename in db_entry.filenames:
+    for filename in dataset_description.filenames:
         all_structures.extend(read(root / filename, index=":"))
-    return Dataset(all_structures, db_entry.name)
+
+    return Dataset(all_structures, dataset_description.name)
 
 
-def download_if_needed(db_entry: DatabaseEntry, root: Path) -> None:
+def download_if_needed(dataset: DatasetDescription, root: Path) -> None:
     """Download a dataset if it is not already present."""
 
-    for filename in db_entry.filenames:
+    for filename in dataset.filenames:
         local_path = root / filename
         if local_path.exists():
             continue

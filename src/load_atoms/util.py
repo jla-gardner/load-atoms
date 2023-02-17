@@ -11,6 +11,10 @@ DONE = "█"
 TODO = "░"
 
 
+def lpad(s, indent=4):
+    return "\n".join(" " * indent + line for line in s.splitlines())
+
+
 def intersection(things: Iterable[Iterable]):
     """Get the set intersection of a list of iterables."""
     return set.intersection(*map(set, things))
@@ -28,8 +32,6 @@ def progress_bar(iterable, N, width=50):
 
         message = f"{progress:6.1%} | {done}{todo}"
         print(message, end="\r")
-
-    print()
 
     _progress(0, N)
     for i, item in enumerate(iterable):
