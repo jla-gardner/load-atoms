@@ -49,20 +49,20 @@ This dataset is licensed under the {license} license.
 def page_content(dataset_id: str) -> str:
     # avoid actually downloading the dataset
     structures = dataset(dataset_id, root=PROJECT_ROOT / "datasets")
-    db_entry = DATASETS[dataset_id]
+    dataset_description = DATASETS[dataset_id]
     summary = str(structures)
 
     license = ""
-    if db_entry.license:
-        license = LICENSE.format(license=db_entry.license)
+    if dataset_description.license:
+        license = LICENSE.format(license=dataset_description.license)
 
-    title = db_entry.name + "\n" + "=" * len(db_entry.name)
+    title = dataset_description.name + "\n" + "=" * len(dataset_description.name)
 
     visualisations = ""
-    if db_entry.representative_structures:
+    if dataset_description.representative_structures:
         shutil.rmtree(DOC_SOURCE / "_static/visualisations" / dataset_id)
         visualisations += VISUALISATION
-        for i in db_entry.representative_structures[:1]:
+        for i in dataset_description.representative_structures[:1]:
             # TODO work out how to show more than 1 visualisation without
             # them breaking onto new lines
             structures[i].wrap()
@@ -76,12 +76,12 @@ def page_content(dataset_id: str) -> str:
 
     return PAGE_TEMPLATE.format(
         title=title,
-        description=dataset.description,
+        description=dataset_description.description,
         dataset_id=dataset_id,
         summary=pad(summary, indent=4),
         visualisations=visualisations,
         license=license,
-        citation=pad(db_entry.citation, indent=4),
+        citation=pad(dataset_description.citation, indent=4),
     )
 
 
@@ -100,10 +100,18 @@ def build_page(dataset_id):
 def build_datasets_index():
     all_documented_datasets = (DOC_SOURCE / "datasets").glob("*.rst")
     all_documented_datasets = sorted([p.stem for p in all_documented_datasets])
+    contents = """\
+.. toctree::
+    :maxdepth: 3
+    :caption: Datasets:
+    :hidden:
+    
+"""
+    for dataset_id in all_documented_datasets:
+        contents += f"    datasets/{dataset_id}\n"
 
     with open(DOC_SOURCE / "datasets.rst", "w") as f:
-        for dataset_id in all_documented_datasets:
-            f.write(f".. include:: datasets/{dataset_id}.rst\n")
+        f.write(contents)
 
 
 if __name__ == "__main__":

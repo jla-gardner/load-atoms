@@ -76,10 +76,4 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 
    api
 
-
-.. toctree::
-   :maxdepth: 3
-   :caption: Datasets:
-   :hidden:
-
-   datasets 
+.. include:: datasets.rst
