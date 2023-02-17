@@ -4,6 +4,10 @@ This project is designed to be as easy as possible to add new datasets to. To ad
 
 ## 1. Add a `<dataset>.yaml` file in the `load_atoms/datasets` directory
 
+Dataset descriptions are stored in YAML files, which are located in the `load_atoms/datasets` directory.
+These are programatically validated at runtime, so that the user can be sure that the dataset is valid.
+The blueprint against which these are validated (`DESCRIPTION_BLUEPRINT`) is located in `load_atoms/database.py`.
+
 This file should contain the following fields:
 
 -   `name`: The name of the dataset. This should be a unique, preferably short and easily readable identifier for the dataset
@@ -14,13 +18,11 @@ Optionally, you can also specify the following fields:
 
 -   `license`: The license under which the dataset is released.
 -   `citation`: A citation for the dataset, if applicable. This should be a BibTeX citation.
--   `representative structures`: a list of structures that are representative of the dataset. The first 5 of these will be used to generate the dataset thumbnail on the documentation website.
+-   `representative_structures`: a list of indexes of structures that are representative of the dataset. The first 5 of these will be used to generate the dataset thumbnail on the documentation website.
 
-Example:
+Example file located at `load_atoms/datasets/my-dataset.yaml`:
 
 ```yaml
-# load_atoms/datasets/my-dataset.yaml
-
 name: my-dataset
 description: A dataset of 1000 atoms
 filename: my-dataset.xyz
