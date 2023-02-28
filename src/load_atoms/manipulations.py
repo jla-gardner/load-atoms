@@ -21,11 +21,13 @@ def filter_by(
         if all(structure.info.get(key, None) == value for key, value in kwargs.items())
     ]
 
-    return [
-        structure
-        for structure in structures_filtered_by_kwargs
-        if all(func(structure) for func in functions)
-    ]
+    return Dataset(
+        [
+            structure
+            for structure in structures_filtered_by_kwargs
+            if all(func(structure) for func in functions)
+        ]
+    )
 
 
 def cross_validate_split(

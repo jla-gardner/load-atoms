@@ -20,6 +20,11 @@ def intersection(things: Iterable[Iterable]):
     return set.intersection(*map(set, things))
 
 
+def union(things: Iterable[Iterable]):
+    """Get the set union of a list of iterables."""
+    return set.union(*map(set, things))
+
+
 def progress_bar(iterable, N, width=50):
     """own implementation of tqdm for download progress bar"""
 

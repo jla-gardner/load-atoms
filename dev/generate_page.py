@@ -60,12 +60,15 @@ def page_content(dataset_id: str) -> str:
 
     visualisations = ""
     if dataset_description.representative_structures:
-        shutil.rmtree(DOC_SOURCE / "_static/visualisations" / dataset_id)
+        shutil.rmtree(
+            DOC_SOURCE / "_static/visualisations" / dataset_id, ignore_errors=True
+        )
         visualisations += VISUALISATION
         for i in dataset_description.representative_structures[:1]:
             # TODO work out how to show more than 1 visualisation without
             # them breaking onto new lines
             structures[i].wrap()
+            structures[i].center()
             x3d = visualisation_for(structures[i])
             ref = f"_static/visualisations/{dataset_id}/{i}.html"
             fname = DOC_SOURCE / ref
@@ -74,6 +77,7 @@ def page_content(dataset_id: str) -> str:
                 f.write(x3d)
             visualisations += f".. raw:: html\n   :file: ../{ref}\n\n"
 
+    citation = dataset_description.citation or ""
     return PAGE_TEMPLATE.format(
         title=title,
         description=dataset_description.description,
@@ -81,7 +85,7 @@ def page_content(dataset_id: str) -> str:
         summary=pad(summary, indent=4),
         visualisations=visualisations,
         license=license,
-        citation=pad(dataset_description.citation, indent=4),
+        citation=pad(citation, indent=4),
     )
 
 

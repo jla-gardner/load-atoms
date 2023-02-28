@@ -3,7 +3,7 @@ from typing import Iterable, List
 from ase import Atoms
 from yaml import dump
 
-from load_atoms.util import intersection
+from load_atoms.util import intersection, union
 
 
 class Dataset:
@@ -39,7 +39,7 @@ def summarise_dataset(structures: List[Atoms], name: str = None) -> str:
         structure.info.keys() for structure in structures
     )
 
-    species = intersection(structure.get_chemical_symbols() for structure in structures)
+    species = union(structure.get_chemical_symbols() for structure in structures)
     species_counts = {
         s: sum([structure.get_chemical_symbols().count(s) for structure in structures])
         for s in species

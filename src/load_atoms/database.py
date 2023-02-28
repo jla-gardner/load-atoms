@@ -1,4 +1,4 @@
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from pathlib import Path
 
 import yaml
@@ -34,18 +34,29 @@ DESCRIPTION_BLUEPRINT = Blueprint(
     Optional(
         "properties",
         AnyOf(
-            Optional("per atom", dict),
-            Optional("per structure", dict),
+            Optional("per_atom", dict),
+            Optional("per_structure", dict),
         ),
     ),
 )
+
+
+def preprocess_filename(data: dict) -> dict:
+    """Convert filename to filenames."""
+
+    if "filename" in data:
+        assert "filenames" not in data
+        data["filenames"] = [data.pop("filename")]
+    return data
+
+
+PRE_PROCESSORS = [preprocess_filename]
 
 
 @dataclass
 class DatasetDescription:
     name: str
     description: str
-    filename: str = None
     filenames: list = None
 
     citation: str = None
@@ -54,20 +65,15 @@ class DatasetDescription:
     long_description: str = None
     properties: dict = None
 
-    def __post_init__(self):
-        # validate the data
-        DESCRIPTION_BLUEPRINT.validate(asdict(self))
-
-        # make sure we have a list of filenames
-        if self.filename is not None:
-            assert self.filenames is None
-            self.filenames = [self.filename]
-
     @classmethod
     def from_file(cls, path: Path) -> "DatasetDescription":
         with open(path) as f:
             data = yaml.safe_load(f)
         DESCRIPTION_BLUEPRINT.validate(data)
+
+        for preprocessor in PRE_PROCESSORS:
+            data = preprocessor(data)
+
         return cls(**data)
 
 
