@@ -1,3 +1,7 @@
+import inspect
+import string
+from dataclasses import asdict, field, make_dataclass
+
 from load_atoms.util import lpad
 
 
@@ -61,6 +65,7 @@ class IsInstance(Rule):
 
 class MultiRule(Rule):
     def __init__(self, *rules: Rule):
+        rules = [convert_from_shorthand(rule) for rule in rules]
         self.rules = rules
 
     def apply_rules(self, data):
@@ -94,7 +99,38 @@ class AllOf(MultiRule):
 
 
 class Blueprint(AllOf):
-    pass
+    def dataclass(self):
+        fields = []
+
+        for rule in self.rules:
+            if not isinstance(rule, FieldValidator):
+                continue
+
+            if isinstance(rule.validator, IsInstance):
+                cls = rule.validator.cls
+            else:
+                cls = any
+
+            if isinstance(rule, Required):
+                fields.append((rule.field, cls))
+
+            elif isinstance(rule, Optional):
+                fields.append((rule.field, cls, field(default=None)))
+
+            else:
+                raise ValueError(f"Unknown field validator {rule}")
+
+        fields.append(("_blueprint", MultiRule, field(default=self)))
+
+        def validate(self):
+            dictionary = asdict(self)
+            dictionary.pop("_blueprint")
+            self._blueprint.validate(dictionary)
+
+        cls = make_dataclass(
+            "AutoValidatedDataclass", fields, namespace={"validate": validate}
+        )
+        return cls
 
 
 class OneOf(MultiRule):
@@ -152,6 +188,8 @@ class ListOf(Rule):
 
 
 def convert_from_shorthand(validator):
+    if validator is any:
+        return lambda data: data is not None
     if validator in (str, int, float, list, dict):
         return IsInstance(validator)
     if isinstance(validator, type):
@@ -159,12 +197,17 @@ def convert_from_shorthand(validator):
     if isinstance(validator, list):
         assert len(validator) == 1
         return ListOf(validator[0])
+    # test if is a lambda function:
+    if hasattr(validator, "__name__") and validator.__name__ == "<lambda>":
+        return Lambda(validator)
     return validator
 
 
 class FieldValidator(Rule):
     def __init__(self, field, validator=None):
         self.field = field
+        if validator is None:
+            validator = any
         self.validator = convert_from_shorthand(validator)
 
     def _describe(self):
@@ -218,8 +261,6 @@ class Optional(FieldValidator):
 
     def is_valid(self, data):
         # rule passes if the field is not present
-        if getattr(data, self.field, None) is None:
-            return True
         if self.field not in data:
             return True
         # but if it is present, it must be valid
@@ -250,7 +291,47 @@ class IsIn(Rule):
         return super()._describe(self.options)
 
 
-class IsBibTeX(Rule):
+class Mapping(Rule):
+    def __init__(self, keys, values):
+        self.keys = convert_from_shorthand(keys)
+        self.values = convert_from_shorthand(values)
+
+    def is_valid(self, data):
+        if not isinstance(data, dict):
+            return False
+        for key, value in data.items():
+            if not self.keys(key):
+                return False
+            if not self.values(value):
+                return False
+        return True
+
+    def _describe(self):
+        return super()._describe(f"{self.keys} -> {self.values}")
+
+
+class BibTeX(Rule):
     def is_valid(self, data):
         data = data.strip()
         return data.startswith("@") and data.endswith("}")
+
+
+class FileHash(Rule):
+    def is_valid(self, data):
+        if not isinstance(data, str):
+            return False
+        if len(data) != 12:
+            return False
+        return all(c in string.hexdigits for c in data)
+
+
+class Lambda(Rule):
+    def __init__(self, func):
+        self.func = func
+
+    def is_valid(self, data) -> bool:
+        return self.func(data)
+
+    def _describe(self):
+        # get the code of the lambda function using inspect
+        return inspect.getsource(self.func)

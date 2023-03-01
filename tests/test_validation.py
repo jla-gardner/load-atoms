@@ -1,8 +1,9 @@
 import pytest
 
 from load_atoms.validation import (
+    BibTeX,
     Blueprint,
-    IsBibTeX,
+    FileHash,
     IsIn,
     ListOf,
     OneOf,
@@ -54,3 +55,41 @@ def test_failure():
     # assert that validation fails
     with pytest.raises(RuleValidationError):
         schema.validate(bob)
+
+
+def test_bibtext():
+    bibtext = "@misc{bob, author = {Bob}, title = {A happy little fellow}}"
+    assert BibTeX().is_valid(bibtext)
+
+    # test that validation fails
+    with pytest.raises(RuleValidationError):
+        BibTeX().validate("this is not bibtext")
+
+
+def test_file_hash():
+    assert FileHash().is_valid("c9dcec505f4d"), "c9dcec505f4d is a valid hash"
+    assert not FileHash().is_valid("00000000000000000"), "hash is too long"
+    assert not FileHash().is_valid("00000000000"), "hash is too short"
+    assert not FileHash().is_valid("hello there"), "hash contains invalid characters"
+
+
+def test_one_of():
+    rule = OneOf(Required("name"), Required("age"))
+    assert not rule.is_valid(bob), "both of these fields exist - should fail"
+
+    rule = OneOf(Required("name"), Required("made_up_field"))
+    assert rule(bob), "one of these fields exists - should pass"
+
+
+def test_optional():
+    assert Optional("made_up_field", str).is_valid(
+        bob
+    ), "made_up_field doesn't exist on bob, so an optional rule should pass"
+
+    assert Optional("name", str).is_valid(
+        bob
+    ), "name exists on bob, so an optional rule should pass"
+
+    assert not Optional("name", int).is_valid(
+        bob
+    ), "name exists on bob, but is the wrong type, so an optional rule should fail"

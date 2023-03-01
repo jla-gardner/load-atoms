@@ -1,34 +1,37 @@
-from dataclasses import dataclass
+import warnings
 from pathlib import Path
 
 import yaml
 
-from load_atoms.util import DATASETS_DIR
+from load_atoms.util import DATASETS_DIR, get_dataset_file
 from load_atoms.validation import (
+    AllOf,
     AnyOf,
+    BibTeX,
     Blueprint,
-    IsBibTeX,
+    FileHash,
     IsIn,
-    OneOf,
+    Mapping,
     Optional,
     Required,
 )
 
-VALID_LICENSES = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
+dataset_file_exists = lambda x: get_dataset_file(x).exists()
+valid_licences = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
 
 DESCRIPTION_BLUEPRINT = Blueprint(
+    # -----------------------
     # --- required fields ---
     # -----------------------
     Required("name", str),
     Required("description", str),
-    OneOf(
-        Required("filename", str),
-        Required("filenames", [str]),
-    ),
+    # test that files is a mapping of files that exist to their hashes
+    Required("files", Mapping(AllOf(str, dataset_file_exists), FileHash())),
+    # -----------------------
     # --- optional fields ---
     # -----------------------
-    Optional("citation", IsBibTeX()),
-    Optional("license", IsIn(VALID_LICENSES)),
+    Optional("citation", BibTeX()),
+    Optional("license", IsIn(valid_licences)),
     Optional("representative_structures", [int]),
     Optional("long_description", str),
     Optional(
@@ -41,46 +44,24 @@ DESCRIPTION_BLUEPRINT = Blueprint(
 )
 
 
-def preprocess_filename(data: dict) -> dict:
-    """Convert filename to filenames."""
-
-    if "filename" in data:
-        assert "filenames" not in data
-        data["filenames"] = [data.pop("filename")]
-    return data
-
-
-PRE_PROCESSORS = [preprocess_filename]
-
-
-@dataclass
-class DatasetDescription:
-    name: str
-    description: str
-    filenames: list = None
-
-    citation: str = None
-    license: str = None
-    representative_structures: list = None
-    long_description: str = None
-    properties: dict = None
-
+class DatasetDescription(DESCRIPTION_BLUEPRINT.dataclass()):
     @classmethod
     def from_file(cls, path: Path) -> "DatasetDescription":
         with open(path) as f:
             data = yaml.safe_load(f)
-        DESCRIPTION_BLUEPRINT.validate(data)
-
-        for preprocessor in PRE_PROCESSORS:
-            data = preprocessor(data)
 
         return cls(**data)
 
 
-_descriptor_files = list(DATASETS_DIR.glob("**/*.yaml"))
-DATASETS = {
-    entry.name: entry for entry in map(DatasetDescription.from_file, _descriptor_files)
-}
+_DESCRIPTOR_FILES = list(DATASETS_DIR.glob("**/*.yaml"))
+DATASETS = {}
+for file in _DESCRIPTOR_FILES:
+    try:
+        entry = DatasetDescription.from_file(file)
+        DATASETS[entry.name] = entry
+    except:
+        # if all tests pass, then we will never hit this in production
+        warnings.warn(f"Failed to load dataset {entry.name} from {file}")
 
 
 def is_known_dataset(dataset_id: str) -> bool:
