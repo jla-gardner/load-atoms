@@ -5,11 +5,14 @@ from load_atoms import dataset
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
 
+def _is_water_dataset(ds):
+    assert len(ds) == 2
+    assert set(ds[0].symbols) == {"H", "O"}
+
 
 def test_dataset_from_structures():
     ds = dataset(STRUCTURES)
-    assert len(ds) == 2
-    assert set(ds[0].symbols) == {"H", "O"}
+    _is_water_dataset(ds)
 
 
 def test_dataset_writeable_and_readable(tmp_path):
@@ -17,9 +20,16 @@ def test_dataset_writeable_and_readable(tmp_path):
     write(tmp_path / "test.xyz", ds)
 
     ds2 = dataset(read(tmp_path / "test.xyz", index=":"))
+    _is_water_dataset(ds2)
 
-    assert len(ds2) == 2
-    assert set(ds[0].symbols) == {"H", "O"}
+    ds3 = dataset(tmp_path / "test.xyz")
+    _is_water_dataset(ds3)
+
+
+def test_can_load_from_id():
+    # pass root to avoid downloading the dataset
+    structures = dataset("QM7", root="datasets") 
+    assert len(structures) == 7165
 
 
     

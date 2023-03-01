@@ -1,6 +1,8 @@
+from pathlib import Path
 from typing import Iterable, List
 
 from ase import Atoms
+from ase.io import read
 from yaml import dump
 
 from load_atoms.util import intersection, union
@@ -25,6 +27,15 @@ class Dataset:
 
     def __repr__(self):
         return summarise_dataset(self.structures, self.name)
+
+    @classmethod
+    def from_structures(cls, structures: Iterable[Atoms]):
+        return cls(structures)
+
+    @classmethod
+    def from_file(cls, path: Path):
+        structures = read(path, index=":")
+        return cls(structures, path.stem)
 
 
 def summarise_dataset(structures: List[Atoms], name: str = None) -> str:
