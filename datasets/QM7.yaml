@@ -1,0 +1,29 @@
+name: QM7
+description: |
+    a collection of saturated, small molecules containing up to 7 heavy atoms
+    with geometries relaxed using an empirical potential
+files:
+    QM7.extxyz: c9dcec505f4d
+properties:
+    - per_structure:
+          - energy: atomisation energy in eV, as calculated using DFT with the PBE0 functional
+representative_structures: [1, 2, 3]
+citation: |
+    @inproceedings{Montavon-12,
+        author = {Montavon, Gr\'{e}goire and Hansen, Katja and Fazli, Siamac and Rupp, Matthias and Biegler, Franziska and Ziehe, Andreas and Tkatchenko, Alexandre and Lilienfeld, Anatole and M\"{u}ller, Klaus-Robert},
+        booktitle = {Advances in Neural Information Processing Systems},
+        editor = {F. Pereira and C.J. Burges and L. Bottou and K.Q. Weinberger},
+        title = {Learning Invariant Representations of Molecules for Atomization Energy Prediction},
+        volume = {25},
+        year = {2012}
+    }
+    @article{Rupp-12,
+        title = {Fast and Accurate Modeling of {Molecular Atomization Energies with Machine Learning},
+        author = {Rupp, Matthias and Tkatchenko, Alexandre and M{\"u}ller, Klaus-Robert and {von Lilienfeld}, O. Anatole},
+        year = {2012},
+        journal = {Physical Review Letters},
+        volume = {108},
+        number = {5},
+        pages = {058301},
+        doi = {10.1103/PhysRevLett.108.058301}
+    }

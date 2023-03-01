@@ -4,6 +4,8 @@ This project is designed to be as easy as possible to add new datasets to. To ad
 
 ## 1. Add a `<dataset>.yaml` file in the `load_atoms/datasets` directory
 
+TODO update this!
+
 Dataset descriptions are stored in YAML files, which are located in the `load_atoms/datasets` directory.
 These are programatically validated at runtime, so that the user can be sure that the dataset is valid.
 The blueprint against which these are validated (`DESCRIPTION_BLUEPRINT`) is located in `load_atoms/database.py`.

@@ -3,12 +3,16 @@ from typing import Iterable
 
 # this file is at load_atoms/src/load_atoms/util.py
 # the datasets are at load_atoms/datasets
-DATASETS_DIR = Path(__file__).parent.parent.parent / "datasets"
+DATASETS_DIR = (Path(__file__).parent.parent.parent / "datasets").resolve()
+
+
+def get_dataset_file(relative_path: str) -> Path:
+    """Get the absolute path to a dataset file."""
+    return DATASETS_DIR / relative_path
+
+
 DEFAULT_DOWNLOAD_DIR = Path.home() / ".load_atoms"
 BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/datasets/"
-
-DONE = "█"
-TODO = "░"
 
 
 def lpad(s, indent=4):
@@ -27,6 +31,9 @@ def union(things: Iterable[Iterable]):
 
 def progress_bar(iterable, N, width=50):
     """own implementation of tqdm for download progress bar"""
+
+    DONE = "█"
+    TODO = "░"
 
     def _progress(count, total):
         progress = min(count / total, 1)
