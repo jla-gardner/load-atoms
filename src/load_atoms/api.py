@@ -3,8 +3,6 @@ from typing import List, Union
 
 from ase import Atoms
 
-from load_atoms.backend import load_dataset_for
-from load_atoms.database import is_known_dataset
 from load_atoms.dataset import Dataset
 
 
@@ -50,8 +48,7 @@ def dataset(
 
     elif isinstance(thing, str):
         # assume thing is a dataset ID, and try to load it
-        assert is_known_dataset(thing), f"Dataset {thing} is not known."
-        return load_dataset_for(thing, root)
+        return Dataset.from_id(thing, root)
 
     raise ValueError(
         f"Could not load dataset from {thing}. "

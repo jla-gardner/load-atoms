@@ -1,67 +1,105 @@
 """
 The backend is responsible for downloading the datasets when they 
 are first loaded, and for loading these datasets into memory, via
-the `load_dataset_for` function. 
+the `get_structures` function. 
 """
 
 from pathlib import Path
-from typing import Tuple, Union
+from typing import List
 
 import requests
+from ase import Atoms
 from ase.io import read
 
 from load_atoms.checksums import generate_checksum
-from load_atoms.database import DatasetDescription, get_description_of, print_info_for
-from load_atoms.dataset import Dataset
+from load_atoms.database import DatasetDescription
 from load_atoms.util import BASE_REMOTE_URL, DEFAULT_DOWNLOAD_DIR, progress_bar
 
 
-def load_dataset_for(
-    dataset_id: str, root: Union[str, Path] = None
-) -> Tuple[str, Dataset]:
-    """Get a dataset from a dataset ID."""
+def get_structures(dataset: DatasetDescription, root: Path = None) -> List[Atoms]:
+    """
+    Get the structures associated with a dataset.
+    """
 
     if root is None:
         root = DEFAULT_DOWNLOAD_DIR
     else:
         root = Path(root)
 
-    dataset_description = get_description_of(dataset_id)
-
-    download_if_needed(dataset_description, root)
-    print_info_for(dataset_description)
-
     all_structures = []
-    for filename in dataset_description.files:
-        all_structures.extend(read(root / filename, index=":"))
 
-    return Dataset(all_structures, dataset_description.name)
-
-
-def download_if_needed(dataset: DatasetDescription, root: Path) -> None:
-    """Download a dataset if it is not already present."""
-
-    for filename, file_hash in dataset.files.items():
-        local_path = root / filename
-        if not local_path.exists():
-            print(
-                f"Downloading {filename} from https://github.com/jla-gardner/load-atoms/"
+    for file, hash in dataset.files.items():
+        local_path = root / file
+        download_structures(
+            BASE_REMOTE_URL + file,
+            local_path,
+            hash,
+            f"Downloading {file}",
+        )
+        try:
+            structures = read(local_path, index=":")
+        except:
+            # we can't read the ase file, so delete it and ask to try again
+            local_path.unlink()
+            raise ValueError(
+                f"Could not read {local_path}.\n"
+                "This is probably due to a corrupted download.\n"
+                "Please try again."
             )
-            local_path.parent.mkdir(parents=True, exist_ok=True)
-            remote_url = BASE_REMOTE_URL + filename
-            _download_thing(remote_url, local_path)
 
-        assert local_path.exists(), f"Could not download {filename} from {remote_url}"
-        assert file_hash == generate_checksum(
-            local_path
-        ), f"Checksum of {filename} does not match expected value."
+        all_structures.extend(structures)
+
+    return all_structures
 
 
-def _download_thing(url: str, save_to: Path) -> None:
+def download_structures(
+    remote_url: str, local_path: Path, expected_file_hash: str, message: str = None
+):
+    def check_file_contents():
+        file_hash = generate_checksum(local_path)
+        return expected_file_hash == file_hash
+
+    if local_path.exists():
+        if check_file_contents():
+            return
+        else:
+            raise ValueError(
+                f"The dataset on disk at {local_path} has been corrupted.\n"
+                "If you have made changes to this, "
+                "please revert them or move/delete the file. Otherwise, "
+                "please try again."
+            )
+
+    if message is not None:
+        print(message)
+
+    local_path.parent.mkdir(parents=True, exist_ok=True)
+    download_thing(remote_url, local_path)
+
+    if not local_path.exists():
+        raise ValueError(
+            "There was a problem downloading the dataset.\n" "Please try again."
+        )
+
+    if not check_file_contents():
+        # delete the file so we can try again later
+        local_path.unlink()
+        raise ValueError(
+            "There was a problem downloading the dataset.\n"
+            "What downloaded does not match the what we were expecting:\n"
+            "Please try again."
+        )
+
+    assert local_path.exists()
+
+
+def download_thing(url: str, save_to: Path) -> None:
     """Download a thing from the internet."""
 
     response = requests.get(url, stream=True)
-    assert response.status_code == 200, f"Could not find {url}"
+    if response.status_code != 200:
+        raise ValueError(f"Could not find {url}. Response code: {response.status_code}")
+
     total_size_in_bytes = int(response.headers.get("content-length", 0))
     block_size = 1024**2  # 1 MB
 

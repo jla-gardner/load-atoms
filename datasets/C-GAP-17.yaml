@@ -19,10 +19,9 @@ citation: |
     }
 license: CC BY-NC-SA 4.0
 representative_structures: [1, 1000, 2000]
-properties:
-    - per_atom:
-          - force: labelled by DFT
-    - per_structure:
-          - energy: total energy of the cell as labelled by DFT
-          - config_type: category of structure (dimer, bulk_amo, bulk_cryst, surface)
-          - detailed_ct: additional sub-categories of structures
+per_atom_properties:
+    force: labelled by DFT
+per_structure_properties:
+    energy: total energy of the cell as labelled by DFT
+    config_type: category of structure (dimer, bulk_amo, bulk_cryst, surface)
+    detailed_ct: additional sub-categories of structures

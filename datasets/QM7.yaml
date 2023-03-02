@@ -4,9 +4,8 @@ description: |
     with geometries relaxed using an empirical potential
 files:
     QM7.extxyz: c9dcec505f4d
-properties:
-    - per_structure:
-          - energy: atomisation energy in eV, as calculated using DFT with the PBE0 functional
+per_structure_properties:
+    energy: atomisation energy in eV, as calculated using DFT with the PBE0 functional
 representative_structures: [1, 2, 3]
 citation: |
     @inproceedings{Montavon-12,

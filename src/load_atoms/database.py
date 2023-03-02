@@ -34,13 +34,8 @@ DESCRIPTION_BLUEPRINT = Blueprint(
     Optional("license", IsIn(valid_licences)),
     Optional("representative_structures", [int]),
     Optional("long_description", str),
-    Optional(
-        "properties",
-        AnyOf(
-            Optional("per_atom", dict),
-            Optional("per_structure", dict),
-        ),
-    ),
+    Optional("per_atom_properties", dict),
+    Optional("per_structure_properties", dict),
 )
 
 
@@ -61,7 +56,7 @@ for file in _DESCRIPTOR_FILES:
         DATASETS[entry.name] = entry
     except:
         # if all tests pass, then we will never hit this in production
-        warnings.warn(f"Failed to load dataset {entry.name} from {file}")
+        warnings.warn(f"Failed to load dataset from {file}")
 
 
 def is_known_dataset(dataset_id: str) -> bool:

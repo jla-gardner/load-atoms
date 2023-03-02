@@ -15,6 +15,13 @@ def test_description_file(file):
         DESCRIPTION_BLUEPRINT.validate(yaml.safe_load(f))
 
 
+def test_all_loaded():
+    """
+    test that all datasets are loaded
+    """
+    assert len(DATASETS) == len(_DESCRIPTOR_FILES)
+
+
 @pytest.mark.parametrize("dataset", DATASETS.values(), ids=lambda x: x.name)
 def test_checksums(dataset):
     """
