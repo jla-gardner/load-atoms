@@ -3,5 +3,5 @@
     :caption: Datasets:
     :hidden:
     
-    datasets/C-GAP-17-dimers
     datasets/C-GAP-17-train
+    datasets/QM7

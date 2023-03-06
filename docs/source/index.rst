@@ -57,6 +57,16 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 
 .. code-block:: python
 
+      >>> structures
+      C-GAP-17-train:
+         counts:
+            structures: 4,080
+            atoms: 256,628
+         species:
+            C: 100.00%
+         properties:
+            per atom: (force)
+            per structure: (energy, detailed_ct, config_type)
       >>> len(structures)
       4080
       >>> structures[0]
@@ -66,7 +76,7 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 .. toctree::
    :maxdepth: 1
    :hidden:
-
+ 
    Home <self>
 
 .. toctree::

@@ -13,6 +13,12 @@ def get_dataset_file(relative_path: str) -> Path:
 
 DEFAULT_DOWNLOAD_DIR = Path.home() / ".load_atoms"
 BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/datasets/"
+FRONTEND_URL = "https://jla-gardner.github.io/load-atoms/datasets/"
+
+
+def frontend_url(dataset_info):
+    """Get the URL for a dataset."""
+    return FRONTEND_URL + dataset_info.name + ".html"
 
 
 def lpad(s, indent=4):

@@ -11,14 +11,13 @@ https://www.repository.cam.ac.uk/handle/1810/262814
     >>> from load_atoms import dataset
     >>> dataset("C-GAP-17-train")
     C-GAP-17-train:
-        counts:
-            structures: 4,080
-            atoms: 256,628
+        structures: 4,080
+        atoms: 256,628
         species:
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (detailed_ct, config_type, energy)
+            per structure: (detailed_ct, energy, config_type)
 
 A representative structure from this dataset:
 

@@ -7,7 +7,7 @@ from yaml import dump
 
 from load_atoms import backend
 from load_atoms.database import DATASETS, DatasetDescription, is_known_dataset
-from load_atoms.util import intersection, union
+from load_atoms.util import frontend_url, intersection, union
 
 
 class Dataset:
@@ -44,11 +44,13 @@ class Dataset:
         return cls(structures, path.stem)
 
     @classmethod
-    def from_id(cls, dataset_id: str, root: Path = None):
+    def from_id(cls, dataset_id: str, root: Path = None, verbose: bool = True):
         if not is_known_dataset(dataset_id):
             raise ValueError(f"Dataset {dataset_id} is not known.")
         dataset_info = DATASETS[dataset_id]
         all_structures = backend.get_structures(dataset_info, root)
+        if verbose:
+            usage_info(dataset_info)
         return cls(all_structures, dataset_info)
 
     @classmethod
@@ -59,6 +61,16 @@ class Dataset:
     def from_file(cls, path: Path):
         structures = read(path, index=":")
         return cls(structures, path.stem)
+
+
+def usage_info(dataset: DatasetDescription):
+    if dataset.license is not None:
+        print(f"This dataset is covered by the {dataset.license} license.")
+    if dataset.citation is not None:
+        print(f"Please cite this dataset if you use it in your work.")
+
+    _url = frontend_url(dataset)
+    print(f"For more information about this dataset, see here {_url}")
 
 
 def summarise_dataset(
