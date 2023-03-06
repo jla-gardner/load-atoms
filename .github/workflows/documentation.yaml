@@ -3,28 +3,28 @@ on: [push, workflow_dispatch]
 permissions:
     contents: write
 jobs:
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Skip Duplicate Actions
-        uses: fkirc/skip-duplicate-actions@v5.3.0
+    docs:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Skip Duplicate Actions
+              uses: fkirc/skip-duplicate-actions@v5.3.0
 
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v3
-      - name: Install dependencies
-        run: |
-          pip install ".[dev]"
-      - name: Sphinx build
-        run: |
-          sphinx-build docs/source docs/build
-      - name: Sphinx link check
-        run: |
-          sphinx-build -b linkcheck docs/source docs/build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        with:
-          publish_branch: gh-pages
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/build/
-          force_orphan: true
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v3
+            - name: Install dependencies
+              run: |
+                  pip install ".[dev]"
+            - name: Sphinx build
+              run: |
+                  sphinx-build docs/source docs/build
+            - name: Sphinx link check
+              run: |
+                  sphinx-build -b linkcheck docs/source docs/build
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v3
+              if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+              with:
+                  publish_branch: gh-pages
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  publish_dir: docs/build/
+                  force_orphan: true
