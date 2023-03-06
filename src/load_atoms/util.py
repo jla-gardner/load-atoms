@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Iterable
 
-# this file is at load_atoms/src/load_atoms/util.py
-# the datasets are at load_atoms/datasets
-DATASETS_DIR = (Path(__file__).parent.parent.parent / "datasets").resolve()
+# this file is at <root>/src/load_atoms/util.py
+# the datasets are at <root>/src/load_atoms/datasets
+DATASETS_DIR = (Path(__file__).parent / "datasets").resolve()
 
 
 def get_dataset_file(relative_path: str) -> Path:

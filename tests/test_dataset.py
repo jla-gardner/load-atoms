@@ -28,7 +28,7 @@ def test_dataset_writeable_and_readable(tmp_path):
 
 def test_can_load_from_id():
     # pass root to avoid downloading the dataset
-    structures = dataset("QM7", root="datasets") 
+    structures = dataset("QM7", root="src/load_atoms/datasets") 
     assert len(structures) == 7165
 
 
