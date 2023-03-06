@@ -5,8 +5,6 @@ from load_atoms.checksums import generate_checksum
 from load_atoms.database import _DESCRIPTOR_FILES, DATASETS, DESCRIPTION_BLUEPRINT
 from load_atoms.util import get_dataset_file
 
-print(DATASETS)
-
 
 @pytest.mark.parametrize("file", _DESCRIPTOR_FILES, ids=lambda x: x.name)
 def test_description_file(file):
