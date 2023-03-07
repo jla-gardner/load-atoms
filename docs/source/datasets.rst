@@ -5,3 +5,4 @@
     
     datasets/C-GAP-17-train
     datasets/QM7
+    datasets/amorphous-graphene

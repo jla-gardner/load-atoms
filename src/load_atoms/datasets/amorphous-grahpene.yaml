@@ -1,0 +1,33 @@
+name: amorphous-graphene
+files:
+    amorphous-graphene.xyz: 8479ad7586d9
+description: |
+    Amorphous graphene structures generated using the method described in
+    https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b
+citation: |
+    @article{El-Machachi-22-10,
+      title = {Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies},
+      author = {{El-Machachi}, Zakariya and Wilson, Mark and Deringer, Volker L.},
+      year = {2022},
+      journal = {Chemical Science},
+      doi = {10.1039/D2SC04326B}
+    }
+license: CC BY-NC-SA 4.0
+per_atom_properties:
+    forces: as labelled by DFT
+per_structure_properties:
+    energy: total energy of the cell as labelled by DFT
+representative_structures: [1]
+long_description: |
+    Forces and energies were calculated using CASTEP with the following parameters:
+      task        singlepoint       ! The TASK keyword instructs CASTEP what to do
+      xc_functional   LDA           ! Which exchange-correlation functional to use.
+      cut_off_energy 650 eV        ! Choose high cut-off COARSE/MEDIUM/FINE/PRECISE
+      fix_occupancy   false          ! Treat the system as an insulator
+      opt_strategy    speed         ! Choose algorithms for best speed at expense of memory.
+      num_dump_cycles 0             ! Don't write unwanted ".wvfn" files.
+      max_scf_cycles  500            ! Max number of SCF cycles before failing
+      elec_energy_tol 1e-8 eV
+      smearing_scheme Gaussian
+      smearing_width 0.1 eV
+      WRITE_CHECKPOINT : MINIMAL

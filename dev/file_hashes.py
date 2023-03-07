@@ -17,7 +17,7 @@ if __name__ == "__main__":
     try:
         path = sys.argv[1]
     except IndexError:
-        path = "datasets/*.[!y]*"  # exclude yaml files
+        path = "src/load_atoms/datasets/*.[!y]*"  # exclude yaml files
 
     files, checksums = [], []
     for file in glob.glob(path):
