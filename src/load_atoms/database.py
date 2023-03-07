@@ -3,10 +3,8 @@ from pathlib import Path
 
 import yaml
 
-from load_atoms.util import DATASETS_DIR, get_dataset_file
+from load_atoms.util import DATASETS_DIR
 from load_atoms.validation import (
-    AllOf,
-    AnyOf,
     BibTeX,
     Blueprint,
     FileHash,
@@ -16,7 +14,6 @@ from load_atoms.validation import (
     Required,
 )
 
-dataset_file_exists = lambda x: get_dataset_file(x).exists()
 valid_licences = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
 
 DESCRIPTION_BLUEPRINT = Blueprint(
@@ -26,7 +23,7 @@ DESCRIPTION_BLUEPRINT = Blueprint(
     Required("name", str),
     Required("description", str),
     # test that files is a mapping of files that exist to their hashes
-    Required("files", Mapping(AllOf(str, dataset_file_exists), FileHash())),
+    Required("files", Mapping(str, FileHash())),
     # -----------------------
     # --- optional fields ---
     # -----------------------
