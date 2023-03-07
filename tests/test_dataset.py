@@ -2,8 +2,6 @@ from ase import Atoms
 from ase.io import read, write
 
 from load_atoms import dataset
-from load_atoms.database import _DESCRIPTOR_FILES
-from load_atoms.util import DATASETS_DIR
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
 
@@ -28,11 +26,7 @@ def test_dataset_writeable_and_readable(tmp_path):
     _is_water_dataset(ds3)
 
 
-def test_can_load_from_id():
-    print(_DESCRIPTOR_FILES)
-    print(DATASETS_DIR)
-    print(list(DATASETS_DIR.glob("*")))
-    
+def test_can_load_from_id():    
     # pass root to avoid downloading the dataset
     structures = dataset("QM7", root="src/load_atoms/datasets") 
     assert len(structures) == 7165
