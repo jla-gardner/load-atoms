@@ -20,14 +20,14 @@ per_structure_properties:
 representative_structures: [1]
 long_description: |
     Forces and energies were calculated using CASTEP with the following parameters:
-      task        singlepoint       ! The TASK keyword instructs CASTEP what to do
-      xc_functional   LDA           ! Which exchange-correlation functional to use.
-      cut_off_energy 650 eV        ! Choose high cut-off COARSE/MEDIUM/FINE/PRECISE
-      fix_occupancy   false          ! Treat the system as an insulator
-      opt_strategy    speed         ! Choose algorithms for best speed at expense of memory.
-      num_dump_cycles 0             ! Don't write unwanted ".wvfn" files.
-      max_scf_cycles  500            ! Max number of SCF cycles before failing
+      task            singlepoint
+      xc_functional   LDA        
+      cut_off_energy  650 eV     
+      fix_occupancy   false      
+      opt_strategy    speed      
+      num_dump_cycles 0          
+      max_scf_cycles  500        
       elec_energy_tol 1e-8 eV
       smearing_scheme Gaussian
-      smearing_width 0.1 eV
+      smearing_width  0.1 eV
       WRITE_CHECKPOINT : MINIMAL
