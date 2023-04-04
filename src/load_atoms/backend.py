@@ -4,6 +4,7 @@ are first loaded, and for loading these datasets into memory, via
 the `get_structures` function. 
 """
 
+import math
 from pathlib import Path
 from typing import List
 
@@ -78,7 +79,7 @@ def download_structures(
 
     if not local_path.exists():
         raise ValueError(
-            "There was a problem downloading the dataset.\n" "Please try again."
+            "There was a problem downloading the dataset.\nPlease try again."
         )
 
     if not check_file_contents():
@@ -103,7 +104,7 @@ def download_thing(url: str, save_to: Path) -> None:
     total_size_in_bytes = int(response.headers.get("content-length", 0))
     block_size = 1024**2  # 1 MB
 
-    N = total_size_in_bytes // block_size
+    N = math.ceil(total_size_in_bytes / block_size)
     blocks = response.iter_content(block_size)
 
     with open(save_to, "wb") as file:
