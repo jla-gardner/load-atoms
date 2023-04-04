@@ -293,21 +293,21 @@ class IsIn(Rule):
 
 class Mapping(Rule):
     def __init__(self, keys, values):
-        self.keys = convert_from_shorthand(keys)
-        self.values = convert_from_shorthand(values)
+        self.keys_rule = convert_from_shorthand(keys)
+        self.values_rule = convert_from_shorthand(values)
 
     def is_valid(self, data):
         if not isinstance(data, dict):
             return False
         for key, value in data.items():
-            if not self.keys(key):
+            if not self.keys_rule(key):
                 return False
-            if not self.values(value):
+            if not self.values_rule(value):
                 return False
         return True
 
     def _describe(self):
-        return super()._describe(f"{self.keys} -> {self.values}")
+        return super()._describe(f"{self.keys_rule} -> {self.values_rule}")
 
 
 class BibTeX(Rule):
