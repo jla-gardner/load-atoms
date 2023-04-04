@@ -29,6 +29,7 @@ dev = [
     "nbsphinx",
     "sphinx-autobuild",
     "sphinx-copybutton",
+    "pytest-cov",
 ]
 
 [project.urls]
