@@ -29,10 +29,8 @@ dev = [
     "nbsphinx",
     "sphinx-autobuild",
     "sphinx-copybutton",
+    "pytest-cov",
 ]
 
 [project.urls]
 Homepage = "https://github.com/jla-gardner/load-atoms"
-
-[tool.pytest.ini_options]
-addopts = ["--import-mode=importlib"]
