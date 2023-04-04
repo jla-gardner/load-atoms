@@ -1,7 +1,7 @@
 name: Docs
 on: [push]
 permissions:
-    contents: read
+    contents: write
 jobs:
     docs:
         name: Docs
