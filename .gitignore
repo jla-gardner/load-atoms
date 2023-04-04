@@ -7,3 +7,5 @@
 .vscode
 
 docs/build
+
+.coverage

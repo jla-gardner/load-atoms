@@ -34,6 +34,3 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/jla-gardner/load-atoms"
-
-[tool.pytest.ini_options]
-addopts = ["--import-mode=importlib"]
