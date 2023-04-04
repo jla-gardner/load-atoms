@@ -48,12 +48,8 @@ class DatasetDescription(DESCRIPTION_BLUEPRINT.dataclass()):
 _DESCRIPTOR_FILES = list(DATASETS_DIR.glob("**/*.yaml"))
 DATASETS = {}
 for file in _DESCRIPTOR_FILES:
-    try:
-        entry = DatasetDescription.from_file(file)
-        DATASETS[entry.name] = entry
-    except:
-        # if all tests pass, then we will never hit this in production
-        warnings.warn(f"Failed to load dataset from {file}")
+    entry = DatasetDescription.from_file(file)
+    DATASETS[entry.name] = entry
 
 
 def is_known_dataset(dataset_id: str) -> bool:
@@ -65,15 +61,3 @@ def get_description_of(dataset_id: str) -> DatasetDescription:
     """Get the database entry for a dataset."""
     assert is_known_dataset(dataset_id), f"Dataset {dataset_id} is not known."
     return DATASETS[dataset_id]
-
-
-def print_info_for(dataset: DatasetDescription) -> None:
-    """print description and any license/citation info for a dataset"""
-    print(dataset.description)
-
-    if dataset.license is not None:
-        print("This dataset is licensed under", dataset.license.strip())
-
-    if dataset.citation is not None:
-        print("If you use this dataset, please cite the following:")
-        print(dataset.citation.strip())
