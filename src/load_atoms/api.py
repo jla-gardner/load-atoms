@@ -41,16 +41,20 @@ def dataset(
         # thing is a list of structures
         return Dataset.from_structures(thing)
 
+    if not isinstance(thing, (Path, str)):
+        raise TypeError(
+            f"Could not load dataset from {thing}. "
+            "Please provide a string, a list of structures, or a path to a file."
+        )
+
     if Path(thing).exists():
         # thing is a string/path to a file that exists
         # assume it is a file containing structures and load them
         return Dataset.from_file(Path(thing))
 
-    elif isinstance(thing, str):
-        # assume thing is a dataset ID, and try to load it
-        return Dataset.from_id(thing, root)
+    if isinstance(thing, Path):
+        # thing is a path to a file that does not exist
+        raise ValueError(f"The provided path does not exist. ({thing})")
 
-    raise ValueError(
-        f"Could not load dataset from {thing}. "
-        "Please provide a string, a list of structures, or a path to a file."
-    )
+    # assume thing is a dataset ID, and try to load it
+    return Dataset.from_id(thing, root)

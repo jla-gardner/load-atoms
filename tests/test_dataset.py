@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from ase import Atoms
 from ase.io import read, write
@@ -64,7 +66,13 @@ def test_summarise():
 
 def test_useful_error_message():
     with pytest.raises(
-        ValueError,
+        TypeError,
         match="Please provide a string, a list of structures, or a path to a file.",
     ):
         dataset(1)
+
+    with pytest.raises(
+        ValueError,
+        match="The provided path does not exist.",
+    ):
+        dataset(Path("made_up_file.xyz"))
