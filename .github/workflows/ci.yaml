@@ -9,9 +9,9 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-python@v4
-              with:
-                  cache: pip
-                  cache-dependency-path: pyproject.toml
+              # with:
+              #     cache: pip
+              #     cache-dependency-path: pyproject.toml
             - name: Install dependencies
               run: pip install -e ".[dev]"
             - name: Run tests
