@@ -1,14 +1,17 @@
 import pytest
 
 from load_atoms.validation import (
+    AnyOf,
     BibTeX,
     Blueprint,
     FileHash,
     IsIn,
     ListOf,
+    Mapping,
     OneOf,
     Optional,
     Required,
+    Rule,
     RuleValidationError,
 )
 
@@ -47,6 +50,33 @@ def test_required():
     schema.validate(bob)
 
 
+def test_optional():
+    true_rules = [
+        Optional("name"),  # exists
+        Optional("description", str),  # correct type
+        Optional("age", int),  # correct type
+        Optional("hobbies", ListOf(str)),  # correct type
+        Optional("age", lambda x: x > 0),  # custom validation
+        Optional("age", IsIn([42, 43])),  # custom validation
+    ]
+
+    false_rules = [
+        Optional("made_up_field"),  # doesn't exist
+        Optional("name", int),  # wrong type
+    ]
+
+    # test each rule individually
+    for rule in true_rules:
+        assert rule(bob), f"rule {rule} failed"
+
+    for rule in false_rules:
+        assert not rule(bob), f"rule {rule} should have failed"
+
+    # test all rules together
+    schema = Blueprint(*true_rules)
+    schema.validate(bob)
+
+
 def test_failure():
     rule = Required("name", int)
     assert not rule(bob)
@@ -57,9 +87,30 @@ def test_failure():
         schema.validate(bob)
 
 
-def test_bibtext():
-    bibtext = "@misc{bob, author = {Bob}, title = {A happy little fellow}}"
-    assert BibTeX().is_valid(bibtext)
+def test_mapping():
+    rule = Mapping(str, any)
+    assert rule.is_valid(bob), "Bob is a mapping from string to any"
+    assert not rule.is_valid(42), "42 is not a mapping"
+
+    # test validation on values fails
+    rule = Mapping(str, int)
+    assert not rule.is_valid(bob), "Bob is not a mapping from string to int"
+
+    # test validation on keys fails
+    rule = Mapping(int, any)
+    assert not rule.is_valid(bob), "Bob is not a mapping from int to any"
+
+    # test validation on more complex rules
+    extra_test = {"name": "bob", "hobby": "coding"}
+    rule = Mapping(str, lambda x: len(x) > 2)
+    assert rule.is_valid(
+        extra_test
+    ), "extra_test is a valid mapping from string to string of length > 2"
+
+
+def test_bibtex():
+    bibtex = "@misc{bob, author = {Bob}, title = {A happy little fellow}}"
+    assert BibTeX().is_valid(bibtex)
 
     # test that validation fails
     with pytest.raises(RuleValidationError):
@@ -71,6 +122,7 @@ def test_file_hash():
     assert not FileHash().is_valid("00000000000000000"), "hash is too long"
     assert not FileHash().is_valid("00000000000"), "hash is too short"
     assert not FileHash().is_valid("hello there"), "hash contains invalid characters"
+    assert not FileHash().is_valid(42), "hash is not a string"
 
 
 def test_one_of():
@@ -79,6 +131,17 @@ def test_one_of():
 
     rule = OneOf(Required("name"), Required("made_up_field"))
     assert rule(bob), "one of these fields exists - should pass"
+
+
+def test_any_of():
+    rule = AnyOf(Required("name"), Required("age"))
+    assert rule(bob), "both of these fields exist - should pass"
+
+    rule = AnyOf(Required("name"), Required("made_up_field"))
+    assert rule(bob), "one of these fields exists - should pass"
+
+    rule = AnyOf(Required("made_up_field"), Required("made_up_field_2"))
+    assert not rule(bob), "neither of these fields exist - should fail"
 
 
 def test_optional():
@@ -93,3 +156,16 @@ def test_optional():
     assert not Optional("name", int).is_valid(
         bob
     ), "name exists on bob, but is the wrong type, so an optional rule should fail"
+
+
+def test_rule_impl():
+    with pytest.raises(NotImplementedError):
+        Rule().is_valid("hello")
+
+
+def test_lambda():
+    rule = lambda x: x > 0
+    assert rule(42), "42 is greater than 0"
+    assert not rule(-42), "-42 is not greater than 0"
+
+    assert "lambda" in str(rule), "str should contain lambda"
