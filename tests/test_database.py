@@ -4,7 +4,12 @@ import pytest
 import yaml
 
 from load_atoms.checksums import generate_checksum
-from load_atoms.database import _DESCRIPTOR_FILES, DATASETS, DESCRIPTION_BLUEPRINT
+from load_atoms.database import (
+    _DESCRIPTOR_FILES,
+    DATASETS,
+    DESCRIPTION_BLUEPRINT,
+    get_description_of,
+)
 
 _local_path_to_datasets = Path(__file__).parent.parent / "src/load_atoms/datasets"
 
@@ -33,3 +38,8 @@ def test_checksums(dataset):
     for path, checksum in dataset.files.items():
         path = _local_path_to_datasets / path
         assert checksum == generate_checksum(path)
+
+
+def test_description():
+    desc = get_description_of("C-GAP-17-train")
+    assert desc.name == "C-GAP-17-train"

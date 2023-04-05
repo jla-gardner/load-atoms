@@ -50,7 +50,7 @@ class Dataset:
         dataset_info = DATASETS[dataset_id]
         all_structures = backend.get_structures(dataset_info, root)
         if verbose:
-            usage_info(dataset_info)
+            print(usage_info(dataset_info))
         return cls(all_structures, dataset_info)
 
     @classmethod
@@ -63,14 +63,17 @@ class Dataset:
         return cls(structures, path.stem)
 
 
-def usage_info(dataset: DatasetDescription):
+def usage_info(dataset: DatasetDescription) -> str:
+    info = []
     if dataset.license is not None:
-        print(f"This dataset is covered by the {dataset.license} license.")
+        info.append(f"This dataset is covered by the {dataset.license} license.")
     if dataset.citation is not None:
-        print(f"Please cite this dataset if you use it in your work.")
+        info.append(f"Please cite this dataset if you use it in your work.")
 
     _url = frontend_url(dataset)
-    print(f"For more information about this dataset, see here {_url}")
+    info.append(f"For more information about this dataset, see here {_url}")
+
+    return "\n".join(info)
 
 
 def summarise_dataset(
