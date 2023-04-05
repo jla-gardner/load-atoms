@@ -87,7 +87,7 @@ def download_structures(
         local_path.unlink()
         raise ValueError(
             "There was a problem downloading the dataset.\n"
-            "What downloaded does not match the what we were expecting:\n"
+            "What was downloaded does not match what we were expecting.\n"
             "Please try again."
         )
 

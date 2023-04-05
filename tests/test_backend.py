@@ -1,7 +1,8 @@
 import pytest
 import requests
 
-from load_atoms.backend import download_thing
+from load_atoms.backend import download_structures, download_thing
+from load_atoms.util import DATASETS_DIR
 
 
 def test_real_download(tmp_path):
@@ -27,3 +28,20 @@ def test_missing_download(tmp_path):
     real_url_fake_file = "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/made_up_file.json"
     with pytest.raises(ValueError, match="404"):
         download_thing(real_url_fake_file, tmp_path / "test.json")
+
+
+def test_download_structures(tmp_path):
+    # test that download structures raises an error if an existing
+    # file is corrupted
+
+    fake_url = "https://this.is.a.fake.url/file.extxyz"
+    fake_file = tmp_path / "file.extxyz"
+    fake_file.write_text("fake file")
+    incorrect_hash = "0" * 12
+
+    with pytest.raises(ValueError, match="has been corrupted"):
+        download_structures(fake_url, fake_file, incorrect_hash)
+
+    existing = DATASETS_DIR / "QM7.extxyz"
+    new = tmp_path / "QM7.extxyz"
+    new.write_bytes(existing.read_bytes())
