@@ -1,0 +1,29 @@
+name: C-GAP-20
+files:
+    C-GAP-20.extxyz: 3dca8e9f9707
+description: |
+    Complete dataset and labels used for training both the C-GAP-20
+    and C-GAP-20-U models. 
+    For details, see here https://doi.org/10.17863/CAM.54529 
+    and https://doi.org/10.17863/CAM.82086
+citation: |
+    @article{Rowe-20-07,
+        title = {An Accurate and Transferable Machine Learning Potential for Carbon},
+        author = {Rowe, Patrick and Deringer, Volker L. and Gasparotto, Piero and Cs{\'a}nyi, G{\'a}bor and Michaelides, Angelos},
+        year = {2020},
+        journal = {The Journal of Chemical Physics},
+        volume = {153},
+        number = {3},
+        pages = {034702},
+        doi = {10.1063/5.0005084},
+    }
+
+license: CC-BY-4.0
+representative_structures: [1]
+per_atom_properties:
+    force: labelled by DFT
+    force_U: labelled by the higher level of DFT used for the C-GAP-20-U model
+per_structure_properties:
+    energy: total energy of the cell as labelled by DFT
+    energy_U: total energy of the cell as labelled by the higher level of DFT used for the C-GAP-20-U model
+    config_type: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
