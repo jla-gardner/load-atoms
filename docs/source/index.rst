@@ -31,7 +31,7 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 .. code-block:: python
 
    >>> from load_atoms import dataset
-   >>> structures = dataset("C-GAP-17-train")
+   >>> structures = dataset("C-GAP-17")
    Downloading C-GAP-17.extxyz from https://github.com/jla-gardner/load-atoms/
    100.0% | ███████████████████████████████████████
 
@@ -58,7 +58,7 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 .. code-block:: python
 
       >>> structures
-      C-GAP-17-train:
+      C-GAP-17:
          counts:
             structures: 4,080
             atoms: 256,628

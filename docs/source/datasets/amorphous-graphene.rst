@@ -38,7 +38,6 @@ This dataset is licensed under the CC BY-NC-SA 4.0 license.
       title = {Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies},
       author = {{El-Machachi}, Zakariya and Wilson, Mark and Deringer, Volker L.},
       year = {2022},
-      month = oct,
       journal = {Chemical Science},
       doi = {10.1039/D2SC04326B}
     }

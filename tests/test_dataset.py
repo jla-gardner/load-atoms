@@ -59,7 +59,7 @@ def test_summarise():
     summary = summarise_dataset(ds)
     assert "Dataset" in summary, "The summary should contain the dataset name"
 
-    ds = dataset("C-GAP-17-train", root="src/load_atoms/datasets")
+    ds = dataset("C-GAP-17", root="src/load_atoms/datasets")
     summary = summarise_dataset(ds)
     assert "energy" in summary, "The summary should contain the property names"
 

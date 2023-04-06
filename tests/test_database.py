@@ -34,12 +34,12 @@ def test_checksums(dataset):
 
 
 def test_description():
-    desc = get_description_of("C-GAP-17-train")
-    assert desc.name == "C-GAP-17-train"
+    desc = get_description_of("C-GAP-17")
+    assert desc.name == "C-GAP-17"
 
 
 def get_correct_dict():
-    return DATASETS["C-GAP-17-train"].dict()
+    return DATASETS["C-GAP-17"].dict()
 
 
 def test_incorrect_name():
