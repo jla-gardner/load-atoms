@@ -12,7 +12,9 @@ def get_dataset_file(relative_path: str) -> Path:
 
 
 DEFAULT_DOWNLOAD_DIR = Path.home() / ".load_atoms"
-BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/datasets/"
+BASE_REMOTE_URL = (
+    "https://github.com/jla-gardner/load-atoms/raw/main/src/load_atoms/datasets/"
+)
 FRONTEND_URL = "https://jla-gardner.github.io/load-atoms/datasets/"
 
 
