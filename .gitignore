@@ -9,3 +9,4 @@
 docs/build
 
 .coverage
+publish.sh

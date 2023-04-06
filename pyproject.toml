@@ -30,7 +30,22 @@ dev = [
     "sphinx-autobuild",
     "sphinx-copybutton",
     "pytest-cov",
+    "build",
+    "bumpver",
+    "twine",
 ]
 
 [project.urls]
 Homepage = "https://github.com/jla-gardner/load-atoms"
+
+[tool.bumpver]
+current_version = "0.0.0"
+version_pattern = "MAJOR.MINOR.PATCH"
+commit_message = "Bump version {old_version} -> {new_version}"
+commit = true
+tag = true
+push = false
+
+[tool.bumpver.file_patterns]
+"pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
+"src/load_atoms/__init__.py" = ["{version}"]
