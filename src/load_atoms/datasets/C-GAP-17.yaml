@@ -1,8 +1,8 @@
-name: C-GAP-17-train
+name: C-GAP-17
 files:
-    C-GAP-17.extxyz: 02dc1cbec298
+    C-GAP-17.extxyz: cf1d5b067076
 description: |
-    Complete training dataset for the C-GAP-17 model. 
+    Complete dataset for training and testing the C-GAP-17 model. 
     For details, see the supplementary information here:
     https://www.repository.cam.ac.uk/handle/1810/262814
 citation: |
@@ -23,5 +23,6 @@ per_atom_properties:
     force: labelled by DFT
 per_structure_properties:
     energy: total energy of the cell as labelled by DFT
-    config_type: category of structure (dimer, bulk_amo, bulk_cryst, surface)
+    config_type: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
     detailed_ct: additional sub-categories of structures
+    split: train or test - the original split of the dataset
