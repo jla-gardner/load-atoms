@@ -6,8 +6,7 @@ from load_atoms.util import DATASETS_DIR
 
 
 def test_real_download(tmp_path):
-    # this is a test file that is 1kb
-    url = "https://file-examples.com/storage/fef89aabc36429826928b9c/2017/02/file_example_JSON_1kb.json"
+    url = "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/README.md"
 
     # download the file
     path = tmp_path / "test.json"
