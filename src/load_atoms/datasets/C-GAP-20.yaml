@@ -1,6 +1,6 @@
 name: C-GAP-20
 files:
-    C-GAP-20.extxyz: 687206c0373b
+    C-GAP-20.extxyz: 6efca6d549f7
 description: |
     Complete dataset and labels used for training both the C-GAP-20
     and C-GAP-20-U models. 
