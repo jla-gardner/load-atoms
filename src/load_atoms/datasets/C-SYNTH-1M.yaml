@@ -1,7 +1,7 @@
 name: C-SYNTH-1M
 files:
-    C-SYNTH-1M-1.extxyz: afd840731ef2
-    C-SYNTH-1M-2.extxyz: eb8380830b60
+    C-SYNTH-1M-1.extxyz: 594992f8962a
+    C-SYNTH-1M-2.extxyz: 9151c6aa44f5
 description: |
     1 million atomic environments from a "synthetic" dataset 
     created using the C-GAP-17 model to 
@@ -15,3 +15,6 @@ citation: |
       journal = {Digital Discovery},
       doi = {10.1039/D2DD00137C},
     }
+per_atom_properties:
+    gap17_forces: as labelled by C-GAP-17
+    gap17_energy: the local energy as partitioned by C-GAP-17
