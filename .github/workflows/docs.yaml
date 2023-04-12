@@ -2,7 +2,7 @@ name: Docs
 on: [push]
 permissions:
     contents: write
-env:    
+env:
     APT_INSTALL: sudo apt-get install -y --no-install-recommends
 jobs:
     docs:
@@ -17,7 +17,7 @@ jobs:
                   python-version: 3.7
             - name: Install dependencies
               run: pip install -e ".[dev]"
-            - name: Install pandoc:
+            - name: Install pandoc
               run: $APT_INSTALL pandoc
             - name: Generate Pages
               run: python dev/rebuild_all_docs.py
