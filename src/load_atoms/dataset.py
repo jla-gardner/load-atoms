@@ -60,7 +60,7 @@ class Dataset:
     @classmethod
     def from_file(cls, path: Path):
         structures = read(path, index=":")
-        return cls(structures, path.stem)
+        return cls(structures)
 
 
 def usage_info(dataset: DatasetDescription) -> str:
@@ -71,7 +71,7 @@ def usage_info(dataset: DatasetDescription) -> str:
         info.append(f"Please cite this dataset if you use it in your work.")
 
     _url = frontend_url(dataset)
-    info.append(f"For more information about this dataset, see here {_url}")
+    info.append(f"For more information, visit:\n{_url}")
 
     return "\n".join(info)
 

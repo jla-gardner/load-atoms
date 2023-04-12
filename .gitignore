@@ -2,7 +2,6 @@
 **egg-info
 **__pycache__
 **.DS_Store
-**/*.ipynb 
 .pytest_cache
 .vscode
 
@@ -10,3 +9,7 @@ docs/build
 
 .coverage
 publish.sh
+
+# everything in examples except .ipynb files
+**/examples/*
+!**/examples/*.ipynb
