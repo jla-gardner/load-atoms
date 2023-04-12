@@ -3,10 +3,8 @@ C-GAP-20
 
 Complete dataset and labels used for training both the C-GAP-20
 and C-GAP-20-U models. 
-For details, see the supplementary information here:
-https://www.repository.cam.ac.uk/handle/1810/307452
-and here:
-https://www.repository.cam.ac.uk/handle/1810/336687
+For details, see here https://doi.org/10.17863/CAM.54529 
+and https://doi.org/10.17863/CAM.82086
 
 
 .. code-block:: python
@@ -20,7 +18,7 @@ https://www.repository.cam.ac.uk/handle/1810/336687
             C: 100.00%
         properties:
             per atom: (force_U, force)
-            per structure: (energy_U, energy, config_type)
+            per structure: (energy, config_type, energy_U)
 
 A representative structure from this dataset:
 

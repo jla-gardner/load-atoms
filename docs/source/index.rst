@@ -32,41 +32,27 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 
    >>> from load_atoms import dataset
    >>> structures = dataset("C-GAP-17")
-   Downloading C-GAP-17.extxyz from https://github.com/jla-gardner/load-atoms/
-   100.0% | ███████████████████████████████████████
+   Downloading C-GAP-17.extxyz
+   100.0% | ██████████████████████████████████████████████████
 
-   Complete training dataset for the C-GAP-17 model. 
-   For details, see the supplementary information here:
-   https://www.repository.cam.ac.uk/handle/1810/262814
-
-   This dataset is licensed under the CC BY-NC-SA 4.0 license.
-   If you use this dataset, please cite the following:
-   @article{Deringer-17,
-      title = {Machine learning based interatomic potential for amorphous carbon},
-      doi = {10.1103/PhysRevB.95.094203},
-      volume = {95},
-      number = {9},
-      urldate = {2021-07-15},
-      journal = {Physical Review B},
-      author = {Deringer, Volker L. and Cs{\'a}nyi, G{\'a}bor},    
-      year = {2017},
-      pages = {094203},
-   }
-
+   This dataset is covered by the CC BY-NC-SA 4.0 license.
+   Please cite this dataset if you use it in your work.
+   For more information about this dataset, see here:
+   https://jla-gardner.github.io/load-atoms/datasets/C-GAP-17.html
+   
 :code:`structures` is a :class:`Dataset` object. This is a lightweight wrapper around a list of :class:`ase.Atoms` objects, and can be used as such:
 
 .. code-block:: python
 
       >>> structures
       C-GAP-17:
-         counts:
-            structures: 4,080
-            atoms: 256,628
+         structures: 4,530
+         atoms: 284,965
          species:
             C: 100.00%
          properties:
             per atom: (force)
-            per structure: (energy, detailed_ct, config_type)
+            per structure: (config_type, detailed_ct, split, energy)
       >>> len(structures)
       4080
       >>> structures[0]
@@ -85,5 +71,12 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
    :hidden:
 
    api
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Example Usage:
+   :hidden:
+
+   examples/basics.ipynb
 
 .. include:: datasets.rst

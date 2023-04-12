@@ -3,7 +3,7 @@ C-GAP-17
 
 Complete dataset for training and testing the C-GAP-17 model. 
 For details, see the supplementary information here:
-https://www.repository.cam.ac.uk/handle/1810/262814
+https://doi.org/10.17863/CAM.7453
 
 
 .. code-block:: python
@@ -17,7 +17,7 @@ https://www.repository.cam.ac.uk/handle/1810/262814
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (config_type, energy, split, detailed_ct)
+            per structure: (split, config_type, energy, detailed_ct)
 
 A representative structure from this dataset:
 

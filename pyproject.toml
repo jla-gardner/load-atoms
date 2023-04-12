@@ -28,7 +28,6 @@ dev = [
     "furo",
     "nbsphinx",
     "sphinx-autobuild",
-    "sphinx-copybutton",
     "pytest-cov",
     "build",
     "bumpver",
