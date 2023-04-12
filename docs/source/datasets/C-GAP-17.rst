@@ -17,7 +17,7 @@ https://doi.org/10.17863/CAM.7453
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (split, config_type, energy, detailed_ct)
+            per structure: (config_type, split, detailed_ct, energy)
 
 A representative structure from this dataset:
 
