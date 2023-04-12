@@ -1,0 +1,17 @@
+name: C-SYNTH-1M
+files:
+    C-SYNTH-1M-1.extxyz: afd840731ef2
+    C-SYNTH-1M-2.extxyz: eb8380830b60
+description: |
+    1 million atomic environments from a "synthetic" dataset 
+    created using the C-GAP-17 model to 
+    drive MD for 546 uncorrelated configurations. 
+    For details, see https://doi.org/10.1039/D2DD00137C.
+citation: |
+    @article{Gardner-23-03,
+      title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},
+      author = {Gardner, John L. A. and Beaulieu, Zo{\'e} Faure and Deringer, Volker L.},
+      year = {2023},
+      journal = {Digital Discovery},
+      doi = {10.1039/D2DD00137C},
+    }
