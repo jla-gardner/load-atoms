@@ -20,7 +20,7 @@ if __name__ == "__main__":
         path = "src/load_atoms/datasets/*.[!y]*"  # exclude yaml files
 
     files, checksums = [], []
-    for file in glob.glob(path):
+    for file in sorted(glob.glob(path)):
         files.append(file)
         checksums.append(generate_checksum(file))
 

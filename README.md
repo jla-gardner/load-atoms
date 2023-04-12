@@ -14,6 +14,10 @@ _**L**arge **O**pen **A**ccess **D**atasets for **Ato**mistic **M**aterials **S*
 
 ![](https://codecov.io/github/jla-gardner/load-atoms/branch/main/graphs/tree.svg?token=HCVF02CDHR)
 
+# Homepage
+
+https://jla-gardner.github.io/load-atoms/
+
 TODO: Add badges
 
 TODO: write this
