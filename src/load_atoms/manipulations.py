@@ -44,6 +44,6 @@ def cross_validate_split(
     train, test = idxs[:-n_test], idxs[-n_test:]
 
     return (
-        [dataset[t] for t in train],
-        [dataset[t] for t in test],
+        Dataset.from_structures([dataset[t] for t in train]),
+        Dataset.from_structures([dataset[t] for t in test]),
     )

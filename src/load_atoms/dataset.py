@@ -21,12 +21,18 @@ class Dataset:
         return len(self.structures)
 
     def __getitem__(self, slice):
-        if isinstance(slice, int):
-            # return a single structure
+        # if the slice can be cast to an int (e.g. is an np.int64), then
+        # return a single structure
+        try:
+            slice = int(slice)
             return self.structures[slice]
-        else:
-            # return a new Dataset
-            return Dataset(self.structures[slice])
+        except TypeError:
+            pass
+
+        # otherwise, our slice is a slice object,
+        # and we should return a new Dataset
+        sliced_structres = self.structures[slice]
+        return Dataset(sliced_structres)
 
     def __iter__(self):
         return iter(self.structures)
@@ -47,6 +53,7 @@ class Dataset:
     def from_id(cls, dataset_id: str, root: Path = None, verbose: bool = True):
         if not is_known_dataset(dataset_id):
             raise ValueError(f"Dataset {dataset_id} is not known.")
+
         dataset_info = DATASETS[dataset_id]
         all_structures = backend.get_structures(dataset_info, root)
         if verbose:
