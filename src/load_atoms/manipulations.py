@@ -11,7 +11,7 @@ FilterFunction = Callable[[Atoms], bool]
 def filter_by(
     dataset: Union[Dataset, Sequence[Atoms]],
     *functions: Sequence[FilterFunction],
-    **kwargs
+    **kwargs,
 ) -> Dataset:
     """Filter a dataset by a given property."""
 
@@ -31,16 +31,16 @@ def filter_by(
 
 
 def cross_validate_split(
-    dataset: Dataset, fold, folds=5, n_test: int = None, seed: int = 0
+    dataset: Dataset, fold, k=5, n_test: int = None, seed: int = 0
 ) -> Dataset:
     """Generate a shuffled train/test split for cross-validation."""
 
     if n_test is None:
-        n_test = len(dataset) // folds
+        n_test = len(dataset) // k
 
     idxs = np.arange(len(dataset))
     np.random.RandomState(seed).shuffle(idxs)
-    idxs = np.roll(idxs, fold * len(idxs) // folds)
+    idxs = np.roll(idxs, fold * len(idxs) // k)
     train, test = idxs[:-n_test], idxs[-n_test:]
 
     return (
