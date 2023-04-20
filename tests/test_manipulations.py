@@ -24,6 +24,6 @@ def test_filter_by():
 
 
 def test_cv():
-    train, test = cross_validate_split(structures, fold=1, folds=3)
+    train, test = cross_validate_split(structures, fold=1, k=3)
     assert len(train) == 2, "The train dataset should contain two structures"
     assert len(test) == 1, "The test dataset should contain one structure"
