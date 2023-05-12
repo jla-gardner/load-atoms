@@ -10,6 +10,7 @@ from load_atoms.database import (
     find_all_descriptor_files,
     get_description_of,
 )
+from load_atoms.util import BASE_REMOTE_URL
 
 _local_path_to_datasets = Path(__file__).parent.parent / "src/load_atoms/datasets"
 
@@ -27,6 +28,10 @@ def test_checksums(dataset):
     """
     test that all dataset checksums are correct
     """
+
+    # we don't want to download all datasets each time we run the tests
+    if dataset.url_root != BASE_REMOTE_URL:
+        return
 
     for path, checksum in dataset.files.items():
         path = _local_path_to_datasets / path

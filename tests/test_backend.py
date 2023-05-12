@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from load_atoms.backend import download_structures, download_thing
+from load_atoms.backend import RequestError, download_structures, download_thing
 from load_atoms.util import DATASETS_DIR
 
 
@@ -25,7 +25,7 @@ def test_missing_download(tmp_path):
     # attempt to download a file that does not exist
     # and check that we report on the 404 error
     real_url_fake_file = "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/made_up_file.json"
-    with pytest.raises(ValueError, match="404"):
+    with pytest.raises(RequestError, match="404"):
         download_thing(real_url_fake_file, tmp_path / "test.json")
 
 

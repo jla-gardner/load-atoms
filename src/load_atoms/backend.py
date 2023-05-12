@@ -14,7 +14,13 @@ from ase.io import read
 
 from load_atoms.checksums import generate_checksum
 from load_atoms.database import DatasetDescription
-from load_atoms.util import BASE_REMOTE_URL, DEFAULT_DOWNLOAD_DIR, progress_bar
+from load_atoms.util import DEFAULT_DOWNLOAD_DIR, progress_bar
+
+
+class RequestError(Exception):
+    def __init__(self, url: str, code: int):
+        message = f"Could not find {url}. Response code: {code}"
+        super().__init__(message)
 
 
 def get_structures(dataset: DatasetDescription, root: Path = None) -> List[Atoms]:
@@ -31,12 +37,15 @@ def get_structures(dataset: DatasetDescription, root: Path = None) -> List[Atoms
 
     for file, hash in dataset.files.items():
         local_path = root / file
+        remote_url = dataset.url_root + file
+
         download_structures(
-            BASE_REMOTE_URL + file,
+            remote_url,
             local_path,
             hash,
             f"Downloading {file}",
         )
+
         try:
             structures = read(local_path, index=":")
         except:
@@ -99,7 +108,7 @@ def download_thing(url: str, save_to: Path) -> None:
 
     response = requests.get(url, stream=True)
     if response.status_code != 200:
-        raise ValueError(f"Could not find {url}. Response code: {response.status_code}")
+        raise RequestError(url, response.status_code)
 
     total_size_in_bytes = int(response.headers.get("content-length", 0))
     block_size = 1024**2  # 1 MB
