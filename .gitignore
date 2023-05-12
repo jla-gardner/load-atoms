@@ -13,3 +13,5 @@ publish.sh
 # everything in examples except .ipynb files
 **/examples/*
 !**/examples/*.ipynb
+
+testing

@@ -15,13 +15,22 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 keywords = ["chemistry", "machine learning", "datasets"]
-dependencies = ["ase", "pyyaml", "requests", "numpy", "pydantic"]
+dependencies = [
+    "ase",
+    "pyyaml",
+    "requests",
+    "numpy",
+    "pydantic",
+    "aiohttp",
+    "nest_asyncio",
+]
 requires-python = ">=3.7"
 
 [project.optional-dependencies]
 dev = [
     "notebook",
     "pytest",
+    "pytest-asyncio",
     "black",
     "isort",
     "sphinx",
