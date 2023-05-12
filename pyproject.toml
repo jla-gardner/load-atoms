@@ -23,6 +23,7 @@ dependencies = [
     "pydantic",
     "aiohttp",
     "nest_asyncio",
+    "rich",
 ]
 requires-python = ">=3.7"
 
