@@ -5,7 +5,7 @@ import yaml
 from pydantic import BaseModel, validator
 
 from load_atoms.checksums import valid_checksum
-from load_atoms.util import DATASETS_DIR
+from load_atoms.util import BASE_REMOTE_URL, DATASETS_DIR
 
 
 def is_bibtex(data: str) -> bool:
@@ -23,6 +23,7 @@ class DatasetDescription(BaseModel):
     long_description: str = None
     per_atom_properties: dict = None
     per_structure_properties: dict = None
+    url_root: str = BASE_REMOTE_URL
 
     @validator("license")
     def validate_license(cls, v):
