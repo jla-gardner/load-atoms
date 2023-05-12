@@ -86,7 +86,6 @@ def usage_info(dataset: DatasetDescription) -> str:
 def summarise_dataset(
     structures: List[Atoms], description: DatasetDescription = None
 ) -> str:
-
     name = description.name if description is not None else "Dataset"
     N = len(structures)
     number_atoms = sum([len(structure) for structure in structures])

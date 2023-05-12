@@ -4,17 +4,32 @@ are first loaded, and for loading these datasets into memory, via
 the `get_structures` function. 
 """
 
-import math
+import asyncio
 from pathlib import Path
 from typing import List
 
-import requests
+import aiohttp
+import nest_asyncio
 from ase import Atoms
 from ase.io import read
 
 from load_atoms.checksums import generate_checksum
 from load_atoms.database import DatasetDescription
-from load_atoms.util import DEFAULT_DOWNLOAD_DIR, progress_bar
+from load_atoms.util import DEFAULT_DOWNLOAD_DIR
+
+# support for nested asyncio loops, such that we can download
+# structures inside a jupyter notebook in parallel
+nest_asyncio.apply()
+
+
+def get_event_loop():
+    loop = asyncio.get_event_loop()
+    if loop.is_running():
+        loop = asyncio.get_running_loop()
+    else:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    return loop
 
 
 class RequestError(Exception):
@@ -23,99 +38,100 @@ class RequestError(Exception):
         super().__init__(message)
 
 
+class CorruptionError(Exception):
+    def __init__(self, path: Path):
+        super().__init__(
+            f"File {path} exists, but did not match the expected checksum."
+            "Please move this file to a different location, or delete it."
+        )
+
+
 def get_structures(dataset: DatasetDescription, root: Path = None) -> List[Atoms]:
     """
     Get the structures associated with a dataset.
     """
 
+    # if no root is specified, use the default download directory
     if root is None:
         root = DEFAULT_DOWNLOAD_DIR
-    else:
-        root = Path(root)
+    root = Path(root)
 
+    # first, we download any missing files:
+    loop = get_event_loop()
+    loop.run_until_complete(download_missing_files(dataset, root))
+
+    # now, we can load the structures from the files
+    print(f"Loading {dataset.name} from disk...")
     all_structures = []
-
     for file, hash in dataset.files.items():
         local_path = root / file
-        remote_url = dataset.url_root + file
-
-        download_structures(
-            remote_url,
-            local_path,
-            hash,
-            f"Downloading {file}",
-        )
-
-        try:
-            structures = read(local_path, index=":")
-        except:
-            # we can't read the ase file, so delete it and ask to try again
-            local_path.unlink()
-            raise ValueError(
-                f"Could not read {local_path}.\n"
-                "This is probably due to a corrupted download.\n"
-                "Please try again."
-            )
-
+        check_file_contents(local_path, hash)
+        structures = read(local_path, index=":")
         all_structures.extend(structures)
 
     return all_structures
 
 
-def download_structures(
+async def download_missing_files(
+    dataset: DatasetDescription, root: Path = None
+) -> None:
+    tasks = []
+    for file, hash in dataset.files.items():
+        local_path = root / file
+
+        if local_path.exists():
+            continue
+
+        remote_url = dataset.url_root + file
+        download_task = download_structures(
+            remote_url,
+            local_path,
+            hash,
+            f"Downloading {file}",
+        )
+        tasks.append(download_task)
+
+    if not tasks:
+        return
+
+    # wait for all downloads to finish
+    print(f"Downloading {len(tasks)} files...")
+    await asyncio.wait(tasks)
+
+
+def check_file_contents(local_path: Path, expected_file_hash: str) -> bool:
+    file_hash = generate_checksum(local_path)
+    if expected_file_hash != file_hash:
+        raise CorruptionError(
+            f"The dataset on disk at {local_path} has been corrupted.\n"
+            "If you have made changes to this, "
+            "please revert them or move/delete the file."
+        )
+    return True
+
+
+async def download_structures(
     remote_url: str, local_path: Path, expected_file_hash: str, message: str = None
 ):
-    def check_file_contents():
-        file_hash = generate_checksum(local_path)
-        return expected_file_hash == file_hash
-
-    if local_path.exists():
-        if check_file_contents():
-            return
-        else:
-            raise ValueError(
-                f"The dataset on disk at {local_path} has been corrupted.\n"
-                "If you have made changes to this, "
-                "please revert them or move/delete the file. Otherwise, "
-                "please try again."
-            )
-
     if message is not None:
         print(message)
 
     local_path.parent.mkdir(parents=True, exist_ok=True)
-    download_thing(remote_url, local_path)
+    await download_thing(remote_url, local_path)
 
     if not local_path.exists():
         raise ValueError(
             "There was a problem downloading the dataset.\nPlease try again."
         )
 
-    if not check_file_contents():
-        # delete the file so we can try again later
-        local_path.unlink()
-        raise ValueError(
-            "There was a problem downloading the dataset.\n"
-            "What was downloaded does not match what we were expecting.\n"
-            "Please try again."
-        )
 
-    assert local_path.exists()
-
-
-def download_thing(url: str, save_to: Path) -> None:
+async def download_thing(url: str, save_to: Path) -> None:
     """Download a thing from the internet."""
 
-    response = requests.get(url, stream=True)
-    if response.status_code != 200:
-        raise RequestError(url, response.status_code)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status != 200:
+                raise RequestError(url, response.status)
 
-    total_size_in_bytes = int(response.headers.get("content-length", 0))
-    block_size = 1024**2  # 1 MB
-
-    N = math.ceil(total_size_in_bytes / block_size)
-    blocks = response.iter_content(block_size)
-
-    with open(save_to, "wb") as file:
-        for data in progress_bar(blocks, N):
-            file.write(data)
+            data = await response.read()
+            save_to.write_bytes(data)
