@@ -12,6 +12,7 @@ import aiohttp
 import nest_asyncio
 from ase import Atoms
 from ase.io import read
+from rich.progress import Progress, track
 
 from load_atoms.checksums import generate_checksum
 from load_atoms.database import DatasetDescription
@@ -61,9 +62,10 @@ def get_structures(dataset: DatasetDescription, root: Path = None) -> List[Atoms
     loop.run_until_complete(download_missing_files(dataset, root))
 
     # now, we can load the structures from the files
-    print(f"Loading {dataset.name} from disk...")
     all_structures = []
-    for file, hash in dataset.files.items():
+    for file, hash in track(
+        dataset.files.items(), description="Loading files from disk"
+    ):
         local_path = root / file
         check_file_contents(local_path, hash)
         structures = read(local_path, index=":")
@@ -75,28 +77,26 @@ def get_structures(dataset: DatasetDescription, root: Path = None) -> List[Atoms
 async def download_missing_files(
     dataset: DatasetDescription, root: Path = None
 ) -> None:
-    tasks = []
-    for file, hash in dataset.files.items():
-        local_path = root / file
-
-        if local_path.exists():
-            continue
-
-        remote_url = dataset.url_root + file
-        download_task = download_structures(
-            remote_url,
-            local_path,
-            hash,
-            f"Downloading {file}",
-        )
-        tasks.append(download_task)
-
-    if not tasks:
+    missing_files = [file for file in dataset.files if not (root / file).exists()]
+    if not missing_files:
         return
 
-    # wait for all downloads to finish
-    print(f"Downloading {len(tasks)} files...")
-    await asyncio.wait(tasks)
+    tasks = []
+    with Progress(transient=True) as progress:
+        progress.console.print(f"Downloading {len(missing_files)} files.")
+        for file in missing_files:
+            local_path = root / file
+            remote_url = dataset.url_root + file
+
+            download_task = download_structures(
+                remote_url,
+                local_path,
+                progress=progress,
+            )
+            tasks.append(download_task)
+
+        # wait for all downloads to finish
+        await asyncio.wait(tasks)
 
 
 def check_file_contents(local_path: Path, expected_file_hash: str) -> bool:
@@ -111,13 +111,14 @@ def check_file_contents(local_path: Path, expected_file_hash: str) -> bool:
 
 
 async def download_structures(
-    remote_url: str, local_path: Path, expected_file_hash: str, message: str = None
+    remote_url: str,
+    local_path: Path,
+    progress: Progress,
 ):
-    if message is not None:
-        print(message)
-
     local_path.parent.mkdir(parents=True, exist_ok=True)
-    await download_thing(remote_url, local_path)
+    await download_file(
+        remote_url, local_path, progress, task_description=local_path.name
+    )
 
     if not local_path.exists():
         raise ValueError(
@@ -125,13 +126,28 @@ async def download_structures(
         )
 
 
-async def download_thing(url: str, save_to: Path) -> None:
-    """Download a thing from the internet."""
+async def download_file(
+    url: str, save_to: Path, progress: Progress = None, task_description: str = None
+):
+    """
+    Download a file from the internet, optionall using a Rich Progress bar
+    to show the progress.
+    """
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             if response.status != 200:
                 raise RequestError(url, response.status)
 
-            data = await response.read()
-            save_to.write_bytes(data)
+            total_length = int(response.headers.get("content-length", 0))
+            if progress is not None:
+                task = progress.add_task(task_description, total=total_length)
+
+            with save_to.open("wb") as f:
+                async for chunk in response.content.iter_chunked(1024):
+                    f.write(chunk)
+                    if progress is not None:
+                        progress.update(task, advance=len(chunk))
+
+            if progress is not None:
+                progress.remove_task(task)
