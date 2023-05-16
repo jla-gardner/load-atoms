@@ -39,13 +39,7 @@ class Dataset:
 
         # otherwise, we assume the index is an integer,
         # and return a single structure
-        try:
-            index = int(index)
-        except TypeError:
-            raise TypeError(
-                "Slices of a Dataset must be an integer, slice, or iterable"
-            )
-        return self.structures[index]
+        return self.structures[int(index)]
 
     def __iter__(self):
         return iter(self.structures)
