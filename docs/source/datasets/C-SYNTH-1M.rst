@@ -18,7 +18,7 @@ For details, see https://doi.org/10.1039/D2DD00137C.
             C: 100.00%
         properties:
             per atom: (gap17_energy, gap17_forces)
-            per structure: (time, density, run_id, anneal_T)
+            per structure: (run_id, density, anneal_T, time)
 
 
 
