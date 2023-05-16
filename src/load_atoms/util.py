@@ -1,6 +1,8 @@
 from pathlib import Path
 from typing import Iterable
 
+import numpy as np
+
 # this file is at <root>/src/load_atoms/util.py
 # the datasets are at <root>/src/load_atoms/datasets
 DATASETS_DIR = (Path(__file__).parent / "datasets").resolve()
@@ -28,3 +30,8 @@ def intersection(things: Iterable[Iterable]):
 def union(things: Iterable[Iterable]):
     """Get the set union of a list of iterables."""
     return set.union(*map(set, things))
+
+
+def is_numpy(thing):
+    """Check if a thing is a numpy array."""
+    return isinstance(thing, np.ndarray)
