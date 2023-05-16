@@ -45,8 +45,6 @@ def download_all(tasks: List[Download]):
     """
     download a list of files in parallel
     """
-    if len(tasks) == 0:
-        return
 
     # use the asyncio event loop to download the files asynchronously
     # and in parrallel
