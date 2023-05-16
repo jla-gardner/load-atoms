@@ -1,13 +1,14 @@
 from pathlib import Path
 from typing import Iterable, List
 
+import numpy as np
 from ase import Atoms
 from ase.io import read
 from yaml import dump
 
 from load_atoms import backend
 from load_atoms.database import DATASETS, DatasetDescription, is_known_dataset
-from load_atoms.util import frontend_url, intersection, union
+from load_atoms.util import frontend_url, intersection, is_numpy, union
 
 
 class Dataset:
@@ -20,19 +21,25 @@ class Dataset:
     def __len__(self):
         return len(self.structures)
 
-    def __getitem__(self, slice):
-        # if the slice can be cast to an int (e.g. is an np.int64), then
-        # return a single structure
-        try:
-            slice = int(slice)
-            return self.structures[slice]
-        except TypeError:
-            pass
+    def __getitem__(self, index):
+        # if the passed index is a slice, return a new Dataset object:
+        if isinstance(index, slice):
+            return Dataset(self.structures[index])
 
-        # otherwise, our slice is a slice object,
-        # and we should return a new Dataset
-        sliced_structres = self.structures[slice]
-        return Dataset(sliced_structres)
+        # if the index is iterable, return a new Dataset object:
+        if hasattr(index, "__iter__"):
+            # if the index is a np index, we want to keep the same behaviour
+            # (e.g. passing array of indices, or a boolean array)
+            if is_numpy(index):
+                to_keep = np.arange(len(self))[index]
+                return Dataset([self.structures[i] for i in to_keep])
+
+            # some other iterable, e.g. a list of indices
+            return Dataset([self.structures[i] for i in index])
+
+        # otherwise, we assume the index is an integer,
+        # and return a single structure
+        return self.structures[int(index)]
 
     def __iter__(self):
         return iter(self.structures)

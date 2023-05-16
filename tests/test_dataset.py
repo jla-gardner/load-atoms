@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import numpy as np
 import pytest
 from ase import Atoms
 from ase.io import read, write
@@ -31,7 +32,7 @@ def test_dataset_writeable_and_readable(tmp_path):
     _is_water_dataset(ds3)
 
 
-def test_slice():
+def test_indexing():
     ds = dataset(STRUCTURES)
 
     structure = ds[0]
@@ -43,6 +44,27 @@ def test_slice():
     assert (
         len(sub_dataset) == 1
     ), "Slicing should return the correct number of structures"
+
+    indices = np.array([0, 1, 0, 1])
+    sub_dataset = ds[indices]
+    assert isinstance(sub_dataset, Dataset), "Indexing should return a dataset"
+    assert (
+        len(sub_dataset) == 4
+    ), "Indexing should return the correct number of structures"
+
+    indices = np.array([True, False])
+    sub_dataset = ds[indices]
+    assert isinstance(sub_dataset, Dataset), "Indexing should return a dataset"
+    assert (
+        len(sub_dataset) == 1
+    ), "Indexing should return the correct number of structures"
+
+    indices = [0, 1, 1]
+    sub_dataset = ds[indices]
+    assert isinstance(sub_dataset, Dataset), "Indexing should return a dataset"
+    assert (
+        len(sub_dataset) == 3
+    ), "Indexing should return the correct number of structures"
 
 
 def test_can_load_from_id():
