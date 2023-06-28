@@ -1,0 +1,19 @@
+name: Si-GAP-18
+files:
+    Si-GAP-18.extxyz: 74ac5f387aa0
+description: |
+    Complete dataset for training Si-GAP-18 model. 
+    For details, see the supplementary information here:
+    https://doi.org/10.5281/zenodo.1250555
+citation: |
+    @article{Bartok-18-12,
+        title = {Machine {{Learning}} a {{General-Purpose Interatomic Potential}} for {{Silicon}}},
+        author = {Bart{\'o}k, Albert P. and Kermode, James and Bernstein, Noam and Cs{\'a}nyi, G{\'a}bor},
+        year = {2018},
+        month = dec,
+        journal = {Physical Review X},
+        volume = {8},
+        number = {4},
+        pages = {041048},
+    }
+license: CC BY-NC-SA 4.0
