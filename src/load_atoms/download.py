@@ -1,11 +1,13 @@
 import asyncio
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import aiohttp
 import nest_asyncio
 from rich.progress import Progress
+
+from load_atoms.util import do_nothing
 
 
 @dataclass
@@ -104,7 +106,10 @@ async def _download_all(tasks: List[Download], num_workers: int = 16):
 
 
 async def download_file(
-    url: str, save_to: Path, progress: Progress = None, task_description: str = None
+    url: str,
+    save_to: Path,
+    progress: Optional[Progress] = None,
+    task_description: Optional[str] = None,
 ):
     """
     Download a file from the internet.
@@ -123,14 +128,18 @@ async def download_file(
                 raise RequestError(url, response.status)
 
             total_length = int(response.headers.get("content-length", 0))
+
             if progress is not None:
                 task = progress.add_task(task_description, total=total_length)
+                callback = lambda chunk: progress.update(task, advance=len(chunk))
+                cleanup = lambda: progress.remove_task(task)
+            else:
+                callback = do_nothing
+                cleanup = do_nothing
 
             with save_to.open("wb") as f:
                 async for chunk in response.content.iter_chunked(1024):
                     f.write(chunk)
-                    if progress is not None:
-                        progress.update(task, advance=len(chunk))
+                    callback(chunk)
 
-            if progress is not None:
-                progress.remove_task(task)
+            cleanup()

@@ -17,8 +17,8 @@ and https://doi.org/10.17863/CAM.82086
         species:
             C: 100.00%
         properties:
-            per atom: (force_U, force)
-            per structure: (energy_U, cutoff, energy, config_type, nneightol)
+            per atom: (force, force_U)
+            per structure: (nneightol, config_type, energy, energy_U, cutoff)
 
 A representative structure from this dataset:
 

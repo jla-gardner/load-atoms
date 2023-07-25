@@ -35,3 +35,8 @@ def union(things: Iterable[Iterable]):
 def is_numpy(thing):
     """Check if a thing is a numpy array."""
     return isinstance(thing, np.ndarray)
+
+
+def do_nothing(*args, **kwargs):
+    """A function that does nothing."""
+    pass

@@ -1,0 +1,17 @@
+name: P-GAP-20
+url_root: https://zenodo.org/record/4003703/files/
+description: |
+    The complete training dataset for the P-GAP-20 model.
+citation: |
+    @article{Deringer-20-10a,
+      title = {A General-Purpose Machine-Learning Force Field for Bulk and Nanostructured Phosphorus},
+      author = {Deringer, Volker L. and Caro, Miguel A. and Cs{\'a}nyi, G{\'a}bor},
+      year = {2020},
+      journal = {Nature Communications},
+      volume = {11},
+      number = {1},
+      pages = {5461},
+      doi = {10.1038/s41467-020-19168-z},
+    }
+files:
+    P_GAP_20_fitting_data.xyz: ab3059018068

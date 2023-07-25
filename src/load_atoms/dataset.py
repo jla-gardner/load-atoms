@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Iterable, List
+from typing import Iterable, List, Union
 
 import numpy as np
 from ase import Atoms
@@ -57,7 +57,9 @@ class Dataset:
         return cls(structures, path.stem)
 
     @classmethod
-    def from_id(cls, dataset_id: str, root: Path = None, verbose: bool = True):
+    def from_id(
+        cls, dataset_id: str, root: Union[Path, str, None] = None, verbose: bool = True
+    ):
         if not is_known_dataset(dataset_id):
             raise ValueError(f"Dataset {dataset_id} is not known.")
 

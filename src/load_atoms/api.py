@@ -8,7 +8,7 @@ from load_atoms.dataset import Dataset
 
 def dataset(
     thing: Union[str, List[Atoms], Path],
-    root: Union[str, Path] = None,
+    root: Union[str, Path, None] = None,
 ) -> Dataset:
     """
     Load a dataset by name or from a list of structures.

@@ -1,19 +1,18 @@
-C-SYNTH-1M
-==========
+C-SYNTH-23M
+===========
 
-1 million atomic environments from a "synthetic" dataset 
-created using the C-GAP-17 model to 
-drive MD for 546 uncorrelated configurations. 
-For details, see https://doi.org/10.1039/D2DD00137C.
+The complete synthetic dataset from https://doi.org/10.1039/D2DD00137C.
+Comprised of 546 uncorrelated MD trajectories for for 200 atoms structures
+sampled every 1fs.
 
 
 .. code-block:: python
 
     >>> from load_atoms import dataset
-    >>> dataset("C-SYNTH-1M")
-    C-SYNTH-1M:
-        structures: 5,460
-        atoms: 1,092,000
+    >>> dataset("C-SYNTH-23M")
+    C-SYNTH-23M:
+        structures: 115,206
+        atoms: 23,041,200
         species:
             C: 100.00%
         properties:

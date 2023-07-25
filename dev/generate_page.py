@@ -48,7 +48,7 @@ This dataset is licensed under the {license} license.
 
 def page_content(dataset_id: str) -> str:
     # avoid actually downloading the dataset
-    structures = dataset(dataset_id, root=PROJECT_ROOT / "src/load_atoms/datasets")
+    structures = dataset(dataset_id)
     dataset_description = DATASETS[dataset_id]
     summary = str(structures)
 

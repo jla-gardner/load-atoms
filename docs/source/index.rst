@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-⚛️ load-atoms 🧪
-=================
+Load Atoms
+==========
 
 
 .. warning::
@@ -82,7 +82,7 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 .. include:: datasets.rst
 
 Development & Contributions
------
+---------------------------
 We welcome any suggestions and contributions to this project.
 If you wish to do so, please follow the instructions in the :doc:`contributing guide <contributing>`. 
 **TODO**: add link to contributing guide and make the guide
