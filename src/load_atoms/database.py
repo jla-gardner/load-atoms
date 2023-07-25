@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 import yaml
 from pydantic import BaseModel, validator
@@ -17,12 +17,12 @@ class DatasetDescription(BaseModel):
     name: str
     description: str
     files: Dict[str, str]
-    citation: str = None
-    license: str = None
-    representative_structures: List[int] = None
-    long_description: str = None
-    per_atom_properties: dict = None
-    per_structure_properties: dict = None
+    citation: Optional[str] = None
+    license: Optional[str] = None
+    representative_structures: Optional[List[int]] = None
+    long_description: Optional[str] = None
+    per_atom_properties: Optional[dict] = None
+    per_structure_properties: Optional[dict] = None
     url_root: str = BASE_REMOTE_URL
 
     @validator("license")
