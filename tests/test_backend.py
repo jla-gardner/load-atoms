@@ -14,7 +14,7 @@ def test_check_file_contents(tmp_path):
     correct_hash = generate_checksum(fake_file)
     incorrect_hash = "0" * 12
 
-    assert check_file_contents(fake_file, correct_hash)
+    check_file_contents(fake_file, correct_hash)
 
     with pytest.raises(CorruptionError):
         check_file_contents(fake_file, incorrect_hash)
