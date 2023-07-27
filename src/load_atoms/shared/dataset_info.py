@@ -45,7 +45,7 @@ class DatasetInfo(BaseModel):
     per_structure_properties: Optional[dict] = None
     """a mapping of per structure property keys to a description"""
 
-    url_root: str = BASE_REMOTE_URL
+    url_root: Optional[str] = None
     """the root url of the dataset"""
 
     @field_validator("license")
@@ -77,6 +77,19 @@ class DatasetInfo(BaseModel):
         with open(path) as f:
             data = yaml.safe_load(f)
         return cls(**data)
+
+    def remote_file_locations(self) -> Dict[str, str]:
+        """
+        Mapping from remote file locations to their checksums.
+        """
+        base_url = self.url_root or BASE_REMOTE_URL + self.name + "/"
+        return {base_url + k: v for k, v in self.files.items()}
+
+    @classmethod
+    def description_file_url(cls, dataset_id):
+        """Get the URL for a dataset description file."""
+
+        return BASE_REMOTE_URL + f"{dataset_id}/{dataset_id}.yaml"
 
 
 DatasetId = str

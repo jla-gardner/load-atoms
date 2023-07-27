@@ -6,7 +6,7 @@ from ase import Atoms
 from ase.io import read
 from rich.progress import track
 
-from load_atoms.shared import BASE_REMOTE_URL, UnknownDatasetException
+from load_atoms.shared import UnknownDatasetException
 from load_atoms.shared.checksums import matches_checksum
 from load_atoms.shared.dataset_info import DatasetId, DatasetInfo
 
@@ -79,8 +79,10 @@ class DataStorage:
         if not info_file.exists():
             # download the dataset description file
             try:
-                description_file_location = BASE_REMOTE_URL + dataset_id + ".yaml"
-                internet.download(description_file_location, info_file)
+                internet.download(
+                    DatasetInfo.description_file_url(dataset_id),
+                    info_file,
+                )
             except Exception as e:
                 raise UnknownDatasetException(dataset_id) from e
 
@@ -92,8 +94,14 @@ class DataStorage:
             for file, hash in info.files.items()
             if not (folder / file).exists()
         }
-        remote_files = [info.url_root + file for file in missing_files]
-        internet.download_all(remote_files, folder)
+
+        remote_file_locations = [
+            url
+            for url in info.remote_file_locations()
+            if Path(url).name in missing_files
+        ]
+
+        internet.download_all(remote_file_locations, folder)
 
         # validate the just-downloaded files
         for file_name, hash in missing_files.items():
