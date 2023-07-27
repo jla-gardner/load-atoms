@@ -1,4 +1,4 @@
-from load_atoms.util import intersection, lpad, union
+from load_atoms.shared import intersection, lpad, union
 
 
 def test_intersection():

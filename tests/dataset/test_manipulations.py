@@ -1,6 +1,7 @@
+import pytest
 from ase import Atoms
 
-from load_atoms.manipulations import cross_validate_split, filter_by
+from load_atoms.dataset.manipulations import cross_validate_split, filter_by
 
 structures = [
     Atoms("H2O", info=dict(name="water")),
@@ -9,6 +10,7 @@ structures = [
 ]
 
 
+@pytest.mark.filterwarnings("ignore:Creating a dataset with a single structure")
 def test_filter_by():
     filtered = filter_by(
         structures,
@@ -23,6 +25,7 @@ def test_filter_by():
     assert len(filtered) == 1, "The filtered dataset should contain one structure"
 
 
+@pytest.mark.filterwarnings("ignore:Creating a dataset with a single structure")
 def test_cv():
     train, test = cross_validate_split(structures, fold=1, k=3)
     assert len(train) == 2, "The train dataset should contain two structures"

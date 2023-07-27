@@ -1,1 +1,0 @@
-recursive-include src/load_atoms/datasets *.yaml

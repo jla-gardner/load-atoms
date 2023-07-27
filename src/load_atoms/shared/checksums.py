@@ -19,3 +19,8 @@ def valid_checksum(hash: str) -> bool:
     if len(hash) != 12:
         return False
     return all(c in string.hexdigits for c in hash)
+
+
+def matches_checksum(file_path: Path, hash: str) -> bool:
+    """Check if a file matches a given hash."""
+    return generate_checksum(file_path) == hash

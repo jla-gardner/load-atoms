@@ -1,5 +1,6 @@
+import warnings
 from pathlib import Path
-from typing import Iterable, List, Union
+from typing import List, Optional, Union
 
 import numpy as np
 from ase import Atoms
@@ -7,15 +8,25 @@ from ase.io import read
 from yaml import dump
 
 from load_atoms import backend
-from load_atoms.database import DATASETS, DatasetDescription, is_known_dataset
-from load_atoms.util import frontend_url, intersection, is_numpy, union
+from load_atoms.shared import frontend_url, intersection, is_numpy, union
+from load_atoms.shared.dataset_info import DatasetInfo
 
 
 class Dataset:
     def __init__(
-        self, structures: Iterable[Atoms], description: DatasetDescription = None
+        self,
+        structures: List[Atoms],
+        description: Optional[DatasetInfo] = None,
     ):
-        self.structures = [*structures]
+        if len(structures) == 1:
+            warnings.warn(
+                "Creating a dataset with a single structure. "
+                "Typically, datasets contain multiple structures - "
+                "did you mean to do this?",
+                UserWarning,
+            )
+
+        self.structures = structures
         self._description = description
 
     def __len__(self):
@@ -48,38 +59,33 @@ class Dataset:
         return summarise_dataset(self.structures, self._description)
 
     @classmethod
-    def from_structures(cls, structures: Iterable[Atoms]):
-        return cls(structures)
-
-    @classmethod
-    def from_file(cls, path: Path):
-        structures = read(path, index=":")
-        return cls(structures, path.stem)
-
-    @classmethod
     def from_id(
         cls, dataset_id: str, root: Union[Path, str, None] = None, verbose: bool = True
     ):
-        if not is_known_dataset(dataset_id):
-            raise ValueError(f"Dataset {dataset_id} is not known.")
+        """
+        Load a dataset by id.
+        """
 
-        dataset_info = DATASETS[dataset_id]
-        all_structures = backend.get_structures(dataset_info, root)
+        if root is None:
+            root = Path.home() / ".load_atoms"
+        root = Path(root)
+
+        all_structures, info = backend.get_structures_for(dataset_id, root)
+
         if verbose:
-            print(usage_info(dataset_info))
-        return cls(all_structures, dataset_info)
+            print(usage_info(info))
+        return cls(all_structures, info)
 
     @classmethod
-    def from_structures(cls, structures: Iterable[Atoms]):
+    def from_structures(cls, structures: List[Atoms]):
         return cls(structures)
 
     @classmethod
     def from_file(cls, path: Path):
-        structures = read(path, index=":")
-        return cls(structures)
+        return cls(read(path, index=":"))  # type: ignore
 
 
-def usage_info(dataset: DatasetDescription) -> str:
+def usage_info(dataset: DatasetInfo) -> str:
     info = []
     if dataset.license is not None:
         info.append(f"This dataset is covered by the {dataset.license} license.")
@@ -93,7 +99,8 @@ def usage_info(dataset: DatasetDescription) -> str:
 
 
 def summarise_dataset(
-    structures: List[Atoms], description: DatasetDescription = None
+    structures: Union[List[Atoms], Dataset],
+    description: Optional[DatasetInfo] = None,
 ) -> str:
     name = description.name if description is not None else "Dataset"
     N = len(structures)
