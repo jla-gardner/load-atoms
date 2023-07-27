@@ -18,7 +18,16 @@ class Dataset:
         structures: List[Atoms],
         description: Optional[DatasetInfo] = None,
     ):
-        self.structures = [*structures]
+        if isinstance(structures, Atoms):
+            structures = [structures]
+            warnings.warn(
+                "Creating a dataset with a single structure. "
+                "Typically, datasets contain multiple structures - "
+                "did you mean to do this?",
+                UserWarning,
+            )
+
+        self.structures = structures
         self._description = description
 
     def __len__(self):
@@ -74,15 +83,7 @@ class Dataset:
 
     @classmethod
     def from_file(cls, path: Path):
-        structures = read(path, index=":")
-        if isinstance(structures, Atoms):
-            warnings.warn(
-                "Only one structure was found in the file. "
-                "Creating a dataset with a single structure."
-            )
-            structures = [structures]
-
-        return cls(structures)
+        return cls(read(path, index=":"))  # type: ignore
 
 
 def usage_info(dataset: DatasetInfo) -> str:

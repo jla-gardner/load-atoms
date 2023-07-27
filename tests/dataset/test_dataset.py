@@ -7,6 +7,7 @@ from ase.io import read, write
 
 from load_atoms import dataset
 from load_atoms.dataset import Dataset, summarise_dataset
+from load_atoms.shared import UnknownDatasetException
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
 
@@ -67,23 +68,23 @@ def test_indexing():
     ), "Indexing should return the correct number of structures"
 
 
-# def test_can_load_from_id():
-#     # pass root to avoid downloading the dataset
-#     structures = dataset("QM7", root="src/load_atoms/datasets")
-#     assert len(structures) == 7165
+def test_can_load_from_id():
+    # don't pass a root to mimic the default behaviour
+    structures = dataset("C-GAP-17")
+    assert len(structures) == 4530
 
-#     with pytest.raises(ValueError, match="is not known."):
-#         dataset("made_up_dataset")
+    with pytest.raises(UnknownDatasetException):
+        dataset("made_up_dataset")
 
 
-# def test_summarise():
-#     ds = dataset(STRUCTURES)
-#     summary = summarise_dataset(ds)
-#     assert "Dataset" in summary, "The summary should contain the dataset name"
+def test_summarise():
+    ds = dataset(STRUCTURES)
+    summary = summarise_dataset(ds)
+    assert "Dataset" in summary, "The summary should contain the dataset name"
 
-#     ds = dataset("C-GAP-17", root="src/load_atoms/datasets")
-#     summary = summarise_dataset(ds)
-#     assert "energy" in summary, "The summary should contain the property names"
+    ds = dataset("C-GAP-17", root="src/load_atoms/datasets")
+    summary = repr(ds)
+    assert "energy" in summary, "The summary should contain the property names"
 
 
 def test_useful_error_message():
@@ -98,3 +99,12 @@ def test_useful_error_message():
         match="The provided path does not exist.",
     ):
         dataset(Path("made_up_file.xyz"))
+
+
+def test_useful_warning():
+    structure = Atoms("H2O")
+    with pytest.warns(
+        UserWarning,
+        match="single structure",
+    ):
+        dataset(structure)  # type: ignore
