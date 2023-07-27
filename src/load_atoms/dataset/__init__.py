@@ -8,15 +8,15 @@ from ase.io import read
 from yaml import dump
 
 from load_atoms import backend
-from load_atoms.database import DATASETS, DatasetDescription, is_known_dataset
+from load_atoms.shared.dataset_info import DatasetInfo
 from load_atoms.util import frontend_url, intersection, is_numpy, union
 
 
 class Dataset:
     def __init__(
         self,
-        structures: Iterable[Atoms],
-        description: Optional[DatasetDescription] = None,
+        structures: List[Atoms],
+        description: Optional[DatasetInfo] = None,
     ):
         self.structures = [*structures]
         self._description = description
@@ -54,17 +54,22 @@ class Dataset:
     def from_id(
         cls, dataset_id: str, root: Union[Path, str, None] = None, verbose: bool = True
     ):
-        if not is_known_dataset(dataset_id):
-            raise ValueError(f"Dataset {dataset_id} is not known.")
+        """
+        Load a dataset by id.
+        """
 
-        dataset_info = DATASETS[dataset_id]
-        all_structures = backend.get_structures(dataset_info, root)
+        if root is None:
+            root = Path.home() / ".load_atoms"
+        root = Path(root)
+
+        all_structures, info = backend.get_structures_for(dataset_id, root)
+
         if verbose:
-            print(usage_info(dataset_info))
-        return cls(all_structures, dataset_info)
+            print(usage_info(info))
+        return cls(all_structures, info)
 
     @classmethod
-    def from_structures(cls, structures: Iterable[Atoms]):
+    def from_structures(cls, structures: List[Atoms]):
         return cls(structures)
 
     @classmethod
@@ -80,7 +85,7 @@ class Dataset:
         return cls(structures)
 
 
-def usage_info(dataset: DatasetDescription) -> str:
+def usage_info(dataset: DatasetInfo) -> str:
     info = []
     if dataset.license is not None:
         info.append(f"This dataset is covered by the {dataset.license} license.")
@@ -94,7 +99,8 @@ def usage_info(dataset: DatasetDescription) -> str:
 
 
 def summarise_dataset(
-    structures: List[Atoms], description: Optional[DatasetDescription] = None
+    structures: Union[List[Atoms], Dataset],
+    description: Optional[DatasetInfo] = None,
 ) -> str:
     name = description.name if description is not None else "Dataset"
     N = len(structures)
