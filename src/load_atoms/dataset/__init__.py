@@ -1,6 +1,6 @@
 import warnings
 from pathlib import Path
-from typing import Iterable, List, Optional, Union
+from typing import List, Optional, Union
 
 import numpy as np
 from ase import Atoms
@@ -8,8 +8,8 @@ from ase.io import read
 from yaml import dump
 
 from load_atoms import backend
+from load_atoms.shared import frontend_url, intersection, is_numpy, union
 from load_atoms.shared.dataset_info import DatasetInfo
-from load_atoms.util import frontend_url, intersection, is_numpy, union
 
 
 class Dataset:

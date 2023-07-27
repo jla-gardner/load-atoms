@@ -4,8 +4,8 @@ from typing import Dict, List, Optional
 import yaml
 from pydantic import BaseModel, validator
 
+from load_atoms.shared import BASE_REMOTE_URL
 from load_atoms.shared.checksums import valid_checksum
-from load_atoms.util import BASE_REMOTE_URL
 
 
 class DatasetInfo(BaseModel):

@@ -36,4 +36,4 @@ def test_download_all(tmp_path):
 
     # attempt to download a file that doesn't exist
     with pytest.raises(Exception):
-        download_all([RAW_GITHUB_URL + "fake-file.txt"], tmp_path)
+        download_all([RAW_GITHUB_URL + "fake-file.txt", *urls], tmp_path)
