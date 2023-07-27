@@ -4,6 +4,7 @@ from typing import List, Tuple
 
 from ase import Atoms
 from ase.io import read
+from rich.progress import track
 
 from load_atoms.shared import BASE_REMOTE_URL, UnknownDatasetException
 from load_atoms.shared.checksums import matches_checksum
@@ -123,7 +124,17 @@ class DataStorage:
 
         info = DatasetInfo.from_yaml_file(info_file)
         structures = []
-        for file_name in info.files:
+
+        iterator = info.files
+        if len(info.files) > 3:
+            # show a progress bar if there are many files
+            iterator = track(
+                info.files,
+                description=f"Reading files from disk for {dataset_id}",
+                transient=True,
+            )
+
+        for file_name in iterator:
             file = folder / file_name
             structures.extend(read(file, index=":"))
 

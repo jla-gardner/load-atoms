@@ -49,6 +49,10 @@ def test_incorrect_files():
     with pytest.raises(ValidationError):
         DatasetInfo(**kwargs)
 
+    kwargs["files"] = {"file1": "not a hash"}
+    with pytest.raises(ValidationError):
+        DatasetInfo(**kwargs)
+
 
 def test_incorrect_citation():
     kwargs = get_correct_dictionary()
