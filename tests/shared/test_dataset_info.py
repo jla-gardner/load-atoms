@@ -15,7 +15,7 @@ def get_correct_dictionary():
     project_root = Path(__file__).parent.parent.parent
     correct_yaml_file = project_root / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
-    return DatasetInfo.from_yaml_file(correct_yaml_file).dict()
+    return DatasetInfo.from_yaml_file(correct_yaml_file).model_dump()
 
 
 def test_incorrect_name():

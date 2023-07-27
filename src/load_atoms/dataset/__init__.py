@@ -20,6 +20,8 @@ class Dataset:
     ):
         if isinstance(structures, Atoms):
             structures = [structures]
+
+        if len(structures) == 1:
             warnings.warn(
                 "Creating a dataset with a single structure. "
                 "Typically, datasets contain multiple structures - "

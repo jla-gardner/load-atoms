@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 import yaml
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 from load_atoms.shared import BASE_REMOTE_URL
 from load_atoms.shared.checksums import valid_checksum
@@ -48,21 +48,21 @@ class DatasetInfo(BaseModel):
     url_root: str = BASE_REMOTE_URL
     """the root url of the dataset"""
 
-    @validator("license")
+    @field_validator("license")
     def validate_license(cls, v):
         valid_licences = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
         if v not in valid_licences:
             raise ValueError(f"Invalid license: {v}. Must be one of {valid_licences}")
         return v
 
-    @validator("files")
+    @field_validator("files")
     def validate_files(cls, v):
         for data in v.values():
             if not valid_checksum(data):
                 raise ValueError(f"Invalid checksum: {data}")
         return v
 
-    @validator("citation")
+    @field_validator("citation")
     def validate_citation(cls, v):
         v = v.strip()
         if v.startswith("@") and v.endswith("}"):

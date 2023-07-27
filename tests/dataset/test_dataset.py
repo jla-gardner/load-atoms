@@ -33,6 +33,7 @@ def test_dataset_writeable_and_readable(tmp_path):
     _is_water_dataset(ds3)
 
 
+@pytest.mark.filterwarnings("ignore:Creating a dataset with a single structure")
 def test_indexing():
     ds = dataset(STRUCTURES)
 
@@ -101,10 +102,12 @@ def test_useful_error_message():
         dataset(Path("made_up_file.xyz"))
 
 
-def test_useful_warning():
+def test_useful_warning(tmp_path):
     structure = Atoms("H2O")
+    write(tmp_path / "test.xyz", structure)  # type: ignore
+
     with pytest.warns(
         UserWarning,
         match="single structure",
     ):
-        dataset(structure)  # type: ignore
+        dataset(tmp_path / "test.xyz")
