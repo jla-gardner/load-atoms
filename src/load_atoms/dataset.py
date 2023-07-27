@@ -1,5 +1,6 @@
+import warnings
 from pathlib import Path
-from typing import Iterable, List, Union
+from typing import Iterable, List, Optional, Union
 
 import numpy as np
 from ase import Atoms
@@ -13,7 +14,9 @@ from load_atoms.util import frontend_url, intersection, is_numpy, union
 
 class Dataset:
     def __init__(
-        self, structures: Iterable[Atoms], description: DatasetDescription = None
+        self,
+        structures: Iterable[Atoms],
+        description: Optional[DatasetDescription] = None,
     ):
         self.structures = [*structures]
         self._description = description
@@ -48,15 +51,6 @@ class Dataset:
         return summarise_dataset(self.structures, self._description)
 
     @classmethod
-    def from_structures(cls, structures: Iterable[Atoms]):
-        return cls(structures)
-
-    @classmethod
-    def from_file(cls, path: Path):
-        structures = read(path, index=":")
-        return cls(structures, path.stem)
-
-    @classmethod
     def from_id(
         cls, dataset_id: str, root: Union[Path, str, None] = None, verbose: bool = True
     ):
@@ -76,6 +70,13 @@ class Dataset:
     @classmethod
     def from_file(cls, path: Path):
         structures = read(path, index=":")
+        if isinstance(structures, Atoms):
+            warnings.warn(
+                "Only one structure was found in the file. "
+                "Creating a dataset with a single structure."
+            )
+            structures = [structures]
+
         return cls(structures)
 
 
@@ -93,7 +94,7 @@ def usage_info(dataset: DatasetDescription) -> str:
 
 
 def summarise_dataset(
-    structures: List[Atoms], description: DatasetDescription = None
+    structures: List[Atoms], description: Optional[DatasetDescription] = None
 ) -> str:
     name = description.name if description is not None else "Dataset"
     N = len(structures)

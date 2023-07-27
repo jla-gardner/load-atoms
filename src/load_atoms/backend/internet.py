@@ -1,60 +1,102 @@
 import asyncio
-from dataclasses import dataclass
+from collections import namedtuple
 from pathlib import Path
 from typing import List, Optional
 
 import aiohttp
 import nest_asyncio
-from rich.progress import Progress
+import requests
+from rich.progress import Progress, track
 
 from load_atoms.util import do_nothing
 
 
-@dataclass
-class Download:
-    url: str
-    save_to: Path
-
-
-class RequestError(Exception):
-    def __init__(self, url: str, code: int):
-        message = f"Could not find {url}. Response code: {code}"
-        super().__init__(message)
-
-
-# support for nested asyncio loops, such that we can download
-# structures inside a jupyter notebook in parallel
-nest_asyncio.apply()
-
-
-def get_event_loop():
+def download(url: str, local_path: Path):
     """
-    get the current event loop, or create a new one if none exists
+    Download a file from the given url to the given path.
 
-    this is useful for running this code inside a jupyter notebook,
-    where an event loop already exists
+    If path is a file, the file will be downloaded to that path.
+    Else, the file will be downloaded to the given path, with the same name as
+    the file at the given url.
+
+    Parameters
+    ----------
+    url
+        The url to download the file from.
+    local_path
+        The path to download the file to.
     """
+    if local_path.is_dir():
+        local_path = local_path / Path(url).name
+
+    with requests.get(url, stream=True) as response:
+        # raise an exception if the request was not successful
+        response.raise_for_status()
+
+        with open(local_path, "wb") as f:
+            file_size = int(response.headers.get("content-length", 0))
+            large_file = file_size > 10 * 1024 * 1024  # 10 MB threshold
+
+            chunk_stream = response.iter_content(chunk_size=1024)
+            if large_file:
+                chunk_stream = track(
+                    chunk_stream,
+                    total=file_size,
+                    description=f"Downloading {local_path.name}...",
+                )
+
+            for chunk in chunk_stream:
+                if chunk:
+                    f.write(chunk)
+
+
+def download_all(urls: List[str], directory: Path):
+    """
+    Download all files from the given urls to the given directory.
+
+    Parameters
+    ----------
+    urls
+        A list of urls to download the files from.
+    directory
+        The directory to download the files to.
+    """
+    if len(urls) == 0:
+        return
+
+    if len(urls) == 1:
+        download(urls[0], directory)
+        return
+
+    if len(urls) <= 3:
+        for url in urls:
+            download(url, directory)
+        return
+
+    # async download all files if there are more than three
+    run_until_complete(_async_download_all(urls, directory))
+
+
+def run_until_complete(future):
+    # support for nested asyncio loops, such that we can run
+    # asyncio code from within a Jupyter notebook
+    nest_asyncio.apply()
+
     loop = asyncio.get_event_loop()
     if loop.is_running():
         loop = asyncio.get_running_loop()
     else:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-    return loop
+
+    loop.run_until_complete(future)
 
 
-def download_all(tasks: List[Download]):
-    """
-    download a list of files in parallel
-    """
-
-    # use the asyncio event loop to download the files asynchronously
-    # and in parrallel
-    loop = get_event_loop()
-    loop.run_until_complete(_download_all(tasks))
-
-
-async def _download_all(tasks: List[Download], num_workers: int = 16):
+async def _async_download_all(
+    urls: List[str],
+    directory: Path,
+    num_workers: int = 16,
+):
     """
     Download a list of files with up to
     `num_workers` parallel downloads.
@@ -62,11 +104,12 @@ async def _download_all(tasks: List[Download], num_workers: int = 16):
     Makes use of a asycnio.Queue to limit the number of parallel downloads,
     and a Rich Progress bar to show the progress.
     """
+    Task = namedtuple("Task", ["url", "save_to"])
 
-    # fill our queue with the tasks
+    # build our queue of tasks
     queue = asyncio.Queue()
-    for task in tasks:
-        queue.put_nowait(task)
+    for url in urls:
+        queue.put_nowait(Task(url, directory / Path(url).name))
 
     # make some workers to download the files
     async def worker(progress_bar: Progress, callback=None):
@@ -75,9 +118,9 @@ async def _download_all(tasks: List[Download], num_workers: int = 16):
         and updates the progress bar
         """
         while True:
-            # this loop runs forever, until this worker is cancelled
+            # this loop runs until this worker is cancelled
             task = await queue.get()
-            await download_file(task.url, task.save_to, progress_bar)
+            await _async_download(task.url, task.save_to, progress_bar)
             if callback is not None:
                 callback()
             queue.task_done()
@@ -85,7 +128,7 @@ async def _download_all(tasks: List[Download], num_workers: int = 16):
     # create a progress bar
     with Progress(transient=True) as progress:
         # overall progress bar
-        task = progress.add_task(f"Downloading files", total=len(tasks))
+        task = progress.add_task(f"Downloading files", total=len(urls))
         update_total = lambda: progress.update(task, advance=1)
 
         # create some workers: this automatically starts them
@@ -105,7 +148,7 @@ async def _download_all(tasks: List[Download], num_workers: int = 16):
         # everything is now downloaded!
 
 
-async def download_file(
+async def _async_download(
     url: str,
     save_to: Path,
     progress: Optional[Progress] = None,
@@ -124,8 +167,8 @@ async def download_file(
 
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
-            if response.status != 200:
-                raise RequestError(url, response.status)
+            # raise an exception if the request was not successful
+            response.raise_for_status()
 
             total_length = int(response.headers.get("content-length", 0))
 

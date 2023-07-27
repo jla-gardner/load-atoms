@@ -11,9 +11,9 @@ from ase import Atoms
 from ase.io import read
 from rich.progress import track
 
-from load_atoms.checksums import generate_checksum
 from load_atoms.database import DatasetDescription
 from load_atoms.download import Download, download_all
+from load_atoms.shared.checksums import generate_checksum
 from load_atoms.util import DEFAULT_DOWNLOAD_DIR
 
 

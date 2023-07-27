@@ -5,25 +5,48 @@ import yaml
 from pydantic import BaseModel, validator
 
 from load_atoms.shared.checksums import valid_checksum
-from load_atoms.util import BASE_REMOTE_URL, DATASETS_DIR
+from load_atoms.util import BASE_REMOTE_URL
 
 
-def is_bibtex(data: str) -> bool:
-    data = data.strip()
-    return data.startswith("@") and data.endswith("}")
+class DatasetInfo(BaseModel):
+    """
+    Represents the metadata of a dataset. Anything information that
+    is associated with a dataset (but not with a specific structure)
+    should be stored here.
 
+    This subclasses pydantic's BaseModel, which means that it can be
+    it will be automatically validated when it is created.
+    """
 
-class DatasetDescription(BaseModel):
     name: str
+    """the name of the dataset"""
+
     description: str
+    """a short description of the dataset"""
+
     files: Dict[str, str]
+    """a dictionary mapping file names to their checksums"""
+
     citation: Optional[str] = None
+    """a BibTeX citation for the dataset"""
+
     license: Optional[str] = None
+    """the license of the dataset"""
+
     representative_structures: Optional[List[int]] = None
+    """a list of indices of representative structures"""
+
     long_description: Optional[str] = None
+    """a longer description of the dataset"""
+
     per_atom_properties: Optional[dict] = None
+    """a mapping of per atom property keys to a description"""
+
     per_structure_properties: Optional[dict] = None
+    """a mapping of per structure property keys to a description"""
+
     url_root: str = BASE_REMOTE_URL
+    """the root url of the dataset"""
 
     @validator("license")
     def validate_license(cls, v):
@@ -41,35 +64,19 @@ class DatasetDescription(BaseModel):
 
     @validator("citation")
     def validate_citation(cls, v):
-        if not is_bibtex(v):
-            raise ValueError(f"Invalid BibTeX: {v}")
-        return v
+        v = v.strip()
+        if v.startswith("@") and v.endswith("}"):
+            return v
+        raise ValueError(f"Invalid BibTeX: {v}")
 
     @classmethod
-    def from_file(cls, path: Path) -> "DatasetDescription":
+    def from_file(cls, path: Path) -> "DatasetInfo":
+        """
+        Load dataset metadata from a .yaml description file.
+        """
         with open(path) as f:
             data = yaml.safe_load(f)
         return cls(**data)
 
 
-def find_all_descriptor_files() -> List[Path]:
-    """Find all descriptor files."""
-
-    return list(DATASETS_DIR.glob("**/*.yaml"))
-
-
-def is_known_dataset(dataset_id: str) -> bool:
-    """Check if a dataset is known."""
-    return dataset_id in DATASETS
-
-
-def get_description_of(dataset_id: str) -> DatasetDescription:
-    """Get the database entry for a dataset."""
-    assert is_known_dataset(dataset_id), f"Dataset {dataset_id} is not known."
-    return DATASETS[dataset_id]
-
-
-DATASETS = {}
-for file in find_all_descriptor_files():
-    entry = DatasetDescription.from_file(file)
-    DATASETS[entry.name] = entry
+DatasetId = str
