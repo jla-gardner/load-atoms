@@ -1,14 +1,9 @@
-import asyncio
-from collections import namedtuple
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 
-import aiohttp
-import nest_asyncio
 import requests
-from rich.progress import Progress, track
-
-from load_atoms.util import do_nothing
+from rich.progress import Progress, TaskID
 
 
 def download(url: str, local_path: Path):
@@ -26,28 +21,10 @@ def download(url: str, local_path: Path):
     local_path
         The path to download the file to.
     """
-    if local_path.is_dir():
-        local_path = local_path / Path(url).name
 
-    with requests.get(url, stream=True) as response:
-        # raise an exception if the request was not successful
-        response.raise_for_status()
-
-        with open(local_path, "wb") as f:
-            file_size = int(response.headers.get("content-length", 0))
-            large_file = file_size > 10 * 1024 * 1024  # 10 MB threshold
-
-            chunk_stream = response.iter_content(chunk_size=1024)
-            if large_file:
-                chunk_stream = track(
-                    chunk_stream,
-                    total=file_size,
-                    description=f"Downloading {local_path.name}...",
-                )
-
-            for chunk in chunk_stream:
-                if chunk:
-                    f.write(chunk)
+    with Progress(transient=True) as progress:
+        task = progress.add_task(f"Downloading {Path(url).name}", start=False)
+        _download_with_progress(url, local_path, progress, task)
 
 
 def download_all(urls: List[str], directory: Path):
@@ -61,6 +38,7 @@ def download_all(urls: List[str], directory: Path):
     directory
         The directory to download the files to.
     """
+
     if len(urls) == 0:
         return
 
@@ -68,121 +46,50 @@ def download_all(urls: List[str], directory: Path):
         download(urls[0], directory)
         return
 
-    if len(urls) <= 3:
+    pool_exectutor = ThreadPoolExecutor(max_workers=8, thread_name_prefix="download")
+    futures = []
+    with Progress(transient=True) as progress, pool_exectutor as pool:
         for url in urls:
-            download(url, directory)
-        return
+            task = progress.add_task(f"Downloading {Path(url).name}", start=False)
+            future = pool.submit(
+                _download_with_progress, url, directory, progress, task
+            )
+            futures.append((future, url))
 
-    # async download all files if there are more than three
-    run_until_complete(_async_download_all(urls, directory))
+    failures = []
+    for future, url in futures:
+        try:
+            future.result()
+        except Exception as e:
+            failures.append(url)
 
+    if len(failures) > 0:
+        raise Exception(f"Failed to download {len(failures)} files: {failures}")
 
-def run_until_complete(future):
-    # support for nested asyncio loops, such that we can run
-    # asyncio code from within a Jupyter notebook
-    nest_asyncio.apply()
-
-    loop = asyncio.get_event_loop()
-    if loop.is_running():
-        loop = asyncio.get_running_loop()
-    else:
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-    loop.run_until_complete(future)
+    pool_exectutor.shutdown()
 
 
-async def _async_download_all(
-    urls: List[str],
-    directory: Path,
-    num_workers: int = 16,
+def _download_with_progress(
+    url: str, local_path: Path, progress: Progress, task: TaskID
 ):
     """
-    Download a list of files with up to
-    `num_workers` parallel downloads.
-
-    Makes use of a asycnio.Queue to limit the number of parallel downloads,
-    and a Rich Progress bar to show the progress.
+    download the file at the given url to the given path, and update the given
+    progress bar as the file is downloaded.
     """
-    Task = namedtuple("Task", ["url", "save_to"])
+    if local_path.is_dir():
+        local_path = local_path / Path(url).name
+    local_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # build our queue of tasks
-    queue = asyncio.Queue()
-    for url in urls:
-        queue.put_nowait(Task(url, directory / Path(url).name))
+    with requests.get(url, stream=True) as response:
+        # raise an exception if the request was not successful
+        response.raise_for_status()
 
-    # make some workers to download the files
-    async def worker(progress_bar: Progress, callback=None):
-        """
-        a worker that continuously downloads files from the queue
-        and updates the progress bar
-        """
-        while True:
-            # this loop runs until this worker is cancelled
-            task = await queue.get()
-            await _async_download(task.url, task.save_to, progress_bar)
-            if callback is not None:
-                callback()
-            queue.task_done()
+        file_size = int(response.headers.get("content-length", 0))
+        progress.update(task, total=file_size)
+        progress.start_task(task)
 
-    # create a progress bar
-    with Progress(transient=True) as progress:
-        # overall progress bar
-        task = progress.add_task(f"Downloading files", total=len(urls))
-        update_total = lambda: progress.update(task, advance=1)
-
-        # create some workers: this automatically starts them
-        workers = [
-            asyncio.create_task(worker(progress, callback=update_total))
-            for _ in range(num_workers)
-        ]
-
-        # wait for the queue to be empty, i.e. all files have been downloaded
-        await queue.join()
-
-        # wait until all workers are cancelled
-        for worker in workers:
-            worker.cancel()
-        await asyncio.gather(*workers, return_exceptions=True)
-
-        # everything is now downloaded!
-
-
-async def _async_download(
-    url: str,
-    save_to: Path,
-    progress: Optional[Progress] = None,
-    task_description: Optional[str] = None,
-):
-    """
-    Download a file from the internet.
-
-    Optionally use a Rich Progress bar to show the progress.
-    """
-
-    if task_description is None:
-        task_description = save_to.name
-
-    save_to.parent.mkdir(parents=True, exist_ok=True)
-
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            # raise an exception if the request was not successful
-            response.raise_for_status()
-
-            total_length = int(response.headers.get("content-length", 0))
-
-            if progress is not None:
-                task = progress.add_task(task_description, total=total_length)
-                callback = lambda chunk: progress.update(task, advance=len(chunk))
-                cleanup = lambda: progress.remove_task(task)
-            else:
-                callback = do_nothing
-                cleanup = do_nothing
-
-            with save_to.open("wb") as f:
-                async for chunk in response.content.iter_chunked(1024):
+        with open(local_path, "wb") as f:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk:
                     f.write(chunk)
-                    callback(chunk)
-
-            cleanup()
+                    progress.update(task, advance=len(chunk))

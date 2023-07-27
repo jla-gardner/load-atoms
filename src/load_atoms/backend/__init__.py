@@ -5,9 +5,9 @@ from typing import List, Tuple
 from ase import Atoms
 from ase.io import read
 
-from load_atoms.dataset_info import DatasetId, DatasetInfo
 from load_atoms.shared import BASE_REMOTE_URL, UnknownDatasetException
 from load_atoms.shared.checksums import matches_checksum
+from load_atoms.shared.dataset_info import DatasetId, DatasetInfo
 
 from . import internet
 

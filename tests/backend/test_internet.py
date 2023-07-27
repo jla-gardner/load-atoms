@@ -1,8 +1,14 @@
-from load_atoms.backend.internet import download
+from pathlib import Path
+
+import pytest
+
+from load_atoms.backend.internet import download, download_all
+
+RAW_GITHUB_URL = "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/"
 
 
 def test_download(tmp_path):
-    url = "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/README.md"
+    url = RAW_GITHUB_URL + "README.md"
     save_to = tmp_path / "test"
 
     # check downloading to explicit file works:
@@ -12,3 +18,22 @@ def test_download(tmp_path):
     # check downloading to directory works:
     download(url, tmp_path)
     assert (tmp_path / "README.md").exists()
+
+    fake_url = RAW_GITHUB_URL + "fake-file.txt"
+    with pytest.raises(Exception):
+        download(fake_url, save_to)
+
+
+def test_download_all(tmp_path):
+    files = ["README.md", "LICENSE", ".gitignore"]
+    urls = [RAW_GITHUB_URL + f for f in files]
+
+    download_all(urls, tmp_path)
+
+    assert all((tmp_path / f).exists() for f in files)
+
+    fake_file = RAW_GITHUB_URL + "fake-file.txt"
+    fake_urls = urls + [fake_file]
+
+    with pytest.raises(Exception):
+        download_all(fake_urls, tmp_path)
