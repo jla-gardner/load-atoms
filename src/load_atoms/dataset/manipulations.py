@@ -1,3 +1,7 @@
+"""
+convenience functions for manipulating datasets
+"""
+
 from typing import Callable, Optional, Sequence, Tuple, Union
 
 import numpy as np

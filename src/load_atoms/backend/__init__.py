@@ -43,8 +43,7 @@ def get_structures_for(
 
 class DataStorage:
     """
-    A Class that handles the storage of datasets at a specific path.
-
+    Handle the storage of datasets at a specific path.
 
     Each dataset is stored in a sub-directory with name <dataset_id>.
     Within this directory, the dataset description is stored in a .yaml
@@ -84,7 +83,7 @@ class DataStorage:
             except Exception as e:
                 raise UnknownDatasetException(dataset_id) from e
 
-        info = DatasetInfo.from_file(info_file)
+        info = DatasetInfo.from_yaml_file(info_file)
 
         # download any missing dataset files
         missing_files = {
@@ -122,7 +121,7 @@ class DataStorage:
         folder = self._sub_folder_for(dataset_id)
         info_file = folder / (dataset_id + ".yaml")
 
-        info = DatasetInfo.from_file(info_file)
+        info = DatasetInfo.from_yaml_file(info_file)
         structures = []
         for file_name in info.files:
             file = folder / file_name

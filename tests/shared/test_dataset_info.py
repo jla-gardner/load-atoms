@@ -3,7 +3,6 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from load_atoms.shared.checksums import generate_checksum
 from load_atoms.shared.dataset_info import DatasetInfo
 
 
@@ -16,7 +15,7 @@ def get_correct_dictionary():
     project_root = Path(__file__).parent.parent.parent
     correct_yaml_file = project_root / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
-    return DatasetInfo.parse_file(correct_yaml_file).dict()
+    return DatasetInfo.from_yaml_file(correct_yaml_file).dict()
 
 
 def test_incorrect_name():

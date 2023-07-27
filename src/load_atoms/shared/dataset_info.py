@@ -70,7 +70,7 @@ class DatasetInfo(BaseModel):
         raise ValueError(f"Invalid BibTeX: {v}")
 
     @classmethod
-    def from_file(cls, path: Path) -> "DatasetInfo":
+    def from_yaml_file(cls, path: Path) -> "DatasetInfo":
         """
         Load dataset metadata from a .yaml description file.
         """
