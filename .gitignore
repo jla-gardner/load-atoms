@@ -14,4 +14,4 @@ publish.sh
 **/examples/*
 !**/examples/*.ipynb
 
-testing
+testing*

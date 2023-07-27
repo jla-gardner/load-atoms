@@ -15,3 +15,4 @@ def test_matches_contents(tmp_path):
 
     assert matches_checksum(fake_file, correct_hash)
     assert not matches_checksum(fake_file, incorrect_hash)
+    assert not matches_checksum(fake_file, correct_hash[:-1])

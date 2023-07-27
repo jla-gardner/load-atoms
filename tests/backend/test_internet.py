@@ -25,15 +25,15 @@ def test_download(tmp_path):
 
 
 def test_download_all(tmp_path):
+    # download_all on nothing should do nothing
+    download_all([], tmp_path)
+
+    # download a few files we know exist
     files = ["README.md", "LICENSE", ".gitignore"]
     urls = [RAW_GITHUB_URL + f for f in files]
-
     download_all(urls, tmp_path)
-
     assert all((tmp_path / f).exists() for f in files)
 
-    fake_file = RAW_GITHUB_URL + "fake-file.txt"
-    fake_urls = urls + [fake_file]
-
+    # attempt to download a file that doesn't exist
     with pytest.raises(Exception):
-        download_all(fake_urls, tmp_path)
+        download_all([RAW_GITHUB_URL + "fake-file.txt"], tmp_path)

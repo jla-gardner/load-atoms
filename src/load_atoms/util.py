@@ -6,7 +6,6 @@ import numpy as np
 # this file is at <root>/src/load_atoms/util.py
 # the datasets are at <root>/src/load_atoms/datasets
 DATASETS_DIR = (Path(__file__).parent / "datasets").resolve()
-DEFAULT_DOWNLOAD_DIR = Path.home() / ".load_atoms"
 BASE_REMOTE_URL = (
     "https://github.com/jla-gardner/load-atoms/raw/main/src/load_atoms/datasets/"
 )
