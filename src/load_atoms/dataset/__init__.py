@@ -18,9 +18,6 @@ class Dataset:
         structures: List[Atoms],
         description: Optional[DatasetInfo] = None,
     ):
-        if isinstance(structures, Atoms):
-            structures = [structures]
-
         if len(structures) == 1:
             warnings.warn(
                 "Creating a dataset with a single structure. "
