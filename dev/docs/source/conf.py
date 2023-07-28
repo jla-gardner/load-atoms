@@ -32,10 +32,19 @@ exclude_patterns = []
 html_theme = "furo"
 html_static_path = ["_static"]
 html_logo = "logo.svg"
+
+our_colour = "#ef9940"
 html_theme_options = {
     "sidebar_hide_name": True,
+    "light_css_variables": {
+        "color-brand-primary": our_colour,
+        "color-brand-content": our_colour,
+    },
+    "dark_css_variables": {
+        "color-brand-primary": our_colour,
+        "color-brand-content": our_colour,
+    },
 }
-
 
 # Other stuff
 

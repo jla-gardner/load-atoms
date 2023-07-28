@@ -22,14 +22,6 @@ with geometries relaxed using an empirical potential
             per atom: ()
             per structure: (energy)
 
-A representative structure from this dataset:
-
-.. raw:: html
-    :file: ../_static/visualisations/x3d.html
-
-.. raw:: html
-   :file: ../_static/visualisations/QM7/1.html
-
 
 
 

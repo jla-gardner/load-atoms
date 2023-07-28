@@ -17,8 +17,8 @@ For details, see https://doi.org/10.1039/D2DD00137C.
         species:
             C: 100.00%
         properties:
-            per atom: (gap17_energy, gap17_forces)
-            per structure: (density, time, run_id, anneal_T)
+            per atom: (gap17_forces, gap17_energy)
+            per structure: (density, anneal_T, time, run_id)
 
 
 

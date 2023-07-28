@@ -1,6 +1,6 @@
-from generate_page import DOC_SOURCE, build_datasets_index, build_page
+from pathlib import Path
 
-from load_atoms.database import DATASETS
+from generate_page import DATASETS, DOC_SOURCE, build_datasets_index, build_page
 
 if __name__ == "__main__":
     for file in (DOC_SOURCE / "datasets").glob("*.rst"):

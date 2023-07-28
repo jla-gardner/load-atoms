@@ -3,7 +3,7 @@ from typing import List, Union
 
 from ase import Atoms
 
-from load_atoms.dataset import Dataset
+from load_atoms.logic import Dataset
 
 
 def dataset(

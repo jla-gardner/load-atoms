@@ -2,5 +2,5 @@ Core
 ====
 
 .. autofunction:: load_atoms.dataset
-.. autoclass:: load_atoms.dataset.Dataset 
+.. autoclass:: load_atoms.logic.Dataset 
 

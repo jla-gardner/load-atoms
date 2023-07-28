@@ -17,15 +17,7 @@ https://doi.org/10.17863/CAM.7453
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (split, energy, config_type, detailed_ct)
-
-A representative structure from this dataset:
-
-.. raw:: html
-    :file: ../_static/visualisations/x3d.html
-
-.. raw:: html
-   :file: ../_static/visualisations/C-GAP-17/1.html
+            per structure: (detailed_ct, energy, split, config_type)
 
 
 
