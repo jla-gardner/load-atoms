@@ -22,7 +22,7 @@ Usage
 
 The main entry point to `load-atoms` is the :func:`dataset` function. This can be used to download any dataset that this package currently supports:
 
-.. code-block:: python
+.. code-block:: pycon
 
    >>> from load_atoms import dataset
    >>> structures = dataset("C-GAP-17")
