@@ -10,17 +10,17 @@ We place a heavy emphasis on testing as a means to ensure the code base remains 
 
 ## Package architecture and design
 
-The `load-atoms` code (located at [src/load-atoms](../src/load_atoms/)) is comprised of several modules, forming 3 natural layers to the package:
+The `load-atoms` code (located at [src/load-atoms](../../src/load_atoms/)) is comprised of several modules, forming 3 natural layers to the package:
 
 ![](architecture.svg)
 
 Working from bottom to top, these layers are:
 
-1. The **Backend** Layer: `load-atoms` allows users to download atomic datasets from the internet. Thus the backend is responsible for downloading and caching the data. The single function this module exposes is [`get_structures_for(datset_id, root: Path)`](../src/load_atoms/backend/__init__.py) which:
+1. The **Backend** Layer: `load-atoms` allows users to download atomic datasets from the internet. Thus the backend is responsible for downloading and caching the data. The single function this module exposes is [`get_structures_for(datset_id, root: Path)`](../../src/load_atoms/backend/__init__.py) which:
    - downloads all the necessary files from the internet (if necessary)
    - stores them in an easy to inspect format in the `root` directory
    - returns a list of all the datasets structures as `ase.Atoms` objects
-2. The **Logic** Layer: `load-atoms` provides a [`Dataset`](../src/load_atoms/dataset/__init__.py) class which is a thin wrapper around a list of `ase.Atoms` objects. Several other convenience functions are defined in this module for data manipulation.
+2. The **Logic** Layer: `load-atoms` provides a [`Dataset`](../../src/load_atoms/dataset/__init__.py) class which is a thin wrapper around a list of `ase.Atoms` objects. Several other convenience functions are defined in this module for data manipulation.
 3. The **API** Layer: this module is solely responsible for presenting a curated, well documented and user-friendly interface to the `load-atoms` package. The main function this exposes is `dataset`.
 
 To enable communication between the `Dataset` and `Backend` layers, the `DatsetInfo` and `DatasetId` interface classes are defined in their own, stand-alone module `load_atoms.shared`.
@@ -28,10 +28,10 @@ To enable communication between the `Dataset` and `Backend` layers, the `DatsetI
 ## Dataset specification
 
 `load-atoms` defines a specification for the metadata to be included with each dataset.
-As an example of what one of these contains, see [database/C-GAP-17/C-GAP-17.yaml](../database/C-GAP-17/C-GAP-17.yaml). 
-The complete specification is defined programmatically in the [`DatasetInfo`](../src/load_atoms/shared/dataset_info.py) class.
+As an example of what one of these contains, see [database/C-GAP-17/C-GAP-17.yaml](../../database/C-GAP-17/C-GAP-17.yaml). 
+The complete specification is defined programmatically in the [`DatasetInfo`](../../src/load_atoms/shared/dataset_info.py) class.
 
-Alongside the `load-atoms` python code base, this repository also stores all the datasets that are available for download, each in its own directory in the [database](../database) directory.
+Alongside the `load-atoms` python code base, this repository also stores all the datasets that are available for download, each in its own directory in the [database](../../database) directory.
 
 Adding a dataset to the database is as simple as creating a new directory, adding a `yaml` file containing the metadata for the dataset and submitting a pull request. See [adding-a-dataset.md](adding-a-dataset.md) for more details.
 

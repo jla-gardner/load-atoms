@@ -5,12 +5,16 @@ from pathlib import Path
 from x3d import visualisation_for
 
 from load_atoms import dataset
-from load_atoms.database import DATASETS, is_known_dataset
+from load_atoms.shared.dataset_info import DatasetInfo
 
-THIS_FILE = Path(__file__).resolve()
-PROJECT_ROOT = THIS_FILE.parent.parent
-DOC_SOURCE = PROJECT_ROOT / "docs/source"
-
+# this file is at dev/scripts/rebuild_all_docs.py
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+# database is at root/database/
+DATASETS = [d.name for d in (PROJECT_ROOT / "database").glob("*") if d.is_dir()]
+# docs are at dev/docs/
+DOC_SOURCE = PROJECT_ROOT / "dev/docs/source"
+# source folder for dataset downloads
+DOWNLOAD_DIR = PROJECT_ROOT / "testing-datasets"
 
 PAGE_TEMPLATE = """\
 {title}
@@ -48,8 +52,9 @@ This dataset is licensed under the {license} license.
 
 def page_content(dataset_id: str) -> str:
     # avoid actually downloading the dataset
-    structures = dataset(dataset_id)
-    dataset_description = DATASETS[dataset_id]
+    structures = dataset(dataset_id, root=DOWNLOAD_DIR)
+    dataset_description: DatasetInfo = structures._description  # type: ignore
+
     summary = str(structures)
 
     license = ""
@@ -59,23 +64,24 @@ def page_content(dataset_id: str) -> str:
     title = dataset_description.name + "\n" + "=" * len(dataset_description.name)
 
     visualisations = ""
-    if dataset_description.representative_structures:
-        shutil.rmtree(
-            DOC_SOURCE / "_static/visualisations" / dataset_id, ignore_errors=True
-        )
-        visualisations += VISUALISATION
-        for i in dataset_description.representative_structures[:1]:
-            # TODO work out how to show more than 1 visualisation without
-            # them breaking onto new lines
-            structures[i].wrap()
-            structures[i].center()
-            x3d = visualisation_for(structures[i])
-            ref = f"_static/visualisations/{dataset_id}/{i}.html"
-            fname = DOC_SOURCE / ref
-            fname.parent.mkdir(parents=True, exist_ok=True)
-            with open(fname, "w") as f:
-                f.write(x3d)
-            visualisations += f".. raw:: html\n   :file: ../{ref}\n\n"
+    # TODO un break this
+    # if dataset_description.representative_structures:
+    #     shutil.rmtree(
+    #         DOC_SOURCE / "_static/visualisations" / dataset_id, ignore_errors=True
+    #     )
+    #     visualisations += VISUALISATION
+    #     for i in dataset_description.representative_structures[:1]:
+    #         # TODO work out how to show more than 1 visualisation without
+    #         # them breaking onto new lines
+    #         structures[i].wrap()
+    #         structures[i].center()
+    #         x3d = visualisation_for(structures[i])
+    #         ref = f"_static/visualisations/{dataset_id}/{i}.html"
+    #         fname = DOC_SOURCE / ref
+    #         fname.parent.mkdir(parents=True, exist_ok=True)
+    #         with open(fname, "w") as f:
+    #             f.write(x3d)
+    #         visualisations += f".. raw:: html\n   :file: ../{ref}\n\n"
 
     citation = dataset_description.citation or ""
     return PAGE_TEMPLATE.format(
@@ -120,7 +126,6 @@ def build_datasets_index():
 
 if __name__ == "__main__":
     dataset_id = sys.argv[1]
-    assert is_known_dataset(dataset_id), f"Dataset {dataset_id} is not known."
 
     build_page(dataset_id)
     build_datasets_index()

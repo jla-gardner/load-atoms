@@ -17,16 +17,8 @@ and https://doi.org/10.17863/CAM.82086
         species:
             C: 100.00%
         properties:
-            per atom: (force, force_U)
-            per structure: (nneightol, config_type, energy, energy_U, cutoff)
-
-A representative structure from this dataset:
-
-.. raw:: html
-    :file: ../_static/visualisations/x3d.html
-
-.. raw:: html
-   :file: ../_static/visualisations/C-GAP-20/1.html
+            per atom: (force_U, force)
+            per structure: (energy, cutoff, nneightol, energy_U, config_type)
 
 
 

@@ -20,14 +20,14 @@ jobs:
             - name: Install pandoc
               run: $APT_INSTALL pandoc
             - name: Sphinx build
-              run: sphinx-build docs/source docs/build
+              run: sphinx-build dev/docs/source dev/docs/build
             - name: Sphinx link check
-              run: sphinx-build -b linkcheck docs/source docs/build
+              run: sphinx-build -b linkcheck dev/docs/source dev/docs/build
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
               if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
               with:
                   publish_branch: gh-pages
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: docs/build/
+                  publish_dir: dev/docs/build/
                   force_orphan: true

@@ -17,7 +17,7 @@ https://doi.org/10.5281/zenodo.1250555
             Si: 100.00%
         properties:
             per atom: (force)
-            per structure: (nneightol, config_type, cutoff, energy)
+            per structure: (energy, nneightol, cutoff, config_type)
 
 
 
