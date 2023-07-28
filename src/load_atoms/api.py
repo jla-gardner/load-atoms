@@ -18,8 +18,8 @@ def dataset(
     thing
         A dataset id, a list of structures, or a path to a file.
     root
-        The root directory to use when loading a dataset by id.
-        If not provided, the default root directory will be used.
+        The root directory to use when loading a dataset by id. If not
+        provided, the default root directory (`~/.load-atoms`) will be used.
 
     Returns
     -------

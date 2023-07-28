@@ -9,6 +9,8 @@ from ase import Atoms
 
 from load_atoms.logic import Dataset
 
+__all__ = ["filter_by", "cross_validate_split"]
+
 FilterFunction = Callable[[Atoms], bool]
 
 
@@ -39,7 +41,7 @@ def filter_by(
     Examples
     --------
     >>> from ase import Atoms
-    >>> from load_atoms.dataset.manipulations import filter_by
+    >>> from load_atoms.manipulations import filter_by
     >>> structures = [
     ...     Atoms("H2O", info=dict(name="water")),
     ...     Atoms("H2O2", info=dict(name="hydrogen peroxide")),
@@ -79,7 +81,43 @@ def cross_validate_split(
     n_test: Optional[int] = None,
     seed: int = 0,
 ) -> Tuple[Dataset, Dataset]:
-    """Generate a shuffled train/test split for cross-validation."""
+    """
+    Generate a shuffled train/test split for cross-validation.
+
+    Parameters
+    ----------
+    dataset : Union[Dataset, Sequence[Atoms]]
+        The dataset to split.
+    fold : int
+        The fold to use for testing.
+    k : int, optional
+        The number of folds to use, by default 5.
+    n_test : Optional[int], optional
+        The number of structures to use for testing, by default None.
+        If None, this will be set to len(dataset) // k.
+    seed : int, optional
+        The random seed to use, by default 0.
+
+    Returns
+    -------
+    Tuple[Dataset, Dataset]
+        The train and test datasets.
+
+    Examples
+    --------
+    >>> from ase import Atoms
+    >>> from load_atoms.manipulations import cross_validate_split
+    >>> structures = [
+    ...     Atoms("H2O", info=dict(name="water")),
+    ...     Atoms("H2O2", info=dict(name="hydrogen peroxide")),
+    ...     Atoms("CH4", info=dict(name="methane")),
+    ... ]
+    >>> train, test = cross_validate_split(structures, fold=0, k=3)
+    >>> len(train)
+    2
+    >>> len(test)
+    1
+    """
 
     if n_test is None:
         n_test = len(dataset) // k

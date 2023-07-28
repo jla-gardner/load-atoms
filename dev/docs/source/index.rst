@@ -64,7 +64,8 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
    :caption: API:
    :hidden:
 
-   api
+   api/dataset
+   api/manipulations
 
 .. toctree::
    :maxdepth: 3

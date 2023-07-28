@@ -13,6 +13,17 @@ from load_atoms.shared.dataset_info import DatasetInfo
 
 
 class Dataset:
+    """
+    A collection of structures, with some optional metadata.
+
+    Parameters
+    ----------
+    structures : List[Atoms]
+        a list of structures
+    description : Optional[DatasetInfo]
+        an optional DatasetInfo object
+    """
+
     def __init__(
         self,
         structures: List[Atoms],
@@ -32,7 +43,7 @@ class Dataset:
     def __len__(self):
         return len(self.structures)
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: Union[int, slice, np.ndarray]):
         # if the passed index is a slice, return a new Dataset object:
         if isinstance(index, slice):
             return Dataset(self.structures[index])
@@ -46,7 +57,7 @@ class Dataset:
                 return Dataset([self.structures[i] for i in to_keep])
 
             # some other iterable, e.g. a list of indices
-            return Dataset([self.structures[i] for i in index])
+            return Dataset([self.structures[i] for i in index])  # type: ignore
 
         # otherwise, we assume the index is an integer,
         # and return a single structure
@@ -60,14 +71,26 @@ class Dataset:
 
     @classmethod
     def from_id(
-        cls, dataset_id: str, root: Union[Path, str, None] = None, verbose: bool = True
-    ):
+        cls,
+        dataset_id: str,
+        root: Union[Path, str, None] = None,
+        verbose: bool = True,
+    ) -> "Dataset":
         """
         Load a dataset by id.
+
+        Parameters
+        ----------
+        dataset_id : str
+            the id of the dataset to load
+        root : Union[Path, str, None], optional
+            the root directory to cache the dataset to, by default None
+        verbose : bool, optional
+            whether to print information about the dataset, by default True
         """
 
         if root is None:
-            root = Path.home() / ".load_atoms"
+            root = Path.home() / ".load-atoms"
         root = Path(root)
 
         all_structures, info = backend.get_structures_for(dataset_id, root)
@@ -77,11 +100,27 @@ class Dataset:
         return cls(all_structures, info)
 
     @classmethod
-    def from_structures(cls, structures: List[Atoms]):
+    def from_structures(cls, structures: List[Atoms]) -> "Dataset":
+        """
+        Create a dataset from a list of structures.
+
+        Parameters
+        ----------
+        structures : List[Atoms]
+            a list of structures
+        """
         return cls(structures)
 
     @classmethod
-    def from_file(cls, path: Path):
+    def from_file(cls, path: Path) -> "Dataset":
+        """
+        Load a dataset from an `ase.io.read`'able file.
+
+        Parameters
+        ----------
+        path : Path
+            the path to the file to load
+        """
         return cls(read(path, index=":"))  # type: ignore
 
 
