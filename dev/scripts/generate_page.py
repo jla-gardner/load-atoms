@@ -51,6 +51,15 @@ This dataset is licensed under the {license} license.
 
 
 def page_content(dataset_id: str) -> str:
+    # delete the dataset if it exists
+    shutil.rmtree(DOWNLOAD_DIR / dataset_id, ignore_errors=True)
+
+    # copy over what we need
+    shutil.copytree(
+        PROJECT_ROOT / "database" / dataset_id,
+        DOWNLOAD_DIR / dataset_id,
+    )
+
     # avoid actually downloading the dataset
     structures = dataset(dataset_id, root=DOWNLOAD_DIR)
     dataset_description: DatasetInfo = structures._description  # type: ignore

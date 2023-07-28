@@ -19,6 +19,8 @@ The complete training dataset for the P-GAP-20 model.
 
 
 
+This dataset is licensed under the CC-BY-4.0 license.
+
 
 
 .. code-block:: bibtex

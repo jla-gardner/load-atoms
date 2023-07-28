@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="dev/docs/source/logo.svg" width="50%"/>
+    <img src="https://github.com/jla-gardner/load-atoms/blob/main/dev/docs/source/logo.svg" width="50%"/>
     </br>
 </div>
     
