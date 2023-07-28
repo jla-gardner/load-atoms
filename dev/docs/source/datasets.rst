@@ -11,3 +11,4 @@
     datasets/P-GAP-20
     datasets/QM7
     datasets/Si-GAP-18
+    datasets/SiO2-GAP-21
