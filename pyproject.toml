@@ -48,4 +48,4 @@ push = false
 [tool.bumpver.file_patterns]
 "pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
 "src/load_atoms/__init__.py" = ["{version}"]
-"dev/docs/conf.py" = ["{release}"]
+"dev/docs/source/conf.py" = ['release = "{version}"']
