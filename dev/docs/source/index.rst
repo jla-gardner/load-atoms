@@ -78,5 +78,5 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 Development & Contributions
 ---------------------------
 We welcome any suggestions and contributions to this project.
-If you wish to do so, please follow the instructions in the :doc:`contributing guide <contributing>`. 
-**TODO**: add link to contributing guide and make the guide
+Please visit our `GitHub repository <https://github.com/jla-gardner/load-atoms>`_ to report issues or submit pull requests.
+The `developer guide <https://github.com/jla-gardner/load-atoms/blob/main/dev/developer-guide>`_ contains information on how to set up a development environment and run the tests.
