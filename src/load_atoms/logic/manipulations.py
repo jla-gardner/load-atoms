@@ -7,7 +7,7 @@ from typing import Callable, Optional, Sequence, Tuple, Union
 import numpy as np
 from ase import Atoms
 
-from load_atoms.dataset import Dataset
+from load_atoms.logic import Dataset
 
 FilterFunction = Callable[[Atoms], bool]
 

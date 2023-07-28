@@ -1,7 +1,7 @@
 import pytest
 from ase import Atoms
 
-from load_atoms.dataset.manipulations import cross_validate_split, filter_by
+from load_atoms.logic.manipulations import cross_validate_split, filter_by
 
 structures = [
     Atoms("H2O", info=dict(name="water")),
