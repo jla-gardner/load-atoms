@@ -1,6 +1,6 @@
 import warnings
 from pathlib import Path
-from typing import List, Optional, Union
+from typing import Iterable, List, Optional, Union
 
 import numpy as np
 from ase import Atoms
@@ -14,20 +14,52 @@ from load_atoms.shared.dataset_info import DatasetInfo
 
 class Dataset:
     """
-    A collection of structures, with some optional metadata.
+    A lightweight wrapper around a list of `ase.Atoms` objects.
 
-    Parameters
-    ----------
-    structures : List[Atoms]
-        a list of structures
-    description : Optional[DatasetInfo]
-        an optional DatasetInfo object
+    Examples
+    -----------------
+
+    >>> from load_atoms import dataset
+    >>> ds = dataset("QM7")
+    Please cite this dataset if you use it in your work.
+    For more information, visit:
+    https://jla-gardner.github.io/load-atoms/datasets/QM7.html
+
+    `ds` is now a `Dataset` object - treat it like a list of `Atoms` objects:
+
+    >>> from load_atoms.logic import Dataset
+    >>> isinstance(ds, Dataset)
+    True
+    >>> len(ds)
+    7165
+    >>> ds[0]
+    Atoms(symbols='CH4', pbc=False)
+
+    Slicing the dataset returns a new `Dataset` object:
+
+    >>> isinstance(ds[1:3], Dataset)
+    True
+
+    You can get a summary of the dataset by printing it:
+
+    >>> print(ds)
+    QM7:
+    structures: 7,165
+    atoms: 110,650
+    species:
+        H: 56.00%
+        C: 32.32%
+        N: 6.01%
+        O: 5.40%
+        S: 0.27%
+    properties:
+        per atom: ()
+        per structure: (energy)
     """
 
     def __init__(
         self,
         structures: List[Atoms],
-        description: Optional[DatasetInfo] = None,
     ):
         if len(structures) == 1:
             warnings.warn(
@@ -38,12 +70,11 @@ class Dataset:
             )
 
         self.structures = structures
-        self._description = description
 
     def __len__(self):
         return len(self.structures)
 
-    def __getitem__(self, index: Union[int, slice, np.ndarray]):
+    def __getitem__(self, index: Union[int, slice, np.ndarray, Iterable]):
         # if the passed index is a slice, return a new Dataset object:
         if isinstance(index, slice):
             return Dataset(self.structures[index])
@@ -67,7 +98,41 @@ class Dataset:
         return iter(self.structures)
 
     def __repr__(self):
-        return summarise_dataset(self.structures, self._description)
+        return summarise_dataset(self.structures)
+
+    @classmethod
+    def from_structures(cls, structures: List[Atoms]) -> "Dataset":
+        """
+        Create a dataset from a list of structures.
+
+        Parameters
+        ----------
+        structures : List[Atoms]
+            a list of structures
+        """
+        return cls(structures)
+
+    @classmethod
+    def from_file(cls, path: Path) -> "Dataset":
+        """
+        Load a dataset from an `ase.io.read`'able file.
+
+        Parameters
+        ----------
+        path : Path
+            the path to the file to load
+        """
+        return cls(read(path, index=":"))  # type: ignore
+
+
+class DescribedDataset(Dataset):
+    def __init__(
+        self,
+        structures: List[Atoms],
+        description: DatasetInfo,
+    ):
+        super().__init__(structures)
+        self.description = description
 
     @classmethod
     def from_id(
@@ -99,29 +164,8 @@ class Dataset:
             print(usage_info(info))
         return cls(all_structures, info)
 
-    @classmethod
-    def from_structures(cls, structures: List[Atoms]) -> "Dataset":
-        """
-        Create a dataset from a list of structures.
-
-        Parameters
-        ----------
-        structures : List[Atoms]
-            a list of structures
-        """
-        return cls(structures)
-
-    @classmethod
-    def from_file(cls, path: Path) -> "Dataset":
-        """
-        Load a dataset from an `ase.io.read`'able file.
-
-        Parameters
-        ----------
-        path : Path
-            the path to the file to load
-        """
-        return cls(read(path, index=":"))  # type: ignore
+    def __repr__(self):
+        return summarise_dataset(self.structures, self.description)
 
 
 def usage_info(dataset: DatasetInfo) -> str:

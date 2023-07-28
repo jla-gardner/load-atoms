@@ -5,6 +5,7 @@ from pathlib import Path
 from x3d import visualisation_for
 
 from load_atoms import dataset
+from load_atoms.logic import DescribedDataset
 from load_atoms.shared.dataset_info import DatasetInfo
 
 # this file is at dev/scripts/rebuild_all_docs.py
@@ -61,8 +62,8 @@ def page_content(dataset_id: str) -> str:
     )
 
     # avoid actually downloading the dataset
-    structures = dataset(dataset_id, root=DOWNLOAD_DIR)
-    dataset_description: DatasetInfo = structures._description  # type: ignore
+    structures: DescribedDataset = dataset(dataset_id, root=DOWNLOAD_DIR)  # type: ignore
+    dataset_description: DatasetInfo = structures.description
 
     summary = str(structures)
 

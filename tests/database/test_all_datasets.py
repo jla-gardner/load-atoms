@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from load_atoms import dataset
+from load_atoms.logic import DescribedDataset
 from load_atoms.shared.checksums import matches_checksum
 
 # this file is at root/tests/database/test_all_datasets.py
@@ -37,10 +38,10 @@ def test_dataset(name):
     if name in to_ignore:
         pytest.skip(f"Skipping {name}")
 
-    ds = dataset(name, root=testing_dir)
+    ds: DescribedDataset = dataset(name, root=testing_dir)  # type: ignore
 
     # check that all files match their checksums
-    for filename, hash in ds._description.files.items():  # type: ignore
+    for filename, hash in ds.description.files.items():
         file = testing_dir / name / filename
         assert matches_checksum(file, hash)
 

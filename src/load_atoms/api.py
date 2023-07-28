@@ -3,7 +3,7 @@ from typing import List, Union
 
 from ase import Atoms
 
-from load_atoms.logic import Dataset
+from load_atoms.logic import Dataset, DescribedDataset
 
 
 def dataset(
@@ -15,15 +15,15 @@ def dataset(
 
     Parameters
     ----------
-    thing
+    thing : Union[str, List[Atoms], Path]
         A dataset id, a list of structures, or a path to a file.
-    root
+    root : Union[str, Path, None], optional
         The root directory to use when loading a dataset by id. If not
         provided, the default root directory (`~/.load-atoms`) will be used.
 
     Returns
     -------
-    Dataset
+    ds : Dataset
         The loaded dataset.
 
     Examples
@@ -57,4 +57,4 @@ def dataset(
         raise ValueError(f"The provided path does not exist. ({thing})")
 
     # assume thing is a dataset ID, and try to load it
-    return Dataset.from_id(thing, root)
+    return DescribedDataset.from_id(thing, root)
