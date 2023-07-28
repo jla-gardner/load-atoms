@@ -17,9 +17,6 @@ project_root = Path(__file__).parent.parent.parent
 databaset_root = project_root / "database"
 dataset_names = sorted([p.name for p in databaset_root.iterdir() if p.is_dir()])
 
-# ignore the really big datasets to save on time
-to_ignore = ["C-SYNTH-23M"]
-dataset_names = [name for name in dataset_names if name not in to_ignore]
 
 # copy over the datasets to a place to test them
 testing_dir = project_root / "testing-datasets"
@@ -31,9 +28,14 @@ for name in dataset_names:
         shutil.copytree(databaset_root / name, testing_dir / name)
 
 
-@pytest.mark.parametrize("name", dataset_names)
+@pytest.mark.parametrize("name", dataset_names, ids=dataset_names)
 def test_dataset(name):
     """Test that the dataset can be loaded."""
+
+    # ignore the really big datasets to save on time
+    to_ignore = ["C-SYNTH-23M"]
+    if name in to_ignore:
+        pytest.skip(f"Skipping {name}")
 
     ds = dataset(name, root=testing_dir)
 
@@ -41,3 +43,12 @@ def test_dataset(name):
     for filename, hash in ds._description.files.items():  # type: ignore
         file = testing_dir / name / filename
         assert matches_checksum(file, hash)
+
+
+@pytest.mark.parametrize("name", dataset_names, ids=dataset_names)
+def test_docs_exist(name):
+    """Test that documentation exists for each dataset."""
+
+    docs = project_root / "dev/docs/source/datasets"
+
+    assert (docs / f"{name}.rst").exists(), f"Missing docs for {name}"
