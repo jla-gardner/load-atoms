@@ -1,10 +1,12 @@
 MD17-1k
 =======
 
-1k of randomly sampled training structures for each system from the MD17 dataset (together
-with 100 val and 100 test structures).
+1k of randomly sampled training structures for each system from the MD17 dataset
+(further split into 950 train and 50 validation), together with a further
+1k test structures.
 Exact code used to generate these structures is available 
 `here <https://github.com/jla-gardner/load-atoms/blob/main/database/MD17-1k/process.py>`_.
+Labels have been converted from the original units of kcal/mol to eV.
 
 
 .. code-block:: python
@@ -12,8 +14,8 @@ Exact code used to generate these structures is available
     >>> from load_atoms import dataset
     >>> dataset("MD17-1k")
     MD17-1k:
-        structures: 9,600
-        atoms: 134,400
+        structures: 16,000
+        atoms: 224,000
         species:
             H: 44.64%
             C: 42.86%
@@ -21,7 +23,7 @@ Exact code used to generate these structures is available
             N: 1.79%
         properties:
             per atom: (forces)
-            per structure: (split, system, energy)
+            per structure: (energy, split, system)
 
 
 

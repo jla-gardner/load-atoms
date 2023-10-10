@@ -1,11 +1,13 @@
 name: MD17-1k
 files:
-    md17-1k.extxyz: 2a1aa2967a2b
+    md17-1k.extxyz: d0ef9665e704
 description: |
-    1k of randomly sampled training structures for each system from the MD17 dataset (together
-    with 100 val and 100 test structures).
+    1k of randomly sampled training structures for each system from the MD17 dataset
+    (further split into 950 train and 50 validation), together with a further
+    1k test structures.
     Exact code used to generate these structures is available 
     `here <https://github.com/jla-gardner/load-atoms/blob/main/database/MD17-1k/process.py>`_.
+    Labels have been converted from the original units of kcal/mol to eV.
 citation: |
     @article{Chmiela-17-05,
       title = {Machine Learning of Accurate Energy-Conserving Molecular Force Fields},
@@ -18,8 +20,8 @@ citation: |
       doi = {10.1126/sciadv.1603015},
     }
 per_atom_properties:
-    forces: labelled by DFT
+    forces: labelled by DFT, in eV/Å
 per_structure_properties:
-    energy: total energy of the cell as labelled by DFT
+    energy: total energy of the cell as labelled by DFT, in eV
     split: train|val|test - the original split of the dataset
     system: the system name (e.g. benzene, aspirin, etc.)

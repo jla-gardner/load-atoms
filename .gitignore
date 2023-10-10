@@ -15,3 +15,5 @@ publish.sh
 !**/examples/*.ipynb
 
 testing*
+
+**/*.npz
