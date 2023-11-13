@@ -8,6 +8,7 @@
     datasets/C-GAP-20
     datasets/C-SYNTH-1M
     datasets/C-SYNTH-23M
+    datasets/Cu-POET
     datasets/MD17-1k
     datasets/P-GAP-20
     datasets/QM7
