@@ -46,11 +46,15 @@ def download_all(urls: List[str], directory: Path):
         download(urls[0], directory)
         return
 
-    pool_exectutor = ThreadPoolExecutor(max_workers=8, thread_name_prefix="download")
+    pool_exectutor = ThreadPoolExecutor(
+        max_workers=8, thread_name_prefix="download"
+    )
     futures = []
     with Progress(transient=True) as progress, pool_exectutor as pool:
         for url in urls:
-            task = progress.add_task(f"Downloading {Path(url).name}", start=False)
+            task = progress.add_task(
+                f"Downloading {Path(url).name}", start=False
+            )
             future = pool.submit(
                 _download_with_progress, url, directory, progress, task
             )
@@ -60,7 +64,7 @@ def download_all(urls: List[str], directory: Path):
     for future, url in futures:
         try:
             future.result()
-        except Exception as e:
+        except Exception:
             failures.append(url)
 
     if len(failures) > 0:

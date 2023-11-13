@@ -22,8 +22,6 @@ requires-python = ">=3.7"
 dev = [
     "notebook",
     "pytest",
-    "black",
-    "isort",
     "sphinx",
     "furo",
     "nbsphinx",
@@ -32,6 +30,7 @@ dev = [
     "build",
     "bumpver",
     "twine",
+    "ruff",
 ]
 
 [project.urls]
@@ -49,3 +48,36 @@ push = false
 "pyproject.toml" = ['current_version = "{version}"', 'version = "{version}"']
 "src/load_atoms/__init__.py" = ["{version}"]
 "dev/docs/source/conf.py" = ['release = "{version}"']
+
+
+[tool.ruff]
+include = ["dev/**/*.py", "src/**/*.py", "tests/**/*.py"]
+line-length = 80
+indent-width = 4
+target-version = "py38"
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

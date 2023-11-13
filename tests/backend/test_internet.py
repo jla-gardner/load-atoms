@@ -4,7 +4,9 @@ import pytest
 
 from load_atoms.backend.internet import download, download_all
 
-RAW_GITHUB_URL = "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/"
+RAW_GITHUB_URL = (
+    "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/"
+)
 
 
 def test_download(tmp_path):

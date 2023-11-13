@@ -16,13 +16,17 @@ def test_filter_by():
         structures,
         lambda structure: len(structure) >= 4,
     )
-    assert len(filtered) == 2, "The filtered dataset should contain two structures"
+    assert (
+        len(filtered) == 2
+    ), "The filtered dataset should contain two structures"
 
     filtered = filter_by(
         structures,
         name="water",
     )
-    assert len(filtered) == 1, "The filtered dataset should contain one structure"
+    assert (
+        len(filtered) == 1
+    ), "The filtered dataset should contain one structure"
 
 
 @pytest.mark.filterwarnings("ignore:Creating a dataset with a single structure")

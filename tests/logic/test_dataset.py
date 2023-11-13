@@ -38,8 +38,12 @@ def test_indexing():
     ds = dataset(STRUCTURES)
 
     structure = ds[0]
-    assert isinstance(structure, Atoms), "Indexing should return an Atoms object"
-    assert structure is STRUCTURES[0], "Indexing should return the same structure"
+    assert isinstance(
+        structure, Atoms
+    ), "Indexing should return an Atoms object"
+    assert (
+        structure is STRUCTURES[0]
+    ), "Indexing should return the same structure"
 
     sub_dataset = ds[1:]
     assert isinstance(sub_dataset, Dataset), "Slicing should return a dataset"

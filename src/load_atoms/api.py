@@ -44,7 +44,8 @@ def dataset(
     if not isinstance(thing, (Path, str)):
         raise TypeError(
             f"Could not load dataset from {thing}. "
-            "Please provide a string, a list of structures, or a path to a file."
+            "Please provide a string, a list of structures, "
+            "or a path to a file."
         )
 
     if Path(thing).exists():

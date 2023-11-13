@@ -71,7 +71,9 @@ def page_content(dataset_id: str) -> str:
     if dataset_description.license:
         license = LICENSE.format(license=dataset_description.license)
 
-    title = dataset_description.name + "\n" + "=" * len(dataset_description.name)
+    title = (
+        dataset_description.name + "\n" + "=" * len(dataset_description.name)
+    )
 
     visualisations = ""
     # TODO un break this

@@ -64,10 +64,7 @@ def filter_by(
     functions = (*functions, matches_info)
 
     def the_filter(structure: Atoms) -> bool:
-        for function in functions:
-            if not function(structure):
-                return False
-        return True
+        return all(function(structure) for function in functions)
 
     return Dataset.from_structures(
         [structure for structure in dataset if the_filter(structure)]

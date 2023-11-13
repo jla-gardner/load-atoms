@@ -66,7 +66,7 @@ class Dataset:
                 "Creating a dataset with a single structure. "
                 "Typically, datasets contain multiple structures - "
                 "did you mean to do this?",
-                UserWarning,
+                stacklevel=2,
             )
 
         self.structures = structures
@@ -171,9 +171,11 @@ class DescribedDataset(Dataset):
 def usage_info(dataset: DatasetInfo) -> str:
     info = []
     if dataset.license is not None:
-        info.append(f"This dataset is covered by the {dataset.license} license.")
+        info.append(
+            f"This dataset is covered by the {dataset.license} license."
+        )
     if dataset.citation is not None:
-        info.append(f"Please cite this dataset if you use it in your work.")
+        info.append("Please cite this dataset if you use it in your work.")
 
     _url = frontend_url(dataset)
     info.append(f"For more information, visit:\n{_url}")
@@ -197,9 +199,16 @@ def summarise_dataset(
         structure.info.keys() for structure in structures
     )
 
-    species = union(structure.get_chemical_symbols() for structure in structures)
+    species = union(
+        structure.get_chemical_symbols() for structure in structures
+    )
     species_counts = {
-        s: sum([structure.get_chemical_symbols().count(s) for structure in structures])
+        s: sum(
+            [
+                structure.get_chemical_symbols().count(s)
+                for structure in structures
+            ]
+        )
         for s in species
     }
     species_counts = {

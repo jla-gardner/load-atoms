@@ -52,7 +52,9 @@ class DatasetInfo(BaseModel):
     def validate_license(cls, v):
         valid_licences = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
         if v not in valid_licences:
-            raise ValueError(f"Invalid license: {v}. Must be one of {valid_licences}")
+            raise ValueError(
+                f"Invalid license: {v}. Must be one of {valid_licences}"
+            )
         return v
 
     @field_validator("files")
