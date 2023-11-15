@@ -1,0 +1,17 @@
+name: Cu-ACE-21
+files:
+    Cu_df2_1k.extxyz: ef653dec4d4c
+description: |
+    Cu dataset originally used for training ACE potentials. Labelled with 
+    DFT using the PBE functional.
+citation: |
+    @article{Lysogorskiy-21-06,
+        title = {Performant Implementation of the Atomic Cluster Expansion ({{PACE}}) and Application to Copper and Silicon},
+        author = {Lysogorskiy, Yury and van der Oord, Cas and Bochkarev, Anton and Menon, Sarath and Rinaldi, Matteo and Hammerschmidt, Thomas and Mrovec, Matous and Thompson, Aidan and Cs{\'a}nyi, G{\'a}bor and Ortner, Christoph and Drautz, Ralf},
+        year = {2021},
+        journal = {npj Computational Materials},
+        volume = {7},
+        number = {1},
+        pages = {1--12},
+        doi = {10.1038/s41524-021-00559-9},
+    }
