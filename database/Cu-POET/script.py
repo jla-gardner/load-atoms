@@ -30,8 +30,9 @@ for config_type, config_type_name in config_types.items():
 
     for structure, raw_stress in zip(structures, raw_stresses):
         xx, yy, zz, xy, yz, zx = list(map(float, raw_stress.split()))
-        structure.info["stress"] = np.array(
-            [[xx, xy, zx], [xy, yy, yz], [zx, yz, zz]]
+        structure.info["stress"] = (
+            np.array([[xx, xy, zx], [xy, yy, yz], [zx, yz, zz]])
+            / structure.get_volume()
         )
 
     raw_forces = (dir / "F_coord.data").read_text().splitlines()

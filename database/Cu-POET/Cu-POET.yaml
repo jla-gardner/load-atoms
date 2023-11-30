@@ -1,6 +1,6 @@
 name: Cu-POET
 files:
-    Cu-POET.extxyz: 20d9ad989e2c
+    Cu-POET.extxyz: eb9b163e1534
 description: |
     Cu dataset, with DFT labels, originally used for training symbolic
     interatomic potentials, using the POET framework (https://gitlab.com/muellergroup/poet).
@@ -16,3 +16,10 @@ citation: |
         pages = {1--11},
         doi = {10.1038/s41524-019-0249-1},
     }
+per_atom_properties:
+    forces: labelled by DFT, in eV/Å
+per_structure_properties:
+    energy: total energy of the cell as labelled by DFT, in eV
+    stress: labelled by DFT, in units of kB / Å^3
+    split: train|val|test - the original split of the dataset
+    system: the system name (e.g. benzene, aspirin, etc.)

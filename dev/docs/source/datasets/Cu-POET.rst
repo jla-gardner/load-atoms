@@ -2,7 +2,8 @@ Cu-POET
 =======
 
 Cu dataset, with DFT labels, originally used for training symbolic
-interatomic potentials, using the POET framework (https://gitlab.com/muellergroup/poet)
+interatomic potentials, using the POET framework (https://gitlab.com/muellergroup/poet).
+Also included are a selection of low index surfaces for testing.
 
 
 .. code-block:: python
@@ -16,7 +17,7 @@ interatomic potentials, using the POET framework (https://gitlab.com/muellergrou
             Cu: 100.00%
         properties:
             per atom: (forces)
-            per structure: (config_type, stress, energy)
+            per structure: (energy, config_type, stress)
 
 
 
