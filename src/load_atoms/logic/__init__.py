@@ -1,6 +1,6 @@
 import warnings
 from pathlib import Path
-from typing import Iterable, List, Optional, Union
+from typing import Any, Iterable, List, Optional, Union, overload
 
 import numpy as np
 from ase import Atoms
@@ -74,7 +74,23 @@ class Dataset:
     def __len__(self):
         return len(self.structures)
 
-    def __getitem__(self, index: Union[int, slice, np.ndarray, Iterable]):
+    @overload
+    def __getitem__(self, index: int) -> Atoms:
+        ...
+
+    @overload
+    def __getitem__(self, index: slice) -> "Dataset":
+        ...
+
+    @overload
+    def __getitem__(self, index: np.ndarray) -> "Dataset":
+        ...
+
+    @overload
+    def __getitem__(self, index: Iterable[int]) -> "Dataset":
+        ...
+
+    def __getitem__(self, index: Any):
         # if the passed index is a slice, return a new Dataset object:
         if isinstance(index, slice):
             return Dataset(self.structures[index])
