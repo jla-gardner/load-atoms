@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import hashlib
 import string
 from pathlib import Path
 
 
-def generate_checksum(file_path: Path) -> str:
+def generate_checksum(file_path: Path | str) -> str:
     """Generate a checksum for a file."""
 
     sha256_hash = hashlib.sha256()

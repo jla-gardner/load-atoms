@@ -1,0 +1,42 @@
+COLL
+====
+
+COLL v1.2: distorted configurations of small molecules during collisions.
+Files originally downloaded from 
+https://figshare.com/articles/dataset/COLL_Dataset_v1_2/13289165.
+For more information, see the original DimeNet++ paper:
+https://arxiv.org/abs/2011.14115.
+The script used to add the train/val/test split information to each 
+structure is available at
+https://github.com/jla-gardner/load-atoms/blob/main/database/COLL/script.py.
+
+
+.. code-block:: python
+
+    >>> from load_atoms import dataset
+    >>> dataset("COLL")
+    COLL:
+        structures: 139,480
+        atoms: 1,425,091
+        species:
+            H: 54.07%
+            C: 33.00%
+            O: 12.94%
+        properties:
+            per atom: (forces)
+            per structure: (split, atomization_energy, energy)
+
+
+
+This dataset is licensed under the CC-BY-4.0 license.
+
+
+
+.. code-block:: bibtex
+
+    @article{Klicpera-20-12,
+        title = {Fast and {{Uncertainty-Aware Directional Message Passing}} for {{Non-Equilibrium Molecules}}},
+        author = {Klicpera, Johannes and Giri, Shankari and Margraf, Johannes T. and G{\"u}nnemann, Stephan},
+        year = {2020},
+        journal = {arXiv:2011.14115 [physics]},
+    }
