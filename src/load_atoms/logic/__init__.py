@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import warnings
 from pathlib import Path
-from typing import Any, Iterable, List, Optional, Union, overload
+from typing import Any, Callable, Iterable, overload
 
 import numpy as np
 from ase import Atoms
@@ -8,7 +10,12 @@ from ase.io import read
 from yaml import dump
 
 from load_atoms import backend
-from load_atoms.shared import frontend_url, intersection, is_numpy, union
+from load_atoms.shared import (
+    LazyMapping,
+    frontend_url,
+    intersect,
+    union,
+)
 from load_atoms.shared.dataset_info import DatasetInfo
 
 
@@ -59,7 +66,7 @@ class Dataset:
 
     def __init__(
         self,
-        structures: List[Atoms],
+        structures: list[Atoms],
     ):
         if len(structures) == 1:
             warnings.warn(
@@ -71,6 +78,12 @@ class Dataset:
 
         self.structures = structures
 
+        keys, loader = _get_info_loader(structures)
+        self.info = LazyMapping(keys, loader)
+
+        keys, loader = _get_arrays_loader(structures)
+        self.arrays = LazyMapping(keys, loader)
+
     def __len__(self):
         return len(self.structures)
 
@@ -79,15 +92,15 @@ class Dataset:
         ...
 
     @overload
-    def __getitem__(self, index: slice) -> "Dataset":
+    def __getitem__(self, index: slice) -> Dataset:
         ...
 
     @overload
-    def __getitem__(self, index: np.ndarray) -> "Dataset":
+    def __getitem__(self, index: np.ndarray) -> Dataset:
         ...
 
     @overload
-    def __getitem__(self, index: Iterable[int]) -> "Dataset":
+    def __getitem__(self, index: Iterable[int]) -> Dataset:
         ...
 
     def __getitem__(self, index: Any):
@@ -99,7 +112,7 @@ class Dataset:
         if hasattr(index, "__iter__"):
             # if the index is a np index, we want to keep the same behaviour
             # (e.g. passing array of indices, or a boolean array)
-            if is_numpy(index):
+            if isinstance(index, np.ndarray):
                 to_keep = np.arange(len(self))[index]
                 return Dataset([self.structures[i] for i in to_keep])
 
@@ -117,7 +130,7 @@ class Dataset:
         return summarise_dataset(self.structures)
 
     @classmethod
-    def from_structures(cls, structures: List[Atoms]) -> "Dataset":
+    def from_structures(cls, structures: list[Atoms]) -> Dataset:
         """
         Create a dataset from a list of structures.
 
@@ -129,7 +142,7 @@ class Dataset:
         return cls(structures)
 
     @classmethod
-    def from_file(cls, path: Path) -> "Dataset":
+    def from_file(cls, path: Path) -> Dataset:
         """
         Load a dataset from an `ase.io.read`'able file.
 
@@ -144,7 +157,7 @@ class Dataset:
 class DescribedDataset(Dataset):
     def __init__(
         self,
-        structures: List[Atoms],
+        structures: list[Atoms],
         description: DatasetInfo,
     ):
         super().__init__(structures)
@@ -154,9 +167,9 @@ class DescribedDataset(Dataset):
     def from_id(
         cls,
         dataset_id: str,
-        root: Union[Path, str, None] = None,
+        root: Path | (str | None) = None,
         verbose: bool = True,
-    ) -> "Dataset":
+    ) -> Dataset:
         """
         Load a dataset by id.
 
@@ -200,18 +213,18 @@ def usage_info(dataset: DatasetInfo) -> str:
 
 
 def summarise_dataset(
-    structures: Union[List[Atoms], Dataset],
-    description: Optional[DatasetInfo] = None,
+    structures: list[Atoms] | Dataset,
+    description: DatasetInfo | None = None,
 ) -> str:
     name = description.name if description is not None else "Dataset"
     N = len(structures)
     number_atoms = sum([len(structure) for structure in structures])
 
-    per_atom_properties = intersection(
+    per_atom_properties = intersect(
         structure.arrays.keys() for structure in structures
     )
     per_atom_properties -= {"numbers", "positions"}
-    per_structure_properties = intersection(
+    per_structure_properties = intersect(
         structure.info.keys() for structure in structures
     )
 
@@ -250,3 +263,27 @@ def summarise_dataset(
     }
 
     return dump({name: fields}, sort_keys=False, indent=4)
+
+
+def _get_info_loader(
+    structures: list[Atoms],
+) -> tuple[list[str], Callable[[str], Any]]:
+    keys = intersect(structure.info.keys() for structure in structures)
+
+    def loader(key: str):
+        return np.array([structure.info[key] for structure in structures])
+
+    return list(keys), loader
+
+
+def _get_arrays_loader(
+    structures: list[Atoms],
+) -> tuple[list[str], Callable[[str], Any]]:
+    keys = intersect(structure.arrays.keys() for structure in structures)
+
+    def loader(key: str):
+        return np.concatenate(
+            [structure.arrays[key] for structure in structures]
+        )
+
+    return list(keys), loader

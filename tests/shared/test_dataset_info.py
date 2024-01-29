@@ -1,9 +1,8 @@
 from pathlib import Path
 
 import pytest
-from pydantic import ValidationError
-
 from load_atoms.shared.dataset_info import DatasetInfo
+from pydantic import ValidationError
 
 
 def get_correct_dictionary():
