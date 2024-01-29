@@ -65,27 +65,21 @@ indent-width = 4
 target-version = "py38"
 
 [tool.ruff.lint]
-select = [
-    # pycodestyle
-    "E",
-    # Pyflakes
-    "F",
-    # pyupgrade
-    "UP",
-    # flake8-bugbear
-    "B",
-    # flake8-simplify
-    "SIM",
-    # isort
-    "I",
-]
-
-# Allow fix for all enabled rules (when `--fix`) is provided.
+select = ["E", "F", "UP", "B", "SIM", "I"]
 fixable = ["ALL"]
 unfixable = []
+ignore = ["SIM300", "E402", "E703", "B017"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+[tool.coverage.report]
+exclude_also = [
+    "def __repr__",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+    "\\.\\.\\.",
+]
