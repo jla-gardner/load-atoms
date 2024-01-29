@@ -6,7 +6,6 @@ import shutil
 from pathlib import Path
 
 import pytest
-
 from load_atoms import dataset
 from load_atoms.logic import DescribedDataset
 from load_atoms.shared.checksums import matches_checksum

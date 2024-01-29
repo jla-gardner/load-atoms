@@ -13,7 +13,6 @@ description: |
     The script used to add the train/val/test split information to each 
     structure is available at
     https://github.com/jla-gardner/load-atoms/blob/main/database/COLL/script.py.
-
 citation: |
     @article{Klicpera-20-12,
         title = {Fast and {{Uncertainty-Aware Directional Message Passing}} for {{Non-Equilibrium Molecules}}},

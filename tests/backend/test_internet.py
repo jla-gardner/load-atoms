@@ -1,7 +1,4 @@
-from pathlib import Path
-
 import pytest
-
 from load_atoms.backend.internet import download, download_all
 
 RAW_GITHUB_URL = (

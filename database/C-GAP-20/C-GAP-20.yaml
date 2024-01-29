@@ -19,7 +19,6 @@ citation: |
     }
 
 license: CC-BY-4.0
-representative_structures: [1]
 per_atom_properties:
     force: labelled by DFT
     force_U: labelled by the higher level of DFT used for the C-GAP-20-U model
