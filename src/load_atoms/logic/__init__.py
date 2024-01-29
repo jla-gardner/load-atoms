@@ -62,6 +62,15 @@ class Dataset:
     properties:
         per atom: ()
         per structure: (energy)
+
+    Access a concatenation of the properties of all structures:
+
+    >>> ds.info["energy"].shape
+    (7165,)
+    >>> ds.arrays["numbers"].shape
+    (110650,)
+    >>> ds.arrays["positions"].shape
+    (110650, 3)
     """
 
     def __init__(

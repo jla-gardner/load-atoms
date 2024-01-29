@@ -31,6 +31,8 @@ def test_lazy_mapping():
     with pytest.raises(KeyError):
         mapping[4]
 
+    assert 1 in mapping
+
     assert mapping[1] == 2
     assert _calls == 1
 
