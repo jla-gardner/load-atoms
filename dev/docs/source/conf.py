@@ -9,7 +9,7 @@
 project = "load-atoms"
 copyright = "2023, John Gardner"
 author = "John Gardner"
-release = "0.0.14"
+release = "0.0.15"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
