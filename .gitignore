@@ -9,6 +9,7 @@ dev/docs/build
 
 .coverage
 publish.sh
+ignore/
 
 # everything in examples except .ipynb files
 **/examples/*
