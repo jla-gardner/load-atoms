@@ -4,7 +4,6 @@ import numpy as np
 import pytest
 from ase import Atoms
 from ase.io import read, write
-
 from load_atoms import dataset
 from load_atoms.logic import Dataset, summarise_dataset
 from load_atoms.shared import UnknownDatasetException
@@ -95,7 +94,7 @@ def test_summarise():
 def test_useful_error_message():
     with pytest.raises(
         TypeError,
-        match="Please provide a string, a list of structures, or a path to a file.",
+        match="provide a string, a list of structures, or a path to a file.",
     ):
         dataset(1)  # type: ignore
 
@@ -115,3 +114,13 @@ def test_useful_warning(tmp_path):
         match="single structure",
     ):
         dataset(tmp_path / "test.xyz")
+
+
+def tets_info_and_arrays():
+    ds = dataset("QM7")
+
+    assert "energy" in ds.info
+    assert isinstance(ds.info["energy"], np.ndarray)
+
+    assert "positions" in ds.arrays
+    assert ds.arrays["positions"].shape[-1] == 3

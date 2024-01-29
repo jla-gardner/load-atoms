@@ -15,7 +15,15 @@ classifiers = [
     "Programming Language :: Python :: 3",
 ]
 keywords = ["chemistry", "machine learning", "datasets"]
-dependencies = ["ase", "pyyaml", "requests", "numpy", "pydantic>2.0.0", "rich"]
+dependencies = [
+    "ase",
+    "pyyaml",
+    "requests",
+    "numpy",
+    "pydantic>2.0.0",
+    "rich",
+    "ipywidgets",
+]
 requires-python = ">=3.7"
 
 [project.optional-dependencies]
