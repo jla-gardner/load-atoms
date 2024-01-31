@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 import warnings
 from pathlib import Path
-from typing import List, Tuple
 
 from ase import Atoms
 from ase.io import read
@@ -15,7 +16,7 @@ from . import internet
 
 def get_structures_for(
     dataset_id: DatasetId, root: Path
-) -> Tuple[List[Atoms], DatasetInfo]:
+) -> tuple[list[Atoms], DatasetInfo]:
     """
     Get the structures comprising the dataset with the given id, either by
     downloading them from the web or by loading them from disk at the given
@@ -108,11 +109,13 @@ class DataStorage:
             file = folder / file_name
             if not matches_checksum(file, hash):
                 warnings.warn(
-                    f"Checksum of {file_name} does not match the expected value. "
-                    "This means that the downloaded dataset may be corrupted."
+                    f"Checksum of {file_name} does not match the "
+                    "expected value. This means that the downloaded dataset "
+                    "may be corrupted.",
+                    stacklevel=2,
                 )
 
-    def load_dataset(self, dataset_id) -> Tuple[List[Atoms], DatasetInfo]:
+    def load_dataset(self, dataset_id) -> tuple[list[Atoms], DatasetInfo]:
         """
         Load the dataset with the given id from the given path.
 
