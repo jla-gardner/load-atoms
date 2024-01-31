@@ -1,6 +1,6 @@
 <div align="center">
     <a href="https://jla-gardner.github.io/load-atoms/">
-        <img src="https://raw.githubusercontent.com/jla-gardner/load-atoms/main/dev/docs/source/logo.svg" width="50%"/>
+        <img src="https://raw.githubusercontent.com/jla-gardner/load-atoms/main/docs/source/logo.svg" width="50%"/>
     </a>
 </div>
     

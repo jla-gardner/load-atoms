@@ -5,14 +5,13 @@ from pathlib import Path
 from load_atoms import dataset
 from load_atoms.dataset import DescribedDataset
 from load_atoms.dataset_info import DatasetInfo
-from x3d import visualisation_for
 
 # this file is at dev/scripts/rebuild_all_docs.py
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 # database is at root/database/
 DATASETS = [d.name for d in (PROJECT_ROOT / "database").glob("*") if d.is_dir()]
-# docs are at dev/docs/
-DOC_SOURCE = PROJECT_ROOT / "dev/docs/source"
+# docs are at docs/
+DOC_SOURCE = PROJECT_ROOT / "docs/source"
 # source folder for dataset downloads
 DOWNLOAD_DIR = PROJECT_ROOT / "testing-datasets"
 

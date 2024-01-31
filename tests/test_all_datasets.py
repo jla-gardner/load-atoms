@@ -49,6 +49,6 @@ def test_dataset(name):
 def test_docs_exist(name):
     """Test that documentation exists for each dataset."""
 
-    docs = project_root / "dev/docs/source/datasets"
+    docs = project_root / "docs/source/datasets"
 
     assert (docs / f"{name}.rst").exists(), f"Missing docs for {name}"
