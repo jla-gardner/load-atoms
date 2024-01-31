@@ -9,14 +9,9 @@ from ase import Atoms
 from ase.io import read
 from yaml import dump
 
-from load_atoms import backend
-from load_atoms.shared import (
-    LazyMapping,
-    frontend_url,
-    intersect,
-    union,
-)
-from load_atoms.shared.dataset_info import DatasetInfo
+from . import backend
+from .dataset_info import DatasetInfo
+from .utils import LazyMapping, frontend_url, intersect, union
 
 
 class Dataset:
@@ -163,6 +158,21 @@ class Dataset:
         return cls(read(path, index=":"))  # type: ignore
 
 
+def usage_info(dataset: DatasetInfo) -> str:
+    info = []
+    if dataset.license is not None:
+        info.append(
+            f"This dataset is covered by the {dataset.license} license."
+        )
+    if dataset.citation is not None:
+        info.append("Please cite this dataset if you use it in your work.")
+
+    _url = frontend_url(dataset)
+    info.append(f"For more information, visit:\n{_url}")
+
+    return "\n".join(info)
+
+
 class DescribedDataset(Dataset):
     def __init__(
         self,
@@ -206,19 +216,83 @@ class DescribedDataset(Dataset):
         return summarise_dataset(self.structures, self.description)
 
 
-def usage_info(dataset: DatasetInfo) -> str:
-    info = []
-    if dataset.license is not None:
-        info.append(
-            f"This dataset is covered by the {dataset.license} license."
+def dataset(
+    thing: str | list[Atoms] | Path,
+    root: str | Path | None = None,
+) -> Dataset:
+    """
+    Load a dataset by name or from a list of structures.
+
+    Parameters
+    ----------
+    thing : Union[str, List[Atoms], Path]
+        A dataset id, a list of structures, or a path to a file.
+    root : Union[str, Path, None], optional
+        The root directory to use when loading a dataset by id. If not
+        provided, the default root directory (`~/.load-atoms`) will be used.
+
+    Returns
+    -------
+    ds : Dataset
+        The loaded dataset.
+
+    Examples
+    --------
+    >>> from load_atoms import dataset
+    >>> from ase import Atoms
+    >>> from ase.io import read, write
+    >>> dataset("qm7")
+    >>> dataset("qm7", root="./my-datasets")
+    >>> dataset([Atoms("H2O"), Atoms("H2O2")])
+    >>> dataset("path/to/file.xyz")
+    """
+
+    if isinstance(thing, list) and all(isinstance(s, Atoms) for s in thing):
+        # thing is a list of structures
+        return Dataset.from_structures(thing)
+
+    if not isinstance(thing, (Path, str)):
+        raise TypeError(
+            f"Could not load dataset from {thing}. "
+            "Please provide a string, a list of structures, "
+            "or a path to a file."
         )
-    if dataset.citation is not None:
-        info.append("Please cite this dataset if you use it in your work.")
 
-    _url = frontend_url(dataset)
-    info.append(f"For more information, visit:\n{_url}")
+    if Path(thing).exists():
+        # thing is a string/path to a file that exists
+        # assume it is a file containing structures and load them
+        return Dataset.from_file(Path(thing))
 
-    return "\n".join(info)
+    if isinstance(thing, Path):
+        # thing is a path to a file that does not exist
+        raise ValueError(f"The provided path does not exist. ({thing})")
+
+    # assume thing is a dataset ID, and try to load it
+    return DescribedDataset.from_id(thing, root)
+
+
+def _get_info_loader(
+    structures: list[Atoms],
+) -> tuple[list[str], Callable[[str], Any]]:
+    keys = intersect(structure.info.keys() for structure in structures)
+
+    def loader(key: str):
+        return np.array([structure.info[key] for structure in structures])
+
+    return list(keys), loader
+
+
+def _get_arrays_loader(
+    structures: list[Atoms],
+) -> tuple[list[str], Callable[[str], Any]]:
+    keys = intersect(structure.arrays.keys() for structure in structures)
+
+    def loader(key: str):
+        return np.concatenate(
+            [structure.arrays[key] for structure in structures]
+        )
+
+    return list(keys), loader
 
 
 def summarise_dataset(
@@ -272,27 +346,3 @@ def summarise_dataset(
     }
 
     return dump({name: fields}, sort_keys=False, indent=4)
-
-
-def _get_info_loader(
-    structures: list[Atoms],
-) -> tuple[list[str], Callable[[str], Any]]:
-    keys = intersect(structure.info.keys() for structure in structures)
-
-    def loader(key: str):
-        return np.array([structure.info[key] for structure in structures])
-
-    return list(keys), loader
-
-
-def _get_arrays_loader(
-    structures: list[Atoms],
-) -> tuple[list[str], Callable[[str], Any]]:
-    keys = intersect(structure.arrays.keys() for structure in structures)
-
-    def loader(key: str):
-        return np.concatenate(
-            [structure.arrays[key] for structure in structures]
-        )
-
-    return list(keys), loader

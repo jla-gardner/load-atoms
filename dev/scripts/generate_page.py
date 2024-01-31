@@ -2,11 +2,10 @@ import shutil
 import sys
 from pathlib import Path
 
-from x3d import visualisation_for
-
 from load_atoms import dataset
-from load_atoms.logic import DescribedDataset
-from load_atoms.shared.dataset_info import DatasetInfo
+from load_atoms.dataset import DescribedDataset
+from load_atoms.dataset_info import DatasetInfo
+from x3d import visualisation_for
 
 # this file is at dev/scripts/rebuild_all_docs.py
 PROJECT_ROOT = Path(__file__).parent.parent.parent

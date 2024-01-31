@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from load_atoms.shared.dataset_info import DatasetInfo
+from load_atoms.dataset_info import DatasetInfo
 from pydantic import ValidationError
 
 
@@ -11,7 +11,7 @@ def get_correct_dictionary():
     """
 
     # this file is root/tests/shared/test_dataset_info.py
-    project_root = Path(__file__).parent.parent.parent
+    project_root = Path(__file__).parent.parent
     correct_yaml_file = project_root / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
     return DatasetInfo.from_yaml_file(correct_yaml_file).model_dump()

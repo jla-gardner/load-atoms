@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from ase.io import read, write
-from load_atoms.backend.internet import download
+from load_atoms.backend import download
 
 splits = {
     "train": "https://figshare.com/ndownloader/files/25605734",

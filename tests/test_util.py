@@ -1,5 +1,5 @@
 import pytest
-from load_atoms.shared import LazyMapping, intersect, lpad, union
+from load_atoms.utils import LazyMapping, intersect, lpad, union
 
 
 def test_intersection():
