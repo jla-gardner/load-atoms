@@ -26,11 +26,8 @@ templates_path = ["_templates"]
 exclude_patterns = []
 
 intersphinx_mapping = {
-    # ASE
     "ase": ("https://wiki.fysik.dtu.dk/ase/", None),
-    # Python
     "python": ("https://docs.python.org/3", None),
-    # NumPy
     "numpy": ("https://numpy.org/doc/stable/", None),
 }
 
@@ -41,18 +38,24 @@ html_theme = "furo"
 html_static_path = ["_static"]
 html_logo = "logo.svg"
 
-our_colour = "#ef9940"
+pink = "#ff8080"
+blue = "#5599ff"
+
 html_theme_options = {
     "sidebar_hide_name": True,
     "light_css_variables": {
-        "color-brand-primary": our_colour,
-        "color-brand-content": our_colour,
+        "color-brand-primary": blue,
+        "color-brand-content": blue,
+        "color-problematic": blue,
     },
     "dark_css_variables": {
-        "color-brand-primary": our_colour,
-        "color-brand-content": our_colour,
+        "color-brand-primary": blue,
+        "color-brand-content": blue,
+        "color-problematic": blue,
     },
 }
+autodoc_typehints = "description"
+html_title = "load-atoms"
 
 # Other stuff
 
