@@ -1,14 +1,36 @@
-Load Atoms
-==========
 
-.. warning::
+.. important::
 
    This project is under active development. Until version 1.0.0 is released, breaking changes to the API may occur.
 
-**L**\arge **O**\pen **A**\ccess **D**\atasets for **Ato**\mistic **M**\aterials **S**\cience
+:code:`load-atoms` Documentation
+================================
 
-Use this python package to easily access datasets of atomic structures.
+Use :code:`load-atoms` to easily download, access and manipulate datasets of atomic structures:
 
+.. code-block:: pycon
+
+   >>> from load_atoms import dataset
+   >>> structures = dataset("C-GAP-17")
+   Downloading C-GAP-17.extxyz
+   100.0% | █████████████████████████████████ | 08.0s
+
+   This dataset is covered by the CC BY-NC-SA 4.0 license.
+   Please cite this dataset if you use it in your work.
+   For more information about this dataset, see here:
+   https://jla-gardner.github.io/load-atoms/datasets/C-GAP-17.html
+
+   >>> structures
+   C-GAP-17:
+      structures: 4,530
+      atoms: 284,965
+      species:
+         C: 100.00%
+      properties:
+         per atom: (force)
+         per structure: (config_type, detailed_ct, split, energy)
+
+         
 Installation
 ------------
 .. _installation:
@@ -52,13 +74,6 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
       >>> structures[0]
       Atoms(symbols='C64', pbc=True, cell=[9.483921, 9.483921, 9.483921], force=...)
 
-
-.. toctree::
-   :maxdepth: 1
-   :hidden:
- 
-   Home <self>
-
 .. toctree::
    :maxdepth: 3
    :caption: API:
@@ -69,7 +84,7 @@ The main entry point to `load-atoms` is the :func:`dataset` function. This can b
 
 .. toctree::
    :maxdepth: 3
-   :caption: Example Usage:
+   :caption: Examples:
    :hidden:
 
    examples/basics.ipynb
