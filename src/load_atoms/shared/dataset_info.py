@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import Dict, List, Optional
 
 import yaml
 from pydantic import BaseModel, field_validator
@@ -24,28 +25,28 @@ class DatasetInfo(BaseModel):
     description: str
     """a short description of the dataset"""
 
-    files: Dict[str, str]
+    files: dict[str, str]
     """a dictionary mapping file names to their checksums"""
 
-    citation: Optional[str] = None
+    citation: str | None = None
     """a BibTeX citation for the dataset"""
 
-    license: Optional[str] = None
+    license: str | None = None
     """the license of the dataset"""
 
-    representative_structures: Optional[List[int]] = None
+    representative_structures: list[int] | None = None
     """a list of indices of representative structures"""
 
-    long_description: Optional[str] = None
+    long_description: str | None = None
     """a longer description of the dataset"""
 
-    per_atom_properties: Optional[dict] = None
+    per_atom_properties: dict | None = None
     """a mapping of per atom property keys to a description"""
 
-    per_structure_properties: Optional[dict] = None
+    per_structure_properties: dict | None = None
     """a mapping of per structure property keys to a description"""
 
-    url_root: Optional[str] = None
+    url_root: str | None = None
     """the root url of the dataset"""
 
     @field_validator("license")
@@ -72,7 +73,7 @@ class DatasetInfo(BaseModel):
         raise ValueError(f"Invalid BibTeX: {v}")
 
     @classmethod
-    def from_yaml_file(cls, path: Path) -> "DatasetInfo":
+    def from_yaml_file(cls, path: Path) -> DatasetInfo:
         """
         Load dataset metadata from a .yaml description file.
         """
@@ -80,7 +81,7 @@ class DatasetInfo(BaseModel):
             data = yaml.safe_load(f)
         return cls(**data)
 
-    def remote_file_locations(self) -> Dict[str, str]:
+    def remote_file_locations(self) -> dict[str, str]:
         """
         Mapping from remote file locations to their checksums.
         """

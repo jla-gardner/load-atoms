@@ -1,8 +1,6 @@
-"""
-convenience functions for manipulating datasets
-"""
+from __future__ import annotations
 
-from typing import Callable, Optional, Sequence, Tuple, Union
+from typing import Callable, Sequence
 
 import numpy as np
 from ase import Atoms
@@ -15,7 +13,7 @@ FilterFunction = Callable[[Atoms], bool]
 
 
 def filter_by(
-    dataset: Union[Dataset, Sequence[Atoms]],
+    dataset: Dataset | Sequence[Atoms],
     *functions: FilterFunction,
     **info_kwargs,
 ) -> Dataset:
@@ -72,12 +70,12 @@ def filter_by(
 
 
 def cross_validate_split(
-    dataset: Union[Dataset, Sequence[Atoms]],
+    dataset: Dataset | Sequence[Atoms],
     fold,
     k=5,
-    n_test: Optional[int] = None,
+    n_test: int | None = None,
     seed: int = 0,
-) -> Tuple[Dataset, Dataset]:
+) -> tuple[Dataset, Dataset]:
     """
     Generate a shuffled train/test split for cross-validation.
 

@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
-from typing import List
 
 import requests
 from rich.progress import Progress, TaskID
@@ -27,7 +28,7 @@ def download(url: str, local_path: Path):
         _download_with_progress(url, local_path, progress, task)
 
 
-def download_all(urls: List[str], directory: Path):
+def download_all(urls: list[str], directory: Path):
     """
     Download all files from the given urls to the given directory.
 

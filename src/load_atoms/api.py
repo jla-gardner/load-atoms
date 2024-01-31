@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from pathlib import Path
-from typing import List, Union
 
 from ase import Atoms
 
@@ -7,8 +8,8 @@ from load_atoms.logic import Dataset, DescribedDataset
 
 
 def dataset(
-    thing: Union[str, List[Atoms], Path],
-    root: Union[str, Path, None] = None,
+    thing: str | list[Atoms] | Path,
+    root: str | Path | None = None,
 ) -> Dataset:
     """
     Load a dataset by name or from a list of structures.
