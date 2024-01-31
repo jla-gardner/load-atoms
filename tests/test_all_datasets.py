@@ -7,11 +7,11 @@ from pathlib import Path
 
 import pytest
 from load_atoms import dataset
-from load_atoms.logic import DescribedDataset
-from load_atoms.shared.checksums import matches_checksum
+from load_atoms.dataset import DescribedDataset
+from load_atoms.utils import matches_checksum
 
 # this file is at root/tests/database/test_all_datasets.py
-project_root = Path(__file__).parent.parent.parent
+project_root = Path(__file__).parent.parent
 
 # database is at root/database
 databaset_root = project_root / "database"

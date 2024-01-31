@@ -11,7 +11,7 @@ Usage:
 import glob
 import sys
 
-from load_atoms.shared.checksums import generate_checksum
+from load_atoms.utils import generate_checksum
 
 if __name__ == "__main__":
     try:

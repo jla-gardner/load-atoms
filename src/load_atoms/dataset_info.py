@@ -1,12 +1,10 @@
-from __future__ import annotations
-
 from pathlib import Path
+from typing import Dict, List, Optional
 
 import yaml
 from pydantic import BaseModel, field_validator
 
-from load_atoms.shared import BASE_REMOTE_URL
-from load_atoms.shared.checksums import valid_checksum
+from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
 
 
 class DatasetInfo(BaseModel):
@@ -25,28 +23,28 @@ class DatasetInfo(BaseModel):
     description: str
     """a short description of the dataset"""
 
-    files: dict[str, str]
+    files: Dict[str, str]
     """a dictionary mapping file names to their checksums"""
 
-    citation: str | None = None
+    citation: Optional[str] = None
     """a BibTeX citation for the dataset"""
 
-    license: str | None = None
+    license: Optional[str] = None
     """the license of the dataset"""
 
-    representative_structures: list[int] | None = None
+    representative_structures: Optional[List[int]] = None
     """a list of indices of representative structures"""
 
-    long_description: str | None = None
+    long_description: Optional[str] = None
     """a longer description of the dataset"""
 
-    per_atom_properties: dict | None = None
+    per_atom_properties: Optional[dict] = None
     """a mapping of per atom property keys to a description"""
 
-    per_structure_properties: dict | None = None
+    per_structure_properties: Optional[dict] = None
     """a mapping of per structure property keys to a description"""
 
-    url_root: str | None = None
+    url_root: Optional[str] = None
     """the root url of the dataset"""
 
     @field_validator("license")
@@ -73,7 +71,7 @@ class DatasetInfo(BaseModel):
         raise ValueError(f"Invalid BibTeX: {v}")
 
     @classmethod
-    def from_yaml_file(cls, path: Path) -> DatasetInfo:
+    def from_yaml_file(cls, path: Path) -> "DatasetInfo":
         """
         Load dataset metadata from a .yaml description file.
         """
@@ -81,7 +79,7 @@ class DatasetInfo(BaseModel):
             data = yaml.safe_load(f)
         return cls(**data)
 
-    def remote_file_locations(self) -> dict[str, str]:
+    def remote_file_locations(self) -> Dict[str, str]:
         """
         Mapping from remote file locations to their checksums.
         """

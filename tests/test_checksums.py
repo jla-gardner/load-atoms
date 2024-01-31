@@ -1,4 +1,4 @@
-from load_atoms.shared.checksums import generate_checksum, matches_checksum
+from load_atoms.utils import generate_checksum, matches_checksum
 
 
 def test_matches_contents(tmp_path):

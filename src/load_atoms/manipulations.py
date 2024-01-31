@@ -5,7 +5,7 @@ from typing import Callable, Sequence
 import numpy as np
 from ase import Atoms
 
-from load_atoms.logic import Dataset
+from load_atoms.dataset import Dataset
 
 __all__ = ["filter_by", "cross_validate_split"]
 
