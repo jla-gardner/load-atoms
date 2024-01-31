@@ -5,7 +5,7 @@
 .pytest_cache
 .vscode
 
-dev/docs/build
+docs/build
 
 .coverage
 publish.sh

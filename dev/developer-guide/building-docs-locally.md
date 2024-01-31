@@ -18,7 +18,7 @@ See the developer [README](README.md) for instructions on how to set up your env
 Once you have done this, you can build the documentation locally using:
 
 ```bash
-sphinx-autobuild dev/docs/source dev/docs/build
+sphinx-autobuild docs/source docs/build
 ```
 
 This will start a local server, and automatically rebuild the documentation whenever a change is detected to the documentation source files.
