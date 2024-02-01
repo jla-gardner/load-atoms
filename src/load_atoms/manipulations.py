@@ -1,39 +1,37 @@
 from __future__ import annotations
 
-from typing import Callable, Sequence
+from typing import Any, Callable, Sequence
 
+import ase
 import numpy as np
-from ase import Atoms
 
-from load_atoms.dataset import Dataset
+from load_atoms.dataset import AtomsDataset
 
 __all__ = ["filter_by", "cross_validate_split"]
 
-FilterFunction = Callable[[Atoms], bool]
-
 
 def filter_by(
-    dataset: Dataset | Sequence[Atoms],
-    *functions: FilterFunction,
-    **info_kwargs,
-) -> Dataset:
+    dataset: AtomsDataset | Sequence[ase.Atoms],
+    *functions: Callable[[ase.Atoms], bool],
+    **info_kwargs: Any,
+) -> AtomsDataset:
     """
     Filter a dataset.
 
     Parameters
     ----------
-    dataset : Union[Dataset, Sequence[Atoms]]
+    dataset
         The dataset to filter.
-    functions : FilterFunction
+    functions
         Functions to filter the dataset by. Each function should take an
         ASE Atoms object as input and return a boolean.
-    info_kwargs : dict
+    info_kwargs
         Keyword arguments to filter the dataset by. Only atoms objects with
         matching info keys and values will be returned.
 
     Returns
     -------
-    Dataset
+    AtomsDataset
         The filtered dataset.
 
     Examples
@@ -51,9 +49,12 @@ def filter_by(
     ... )
     >>> len(small)
     1
+    >>> water = filter_by(name="water")
+    >>> len(water)
+    1
     """
 
-    def matches_info(structure: Atoms) -> bool:
+    def matches_info(structure: ase.Atoms) -> bool:
         for key, value in info_kwargs.items():
             if structure.info.get(key, None) != value:
                 return False
@@ -61,36 +62,36 @@ def filter_by(
 
     functions = (*functions, matches_info)
 
-    def the_filter(structure: Atoms) -> bool:
+    def the_filter(structure: ase.Atoms) -> bool:
         return all(function(structure) for function in functions)
 
-    return Dataset.from_structures(
+    return AtomsDataset.from_structures(
         [structure for structure in dataset if the_filter(structure)]
     )
 
 
 def cross_validate_split(
-    dataset: Dataset | Sequence[Atoms],
+    dataset: AtomsDataset | Sequence[ase.Atoms],
     fold,
-    k=5,
+    k: int = 5,
     n_test: int | None = None,
     seed: int = 0,
-) -> tuple[Dataset, Dataset]:
+) -> tuple[AtomsDataset, AtomsDataset]:
     """
     Generate a shuffled train/test split for cross-validation.
 
     Parameters
     ----------
-    dataset : Union[Dataset, Sequence[Atoms]]
+    dataset
         The dataset to split.
     fold : int
         The fold to use for testing.
-    k : int, optional
+    k
         The number of folds to use, by default 5.
-    n_test : Optional[int], optional
-        The number of structures to use for testing, by default None.
-        If None, this will be set to len(dataset) // k.
-    seed : int, optional
+    n_test
+        The number of structures to use for testing, by
+        this will be set to len(dataset) // k.
+    seed
         The random seed to use, by default 0.
 
     Returns
@@ -123,6 +124,6 @@ def cross_validate_split(
     train, test = idxs[:-n_test], idxs[-n_test:]
 
     return (
-        Dataset.from_structures([dataset[t] for t in train]),
-        Dataset.from_structures([dataset[t] for t in test]),
+        AtomsDataset.from_structures([dataset[t] for t in train]),
+        AtomsDataset.from_structures([dataset[t] for t in test]),
     )

@@ -1,6 +1,6 @@
 .. toctree::
     :maxdepth: 3
-    :caption: Datasets:
+    :caption: Available Datasets:
     :hidden:
     
     datasets/AC-2D-22

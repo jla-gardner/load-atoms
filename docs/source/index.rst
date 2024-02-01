@@ -6,29 +6,46 @@
 :code:`load-atoms` Documentation
 ================================
 
-Use :code:`load-atoms` to easily download, access and manipulate datasets of atomic structures:
+Use :func:`load_atoms.dataset` to easily download, access and manipulate datasets of atomic structures:
 
 .. code-block:: pycon
 
    >>> from load_atoms import dataset
-   >>> structures = dataset("C-GAP-17")
-   Downloading C-GAP-17.extxyz
-   100.0% | █████████████████████████████████ | 08.0s
-
-   This dataset is covered by the CC BY-NC-SA 4.0 license.
+   >>> structures = dataset("QM7")
+   Downloading QM7.extxyz | ███████████████████████ | 100.0% 
    Please cite this dataset if you use it in your work.
-   For more information about this dataset, see here:
-   https://jla-gardner.github.io/load-atoms/datasets/C-GAP-17.html
 
-   >>> structures
-   C-GAP-17:
-      structures: 4,530
-      atoms: 284,965
-      species:
-         C: 100.00%
-      properties:
-         per atom: (force)
-         per structure: (config_type, detailed_ct, split, energy)
+The resulting :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` wraps 
+a list of :class:`ase.Atoms <ase.atoms.Atoms>`, and provides useful methods to access these:
+
+.. code-block:: pycon
+
+   >>> structures[0] # treat the dataset like a list of ase.Atoms
+   Atoms(symbols='CH4', pbc=False) 
+   >>> structures.info["energy"]  # access per-structure properties
+   array([-18.1366, -30.9142, -24.4829, ..., -72.1238, -77.327 , -83.2715])
+   >>> print(structures) # print a summary of the dataset
+   QM7:
+    structures: 7,165
+    atoms: 110,650
+    species:
+        H: 56.00%
+        C: 32.32%
+        N: 6.01%
+        O: 5.40%
+        S: 0.27%
+    properties:
+        per atom: ()
+        per structure: (energy)
+
+For a full list of available methods, see the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` documentation.
+For a full list of datasets that can be downloaded, see the :ref:`datasets` section.
+Have you own, locally stored dataset? You can make full use of the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` class by simply passing the path to your dataset to :func:`load_atoms.dataset`:
+
+.. code-block:: pycon
+
+   >>> structures = dataset("path/to/structures.xyz")
+
 
          
 Installation
@@ -39,55 +56,18 @@ Installation
 
    $ pip install load-atoms
 
-Usage
------
-
-The main entry point to `load-atoms` is the :func:`dataset` function. This can be used to download any dataset that this package currently supports:
-
-.. code-block:: pycon
-
-   >>> from load_atoms import dataset
-   >>> structures = dataset("C-GAP-17")
-   Downloading C-GAP-17.extxyz
-   100.0% | ██████████████████████████████████████████████████
-
-   This dataset is covered by the CC BY-NC-SA 4.0 license.
-   Please cite this dataset if you use it in your work.
-   For more information about this dataset, see here:
-   https://jla-gardner.github.io/load-atoms/datasets/C-GAP-17.html
-   
-:code:`structures` is a :class:`Dataset` object. This is a lightweight wrapper around a list of :class:`ase.Atoms` objects, and can be used as such:
-
-.. code-block:: python
-
-      >>> structures
-      C-GAP-17:
-         structures: 4,530
-         atoms: 284,965
-         species:
-            C: 100.00%
-         properties:
-            per atom: (force)
-            per structure: (config_type, detailed_ct, split, energy)
-      >>> len(structures)
-      4080
-      >>> structures[0]
-      Atoms(symbols='C64', pbc=True, cell=[9.483921, 9.483921, 9.483921], force=...)
 
 .. toctree::
    :maxdepth: 3
-   :caption: API:
    :hidden:
 
-   api/dataset
-   api/manipulations
+   api
 
 .. toctree::
    :maxdepth: 3
-   :caption: Examples:
    :hidden:
 
-   examples/basics.ipynb
+   examples
 
 .. include:: datasets.rst
 

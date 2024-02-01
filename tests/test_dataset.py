@@ -5,7 +5,7 @@ import pytest
 from ase import Atoms
 from ase.io import read, write
 from load_atoms import dataset
-from load_atoms.dataset import Dataset, summarise_dataset
+from load_atoms.dataset import AtomsDataset, summarise_dataset
 from load_atoms.utils import UnknownDatasetException
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
@@ -45,28 +45,36 @@ def test_indexing():
     ), "Indexing should return the same structure"
 
     sub_dataset = ds[1:]
-    assert isinstance(sub_dataset, Dataset), "Slicing should return a dataset"
+    assert isinstance(
+        sub_dataset, AtomsDataset
+    ), "Slicing should return a dataset"
     assert (
         len(sub_dataset) == 1
     ), "Slicing should return the correct number of structures"
 
     indices = np.array([0, 1, 0, 1])
     sub_dataset = ds[indices]
-    assert isinstance(sub_dataset, Dataset), "Indexing should return a dataset"
+    assert isinstance(
+        sub_dataset, AtomsDataset
+    ), "Indexing should return a dataset"
     assert (
         len(sub_dataset) == 4
     ), "Indexing should return the correct number of structures"
 
     indices = np.array([True, False])
     sub_dataset = ds[indices]
-    assert isinstance(sub_dataset, Dataset), "Indexing should return a dataset"
+    assert isinstance(
+        sub_dataset, AtomsDataset
+    ), "Indexing should return a dataset"
     assert (
         len(sub_dataset) == 1
     ), "Indexing should return the correct number of structures"
 
     indices = [0, 1, 1]
     sub_dataset = ds[indices]
-    assert isinstance(sub_dataset, Dataset), "Indexing should return a dataset"
+    assert isinstance(
+        sub_dataset, AtomsDataset
+    ), "Indexing should return a dataset"
     assert (
         len(sub_dataset) == 3
     ), "Indexing should return the correct number of structures"
