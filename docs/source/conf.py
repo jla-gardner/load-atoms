@@ -1,18 +1,10 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# For the full list of built-in configuration values, see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
-
-# -- Project information -----------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
+from __future__ import annotations
 
 project = "load-atoms"
-copyright = "2023, John Gardner"
+copyright = "2024, John Gardner"
 author = "John Gardner"
 release = "0.0.15"
 
-# -- General configuration ---------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
     "sphinx.ext.duration",
@@ -21,9 +13,8 @@ extensions = [
     "nbsphinx",
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
+    "sphinx_autodoc_typehints",
 ]
-templates_path = ["_templates"]
-exclude_patterns = []
 
 intersphinx_mapping = {
     "ase": ("https://wiki.fysik.dtu.dk/ase/", None),
@@ -31,14 +22,11 @@ intersphinx_mapping = {
     "numpy": ("https://numpy.org/doc/stable/", None),
 }
 
-# -- Options for HTML output -------------------------------------------------
-# https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "furo"
 html_static_path = ["_static"]
 html_logo = "logo.svg"
 
-pink = "#ff8080"
 blue = "#5599ff"
 
 html_theme_options = {
@@ -55,9 +43,5 @@ html_theme_options = {
     },
 }
 autodoc_typehints = "description"
+autodoc_member_order = "bysource"
 html_title = "load-atoms"
-
-# Other stuff
-
-copybutton_prompt_text = r">>> |\.\.\. |\$ "
-copybutton_prompt_is_regexp = True

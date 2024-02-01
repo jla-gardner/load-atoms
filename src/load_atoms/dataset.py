@@ -14,64 +14,63 @@ from .dataset_info import DatasetInfo
 from .utils import LazyMapping, frontend_url, intersect, union
 
 
-class Dataset:
+def dataset(
+    thing: str | list[Atoms] | Path,
+    root: str | Path | None = None,
+) -> AtomsDataset:
     """
-    A lightweight wrapper around a list of `ase.Atoms` objects.
+    Load a dataset by name or from a list of structures.
+
+    Parameters
+    ----------
+    thing
+        A dataset id, a list of structures, or a path to a file.
+    root
+        The root directory to use when loading a dataset by id. If not
+        provided, the default root directory (:code:`~/.load-atoms`)
+        will be used.
 
     Examples
-    -----------------
+    --------
+    The following are all viable ways to load a dataset:
 
-    >>> from load_atoms import dataset
-    >>> ds = dataset("QM7")
-    Please cite this dataset if you use it in your work.
-    For more information, visit:
-    https://jla-gardner.github.io/load-atoms/datasets/QM7.html
-
-    `ds` is now a `Dataset` object - treat it like a list of `Atoms` objects:
-
-    >>> from load_atoms.logic import Dataset
-    >>> isinstance(ds, Dataset)
-    True
-    >>> len(ds)
-    7165
-    >>> ds[0]
-    Atoms(symbols='CH4', pbc=False)
-
-    Slicing the dataset returns a new `Dataset` object:
-
-    >>> isinstance(ds[1:3], Dataset)
-    True
-
-    You can get a summary of the dataset by printing it:
-
-    >>> print(ds)
-    QM7:
-    structures: 7,165
-    atoms: 110,650
-    species:
-        H: 56.00%
-        C: 32.32%
-        N: 6.01%
-        O: 5.40%
-        S: 0.27%
-    properties:
-        per atom: ()
-        per structure: (energy)
-
-    Access a concatenation of the properties of all structures:
-
-    >>> ds.info["energy"].shape
-    (7165,)
-    >>> ds.arrays["numbers"].shape
-    (110650,)
-    >>> ds.arrays["positions"].shape
-    (110650, 3)
+    * by id: :code:`dataset("QM7")`
+    * by id, with a custom root directory:
+      :code:`dataset("QM7", root="./my-datasets")`
+    * from a list of structures: :code:`dataset([Atoms("H2O"), Atoms("H2O2")])`
+    * from a file: :code:`dataset("path/to/file.xyz")`
     """
 
-    def __init__(
-        self,
-        structures: list[Atoms],
-    ):
+    if isinstance(thing, list) and all(isinstance(s, Atoms) for s in thing):
+        # thing is a list of structures
+        return AtomsDataset.from_structures(thing)
+
+    if not isinstance(thing, (Path, str)):
+        raise TypeError(
+            f"Could not load dataset from {thing}. "
+            "Please provide a string, a list of structures, "
+            "or a path to a file."
+        )
+
+    if Path(thing).exists():
+        # thing is a string/path to a file that exists
+        # assume it is a file containing structures and load them
+        return AtomsDataset.from_file(Path(thing))
+
+    if isinstance(thing, Path):
+        # thing is a path to a file that does not exist
+        raise ValueError(f"The provided path does not exist. ({thing})")
+
+    # assume thing is a dataset ID, and try to load it
+    return DescribedDataset.from_id(thing, root)
+
+
+class AtomsDataset:
+    """
+    A lightweight wrapper around a list of :code:`ase.Atoms` objects.
+    """
+
+    def __init__(self, structures: list[Atoms]):
         if len(structures) == 1:
             warnings.warn(
                 "Creating a dataset with a single structure. "
@@ -84,9 +83,11 @@ class Dataset:
 
         keys, loader = _get_info_loader(structures)
         self.info = LazyMapping(keys, loader)
+        """A key-value mapping of per-structure properties."""
 
         keys, loader = _get_arrays_loader(structures)
         self.arrays = LazyMapping(keys, loader)
+        """A key-value mapping of per-atom properties."""
 
     def __len__(self):
         return len(self.structures)
@@ -96,21 +97,21 @@ class Dataset:
         ...
 
     @overload
-    def __getitem__(self, index: slice) -> Dataset:
+    def __getitem__(self, index: slice) -> AtomsDataset:
         ...
 
     @overload
-    def __getitem__(self, index: np.ndarray) -> Dataset:
+    def __getitem__(self, index: np.ndarray) -> AtomsDataset:
         ...
 
     @overload
-    def __getitem__(self, index: Iterable[int]) -> Dataset:
+    def __getitem__(self, index: Iterable[int]) -> AtomsDataset:
         ...
 
     def __getitem__(self, index: Any):
         # if the passed index is a slice, return a new Dataset object:
         if isinstance(index, slice):
-            return Dataset(self.structures[index])
+            return AtomsDataset(self.structures[index])
 
         # if the index is iterable, return a new Dataset object:
         if hasattr(index, "__iter__"):
@@ -118,10 +119,10 @@ class Dataset:
             # (e.g. passing array of indices, or a boolean array)
             if isinstance(index, np.ndarray):
                 to_keep = np.arange(len(self))[index]
-                return Dataset([self.structures[i] for i in to_keep])
+                return AtomsDataset([self.structures[i] for i in to_keep])
 
             # some other iterable, e.g. a list of indices
-            return Dataset([self.structures[i] for i in index])  # type: ignore
+            return AtomsDataset([self.structures[i] for i in index])  # type: ignore
 
         # otherwise, we assume the index is an integer,
         # and return a single structure
@@ -134,7 +135,7 @@ class Dataset:
         return summarise_dataset(self.structures)
 
     @classmethod
-    def from_structures(cls, structures: list[Atoms]) -> Dataset:
+    def from_structures(cls, structures: list[Atoms]) -> AtomsDataset:
         """
         Create a dataset from a list of structures.
 
@@ -146,7 +147,7 @@ class Dataset:
         return cls(structures)
 
     @classmethod
-    def from_file(cls, path: Path) -> Dataset:
+    def from_file(cls, path: Path) -> AtomsDataset:
         """
         Load a dataset from an `ase.io.read`'able file.
 
@@ -156,6 +157,11 @@ class Dataset:
             the path to the file to load
         """
         return cls(read(path, index=":"))  # type: ignore
+
+    @property
+    def structure_sizes(self):
+        """The number of atoms in each structure."""
+        return np.array([len(s) for s in self.structures])
 
 
 def usage_info(dataset: DatasetInfo) -> str:
@@ -168,12 +174,12 @@ def usage_info(dataset: DatasetInfo) -> str:
         info.append("Please cite this dataset if you use it in your work.")
 
     _url = frontend_url(dataset)
-    info.append(f"For more information, visit:\n{_url}")
+    # info.append(f"For more information, visit:\n{_url}")
 
     return "\n".join(info)
 
 
-class DescribedDataset(Dataset):
+class DescribedDataset(AtomsDataset):
     def __init__(
         self,
         structures: list[Atoms],
@@ -188,7 +194,7 @@ class DescribedDataset(Dataset):
         dataset_id: str,
         root: Path | (str | None) = None,
         verbose: bool = True,
-    ) -> Dataset:
+    ) -> AtomsDataset:
         """
         Load a dataset by id.
 
@@ -216,61 +222,6 @@ class DescribedDataset(Dataset):
         return summarise_dataset(self.structures, self.description)
 
 
-def dataset(
-    thing: str | list[Atoms] | Path,
-    root: str | Path | None = None,
-) -> Dataset:
-    """
-    Load a dataset by name or from a list of structures.
-
-    Parameters
-    ----------
-    thing : Union[str, List[Atoms], Path]
-        A dataset id, a list of structures, or a path to a file.
-    root : Union[str, Path, None], optional
-        The root directory to use when loading a dataset by id. If not
-        provided, the default root directory (`~/.load-atoms`) will be used.
-
-    Returns
-    -------
-    ds : Dataset
-        The loaded dataset.
-
-    Examples
-    --------
-    >>> from load_atoms import dataset
-    >>> from ase import Atoms
-    >>> from ase.io import read, write
-    >>> dataset("qm7")
-    >>> dataset("qm7", root="./my-datasets")
-    >>> dataset([Atoms("H2O"), Atoms("H2O2")])
-    >>> dataset("path/to/file.xyz")
-    """
-
-    if isinstance(thing, list) and all(isinstance(s, Atoms) for s in thing):
-        # thing is a list of structures
-        return Dataset.from_structures(thing)
-
-    if not isinstance(thing, (Path, str)):
-        raise TypeError(
-            f"Could not load dataset from {thing}. "
-            "Please provide a string, a list of structures, "
-            "or a path to a file."
-        )
-
-    if Path(thing).exists():
-        # thing is a string/path to a file that exists
-        # assume it is a file containing structures and load them
-        return Dataset.from_file(Path(thing))
-
-    if isinstance(thing, Path):
-        # thing is a path to a file that does not exist
-        raise ValueError(f"The provided path does not exist. ({thing})")
-
-    # assume thing is a dataset ID, and try to load it
-    return DescribedDataset.from_id(thing, root)
-
-
 def _get_info_loader(
     structures: list[Atoms],
 ) -> tuple[list[str], Callable[[str], Any]]:
@@ -296,7 +247,7 @@ def _get_arrays_loader(
 
 
 def summarise_dataset(
-    structures: list[Atoms] | Dataset,
+    structures: list[Atoms] | AtomsDataset,
     description: DatasetInfo | None = None,
 ) -> str:
     name = description.name if description is not None else "Dataset"

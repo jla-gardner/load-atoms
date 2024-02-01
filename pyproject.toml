@@ -39,6 +39,7 @@ dev = [
     "bumpver",
     "twine",
     "ruff",
+    "sphinx_autodoc_typehints",
 ]
 
 [project.urls]
