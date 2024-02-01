@@ -43,7 +43,7 @@ def dataset(
 
     if isinstance(thing, list) and all(isinstance(s, Atoms) for s in thing):
         # thing is a list of structures
-        return AtomsDataset.from_structures(thing)
+        return AtomsDataset(thing)
 
     if not isinstance(thing, (Path, str)):
         raise TypeError(
@@ -55,7 +55,8 @@ def dataset(
     if Path(thing).exists():
         # thing is a string/path to a file that exists
         # assume it is a file containing structures and load them
-        return AtomsDataset.from_file(Path(thing))
+        structures = read(Path(thing), index=":")
+        return AtomsDataset(structures)  # type: ignore
 
     if isinstance(thing, Path):
         # thing is a path to a file that does not exist
@@ -68,6 +69,11 @@ def dataset(
 class AtomsDataset:
     """
     A lightweight wrapper around a list of :code:`ase.Atoms` objects.
+
+    Parameters
+    ----------
+    structures
+        A list of :code:`ase.Atoms` objects.
     """
 
     def __init__(self, structures: list[Atoms]):
@@ -133,30 +139,6 @@ class AtomsDataset:
 
     def __repr__(self):
         return summarise_dataset(self.structures)
-
-    @classmethod
-    def from_structures(cls, structures: list[Atoms]) -> AtomsDataset:
-        """
-        Create a dataset from a list of structures.
-
-        Parameters
-        ----------
-        structures : List[Atoms]
-            a list of structures
-        """
-        return cls(structures)
-
-    @classmethod
-    def from_file(cls, path: Path) -> AtomsDataset:
-        """
-        Load a dataset from an `ase.io.read`'able file.
-
-        Parameters
-        ----------
-        path : Path
-            the path to the file to load
-        """
-        return cls(read(path, index=":"))  # type: ignore
 
     @property
     def structure_sizes(self):

@@ -65,7 +65,7 @@ def filter_by(
     def the_filter(structure: ase.Atoms) -> bool:
         return all(function(structure) for function in functions)
 
-    return AtomsDataset.from_structures(
+    return AtomsDataset(
         [structure for structure in dataset if the_filter(structure)]
     )
 
@@ -124,6 +124,6 @@ def cross_validate_split(
     train, test = idxs[:-n_test], idxs[-n_test:]
 
     return (
-        AtomsDataset.from_structures([dataset[t] for t in train]),
-        AtomsDataset.from_structures([dataset[t] for t in test]),
+        AtomsDataset([dataset[t] for t in train]),
+        AtomsDataset([dataset[t] for t in test]),
     )
