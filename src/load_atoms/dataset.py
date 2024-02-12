@@ -150,13 +150,14 @@ def usage_info(dataset: DatasetInfo) -> str:
     info = []
     if dataset.license is not None:
         info.append(
-            f"This dataset is covered by the {dataset.license} license."
+            f"The {dataset.name} dataset is covered by the "
+            f"{dataset.license} license."
         )
     if dataset.citation is not None:
-        info.append("Please cite this dataset if you use it in your work.")
-
-    _url = frontend_url(dataset)
-    # info.append(f"For more information, visit:\n{_url}")
+        info.append(
+            f"Please cite the {dataset.name} dataset "
+            "if you use it in your work."
+        )
 
     return "\n".join(info)
 

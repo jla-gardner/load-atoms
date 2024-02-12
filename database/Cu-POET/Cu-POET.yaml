@@ -23,3 +23,4 @@ per_structure_properties:
     stress: labelled by DFT, in units of kB / Å^3
     split: train|val|test - the original split of the dataset
     system: the system name (e.g. benzene, aspirin, etc.)
+representative_structure: 33

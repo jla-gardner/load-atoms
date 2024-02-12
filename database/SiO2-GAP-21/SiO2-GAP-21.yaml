@@ -2,7 +2,7 @@ name: SiO2-GAP-21
 description: |
     The training database Erhard et al. used to fit their GAP-21 potential for silica. 
     More details available at https://doi.org/10.1038/s41524-022-00768-w
-license: CC-BY-4.0
+license: CC BY 4.0
 citation: |
     @article{Erhard-22-04,
       title = {A Machine-Learned Interatomic Potential for Silica and Its Relation to Empirical Models},

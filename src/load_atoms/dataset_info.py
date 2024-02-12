@@ -8,6 +8,7 @@ from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
 
 valid_licenses = {
     "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
+    "CC BY-NC 4.0": "https://creativecommons.org/licenses/by-nc/4.0/deed.en",
     "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.en",
     "MIT": "https://opensource.org/licenses/MIT",
 }
@@ -57,7 +58,7 @@ class DatasetInfo(BaseModel):
     def validate_license(cls, v):
         if v not in valid_licenses:
             raise ValueError(
-                f"Invalid license: {v}. Must be one of {valid_licenses}"
+                f"Invalid license: {v}. Must be one of {list(valid_licenses)}"
             )
         return v
 
@@ -82,7 +83,12 @@ class DatasetInfo(BaseModel):
         """
         with open(path) as f:
             data = yaml.safe_load(f)
-        return cls(**data)
+        try:
+            return cls(**data)
+        except Exception as e:
+            raise ValueError(
+                f"Error loading dataset description from {path}"
+            ) from e
 
     def remote_file_locations(self) -> Dict[str, str]:
         """
