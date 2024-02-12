@@ -71,9 +71,17 @@ def title(dataset: DescribedDataset) -> str:
 
 @register_component
 def visualisation(dataset: DescribedDataset) -> str:
+    idx = dataset.description.representative_structure
+    if idx is None:
+        # get first structure with more than 1 atom
+        for i, s in enumerate(dataset.structures):
+            if len(s) > 1:
+                idx = i
+                break
+
     viz = (
         '<div class="viz">'
-        + visualisation_for(dataset.structures[0])
+        + visualisation_for(dataset.structures[idx])  # type: ignore
         + "</div>"
     )
     file_name = f"_static/visualisations/{dataset.description.name}.html"
