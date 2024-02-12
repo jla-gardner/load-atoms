@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 import yaml
 from pydantic import BaseModel, field_validator
@@ -38,8 +38,8 @@ class DatasetInfo(BaseModel):
     license: Optional[str] = None
     """the license of the dataset"""
 
-    representative_structures: Optional[List[int]] = None
-    """a list of indices of representative structures"""
+    representative_structure: Optional[int] = None
+    """a representative structure for visualisation purposes"""
 
     long_description: Optional[str] = None
     """a longer description of the dataset"""

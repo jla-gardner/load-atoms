@@ -17,7 +17,7 @@ per_atom_properties:
     forces: as labelled by DFT
 per_structure_properties:
     energy: total energy of the cell as labelled by DFT
-representative_structures: [1]
+representative_structure: 1
 long_description: |
     Forces and energies were calculated using CASTEP with the following parameters:
       task            singlepoint

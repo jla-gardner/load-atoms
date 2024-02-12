@@ -94,7 +94,7 @@ def x3d_atoms(atoms):
     # we want the cell to be in the middle of the viewport
     # so that we can (a) see the whole cell and (b) rotate around the center
     # therefore we translate so that the center of the cell is at the origin
-    cell_center = atoms.cell.diagonal() / 2
+    cell_center = atoms.cell.sum(axis=0) / 2
     cell = translate(cell, *(-cell_center))
 
     # we want the cell, and all atoms, to be visible
