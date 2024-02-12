@@ -76,3 +76,9 @@ Development & Contributions
 We welcome any suggestions and contributions to this project.
 Please visit our `GitHub repository <https://github.com/jla-gardner/load-atoms>`_ to report issues or submit pull requests.
 The `developer guide <https://github.com/jla-gardner/load-atoms/blob/main/dev/developer-guide>`_ contains information on how to set up a development environment and run the tests.
+
+
+.. image:: logo.svg
+   :align: center
+   :alt: load-atoms logo
+   :width: 400px

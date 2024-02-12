@@ -45,3 +45,6 @@ html_theme_options = {
 autodoc_typehints = "description"
 autodoc_member_order = "bysource"
 html_title = "load-atoms"
+
+pygments_dark_style = "monokai"
+html_css_files = ["custom.css"]

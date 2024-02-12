@@ -4,8 +4,7 @@
     </a>
 </div>
     
----
-
+</br>
 <div align="center">
     <a href="https://github.com/jla-gardner/load-atoms/">
         <img src="https://img.shields.io/github/license/jla-gardner/load-atoms"/>
@@ -29,10 +28,10 @@
         <img src="https://img.shields.io/pypi/dw/load-atoms?color=lavender&label=installs&logo=python&logoColor=white"/>
     </a>
 </div>
+</br>
 
----
 
-`load-atoms` is a Python package for Loading Open Access DAtasets for Atomistic Materials Science (LOAD-ATOMS).
+`load-atoms` is a Python package for **L**oading **O**pen **A**ccess **D**atasets for **Ato**mistic **M**aterials **S**cience (LOAD-AtoMS).
 
 > [!WARNING]
 > This project is under active development. Until version 1.0.0 is released, breaking changes to the API may occur with no notice.
@@ -47,7 +46,7 @@
 >>> from load_atoms import dataset
 >>> structures = dataset("C-GAP-17")
 Downloading C-GAP-17.extxyz
-100.0% | ██████████████████████████████████████████████████
+100.0% | ███████████████████████████████████████
 This dataset is covered by the CC BY-NC-SA 4.0 license.
 Please cite this dataset if you use it in your work.
 For more information about this dataset, see here:
