@@ -15,7 +15,7 @@ def visualisation_for(atoms):
     x3d_style = {"width": "400px", "height": "300px"}
     x3dstyle = " ".join(f'{k}="{v}";' for k, v in x3d_style.items())
 
-    scene = x3d_atoms(atoms)
+    scene = x3d_atoms(atoms.copy())
     document = X3DOM_template.format(scene=pretty_print(scene), style=x3dstyle)
     return document
 
@@ -86,6 +86,11 @@ def wireframe_face(vec1, vec2, origin=(0, 0, 0)):
 
 def x3d_atoms(atoms):
     """Convert an atoms object into an x3d representation."""
+    # first, ensure that the atoms are within the cell
+    if atoms.pbc.any():
+        atoms.wrap()
+    else:
+        atoms.center(vacuum=0.1)
 
     atom_spheres = group([x3d_atom(atom) for atom in atoms])
     wireframe = x3d_wireframe_box(atoms.cell)

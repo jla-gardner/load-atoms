@@ -6,7 +6,7 @@ files:
     QM7.extxyz: c9dcec505f4d
 per_structure_properties:
     energy: atomisation energy in eV, as calculated using DFT with the PBE0 functional
-representative_structure: 5
+representative_structure: 1892
 citation: |
     @inproceedings{Montavon-12,
         author = {Montavon, Gr\'{e}goire and Hansen, Katja and Fazli, Siamac and Rupp, Matthias and Biegler, Franziska and Ziehe, Andreas and Tkatchenko, Alexandre and Lilienfeld, Anatole and M\"{u}ller, Klaus-Robert},
