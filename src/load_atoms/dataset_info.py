@@ -6,6 +6,12 @@ from pydantic import BaseModel, field_validator
 
 from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
 
+valid_licenses = {
+    "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
+    "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.en",
+    "MIT": "https://opensource.org/licenses/MIT",
+}
+
 
 class DatasetInfo(BaseModel):
     """
@@ -49,10 +55,9 @@ class DatasetInfo(BaseModel):
 
     @field_validator("license")
     def validate_license(cls, v):
-        valid_licences = ["MIT", "CC-BY-4.0", "CC BY-NC-SA 4.0"]
-        if v not in valid_licences:
+        if v not in valid_licenses:
             raise ValueError(
-                f"Invalid license: {v}. Must be one of {valid_licences}"
+                f"Invalid license: {v}. Must be one of {valid_licenses}"
             )
         return v
 

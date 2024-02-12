@@ -20,8 +20,9 @@ h1 {
     border-radius: 0;
 }
 
-/* center children */
-#sketch-holder {
+/* center all children of viz divs */
+/* and don't allow highlighting when clicked */
+.viz {
     display: flex;
     justify-content: center;
     width: 100%;
