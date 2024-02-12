@@ -1,0 +1,28 @@
+h1 {
+    font-size: 3em;
+    text-align: center;
+    padding: 0.5em;
+}
+
+/* margin highlights left and right by 5% */
+.highlight {
+    margin-left: 7%;
+    margin-right: 7%;
+    width: 86%;
+    border-radius: 10px;
+}
+
+/* unless child of "input-area" */
+.input_area .highlight {
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
+    border-radius: 0;
+}
+
+/* center children */
+#sketch-holder {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
