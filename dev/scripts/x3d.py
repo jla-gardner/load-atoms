@@ -12,7 +12,7 @@ from ase.data.colors import jmol_colors
 
 
 def visualisation_for(atoms):
-    x3d_style = {"width": "400px", "height": "300px"}
+    x3d_style = {"width": "300px", "height": "300px"}
     x3dstyle = " ".join(f'{k}="{v}";' for k, v in x3d_style.items())
 
     scene = x3d_atoms(atoms.copy())
@@ -89,11 +89,13 @@ def x3d_atoms(atoms):
     # first, ensure that the atoms are within the cell
     if atoms.pbc.any():
         atoms.wrap()
+        show_cell = True
     else:
         atoms.center(vacuum=0.1)
+        show_cell = False
 
     atom_spheres = group([x3d_atom(atom) for atom in atoms])
-    wireframe = x3d_wireframe_box(atoms.cell)
+    wireframe = x3d_wireframe_box(atoms.cell) if show_cell else element("group")
     cell = group((wireframe, atom_spheres))
 
     # we want the cell to be in the middle of the viewport
@@ -101,6 +103,8 @@ def x3d_atoms(atoms):
     # therefore we translate so that the center of the cell is at the origin
     cell_center = atoms.cell.sum(axis=0) / 2
     cell = translate(cell, *(-cell_center))
+    # rotate the cell about y (we grab this later to start spinning it)
+    cell = rotate(cell, 0, 1, 0, 0.1, id="atoms-rotation")
 
     # we want the cell, and all atoms, to be visible
     # - sometimes atoms appear outside the cell
@@ -115,11 +119,15 @@ def x3d_atoms(atoms):
     # the largest separation between two points in any of x, y or z
     max_dim = max(max_xyz_extent)
     # put the camera twice as far away as the largest extent
-    pos = f"0 0 {max_dim * 2.5}"
+    pos = f"0, 0, {max_dim * 2.2}"
     # NB. viewpoint needs to contain an (empty) child to be valid x3d
-    viewpoint = element("viewpoint", position=pos, child=element("group"))
+    viewpoint = element(
+        "viewpoint",
+        position=pos,
+        child=element("group"),
+    )
 
-    return element("scene", children=(viewpoint, cell))
+    return element("scene", children=(viewpoint, cell), id="atoms-scene")
 
 
 def element(name, child=None, children=None, **attributes) -> ET.Element:
@@ -145,6 +153,15 @@ def element(name, child=None, children=None, **attributes) -> ET.Element:
 def translate(thing, x, y, z):
     """Translate a x3d element by x, y, z."""
     return element("transform", translation=f"{x} {y} {z}", child=thing)
+
+
+def rotate(thing, x, y, z, angle, **attributes):
+    return element(
+        "transform",
+        rotation=f"{x}, {y}, {z}, {angle}",
+        child=thing,
+        **attributes,
+    )
 
 
 def group(things):
