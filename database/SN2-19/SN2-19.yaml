@@ -1,0 +1,31 @@
+name: SN2-19
+files:
+    sn2_0.xyz: 10af6161d44f
+    sn2_1.xyz: 6f44e4a5b234
+    sn2_2.xyz: 2ee413c2eca1
+    sn2_3.xyz: a95c2072b6d0
+description: |
+    .. epigraph::
+
+        This dataset probes chemical reactions of methyl halides with halide anions, i.e. 
+        :math:`\text{X}^- + \text{CH}_3\text{Y} \rightarrow \text{CH}_3\text{X} +  \text{Y}^-` , and contains structures for all possible combinations of 
+        :math:`\text{X},\text{Y} = \text{F}, \text{Cl}, \text{Br}, \text{I}`.
+
+        -- Oliver T. Unke and Markus Meuwly
+
+    See `PhysNet: A Neural Network for Predicting Energies, Forces, Dipole Moments and Partial Charges <https://doi.org/10.1021/acs.jctc.9b00181>`_ for details.
+    Original files taken from `Zenodo <https://zenodo.org/records/2605341>`_, and converted to the XYZ format using
+    `this script <https://github.com/jla-gardner/load-atoms/blob/main/database/SN2-19/process.py>`_.
+citation: |
+    @article{Unke-19-06,
+        title = {{{PhysNet}}: {{A Neural Network}} for {{Predicting Energies}}, {{Forces}}, {{Dipole Moments}} and {{Partial Charges}}},
+        author = {Unke, Oliver T. and Meuwly, Markus},
+        year = {2019},
+        journal = {Journal of Chemical Theory and Computation},
+        volume = {15},
+        number = {6},
+        pages = {3678--3693},
+        doi = {10.1021/acs.jctc.9b00181},
+    }
+license: CC BY 4.0
+representative_structure: 43

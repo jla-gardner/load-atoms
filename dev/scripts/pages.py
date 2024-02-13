@@ -127,7 +127,7 @@ window.setInterval(function() {
     with open(_DOC_SOURCE / file_name, "w") as f:
         f.write(viz)
 
-    info = str(dataset.description.description).replace("\n", " ")
+    info = str(dataset.description.description).replace("\n", "\n        ")
     return f"""\
 .. raw:: html
     :file: ../_static/x3d.html

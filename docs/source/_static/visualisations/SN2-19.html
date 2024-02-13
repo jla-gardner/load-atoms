@@ -1,0 +1,104 @@
+<div class="viz"><X3D width="300px"; height="300px";>
+
+<!--Inserting Generated X3D Scene-->
+<scene id="atoms-scene">
+  <viewpoint position="0, 0, 11.134664200000001">
+    <group/>
+  </viewpoint>
+  <transform rotation="0, 1, 0, 0.1" id="atoms-rotation">
+    <transform translation="-0.9932565 -0.8741464999999999 -2.5306055">
+      <group>
+        <group/>
+        <group>
+          <transform translation="0.9926919999999999 0.616347 1.9819579999999999">
+            <shape>
+              <appearance>
+                <material diffuseColor="0.565 0.565 0.565"/>
+              </appearance>
+              <sphere radius="0.76"/>
+            </shape>
+          </transform>
+          <transform translation="0.9937189999999999 1.6482929999999998 2.288088">
+            <shape>
+              <appearance>
+                <material diffuseColor="1.0 1.0 1.0"/>
+              </appearance>
+              <sphere radius="0.31"/>
+            </shape>
+          </transform>
+          <transform translation="0.09999999999999998 0.10123099999999996 2.287855">
+            <shape>
+              <appearance>
+                <material diffuseColor="1.0 1.0 1.0"/>
+              </appearance>
+              <sphere radius="0.31"/>
+            </shape>
+          </transform>
+          <transform translation="1.8865129999999999 0.09999999999999998 2.287859">
+            <shape>
+              <appearance>
+                <material diffuseColor="1.0 1.0 1.0"/>
+              </appearance>
+              <sphere radius="0.31"/>
+            </shape>
+          </transform>
+          <transform translation="0.9924379999999999 0.614572 0.10000000000000009">
+            <shape>
+              <appearance>
+                <material diffuseColor="0.122 0.941 0.122"/>
+              </appearance>
+              <sphere radius="1.02"/>
+            </shape>
+          </transform>
+          <transform translation="0.991633 0.6154719999999999 4.961211">
+            <shape>
+              <appearance>
+                <material diffuseColor="0.651 0.161 0.161"/>
+              </appearance>
+              <sphere radius="1.2"/>
+            </shape>
+          </transform>
+        </group>
+      </group>
+    </transform>
+  </transform>
+</scene>
+<!--End of Inserted Scene-->
+
+</X3D>
+</div><script>
+const rotation = document.getElementById("atoms-rotation");
+// get the viz div
+const scene = document.getElementsByTagName("x3d")[0];
+
+// stop rotating when the scene is clicked
+// if its a long-press, the rotation should continue afterwards
+// otherwise, toggle the rotation
+let rotating = true;
+let start;
+let was_rotating_before_click;
+
+scene.addEventListener("mousedown", function() {
+    was_rotating_before_click = rotating;
+    rotating = false;
+    start = Date.now();
+
+    scene.addEventListener("mouseup", function() {
+        if (Date.now() - start < 200) {
+            // short click: toggle rotation
+            rotating = !rotating;
+        } else {
+            // long click: resume previous rotation
+            rotating = was_rotating_before_click;
+        }
+    });
+});
+
+window.setInterval(function() {
+    if (!rotating) return;
+    // turn `x, y, z, angle` into `x, y, z, angle + 0.1`
+    const parts = rotation.getAttribute("rotation").split(", ");
+    parts[3] = String(parseFloat(parts[3]) + 0.007);
+    rotation.setAttribute("rotation", parts.join(", "));
+}, 25);
+</script>
