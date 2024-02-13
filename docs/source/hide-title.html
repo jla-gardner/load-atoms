@@ -1,0 +1,8 @@
+<script>
+    // find any title elements with the text "hidden" and hide them
+    document.querySelectorAll("h1").forEach(function (el) {
+        if (el.textContent.toLowerCase().includes("hidden")) {
+            el.style.display = "none";
+        }
+    });
+</script>

@@ -1,4 +1,8 @@
+hidden
+======
 
+.. raw:: html
+    :file: hide-title.html
 
 .. image:: logo.svg
    :align: center
@@ -11,8 +15,10 @@
 
    This project is under active development. Until version 1.0.0 is released, breaking changes to the API may occur.
 
+Usage
+-----
 
-Use :func:`load_atoms.dataset` to easily download, access and manipulate datasets of atomic structures:
+Use :func:`load_atoms.dataset()` to easily download, access and manipulate datasets of atomic structures. The complete collection of (currently available) datasets is available `here <datasets/AC-2D-22.html>`_ .
 
 .. code-block:: pycon
 
@@ -21,37 +27,26 @@ Use :func:`load_atoms.dataset` to easily download, access and manipulate dataset
    Downloading QM7.extxyz | ███████████████████████ | 100.0% 
    Please cite the QM7 dataset if you use it in your work.
 
+
+
 The resulting :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` wraps 
-a list of :class:`ase.Atoms <ase.atoms.Atoms>`, and provides useful methods to access these:
+a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
 
 .. code-block:: pycon
 
    >>> structures[0] # treat the dataset like a list of ase.Atoms
    Atoms(symbols='CH4', pbc=False) 
-   >>> structures.info["energy"]  # access per-structure properties
-   array([-18.1366, -30.9142, -24.4829, ..., -72.1238, -77.327 , -83.2715])
-   >>> print(structures) # print a summary of the dataset
-   QM7:
-    structures: 7,165
-    atoms: 110,650
-    species:
-        H: 56.00%
-        C: 32.32%
-        N: 6.01%
-        O: 5.40%
-        S: 0.27%
-    properties:
-        per atom: ()
-        per structure: (energy)
 
-For a full list of available methods, see the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` documentation.
-For a full list of datasets that can be downloaded, see the :ref:`datasets` section.
-Have you own, locally stored dataset? You can make full use of the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` class by simply passing the path to your dataset to :func:`load_atoms.dataset`:
+... and provides useful dataset-level methods and properties:
 
 .. code-block:: pycon
 
-   >>> structures = dataset("path/to/structures.xyz")
+   >>> structures.info["energy"]  # access per-structure properties via .info
+   array([-18.1366, -30.9142, -24.4829, ..., -72.1238, -77.327 , -83.2715])
+   >>> structures.structure_sizes  # get the number of atoms in each structure
+   array([ 5,  8,  6, ..., 16, 17, 19])
 
+For a full list of such methods, see the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` documentation.
 
          
 Installation
