@@ -70,7 +70,7 @@ def title(dataset: DescribedDataset) -> str:
 
 
 @register_component
-def visualisation(dataset: DescribedDataset) -> str:
+def header(dataset: DescribedDataset) -> str:
     idx = dataset.description.representative_structure
     if idx is None:
         # get first structure with more than 1 atom
@@ -84,17 +84,65 @@ def visualisation(dataset: DescribedDataset) -> str:
         + visualisation_for(dataset.structures[idx])  # type: ignore
         + "</div>"
     )
+    viz += """\
+<script>
+const rotation = document.getElementById("atoms-rotation");
+// get the viz div
+const scene = document.getElementsByTagName("x3d")[0];
+
+// stop rotating when the scene is clicked
+// if its a long-press, the rotation should continue afterwards
+// otherwise, toggle the rotation
+let rotating = true;
+let start;
+let was_rotating_before_click;
+
+scene.addEventListener("mousedown", function() {
+    was_rotating_before_click = rotating;
+    rotating = false;
+    start = Date.now();
+
+    scene.addEventListener("mouseup", function() {
+        if (Date.now() - start < 200) {
+            // short click: toggle rotation
+            rotating = !rotating;
+        } else {
+            // long click: resume previous rotation
+            rotating = was_rotating_before_click;
+        }
+    });
+});
+
+window.setInterval(function() {
+    if (!rotating) return;
+    // turn `x, y, z, angle` into `x, y, z, angle + 0.1`
+    const parts = rotation.getAttribute("rotation").split(", ");
+    parts[3] = String(parseFloat(parts[3]) + 0.01);
+    rotation.setAttribute("rotation", parts.join(", "));
+}, 50);
+</script>
+"""
     file_name = f"_static/visualisations/{dataset.description.name}.html"
     (_DOC_SOURCE / "_static/visualisations").mkdir(exist_ok=True)
     with open(_DOC_SOURCE / file_name, "w") as f:
         f.write(viz)
 
+    info = str(dataset.description.description).replace("\n", " ")
     return f"""\
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../{file_name}
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../{file_name}
+
+    .. grid-item::
+        :class: info-card
+
+        {info}
 """
 
 
@@ -108,11 +156,6 @@ def code_block(dataset: DescribedDataset) -> str:
     >>> dataset("{dataset.description.name}")
     {summary}
 """
-
-
-@register_component
-def information(dataset: DescribedDataset) -> str:
-    return str(dataset.description.description)
 
 
 @register_component
