@@ -2,9 +2,10 @@ name: Si-GAP-18
 files:
     Si-GAP-18.extxyz: 0095ee3fea57
 description: |
-    Complete dataset for training Si-GAP-18 model. 
-    For details, see the supplementary information here:
-    https://doi.org/10.5281/zenodo.1250555
+    The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model
+    from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
+    The CUR algorithm was used to select representative structures from a larger dataset.
+    Energy and force labels were calculated using DFT and the PW91 exchange-correlation functional.
 citation: |
     @article{Bartok-18-12,
         title = {Machine {{Learning}} a {{General-Purpose Interatomic Potential}} for {{Silicon}}},

@@ -6,8 +6,17 @@ QM7
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/QM7.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/QM7.html
+
+    .. grid-item::
+        :class: info-card
+
+        A collection of 7,165 saturated, small molecules containing up to 7 heavy atoms, with geometries relaxed using an empirical potential. Atomisation energies were calculated similarly to a FHI-AIMS implementation of the Perdew-Burke-Ernzerhof hybrid functional (PBE0). The original files were obtained from `quantum-machine.org <http://quantum-machine.org/datasets/>`_. Energies were converted from kcal/mol to eV. 
 
 
 .. code-block:: python
@@ -27,10 +36,6 @@ QM7
             per atom: ()
             per structure: (energy)
     
-
-
-a collection of saturated, small molecules containing up to 7 heavy atoms
-with geometries relaxed using an empirical potential
 
 
 

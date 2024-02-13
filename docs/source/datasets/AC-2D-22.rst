@@ -6,8 +6,17 @@ AC-2D-22
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/AC-2D-22.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/AC-2D-22.html
+
+    .. grid-item::
+        :class: info-card
+
+        Amorphous, 2D graphene structures generated using a Monte Carlo bond-switching algorithm, as described in the paper: `Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies <https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b>`_. The data files were originaly obtained from `Zenodo <https://zenodo.org/records/7221166>`_. 
 
 
 .. code-block:: python
@@ -23,10 +32,6 @@ AC-2D-22
             per atom: (forces)
             per structure: (energy)
     
-
-
-Amorphous graphene structures generated using the method described in
-https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b
 
 
 License

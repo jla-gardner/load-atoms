@@ -6,8 +6,17 @@ C-GAP-17
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/C-GAP-17.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/C-GAP-17.html
+
+    .. grid-item::
+        :class: info-card
+
+        The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_  interatomic potential for amorphous carbon. This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order. More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_. 
 
 
 .. code-block:: python
@@ -21,14 +30,8 @@ C-GAP-17
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (detailed_ct, config_type, energy, split)
+            per structure: (split, config_type, detailed_ct, energy)
     
-
-
-The complete dataset used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
-interatomic potential for amorphous carbon.
-Contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order.
-More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_.
 
 
 License
@@ -46,12 +49,11 @@ If you use this dataset in your work, please cite the following:
     
     @article{Deringer-17,
         title = {Machine learning based interatomic potential for amorphous carbon},
-        doi = {10.1103/PhysRevB.95.094203},
         volume = {95},
         number = {9},
-        urldate = {2021-07-15},
         journal = {Physical Review B},
         author = {Deringer, Volker L. and Cs{\'a}nyi, G{\'a}bor},    
         year = {2017},
         pages = {094203},
+        doi = {10.1103/PhysRevB.95.094203},
     }

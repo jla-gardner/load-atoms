@@ -1,9 +1,9 @@
 name: C-SYNTH-23M
 url_root: "https://github.com/jla-gardner/carbon-data/raw/main/results/"
 description: |
-    The complete synthetic dataset from https://doi.org/10.1039/D2DD00137C.
-    Comprised of 546 uncorrelated MD trajectories for for 200 atoms structures
-    sampled every 1fs.
+    The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
+    This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
+    and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential.
 citation: |
     @article{Gardner-23-03,
       title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},
@@ -12,6 +12,7 @@ citation: |
       journal = {Digital Discovery},
       doi = {10.1039/D2DD00137C},
     }
+representative_structure: 199
 files:
     density-1.0-T-2000.extxyz: a376ec39abb5
     density-1.0-T-2100.extxyz: 6b1c0b65aa48

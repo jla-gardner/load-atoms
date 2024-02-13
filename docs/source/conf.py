@@ -14,6 +14,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
     "sphinx_autodoc_typehints",
+    "sphinx_design",
 ]
 
 intersphinx_mapping = {
@@ -28,18 +29,19 @@ html_static_path = ["_static"]
 html_logo = "logo.svg"
 
 blue = "#5599ff"
+red = "#ff5555"
 
 html_theme_options = {
     "sidebar_hide_name": True,
     "light_css_variables": {
         "color-brand-primary": blue,
         "color-brand-content": blue,
-        "color-problematic": blue,
+        "color-problematic": red,
     },
     "dark_css_variables": {
         "color-brand-primary": blue,
         "color-brand-content": blue,
-        "color-problematic": blue,
+        "color-problematic": red,
     },
 }
 autodoc_typehints = "description"

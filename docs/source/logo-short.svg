@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="90.423416mm"
+   height="43.108101mm"
+   viewBox="0 0 90.423416 43.108101"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   sodipodi:docname="la4.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="1.6571539"
+     inkscape:cx="134.26634"
+     inkscape:cy="188.57632"
+     inkscape:window-width="1512"
+     inkscape:window-height="945"
+     inkscape:window-x="0"
+     inkscape:window-y="37"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-19.522577,-107.66666)">
+    <g
+       id="g1639"
+       transform="matrix(0.76874242,0,0,0.76874242,-8.774095,68.202278)"
+       style="fill:none;stroke:#000000;stroke-width:1.30083">
+      <rect
+         style="fill:none;fill-opacity:0.986072;stroke:#000000;stroke-width:1.30083;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+         id="rect1599"
+         width="35.548264"
+         height="35.548264"
+         x="37.459457"
+         y="66.891891" />
+      <rect
+         style="fill:none;fill-opacity:0.986072;stroke:#000000;stroke-width:1.30083;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+         id="rect1623"
+         width="35.548264"
+         height="35.548264"
+         x="48.042793"
+         y="56.308556" />
+      <path
+         style="fill:none;fill-opacity:0.986072;stroke:#000000;stroke-width:1.30083;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+         d="M 48.042793,56.308556 37.459457,66.891891"
+         id="path1625"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;fill-opacity:0.986072;stroke:#000000;stroke-width:1.30083;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+         d="M 83.591055,56.308555 73.007719,66.891891"
+         id="path1627" />
+      <path
+         style="fill:none;fill-opacity:0.986072;stroke:#000000;stroke-width:1.30083;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+         d="M 83.591055,91.856818 73.007719,102.44015"
+         id="path1629" />
+      <path
+         style="fill:none;fill-opacity:0.986072;stroke:#000000;stroke-width:1.30083;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:none;paint-order:fill markers stroke"
+         d="M 48.042792,91.856818 37.459457,102.44015"
+         id="path1631" />
+    </g>
+    <path
+       id="rect1991"
+       style="fill:#b3b3b3;fill-opacity:0.986072;stroke:#333333;stroke-width:0.999993;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;paint-order:fill markers stroke"
+       d="m 65.830416,124.88697 v 2.73113 h -14.79961 v 5.94712 h 14.79961 v 2.7308 l 8.98658,-5.69644 z" />
+    <g
+       id="g4437"
+       transform="translate(1.6236023,-8.4176834)">
+      <use
+         x="0"
+         y="0"
+         xlink:href="#g1639"
+         id="use2269"
+         transform="translate(49.014101,8.4175808)" />
+      <circle
+         style="fill:#000000;fill-opacity:0.986072;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:bevel;stroke-dasharray:none;paint-order:fill markers stroke"
+         id="path2356"
+         cx="69.036682"
+         cy="128.0426"
+         r="3.8223939" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#path2356"
+         id="use2358"
+         transform="translate(35.463315,-8.1358639)" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#path2356"
+         id="use2358-8"
+         transform="translate(27.327454,27.32745)" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#path2356"
+         id="use2358-8-3"
+         transform="translate(17.731656,9.5957943)" />
+      <use
+         x="0"
+         y="0"
+         xlink:href="#path2356"
+         id="use2358-6"
+         transform="translate(8.135857,19.191594)" />
+    </g>
+  </g>
+</svg>

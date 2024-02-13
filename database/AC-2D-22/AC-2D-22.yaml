@@ -1,9 +1,10 @@
 name: AC-2D-22
 files:
-    amorphous-graphene.xyz: 8479ad7586d9
+    amorphous-graphene.xyz: a851d821f2b2
 description: |
-    Amorphous graphene structures generated using the method described in
-    https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b
+    Amorphous, 2D graphene structures generated using a Monte Carlo bond-switching algorithm,
+    as described in the paper: `Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies <https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b>`_.
+    The data files were originaly obtained from `Zenodo <https://zenodo.org/records/7221166>`_.
 citation: |
     @article{El-Machachi-22-10,
       title = {Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies},
@@ -17,7 +18,7 @@ per_atom_properties:
     forces: as labelled by DFT
 per_structure_properties:
     energy: total energy of the cell as labelled by DFT
-representative_structure: 1
+representative_structure: 61
 long_description: |
     Forces and energies were calculated using CASTEP with the following parameters:
       task            singlepoint

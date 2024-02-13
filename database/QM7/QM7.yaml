@@ -1,7 +1,9 @@
 name: QM7
 description: |
-    a collection of saturated, small molecules containing up to 7 heavy atoms
-    with geometries relaxed using an empirical potential
+    A collection of 7,165 saturated, small molecules containing up to 7 heavy atoms,
+    with geometries relaxed using an empirical potential. Atomisation energies were calculated similarly to a FHI-AIMS implementation of the Perdew-Burke-Ernzerhof hybrid functional (PBE0).
+    The original files were obtained from `quantum-machine.org <http://quantum-machine.org/datasets/>`_.
+    Energies were converted from kcal/mol to eV.
 files:
     QM7.extxyz: c9dcec505f4d
 per_structure_properties:

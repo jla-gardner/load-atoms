@@ -1,7 +1,10 @@
 h1 {
     font-size: 3em;
     text-align: center;
-    padding: 0.5em;
+    /* pad on top, but not on bottom */
+    padding-top: 0.5em;
+    padding-bottom: 0;
+    border-bottom: 0;
 }
 
 /* margin highlights left and right by 5% */
@@ -26,4 +29,16 @@ h1 {
     display: flex;
     justify-content: center;
     width: 100%;
+}
+
+img {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* align content vertically */
+.info-card {
+    display: flex;
+    justify-content: center; /* Align horizontal */
+    align-items: center; /* Align vertical */
 }
