@@ -3,7 +3,7 @@ from __future__ import annotations
 project = "load-atoms"
 copyright = "2024, John Gardner"
 author = "John Gardner"
-release = "0.1.0"
+release = "0.1.1"
 
 
 extensions = [
