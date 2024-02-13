@@ -21,8 +21,8 @@ C-SYNTH-1M
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("C-SYNTH-1M")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("C-SYNTH-1M")
     C-SYNTH-1M:
         structures: 5,460
         atoms: 1,092,000

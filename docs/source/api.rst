@@ -3,9 +3,9 @@ API
 
 
 
-The main entry point of :code:`load-atoms` is the :func:`dataset <load_atoms.dataset>` function:
+The main entry point of :code:`load-atoms` is the :func:`load_dataset <load_atoms.load_dataset>` function:
 
-.. autofunction:: load_atoms.dataset
+.. autofunction:: load_atoms.load_dataset
 
 
 Full API documentation:

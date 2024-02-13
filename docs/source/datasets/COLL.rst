@@ -21,8 +21,8 @@ COLL
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("COLL")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("COLL")
     COLL:
         structures: 139,480
         atoms: 1,425,091

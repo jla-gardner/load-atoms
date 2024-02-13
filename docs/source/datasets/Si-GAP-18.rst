@@ -21,8 +21,8 @@ Si-GAP-18
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("Si-GAP-18")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("Si-GAP-18")
     Si-GAP-18:
         structures: 2,475
         atoms: 171,815

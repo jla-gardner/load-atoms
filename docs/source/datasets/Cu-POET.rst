@@ -21,8 +21,8 @@ Cu-POET
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("Cu-POET")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("Cu-POET")
     Cu-POET:
         structures: 163
         atoms: 5,051

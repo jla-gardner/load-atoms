@@ -21,8 +21,8 @@ C-GAP-20
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("C-GAP-20")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("C-GAP-20")
     C-GAP-20:
         structures: 6,088
         atoms: 400,275

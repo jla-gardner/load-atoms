@@ -21,8 +21,8 @@ C-SYNTH-23M
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("C-SYNTH-23M")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("C-SYNTH-23M")
     C-SYNTH-23M:
         structures: 115,206
         atoms: 23,041,200

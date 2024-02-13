@@ -6,7 +6,7 @@ import shutil
 from pathlib import Path
 
 import pytest
-from load_atoms import dataset
+from load_atoms import load_dataset
 from load_atoms.dataset import DescribedDataset
 from load_atoms.utils import matches_checksum
 
@@ -37,7 +37,7 @@ def test_dataset(name):
     if name in to_ignore:
         pytest.skip(f"Skipping {name}")
 
-    ds: DescribedDataset = dataset(name, root=testing_dir)  # type: ignore
+    ds: DescribedDataset = load_dataset(name, root=testing_dir)  # type: ignore
 
     # check that all files match their checksums
     for filename, hash in ds.description.files.items():

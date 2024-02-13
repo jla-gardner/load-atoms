@@ -21,8 +21,8 @@ C-GAP-17
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("C-GAP-17")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("C-GAP-17")
     C-GAP-17:
         structures: 4,530
         atoms: 284,965

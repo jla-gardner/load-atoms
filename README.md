@@ -37,8 +37,8 @@ See the [documentation](https://jla-gardner.github.io/load-atoms/) for more info
 ## Usage
 
 ```pycon
->>> from load_atoms import dataset
->>> structures = dataset("QM7")
+>>> from load_atoms import load_dataset
+>>> dataset = load_dataset("QM7")
 Downloading QM7.extxyz | ███████████████████████ | 100.0% 
 Please cite the QM7 dataset if you use it in your work.
 ```

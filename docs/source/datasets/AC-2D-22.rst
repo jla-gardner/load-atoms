@@ -21,8 +21,8 @@ AC-2D-22
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("AC-2D-22")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("AC-2D-22")
     AC-2D-22:
         structures: 175
         atoms: 35,000

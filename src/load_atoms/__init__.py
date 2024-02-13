@@ -1,5 +1,5 @@
 from . import manipulations
-from .dataset import dataset
+from .dataset import load_dataset
 
 __version__ = "0.1.0"
-__all__ = ["dataset", "manipulations"]
+__all__ = ["load_dataset", "manipulations"]

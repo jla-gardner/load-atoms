@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 from ase import Atoms
 from ase.io import read, write
-from load_atoms import dataset
+from load_atoms import load_dataset
 from load_atoms.dataset import AtomsDataset, summarise_dataset
 from load_atoms.utils import UnknownDatasetException
 
@@ -17,24 +17,24 @@ def _is_water_dataset(ds):
 
 
 def test_dataset_from_structures():
-    ds = dataset(STRUCTURES)
+    ds = load_dataset(STRUCTURES)
     _is_water_dataset(ds)
 
 
 def test_dataset_writeable_and_readable(tmp_path):
-    ds = dataset(STRUCTURES)
+    ds = load_dataset(STRUCTURES)
     write(tmp_path / "test.xyz", ds)  # type: ignore
 
-    ds2 = dataset(read(tmp_path / "test.xyz", index=":"))  # type: ignore
+    ds2 = load_dataset(read(tmp_path / "test.xyz", index=":"))  # type: ignore
     _is_water_dataset(ds2)
 
-    ds3 = dataset(tmp_path / "test.xyz")
+    ds3 = load_dataset(tmp_path / "test.xyz")
     _is_water_dataset(ds3)
 
 
 @pytest.mark.filterwarnings("ignore:Creating a dataset with a single structure")
 def test_indexing():
-    ds = dataset(STRUCTURES)
+    ds = load_dataset(STRUCTURES)
 
     structure = ds[0]
     assert isinstance(
@@ -82,19 +82,19 @@ def test_indexing():
 
 def test_can_load_from_id():
     # don't pass a root to mimic the default behaviour
-    structures = dataset("C-GAP-17")
+    structures = load_dataset("C-GAP-17")
     assert len(structures) == 4530
 
     with pytest.raises(UnknownDatasetException):
-        dataset("made_up_dataset")
+        load_dataset("made_up_dataset")
 
 
 def test_summarise():
-    ds = dataset(STRUCTURES)
+    ds = load_dataset(STRUCTURES)
     summary = summarise_dataset(ds)
     assert "Dataset" in summary, "The summary should contain the dataset name"
 
-    ds = dataset("C-GAP-17")
+    ds = load_dataset("C-GAP-17")
     summary = repr(ds)
     assert "energy" in summary, "The summary should contain the property names"
 
@@ -104,13 +104,13 @@ def test_useful_error_message():
         TypeError,
         match="provide a string, a list of structures, or a path to a file.",
     ):
-        dataset(1)  # type: ignore
+        load_dataset(1)  # type: ignore
 
     with pytest.raises(
         ValueError,
         match="The provided path does not exist.",
     ):
-        dataset(Path("made_up_file.xyz"))
+        load_dataset(Path("made_up_file.xyz"))
 
 
 def test_useful_warning(tmp_path):
@@ -121,11 +121,11 @@ def test_useful_warning(tmp_path):
         UserWarning,
         match="single structure",
     ):
-        dataset(tmp_path / "test.xyz")
+        load_dataset(tmp_path / "test.xyz")
 
 
 def tets_info_and_arrays():
-    ds = dataset("QM7")
+    ds = load_dataset("QM7")
 
     assert "energy" in ds.info
     assert isinstance(ds.info["energy"], np.ndarray)

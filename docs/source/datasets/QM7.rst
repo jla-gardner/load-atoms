@@ -21,8 +21,8 @@ QM7
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("QM7")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("QM7")
     QM7:
         structures: 7,165
         atoms: 110,650

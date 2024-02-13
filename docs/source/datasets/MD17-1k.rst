@@ -21,8 +21,8 @@ MD17-1k
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("MD17-1k")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("MD17-1k")
     MD17-1k:
         structures: 16,000
         atoms: 224,000

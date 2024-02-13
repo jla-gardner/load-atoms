@@ -11,10 +11,10 @@ from yaml import dump
 
 from . import backend
 from .dataset_info import DatasetInfo
-from .utils import LazyMapping, frontend_url, intersect, union
+from .utils import LazyMapping, intersect, union
 
 
-def dataset(
+def load_dataset(
     thing: str | list[Atoms] | Path,
     root: str | Path | None = None,
 ) -> AtomsDataset:

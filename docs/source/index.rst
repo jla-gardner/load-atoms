@@ -18,12 +18,12 @@ hidden
 Usage
 -----
 
-Use :func:`load_atoms.dataset()` to easily download, access and manipulate datasets of atomic structures. The complete collection of (currently available) datasets is available `here <datasets/AC-2D-22.html>`_ .
+Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, access and manipulate datasets of atomic structures. The complete collection of (currently available) datasets is available `here <datasets/AC-2D-22.html>`_ .
 
 .. code-block:: pycon
 
-   >>> from load_atoms import dataset
-   >>> structures = dataset("QM7")
+   >>> from load_atoms import load_dataset
+   >>> dataset = load_dataset("QM7")
    Downloading QM7.extxyz | ███████████████████████ | 100.0% 
    Please cite the QM7 dataset if you use it in your work.
 
@@ -34,16 +34,16 @@ a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
 
 .. code-block:: pycon
 
-   >>> structures[0] # treat the dataset like a list of ase.Atoms
+   >>> dataset[0] # treat the dataset like a list of ase.Atoms
    Atoms(symbols='CH4', pbc=False) 
 
 ... and provides useful dataset-level methods and properties:
 
 .. code-block:: pycon
 
-   >>> structures.info["energy"]  # access per-structure properties via .info
+   >>> dataset.info["energy"]  # access per-structure properties via .info
    array([-18.1366, -30.9142, -24.4829, ..., -72.1238, -77.327 , -83.2715])
-   >>> structures.structure_sizes  # get the number of atoms in each structure
+   >>> dataset.structure_sizes  # get the number of atoms in each structure
    array([ 5,  8,  6, ..., 16, 17, 19])
 
 For a full list of such methods, see the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` documentation.

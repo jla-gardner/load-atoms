@@ -21,8 +21,8 @@ P-GAP-20
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("P-GAP-20")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("P-GAP-20")
     P-GAP-20:
         structures: 4,798
         atoms: 140,910

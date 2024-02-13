@@ -21,8 +21,8 @@ Cu-ACE-21
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("Cu-ACE-21")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("Cu-ACE-21")
     Cu-ACE-21:
         structures: 1,000
         atoms: 11,309

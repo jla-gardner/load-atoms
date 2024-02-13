@@ -21,8 +21,8 @@ SiO2-GAP-21
 
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("SiO2-GAP-21")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("SiO2-GAP-21")
     SiO2-GAP-21:
         structures: 3,074
         atoms: 268,118

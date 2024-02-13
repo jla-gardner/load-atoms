@@ -4,7 +4,7 @@ import shutil
 from pathlib import Path
 from typing import Callable
 
-from load_atoms import dataset as load_dataset
+from load_atoms import load_dataset
 from load_atoms.dataset import DescribedDataset
 from load_atoms.dataset_info import valid_licenses
 from x3d import visualisation_for
@@ -152,8 +152,8 @@ def code_block(dataset: DescribedDataset) -> str:
     return f"""\
 .. code-block:: python
 
-    >>> from load_atoms import dataset
-    >>> dataset("{dataset.description.name}")
+    >>> from load_atoms import load_dataset
+    >>> load_dataset("{dataset.description.name}")
     {summary}
 """
 
