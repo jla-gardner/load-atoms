@@ -40,6 +40,7 @@ dev = [
     "twine",
     "ruff",
     "sphinx_autodoc_typehints",
+    "sphinx-design",
 ]
 
 [project.urls]
