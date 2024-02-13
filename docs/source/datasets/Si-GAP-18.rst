@@ -6,8 +6,17 @@ Si-GAP-18
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/Si-GAP-18.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/Si-GAP-18.html
+
+    .. grid-item::
+        :class: info-card
+
+        The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_. The CUR algorithm was used to select representative structures from a larger dataset. Energy and force labels were calculated using DFT and the PW91 exchange-correlation functional. 
 
 
 .. code-block:: python
@@ -21,13 +30,8 @@ Si-GAP-18
             Si: 100.00%
         properties:
             per atom: (force)
-            per structure: (energy, nneightol, cutoff, config_type)
+            per structure: (nneightol, config_type, cutoff, energy)
     
-
-
-Complete dataset for training Si-GAP-18 model. 
-For details, see the supplementary information here:
-https://doi.org/10.5281/zenodo.1250555
 
 
 License

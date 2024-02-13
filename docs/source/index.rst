@@ -1,10 +1,16 @@
 
+
+.. image:: logo.svg
+   :align: center
+   :alt: load-atoms logo
+   :width: 400px
+   :target: .
+
+
 .. important::
 
    This project is under active development. Until version 1.0.0 is released, breaking changes to the API may occur.
 
-:code:`load-atoms` Documentation
-================================
 
 Use :func:`load_atoms.dataset` to easily download, access and manipulate datasets of atomic structures:
 
@@ -13,7 +19,7 @@ Use :func:`load_atoms.dataset` to easily download, access and manipulate dataset
    >>> from load_atoms import dataset
    >>> structures = dataset("QM7")
    Downloading QM7.extxyz | ███████████████████████ | 100.0% 
-   Please cite this dataset if you use it in your work.
+   Please cite the QM7 dataset if you use it in your work.
 
 The resulting :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` wraps 
 a list of :class:`ase.Atoms <ase.atoms.Atoms>`, and provides useful methods to access these:
@@ -78,7 +84,3 @@ Please visit our `GitHub repository <https://github.com/jla-gardner/load-atoms>`
 The `developer guide <https://github.com/jla-gardner/load-atoms/blob/main/dev/developer-guide>`_ contains information on how to set up a development environment and run the tests.
 
 
-.. image:: logo.svg
-   :align: center
-   :alt: load-atoms logo
-   :width: 400px

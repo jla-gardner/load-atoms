@@ -117,9 +117,9 @@ window.setInterval(function() {
     if (!rotating) return;
     // turn `x, y, z, angle` into `x, y, z, angle + 0.1`
     const parts = rotation.getAttribute("rotation").split(", ");
-    parts[3] = String(parseFloat(parts[3]) + 0.01);
+    parts[3] = String(parseFloat(parts[3]) + 0.007);
     rotation.setAttribute("rotation", parts.join(", "));
-}, 50);
+}, 25);
 </script>
 """
     file_name = f"_static/visualisations/{dataset.description.name}.html"

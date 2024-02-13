@@ -6,8 +6,17 @@ Cu-POET
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/Cu-POET.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/Cu-POET.html
+
+    .. grid-item::
+        :class: info-card
+
+        A dataset of copper structures, with DFT labels, originally used for training symbolic interatomic potentials, using the `POET framework <https://gitlab.com/muellergroup/poet>`_. Also included are a selection of low index surfaces for testing. 
 
 
 .. code-block:: python
@@ -21,13 +30,8 @@ Cu-POET
             Cu: 100.00%
         properties:
             per atom: (forces)
-            per structure: (config_type, energy, stress)
+            per structure: (config_type, stress, energy)
     
-
-
-Cu dataset, with DFT labels, originally used for training symbolic
-interatomic potentials, using the POET framework (https://gitlab.com/muellergroup/poet).
-Also included are a selection of low index surfaces for testing.
 
 
 

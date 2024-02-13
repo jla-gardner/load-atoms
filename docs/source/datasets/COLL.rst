@@ -6,8 +6,17 @@ COLL
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/COLL.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/COLL.html
+
+    .. grid-item::
+        :class: info-card
+
+        Version 1.2 of the COLL dataset, containing distorted configurations of small molecules during collisions. Original files were downloaded from `FigShare <https://figshare.com/articles/dataset/COLL_Dataset_v1_2/13289165>`_. The train/val/test split information was added to each structure using the script available at `GitHub <https://github.com/jla-gardner/load-atoms/blob/main/database/COLL/script.py>`_. For more information, see: `Fast and Uncertainty-Aware Directional Message Passing for Non-Equilibrium Molecules <https://arxiv.org/abs/2011.14115>`_. 
 
 
 .. code-block:: python
@@ -23,18 +32,8 @@ COLL
             O: 12.94%
         properties:
             per atom: (forces)
-            per structure: (energy, split, atomization_energy)
+            per structure: (atomization_energy, split, energy)
     
-
-
-COLL v1.2: distorted configurations of small molecules during collisions.
-Files originally downloaded from 
-https://figshare.com/articles/dataset/COLL_Dataset_v1_2/13289165.
-For more information, see the original DimeNet++ paper:
-https://arxiv.org/abs/2011.14115.
-The script used to add the train/val/test split information to each 
-structure is available at
-https://github.com/jla-gardner/load-atoms/blob/main/database/COLL/script.py.
 
 
 License

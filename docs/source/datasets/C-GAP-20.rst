@@ -6,8 +6,17 @@ C-GAP-20
 .. raw:: html
     :file: ../_static/x3d.html
 
-.. raw:: html
-   :file: ../_static/visualisations/C-GAP-20.html
+.. grid:: 2
+    
+    .. grid-item::
+
+        .. raw:: html
+            :file: ../_static/visualisations/C-GAP-20.html
+
+    .. grid-item::
+        :class: info-card
+
+        The complete dataset and labels used for training both the `C-GAP-20 <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_ and C-GAP-20-U interatomic potentials for carbon.  Original labels were obtained from `CAM.54529 <https://doi.org/10.17863/CAM.54529>`_,  and the higher level of DFT used for the C-GAP-20-U model was obtained from `CAM.82086 <https://doi.org/10.17863/CAM.82086>`_. 
 
 
 .. code-block:: python
@@ -21,14 +30,8 @@ C-GAP-20
             C: 100.00%
         properties:
             per atom: (force_U, force)
-            per structure: (nneightol, energy_U, config_type, energy, cutoff)
+            per structure: (config_type, cutoff, nneightol, energy, energy_U)
     
-
-
-The complete dataset and labels used for training both the `C-GAP-20 <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_
-and C-GAP-20-U interatomic potentials for carbon. 
-Original labels were obtained from `CAM.54529 <https://doi.org/10.17863/CAM.54529>`_, 
-and the higher level of DFT used for the C-GAP-20-U model was obtained from `CAM.82086 <https://doi.org/10.17863/CAM.82086>`_.
 
 
 License
