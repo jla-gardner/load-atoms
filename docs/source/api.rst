@@ -16,3 +16,4 @@ Full API documentation:
 
    api/atoms-dataset
    api/manipulations
+   api/viz

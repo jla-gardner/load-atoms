@@ -3,9 +3,6 @@
 C-GAP-17
 ========
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,11 @@ C-GAP-17
     .. grid-item::
         :class: info-card
 
-        The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_  interatomic potential for amorphous carbon. This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order. More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_. 
+        The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
+        interatomic potential for amorphous carbon.
+        This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order.
+        More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_.
+        
 
 
 .. code-block:: python
@@ -30,7 +31,7 @@ C-GAP-17
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (split, config_type, detailed_ct, energy)
+            per structure: (config_type, detailed_ct, energy, split)
     
 
 

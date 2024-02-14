@@ -3,9 +3,6 @@
 C-SYNTH-23M
 ===========
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,10 @@ C-SYNTH-23M
     .. grid-item::
         :class: info-card
 
-        The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_. This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential, and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential. 
+        The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
+        This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
+        and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential.
+        
 
 
 .. code-block:: python
@@ -29,8 +29,8 @@ C-SYNTH-23M
         species:
             C: 100.00%
         properties:
-            per atom: (gap17_energy, gap17_forces)
-            per structure: (density, time, anneal_T, run_id)
+            per atom: (gap17_forces, gap17_energy)
+            per structure: (anneal_T, density, time, run_id)
     
 
 

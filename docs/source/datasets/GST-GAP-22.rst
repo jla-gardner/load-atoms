@@ -3,9 +3,6 @@
 GST-GAP-22
 ==========
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,13 @@ GST-GAP-22
     .. grid-item::
         :class: info-card
 
-        The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential, as labelled using the PBE functional. This dataset covers a range of compositions along the :math:`\text{GeTe} \rightarrow \text{Sb}_2\text{Te}_3` pseudo-binary line, and was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`_. The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_. DFT energy and force labels have been renamed to :code:`energy` and :code:`forces` respectively. 
+        The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
+        as labelled using the PBE functional.
+        This dataset covers a range of compositions along the :math:`\text{GeTe} \rightarrow \text{Sb}_2\text{Te}_3` pseudo-binary line, and
+        was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`_.
+        The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_. DFT energy and force labels have been
+        renamed to :code:`energy` and :code:`forces` respectively.
+        
 
 
 .. code-block:: python

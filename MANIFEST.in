@@ -1,0 +1,4 @@
+# MANIFEST.in
+
+include src/load_atoms/visualise.js
+include src/load_atoms/x3d.script

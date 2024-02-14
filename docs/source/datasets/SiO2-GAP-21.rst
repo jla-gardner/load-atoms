@@ -3,9 +3,6 @@
 SiO2-GAP-21
 ===========
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,11 @@ SiO2-GAP-21
     .. grid-item::
         :class: info-card
 
-        The training database used to fit the `GAP-21 potential for silica <https://zenodo.org/records/6353684>`_ in:  `A Machine-Learned Interatomic Potential for Silica and Its Relation to Empirical Models <https://doi.org/10.1038/s41524-022-00768-w>`_. The dataset was generated using an iterative approach, in some cases driven by an emprical potential. More details is available in the  `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41524-022-00768-w/MediaObjects/41524_2022_768_MOESM1_ESM.pdf>`_. 
+        The training database used to fit the `GAP-21 potential for silica <https://zenodo.org/records/6353684>`_ in: 
+        `A Machine-Learned Interatomic Potential for Silica and Its Relation to Empirical Models <https://doi.org/10.1038/s41524-022-00768-w>`_.
+        The dataset was generated using an iterative approach, in some cases driven by an emprical potential. More details are available in the 
+        `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41524-022-00768-w/MediaObjects/41524_2022_768_MOESM1_ESM.pdf>`_.
+        
 
 
 .. code-block:: python
@@ -31,7 +32,7 @@ SiO2-GAP-21
             Si: 33.53%
         properties:
             per atom: (forces)
-            per structure: (free_energy, config_type, virials, energy)
+            per structure: (free_energy, virials, energy, config_type)
     
 
 

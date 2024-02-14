@@ -18,7 +18,7 @@ hidden
 Usage
 -----
 
-Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, access and manipulate datasets of atomic structures. The complete collection of (currently available) datasets is available `here <datasets/AC-2D-22.html>`_ .
+Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, inspect and manipulate datasets of atomic structures. The complete collection of (currently available) datasets is available `here <datasets/AC-2D-22.html>`_ .
 
 .. code-block:: pycon
 
@@ -26,8 +26,6 @@ Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, access 
    >>> dataset = load_dataset("QM7")
    Downloading QM7.extxyz | ███████████████████████ | 100.0% 
    Please cite the QM7 dataset if you use it in your work.
-
-
 
 The resulting :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` wraps 
 a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
@@ -47,6 +45,15 @@ a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
    array([ 5,  8,  6, ..., 16, 17, 19])
 
 For a full list of such methods, see the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` documentation.
+
+.. code-block:: pycon
+
+   >>> from load_atoms import view
+   >>> # visualize a structure in the dataset
+   >>> view(dataset[6492], show_bonds=True)  
+
+.. raw:: html
+   :file: ./_static/qm7-6492.html
 
          
 Installation

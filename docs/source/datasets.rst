@@ -12,7 +12,7 @@
     datasets/C-SYNTH-23M
     datasets/COLL
     datasets/Cu-ACE-21
-    datasets/Cu-POET
+    datasets/Cu-POET-19
     datasets/GST-GAP-22
     datasets/MD17-1k
     datasets/P-GAP-20

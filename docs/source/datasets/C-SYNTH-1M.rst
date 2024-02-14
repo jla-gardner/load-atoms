@@ -3,9 +3,6 @@
 C-SYNTH-1M
 ==========
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,12 @@ C-SYNTH-1M
     .. grid-item::
         :class: info-card
 
-        One million unique atomic environments from a "synthetic" dataset of carbon structures. These structures, each containing 200 atoms, have been sampled from 546 uncorrelated MD trajectories driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential. Per-atom energy and force labels from the same potential are included. More details can be found in the paper: `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_. 
+        One million unique atomic environments from a "synthetic" dataset of carbon structures.
+        These structures, each containing 200 atoms, have been sampled from 546 uncorrelated MD trajectories
+        driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential.
+        Per-atom energy and force labels from the same potential are included.
+        More details can be found in the paper: `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
+        
 
 
 .. code-block:: python
@@ -29,8 +31,8 @@ C-SYNTH-1M
         species:
             C: 100.00%
         properties:
-            per atom: (gap17_energy, gap17_forces)
-            per structure: (density, time, anneal_T, run_id)
+            per atom: (gap17_forces, gap17_energy)
+            per structure: (anneal_T, density, time, run_id)
     
 
 

@@ -1,10 +1,12 @@
-name: Cu-POET
+name: Cu-POET-19
 files:
     Cu-POET.extxyz: eb9b163e1534
 description: |
     A dataset of copper structures, with DFT labels, originally used for training symbolic
     interatomic potentials, using the `POET framework <https://gitlab.com/muellergroup/poet>`_.
-    Also included are a selection of low index surfaces for testing.
+    Also included are a selection of low index surfaces for testing. 
+    The script used for converting the `original files <https://gitlab.com/muellergroup/poet/-/tree/master/examples/Cu-POET-19>`_ 
+    to the :code:`extxyz` is available `here <https://github.com/jla-gardner/load-atoms/blob/main/database/Cu-POET-19/script.py>`_.
 citation: |
     @article{Hernandez-19-11,
         title = {Fast, Accurate, and Transferable Many-Body Interatomic Potentials by Symbolic Regression},

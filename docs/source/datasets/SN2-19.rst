@@ -3,9 +3,6 @@
 SN2-19
 ======
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -40,13 +37,13 @@ SN2-19
         species:
             H: 49.54%
             C: 16.85%
-            I: 8.40%
             F: 8.40%
+            I: 8.40%
             Br: 8.40%
             Cl: 8.40%
         properties:
             per atom: (forces)
-            per structure: (dipole_moment, charge, energy)
+            per structure: (dipole_moment, energy, charge)
     
 
 

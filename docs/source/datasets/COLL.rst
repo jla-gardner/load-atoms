@@ -3,9 +3,6 @@
 COLL
 ====
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,12 @@ COLL
     .. grid-item::
         :class: info-card
 
-        Version 1.2 of the COLL dataset, containing distorted configurations of small molecules during collisions. Original files were downloaded from `FigShare <https://figshare.com/articles/dataset/COLL_Dataset_v1_2/13289165>`_. The train/val/test split information was added to each structure using the script available at `GitHub <https://github.com/jla-gardner/load-atoms/blob/main/database/COLL/script.py>`_. For more information, see: `Fast and Uncertainty-Aware Directional Message Passing for Non-Equilibrium Molecules <https://arxiv.org/abs/2011.14115>`_. 
+        Version 1.2 of the COLL dataset, containing distorted configurations of small molecules during collisions.
+        Original files were downloaded from `FigShare <https://figshare.com/articles/dataset/COLL_Dataset_v1_2/13289165>`_.
+        The train/val/test split information was added to each structure using the script available at
+        `GitHub <https://github.com/jla-gardner/load-atoms/blob/main/database/COLL/script.py>`_.
+        For more information, see: `Fast and Uncertainty-Aware Directional Message Passing for Non-Equilibrium Molecules <https://arxiv.org/abs/2011.14115>`_.
+        
 
 
 .. code-block:: python

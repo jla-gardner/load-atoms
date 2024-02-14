@@ -3,9 +3,6 @@
 Cu-ACE-21
 =========
 
-.. raw:: html
-    :file: ../_static/x3d.html
-
 .. grid:: 2
     
     .. grid-item::
@@ -16,7 +13,10 @@ Cu-ACE-21
     .. grid-item::
         :class: info-card
 
-        Dataset used to train the Atomic Cluster Expansion (ACE) model for copper from `Performant Implementation of the Atomic Cluster Expansion (PACE) and Application to Copper and Silicon <https://doi.org/10.1038/s41524-021-00559-9>`_. DFT-PBE energy and force labels, computed with FHI-aims, are included. 
+        Dataset used to train the Atomic Cluster Expansion (ACE) model for copper from
+        `Performant Implementation of the Atomic Cluster Expansion (PACE) and Application to Copper and Silicon <https://doi.org/10.1038/s41524-021-00559-9>`_.
+        DFT-PBE energy and force labels, computed with FHI-aims, are included.
+        
 
 
 .. code-block:: python
@@ -30,7 +30,7 @@ Cu-ACE-21
             Cu: 100.00%
         properties:
             per atom: (forces)
-            per structure: (name, energy)
+            per structure: (energy, name)
     
 
 

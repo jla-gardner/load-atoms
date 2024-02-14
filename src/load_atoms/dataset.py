@@ -11,7 +11,7 @@ from yaml import dump
 
 from . import backend
 from .dataset_info import DatasetInfo
-from .utils import LazyMapping, intersect, union
+from .utils import LazyMapping, frontend_url, intersect, union
 
 
 def load_dataset(
@@ -146,20 +146,24 @@ class AtomsDataset:
         return np.array([len(s) for s in self.structures])
 
 
-def usage_info(dataset: DatasetInfo) -> str:
-    info = []
-    if dataset.license is not None:
-        info.append(
-            f"The {dataset.name} dataset is covered by the "
-            f"{dataset.license} license."
+def usage_info(info: DatasetInfo) -> str:
+    lines = []
+    if info.license is not None:
+        lines.append(
+            f"The {info.name} dataset is covered by the "
+            f"{info.license} license."
         )
-    if dataset.citation is not None:
-        info.append(
-            f"Please cite the {dataset.name} dataset "
+    if info.citation is not None:
+        lines.append(
+            f"Please cite the {info.name} dataset "
             "if you use it in your work."
         )
+    lines.append(
+        f"For more information about the {info.name} dataset, visit\n"
+        f"{frontend_url(info)}."
+    )
 
-    return "\n".join(info)
+    return "\n".join(lines)
 
 
 class DescribedDataset(AtomsDataset):
