@@ -11,9 +11,10 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "nbsphinx",
+    "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
-    "sphinx_autodoc_typehints",
+    "sphinx_copybutton",
     "sphinx_design",
 ]
 
@@ -44,9 +45,10 @@ html_theme_options = {
         "color-problematic": red,
     },
 }
-autodoc_typehints = "description"
+# autodoc_typehints = "description"
 autodoc_member_order = "bysource"
 html_title = "load-atoms"
 
 pygments_dark_style = "monokai"
 html_css_files = ["custom.css"]
+html_favicon = "favicon.svg"

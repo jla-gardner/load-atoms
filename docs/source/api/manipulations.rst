@@ -5,6 +5,8 @@
 Dataset manipulation
 ====================
 
+.. autodata:: load_atoms.manipulations.AtomsCollection
+
 .. automodule:: load_atoms.manipulations
     :members:
     :show-inheritance: 
