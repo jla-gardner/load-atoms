@@ -2,8 +2,9 @@ from __future__ import annotations
 
 import warnings
 from pathlib import Path
-from typing import Any, Callable, Iterable, overload
+from typing import Any, Callable, Iterable, Iterator, overload
 
+import ase
 import numpy as np
 from ase import Atoms
 from ase.io import read
@@ -15,7 +16,7 @@ from .utils import LazyMapping, frontend_url, intersect, union
 
 
 def load_dataset(
-    thing: str | list[Atoms] | Path,
+    thing: str | list[ase.Atoms] | Path,
     root: str | Path | None = None,
 ) -> AtomsDataset:
     """
@@ -68,15 +69,18 @@ def load_dataset(
 
 class AtomsDataset:
     """
-    A lightweight wrapper around a list of :code:`ase.Atoms` objects.
+    A lightweight wrapper around a list of :class:`ase.Atoms` objects.
+
+    See :func:`~load_atoms.load_dataset` for the recommended entry point
+    for this class.
 
     Parameters
     ----------
     structures
-        A list of :code:`ase.Atoms` objects.
+        The structures comprising the dataset.
     """
 
-    def __init__(self, structures: list[Atoms]):
+    def __init__(self, structures: list[ase.Atoms]):
         if len(structures) == 1:
             warnings.warn(
                 "Creating a dataset with a single structure. "
@@ -88,18 +92,29 @@ class AtomsDataset:
         self.structures = structures
 
         keys, loader = _get_info_loader(structures)
-        self.info = LazyMapping(keys, loader)
+        self.info: LazyMapping[str, Any] = LazyMapping(keys, loader)
         """A key-value mapping of per-structure properties."""
 
         keys, loader = _get_arrays_loader(structures)
-        self.arrays = LazyMapping(keys, loader)
+        self.arrays: LazyMapping[str, np.ndarray] = LazyMapping(keys, loader)
         """A key-value mapping of per-atom properties."""
 
-    def __len__(self):
+    @property
+    def structure_sizes(self) -> np.ndarray:
+        """The number of atoms in each structure."""
+        return np.array([len(s) for s in self.structures])
+
+    @property
+    def n_atoms(self) -> int:
+        """The total number of atoms in the dataset."""
+        return self.structure_sizes.sum()
+
+    def __len__(self) -> int:
+        """The number of structures in the dataset."""
         return len(self.structures)
 
     @overload
-    def __getitem__(self, index: int) -> Atoms:
+    def __getitem__(self, index: int) -> ase.Atoms:
         ...
 
     @overload
@@ -115,6 +130,58 @@ class AtomsDataset:
         ...
 
     def __getitem__(self, index: Any):
+        """
+        Index the dataset.
+
+        Parameters
+        ----------
+        index
+            specifies the structure/s to select from the dataset.
+
+        Examples
+        --------
+
+        >>> from load_atoms import load_dataset
+        >>> qm7 = load_dataset("QM7")
+
+        Get the first structure in the dataset:
+
+        >>> qm7[0]  # returns the first structure in the dataset
+        Atoms(symbols='CH4', pbc=False)
+
+        Create a new dataset with the first 10 structures:
+
+        >>> qm7[:10]
+        Dataset:
+            structures: 10
+            atoms: 77
+            species:
+                H: 67.53%
+                C: 28.57%
+                O: 3.90%
+            properties:
+                per atom: ()
+                per structure: (energy)
+
+        Create a new dataset of high energy structures using a mask
+        (see :func:`~load_atoms.manipulations.filter_by` for a more convenient
+        way to do this):
+
+        >>> mask = qm7.info["energy"] / qm7.structure_sizes > -4
+        >>> qm7[mask]
+        Dataset:
+            structures: 155
+            atoms: 2,636
+            species:
+                H: 63.28%
+                C: 22.76%
+                N: 8.27%
+                O: 4.78%
+                S: 0.91%
+            properties:
+                per atom: ()
+                per structure: (energy)
+        """
         # if the passed index is a slice, return a new Dataset object:
         if isinstance(index, slice):
             return AtomsDataset(self.structures[index])
@@ -134,16 +201,15 @@ class AtomsDataset:
         # and return a single structure
         return self.structures[int(index)]
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[ase.Atoms]:
+        """
+        Iterate over the structures in the dataset.
+        """
+
         return iter(self.structures)
 
     def __repr__(self):
         return summarise_dataset(self.structures)
-
-    @property
-    def structure_sizes(self):
-        """The number of atoms in each structure."""
-        return np.array([len(s) for s in self.structures])
 
 
 def usage_info(info: DatasetInfo) -> str:
@@ -200,6 +266,10 @@ class DescribedDataset(AtomsDataset):
         root = Path(root)
 
         all_structures, info = backend.get_structures_for(dataset_id, root)
+
+        # remove annoying automatic ASE calculators
+        for structure in all_structures:
+            del structure.calc
 
         if verbose:
             print(usage_info(info))

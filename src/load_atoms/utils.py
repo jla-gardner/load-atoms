@@ -42,10 +42,28 @@ class LazyMapping(Generic[T, Y]):
 
     Parameters
     ----------
-    keys
+    keys: Sequence[T]
         The keys of the mapping.
-    loader
+    loader: Callable[[T], Y]
         A function that takes a key and returns a value.
+
+    Examples
+    --------
+
+    >>> def loader(key):
+    ...     print(f"Loading value for key={key}")
+    ...     return key * 2
+    ...
+    >>> mapping = LazyMapping([1, 2, 3], loader)
+    >>> mapping[3]
+    Loading value for key=3
+    6
+    >>> mapping[3]
+    6
+    >>> 1 in mapping
+    True
+    >>> 4 in mapping
+    False
     """
 
     def __init__(
@@ -83,12 +101,15 @@ class UnknownDatasetException(Exception):
 
 def union(things: Iterable[Iterable]):
     """Get the set union of a list of iterables."""
-    return set.union(*map(set, things))
+    return set.union(*map(set, things), set())
 
 
 def intersect(things: Iterable[Iterable]):
     """Get the set intersection of a list of iterables."""
-    return set.intersection(*map(set, things))
+    sets = list(map(set, things))
+    if not sets:
+        return set()
+    return set.intersection(*sets)
 
 
 def lpad(s, indent=4):

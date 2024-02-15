@@ -18,6 +18,13 @@ def view(atoms: Atoms, show_bonds: bool = False):
     """
     Generate an interactive visualisation of an :class:`ase.Atoms` object.
 
+    Parameters
+    ----------
+    atoms:
+        The atoms object to visualise.
+    show_bonds:
+        Whether to show bonds between atoms.
+
     Example
     -------
     Visualise a water molecule in a Jupyter notebook:
@@ -42,7 +49,6 @@ def view(atoms: Atoms, show_bonds: bool = False):
 
         viz = view(ethanol, show_bonds=True)
         Path("ethanol.html").write_text(viz.data)
-
     """
     scene = x3d_scene(atoms, show_bonds, width="300px", height="300px")
 
