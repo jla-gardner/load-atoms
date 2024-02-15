@@ -16,6 +16,7 @@ description: |
     See `PhysNet: A Neural Network for Predicting Energies, Forces, Dipole Moments and Partial Charges <https://doi.org/10.1021/acs.jctc.9b00181>`_ for details.
     Original files taken from `Zenodo <https://zenodo.org/records/2605341>`_, and converted to the XYZ format using
     `this script <https://github.com/jla-gardner/load-atoms/blob/main/database/SN2-19/process.py>`_.
+category: Benchmarks
 citation: |
     @article{Unke-19-06,
         title = {{{PhysNet}}: {{A Neural Network}} for {{Predicting Energies}}, {{Forces}}, {{Dipole Moments}} and {{Partial Charges}}},

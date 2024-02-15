@@ -7,6 +7,7 @@ description: |
     Structure selection and data processing was performed using the script available 
     `here <https://github.com/jla-gardner/load-atoms/blob/main/database/MD17-1k/process.py>`_.
     As part of this process, energy and force labels have been converted from the original units of kcal/mol and kcal/mol/Å to eV and eV/Å, respectively.
+category: Benchmarks
 citation: |
     @article{Chmiela-17-05,
       title = {Machine Learning of Accurate Energy-Conserving Molecular Force Fields},

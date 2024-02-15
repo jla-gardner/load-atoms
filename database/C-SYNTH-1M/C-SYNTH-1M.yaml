@@ -8,6 +8,7 @@ description: |
     driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential.
     Per-atom energy and force labels from the same potential are included.
     More details can be found in the paper: `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
+category: Synthetic Data
 citation: |
     @article{Gardner-23-03,
       title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},

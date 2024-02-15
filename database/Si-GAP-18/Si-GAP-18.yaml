@@ -6,6 +6,7 @@ description: |
     from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
     The CUR algorithm was used to select representative structures from a larger dataset.
     Energy and force labels were calculated using DFT and the PW91 exchange-correlation functional.
+category: Potential Fitting
 citation: |
     @article{Bartok-18-12,
         title = {Machine {{Learning}} a {{General-Purpose Interatomic Potential}} for {{Silicon}}},

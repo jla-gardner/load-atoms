@@ -6,6 +6,7 @@ description: |
     interatomic potential for amorphous carbon.
     This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order.
     More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_.
+category: Potential Fitting
 citation: |
     @article{Deringer-17,
         title = {Machine learning based interatomic potential for amorphous carbon},

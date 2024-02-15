@@ -6,6 +6,7 @@ description: |
     and C-GAP-20-U interatomic potentials for carbon. 
     Original labels were obtained from `CAM.54529 <https://doi.org/10.17863/CAM.54529>`_, 
     and the higher level of DFT used for the C-GAP-20-U model was obtained from `CAM.82086 <https://doi.org/10.17863/CAM.82086>`_.
+category: Potential Fitting
 citation: |
     @article{Rowe-20-07,
         title = {An Accurate and Transferable Machine Learning Potential for Carbon},
