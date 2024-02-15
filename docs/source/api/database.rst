@@ -6,6 +6,16 @@ Database
 These can be downloaded from the internet (and cached locally) using 
 :func:`~load_atoms.load_dataset`.
 
+Avaiable Datasets
+-----------------
+
+.. DATABASES-START
+
+.. DATABASES-END
+
+Metadata
+--------
+
 The metadata of each dataset is stored as a :code:`.yaml` (see for instance
 `C-GAP-17.yaml <https://github.com/jla-gardner/load-atoms/blob/main/database/C-GAP-17/C-GAP-17.yaml>`_)
 These are converted to :class:`~load_atoms.database.DatabaseEntry` objects at runtime.

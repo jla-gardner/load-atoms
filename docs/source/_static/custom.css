@@ -42,3 +42,8 @@ img {
     justify-content: center; /* Align horizontal */
     align-items: center; /* Align vertical */
 }
+
+/* align text center in each cell */
+.table-wrapper td {
+    text-align: center;
+}

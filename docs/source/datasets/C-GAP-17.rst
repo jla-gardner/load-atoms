@@ -31,7 +31,7 @@ C-GAP-17
             C: 100.00%
         properties:
             per atom: (force)
-            per structure: (config_type, detailed_ct, energy, split)
+            per structure: (config_type, energy, split, detailed_ct)
     
 
 
