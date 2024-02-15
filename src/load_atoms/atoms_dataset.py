@@ -383,7 +383,7 @@ class DescribedDataset(AtomsDataset):
 
         # remove annoying automatic ASE calculators
         for structure in all_structures:
-            del structure.calc
+            structure.calc = None
 
         if verbose:
             print(usage_info(info))

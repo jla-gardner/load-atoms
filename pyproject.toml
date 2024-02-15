@@ -42,6 +42,7 @@ dev = [
     "ruff",
     "sphinx_autodoc_typehints",
     "sphinx-design",
+    "sphinx_copybutton",
 ]
 
 [project.urls]

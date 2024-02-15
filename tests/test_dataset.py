@@ -82,7 +82,7 @@ def test_indexing():
 
 def test_can_load_from_id():
     # don't pass a root to mimic the default behaviour
-    structures = load_dataset("C-GAP-17")
+    structures = load_dataset("C-GAP-17", root="./testing-datasets")
     assert len(structures) == 4530
 
     with pytest.raises(UnknownDatasetException):
@@ -94,7 +94,7 @@ def test_summarise():
     summary = summarise_dataset(ds)
     assert "Dataset" in summary, "The summary should contain the dataset name"
 
-    ds = load_dataset("C-GAP-17")
+    ds = load_dataset("C-GAP-17", root="./testing-datasets")
     summary = repr(ds)
     assert "energy" in summary, "The summary should contain the property names"
 
@@ -124,8 +124,8 @@ def test_useful_warning(tmp_path):
         load_dataset(tmp_path / "test.xyz")
 
 
-def tets_info_and_arrays():
-    ds = load_dataset("QM7")
+def test_info_and_arrays():
+    ds = load_dataset("QM7", root="./testing-datasets")
 
     assert "energy" in ds.info
     assert isinstance(ds.info["energy"], np.ndarray)

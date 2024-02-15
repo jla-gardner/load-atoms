@@ -60,3 +60,16 @@ def test_incorrect_citation():
     kwargs["citation"] = "this is not a bibtex string"
     with pytest.raises(ValidationError):
         DatabaseEntry(**kwargs)
+
+
+ALL_INFO_FILES = list(
+    (Path(__file__).parent.parent / "database").glob("**/*.yaml")
+)
+
+
+@pytest.mark.parametrize("info_file", ALL_INFO_FILES)
+def test_actual_files(info_file):
+    """
+    Test that all the info files in the database pass validation
+    """
+    DatabaseEntry.from_yaml_file(info_file)
