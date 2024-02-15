@@ -71,7 +71,7 @@ class AtomsDataset:
     @property
     def n_atoms(self) -> int:
         """The total number of atoms in the dataset."""
-        return self.structure_sizes.sum()
+        return int(self.structure_sizes.sum())
 
     def filter_by(
         self, *functions: Callable[[ase.Atoms], bool], **info_kwargs: Any
@@ -425,16 +425,16 @@ def summarise_dataset(
     N = len(structures)
     number_atoms = sum([len(structure) for structure in structures])
 
-    per_atom_properties = intersect(
-        structure.arrays.keys() for structure in structures
+    per_atom_properties = sorted(
+        intersect(structure.arrays.keys() for structure in structures)
+        - {"numbers", "positions"}
     )
-    per_atom_properties -= {"numbers", "positions"}
-    per_structure_properties = intersect(
-        structure.info.keys() for structure in structures
+    per_structure_properties = sorted(
+        intersect(structure.info.keys() for structure in structures)
     )
 
-    species = union(
-        structure.get_chemical_symbols() for structure in structures
+    species = sorted(
+        union(structure.get_chemical_symbols() for structure in structures)
     )
     species_counts = {
         s: sum(
