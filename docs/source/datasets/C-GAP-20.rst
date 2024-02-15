@@ -31,7 +31,7 @@ C-GAP-20
             C: 100.00%
         properties:
             per atom: (force, force_U)
-            per structure: (cutoff, nneightol, energy, energy_U, config_type)
+            per structure: (config_type, cutoff, energy, energy_U, nneightol)
     
 
 

@@ -114,3 +114,9 @@ def intersect(things: Iterable[Iterable]):
     if not sets:
         return set()
     return set.intersection(*sets)
+
+
+def lpad(thing: str, length: int = 4, fill: str = " "):
+    """Left pad a string with a given fill character."""
+    sep = f"{fill * length}"
+    return sep + thing.replace("\n", f"\n{sep}")

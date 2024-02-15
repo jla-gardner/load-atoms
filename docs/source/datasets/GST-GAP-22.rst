@@ -35,7 +35,7 @@ GST-GAP-22
             Sb: 21.85%
         properties:
             per atom: (Masses, forces)
-            per structure: (virial_stress, energy, sub_config, config_type)
+            per structure: (config_type, energy, sub_config, virial_stress)
     
 
 

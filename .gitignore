@@ -12,6 +12,8 @@ docs/build
 publish.sh
 ignore/
 
+dev/scripts/info
+
 # everything in examples except .ipynb files
 **/examples/*
 !**/examples/*.ipynb

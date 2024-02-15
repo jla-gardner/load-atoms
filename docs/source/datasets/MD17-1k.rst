@@ -35,7 +35,7 @@ MD17-1k
             N: 1.79%
         properties:
             per atom: (forces)
-            per structure: (split, energy, system)
+            per structure: (energy, split, system)
     
 
 

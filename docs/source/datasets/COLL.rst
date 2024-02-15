@@ -34,7 +34,7 @@ COLL
             O: 12.94%
         properties:
             per atom: (forces)
-            per structure: (atomization_energy, split, energy)
+            per structure: (atomization_energy, energy, split)
     
 
 

@@ -31,7 +31,7 @@ Si-GAP-18
             Si: 100.00%
         properties:
             per atom: (force)
-            per structure: (cutoff, nneightol, energy, config_type)
+            per structure: (config_type, cutoff, energy, nneightol)
     
 
 

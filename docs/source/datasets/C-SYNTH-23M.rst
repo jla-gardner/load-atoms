@@ -29,8 +29,8 @@ C-SYNTH-23M
         species:
             C: 100.00%
         properties:
-            per atom: (gap17_forces, gap17_energy)
-            per structure: (anneal_T, density, time, run_id)
+            per atom: (gap17_energy, gap17_forces)
+            per structure: (anneal_T, density, run_id, time)
     
 
 

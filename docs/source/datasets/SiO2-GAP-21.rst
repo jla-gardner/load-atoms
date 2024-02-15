@@ -32,7 +32,7 @@ SiO2-GAP-21
             Si: 33.53%
         properties:
             per atom: (forces)
-            per structure: (free_energy, virials, energy, config_type)
+            per structure: (config_type, energy, free_energy, virials)
     
 
 
