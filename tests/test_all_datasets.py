@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 from load_atoms import load_dataset
-from load_atoms.atoms_dataset import DescribedDataset
+from load_atoms.database import DatabaseEntry
 from load_atoms.utils import matches_checksum
 
 # this file is at root/tests/database/test_all_datasets.py
@@ -32,15 +32,17 @@ for name in dataset_names:
 def test_dataset(name):
     """Test that the dataset can be loaded."""
 
-    # ignore the really big datasets to save on time
-    to_ignore = ["C-SYNTH-23M"]
-    if name in to_ignore:
-        pytest.skip(f"Skipping {name}")
+    # check that the dataset entry is valid for all datasets
+    info = DatabaseEntry.from_yaml_file(databaset_root / name / f"{name}.yaml")
 
-    ds: DescribedDataset = load_dataset(name, root=testing_dir)  # type: ignore
+    # if the files are hosted on a remote server, finish the test here
+    if info.url_root is not None:
+        return
+
+    load_dataset(name, root=testing_dir)
 
     # check that all files match their checksums
-    for filename, hash in ds.description.files.items():
+    for filename, hash in info.files.items():
         file = testing_dir / name / filename
         assert matches_checksum(file, hash)
 
