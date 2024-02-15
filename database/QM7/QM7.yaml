@@ -6,6 +6,7 @@ description: |
     Energies were converted from kcal/mol to eV.
 files:
     QM7.extxyz: c9dcec505f4d
+category: Benchmarks
 per_structure_properties:
     energy: atomisation energy in eV, as calculated using DFT with the PBE0 functional
 representative_structure: 6492
