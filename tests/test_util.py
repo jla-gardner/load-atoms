@@ -1,5 +1,5 @@
 import pytest
-from load_atoms.utils import LazyMapping, intersect, lpad, union
+from load_atoms.utils import LazyMapping, intersect, union
 
 
 def test_intersection():
@@ -10,11 +10,6 @@ def test_intersection():
 def test_union():
     assert union([[1, 2, 3], [2, 3, 4]]) == {1, 2, 3, 4}
     assert union(("hi", "hello")) == {"h", "e", "l", "o", "i"}
-
-
-def test_pad():
-    assert lpad("hi", 2) == " " * 2 + "hi"
-    assert lpad("hi\nthere", 2) == "  hi\n  there"
 
 
 def test_lazy_mapping():

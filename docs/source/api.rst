@@ -15,6 +15,6 @@ Full API documentation:
    :maxdepth: 2
 
    api/atoms-dataset
-   api/manipulations
    api/viz
+   api/database
    api/utils

@@ -9,13 +9,13 @@ from ase import Atoms
 from ase.io import read
 from rich.progress import Progress, TaskID, track
 
-from load_atoms.dataset_info import DatasetId, DatasetInfo
+from load_atoms.database import DatabaseEntry
 from load_atoms.utils import UnknownDatasetException, matches_checksum
 
 
 def get_structures_for(
-    dataset_id: DatasetId, root: Path
-) -> tuple[list[Atoms], DatasetInfo]:
+    dataset_id: str, root: Path
+) -> tuple[list[Atoms], DatabaseEntry]:
     """
     Get the structures comprising the dataset with the given id, either by
     downloading them from the web or by loading them from disk at the given
@@ -155,7 +155,7 @@ class DataStorage:
     def _sub_folder_for(self, dataset_id):
         return self.root / dataset_id
 
-    def download_missing(self, dataset_id: DatasetId):
+    def download_missing(self, dataset_id: str):
         """
         Download the dataset with the given id from the web and validate it.
 
@@ -173,13 +173,13 @@ class DataStorage:
             # download the dataset description file
             try:
                 download(
-                    DatasetInfo.description_file_url(dataset_id),
+                    DatabaseEntry.description_file_url(dataset_id),
                     info_file,
                 )
             except Exception as e:
                 raise UnknownDatasetException(dataset_id) from e
 
-        info = DatasetInfo.from_yaml_file(info_file)
+        info = DatabaseEntry.from_yaml_file(info_file)
 
         # download any missing dataset files
         missing_files = {
@@ -207,7 +207,7 @@ class DataStorage:
                     stacklevel=2,
                 )
 
-    def load_dataset(self, dataset_id) -> tuple[list[Atoms], DatasetInfo]:
+    def load_dataset(self, dataset_id) -> tuple[list[Atoms], DatabaseEntry]:
         """
         Load the dataset with the given id from the given path.
 
@@ -225,7 +225,7 @@ class DataStorage:
         folder = self._sub_folder_for(dataset_id)
         info_file = folder / (dataset_id + ".yaml")
 
-        info = DatasetInfo.from_yaml_file(info_file)
+        info = DatabaseEntry.from_yaml_file(info_file)
         structures = []
 
         iterator = info.files

@@ -27,7 +27,7 @@ Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, inspect
    Downloading QM7.extxyz | ███████████████████████ | 100.0% 
    Please cite the QM7 dataset if you use it in your work.
 
-The resulting :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` wraps 
+The resulting :class:`~load_atoms.AtomsDataset` wraps 
 a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
 
 .. code-block:: pycon
@@ -40,11 +40,11 @@ a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
 .. code-block:: pycon
 
    >>> dataset.info["energy"]  # access per-structure properties via .info
-   array([-18.1366, -30.9142, -24.4829, ..., -72.1238, -77.327 , -83.2715])
+   array([-18.136, -30.914, -24.482, ..., -72.123, -77.327, -83.271])
    >>> dataset.structure_sizes  # get the number of atoms in each structure
    array([ 5,  8,  6, ..., 16, 17, 19])
 
-For a full list of such methods, see the :class:`AtomsDataset <load_atoms.dataset.AtomsDataset>` documentation.
+For a full list of such methods, see the :class:`~load_atoms.AtomsDataset` documentation.
 
 .. code-block:: pycon
 

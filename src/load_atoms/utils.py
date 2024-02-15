@@ -40,6 +40,10 @@ class LazyMapping(Generic[T, Y]):
     """
     A mapping that lazily loads its values.
 
+    Concretely, the first time a key is accessed, the loader function is called
+    to get the value for that key. Subsequent accesses to the same key will
+    return the same value without calling the loader function again.
+
     Parameters
     ----------
     keys: Sequence[T]
@@ -110,7 +114,3 @@ def intersect(things: Iterable[Iterable]):
     if not sets:
         return set()
     return set.intersection(*sets)
-
-
-def lpad(s, indent=4):
-    return "\n".join(" " * indent + line for line in s.splitlines())

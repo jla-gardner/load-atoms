@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 from load_atoms import load_dataset
-from load_atoms.dataset import DescribedDataset
+from load_atoms.atoms_dataset import DescribedDataset
 from load_atoms.utils import matches_checksum
 
 # this file is at root/tests/database/test_all_datasets.py

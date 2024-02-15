@@ -7,78 +7,15 @@ from typing import Any, Callable, Iterable, Iterator, overload
 import ase
 import numpy as np
 from ase import Atoms
-from ase.io import read
 from yaml import dump
 
 from . import backend
-from .dataset_info import DatasetInfo
+from .database import DatabaseEntry
 from .utils import LazyMapping, frontend_url, intersect, union
 
 
-def load_dataset(
-    thing: str | list[ase.Atoms] | Path,
-    root: str | Path | None = None,
-) -> AtomsDataset:
-    """
-    Load a dataset by name or from a list of structures.
-
-    Parameters
-    ----------
-    thing
-        A dataset id, a list of structures, or a path to a file.
-    root
-        The root directory to use when loading a dataset by id. If not
-        provided, the default root directory (:code:`~/.load-atoms`)
-        will be used.
-
-    Examples
-    --------
-    The following are all viable ways to load a dataset:
-
-    * by id: :code:`dataset("QM7")`
-    * by id, with a custom root directory:
-      :code:`dataset("QM7", root="./my-datasets")`
-    * from a list of structures: :code:`dataset([Atoms("H2O"), Atoms("H2O2")])`
-    * from a file: :code:`dataset("path/to/file.xyz")`
-    """
-
-    if isinstance(thing, list) and all(isinstance(s, Atoms) for s in thing):
-        # thing is a list of structures
-        return AtomsDataset(thing)
-
-    if not isinstance(thing, (Path, str)):
-        raise TypeError(
-            f"Could not load dataset from {thing}. "
-            "Please provide a string, a list of structures, "
-            "or a path to a file."
-        )
-
-    if Path(thing).exists():
-        # thing is a string/path to a file that exists
-        # assume it is a file containing structures and load them
-        structures = read(Path(thing), index=":")
-        return AtomsDataset(structures)  # type: ignore
-
-    if isinstance(thing, Path):
-        # thing is a path to a file that does not exist
-        raise ValueError(f"The provided path does not exist. ({thing})")
-
-    # assume thing is a dataset ID, and try to load it
-    return DescribedDataset.from_id(thing, root)
-
-
 class AtomsDataset:
-    """
-    A lightweight wrapper around a list of :class:`ase.Atoms` objects.
-
-    See :func:`~load_atoms.load_dataset` for the recommended entry point
-    for this class.
-
-    Parameters
-    ----------
-    structures
-        The structures comprising the dataset.
-    """
+    """An immutable wrapper around a list of :class:`ase.Atoms` objects."""
 
     def __init__(self, structures: list[ase.Atoms]):
         if len(structures) == 1:
@@ -93,11 +30,38 @@ class AtomsDataset:
 
         keys, loader = _get_info_loader(structures)
         self.info: LazyMapping[str, Any] = LazyMapping(keys, loader)
-        """A key-value mapping of per-structure properties."""
+        """
+        A key-value mapping of per-structure properties.
+        
+        Examples
+        --------
+        Scalar per-structure properties are turned into an 
+        :class:`np.ndarray <numpy.ndarray>`:
+
+        >>> qm7 = load_dataset("QM7")
+        >>> qm7.info["energy"]
+        array([-18.136, -30.914, -24.482, ..., -72.123, -77.327, -83.271])
+
+        Non-scalar properties are concatenated along a new axis:
+
+        >>> c_gap_20 = load_dataset("C-GAP-20")
+        >>> c_gap_20.info["virial"].shape
+        (6088, 3, 3)
+        """
 
         keys, loader = _get_arrays_loader(structures)
         self.arrays: LazyMapping[str, np.ndarray] = LazyMapping(keys, loader)
-        """A key-value mapping of per-atom properties."""
+        """
+        A key-value mapping of per-atom properties.
+        
+        Example
+        -------
+        Per-atom properties are concatenated along the first axis:
+
+        >>> c_gap_17 = load_dataset("C-GAP-17")
+        >>> c_gap_17.arrays["forces"].shape
+        (284965, 3)
+        """
 
     @property
     def structure_sizes(self) -> np.ndarray:
@@ -108,6 +72,156 @@ class AtomsDataset:
     def n_atoms(self) -> int:
         """The total number of atoms in the dataset."""
         return self.structure_sizes.sum()
+
+    def filter_by(
+        self, *functions: Callable[[ase.Atoms], bool], **info_kwargs: Any
+    ) -> AtomsDataset:
+        """
+        Return a new dataset containing only the structures that match the
+        given criteria.
+
+        Parameters
+        ----------
+        dataset
+            The dataset to filter.
+        functions
+            Functions to filter the dataset by. Each function should take an
+            ASE Atoms object as input and return a boolean.
+        info_kwargs
+            Keyword arguments to filter the dataset by. Only atoms objects with
+            matching info keys and values will be returned.
+
+        Example
+        -------
+        Get small, amorphous structures with large forces:
+
+        .. code-block:: pycon
+            :emphasize-lines: 3-7
+
+            >>> from load_atoms import load_dataset
+            >>> dataset = load_dataset("C-GAP-17")
+            >>> dataset.filter_by(
+            ...     lambda structure: len(structure) < 50,
+            ...     lambda structure: structure.arrays["force"].max() > 5,
+            ...     config_type="bulk_amo"
+            ... )
+            Dataset:
+                structures: 609
+                atoms: 23,169
+                species:
+                    C: 100.00%
+                properties:
+                    per atom: (force)
+                    per structure: (config_type, detailed_ct, split, energy)
+        """
+
+        def matches_info(structure: ase.Atoms) -> bool:
+            for key, value in info_kwargs.items():
+                if structure.info.get(key, None) != value:
+                    return False
+            return True
+
+        functions = (*functions, matches_info)
+
+        def the_filter(structure: ase.Atoms) -> bool:
+            return all(f(structure) for f in functions)
+
+        return AtomsDataset(list(filter(the_filter, self)))
+
+    def random_split(
+        self,
+        splits: list[float] | list[int],
+        seed: int = 42,
+    ) -> list[AtomsDataset]:
+        """
+        Randomly split the dataset into multiple, disjoint parts.
+
+        Parameters
+        ----------
+        splits
+            The number of structures to put in each split.
+            If a list of :class:`float`s, the splits will be
+            calculated as a fraction of the dataset size.
+        seed
+            The random seed to use for shuffling the dataset.
+
+        Returns
+        -------
+        list[AtomsDataset]
+            A list of new datasets, each containing a subset of the original
+
+        Examples
+        --------
+        Split a :code:`dataset` into 80% training and 20% test sets:
+
+        >>> train, test = dataset.random_split([0.8, 0.2])
+
+        Split a :code:`dataset` into 3 parts:
+
+        >>> train, val, test = dataset.random_split([1_000, 100, 100])
+        """
+
+        # process splits
+        if isinstance(splits[0], float):
+            splits = [int(s * len(self)) for s in splits]
+        if sum(splits) > len(self):
+            raise ValueError(
+                "The sum of the splits cannot exceed the dataset size."
+            )
+
+        idxs = np.random.RandomState(seed).permutation(len(self))
+        return [
+            self[idxs[i:j]]
+            for i, j in zip([0, *np.cumsum(splits)], np.cumsum(splits))
+        ]
+
+    def k_fold_split(
+        self,
+        k: int = 5,
+        fold: int = 0,
+        shuffle: bool = True,
+        seed: int = 42,
+    ) -> tuple[AtomsDataset, AtomsDataset]:
+        """
+        Generate (an optionally shuffled) train/test split for cross-validation.
+
+        Parameters
+        ----------
+        k
+            The number of folds to use.
+        fold
+            The fold to use for testing.
+        shuffle
+            Whether to shuffle the dataset before splitting.
+        seed
+            The random seed to use for shuffling the dataset.
+
+        Returns
+        -------
+        Tuple[Dataset, Dataset]
+            The train and test datasets.
+
+        Example
+        -------
+
+        .. code-block:: pycon
+            :emphasize-lines: 2
+
+            >>> for i in range(5):
+            ...     train, test = dataset.k_fold_split(k=5, fold=i)
+            ...     ...  # do something, e.g. train a model
+        """
+
+        if shuffle:
+            idxs = np.random.RandomState(seed).permutation(len(self))
+        else:
+            idxs = np.arange(len(self))
+
+        idxs = np.roll(idxs, fold * len(idxs) // k)
+        n_test = len(self) // k
+        train, test = idxs[:-n_test], idxs[-n_test:]
+
+        return self[train], self[test]
 
     def __len__(self) -> int:
         """The number of structures in the dataset."""
@@ -212,7 +326,7 @@ class AtomsDataset:
         return summarise_dataset(self.structures)
 
 
-def usage_info(info: DatasetInfo) -> str:
+def usage_info(info: DatabaseEntry) -> str:
     lines = []
     if info.license is not None:
         lines.append(
@@ -236,7 +350,7 @@ class DescribedDataset(AtomsDataset):
     def __init__(
         self,
         structures: list[Atoms],
-        description: DatasetInfo,
+        description: DatabaseEntry,
     ):
         super().__init__(structures)
         self.description = description
@@ -305,7 +419,7 @@ def _get_arrays_loader(
 
 def summarise_dataset(
     structures: list[Atoms] | AtomsDataset,
-    description: DatasetInfo | None = None,
+    description: DatabaseEntry | None = None,
 ) -> str:
     name = description.name if description is not None else "Dataset"
     N = len(structures)

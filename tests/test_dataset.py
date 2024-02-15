@@ -5,7 +5,7 @@ import pytest
 from ase import Atoms
 from ase.io import read, write
 from load_atoms import load_dataset
-from load_atoms.dataset import AtomsDataset, summarise_dataset
+from load_atoms.atoms_dataset import AtomsDataset, summarise_dataset
 from load_atoms.utils import UnknownDatasetException
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]

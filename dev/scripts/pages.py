@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Callable
 
 from load_atoms import load_dataset, view
-from load_atoms.dataset import DescribedDataset
-from load_atoms.dataset_info import valid_licenses
+from load_atoms.atoms_dataset import DescribedDataset
+from load_atoms.database import valid_licenses
 
 # this file is at dev/scripts/pages.py
 _PROJECT_ROOT = Path(__file__).parent.parent.parent

@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import pytest
-from load_atoms.dataset_info import DatasetInfo
+from load_atoms.database import DatabaseEntry
 from pydantic import ValidationError
 
 
@@ -14,7 +14,7 @@ def get_correct_dictionary():
     project_root = Path(__file__).parent.parent
     correct_yaml_file = project_root / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
-    return DatasetInfo.from_yaml_file(correct_yaml_file).model_dump()
+    return DatabaseEntry.from_yaml_file(correct_yaml_file).model_dump()
 
 
 def test_incorrect_name():
@@ -22,7 +22,7 @@ def test_incorrect_name():
     kwargs["name"] = dict(_not="a string")
 
     with pytest.raises(ValidationError):
-        DatasetInfo(**kwargs)
+        DatabaseEntry(**kwargs)
 
 
 def test_incorrect_license():
@@ -30,7 +30,7 @@ def test_incorrect_license():
     kwargs["license"] = "Not a real license"
 
     with pytest.raises(ValidationError):
-        DatasetInfo(**kwargs)
+        DatabaseEntry(**kwargs)
 
 
 def test_incorrect_files():
@@ -41,16 +41,16 @@ def test_incorrect_files():
     # not a mapping
     kwargs["files"] = 1
     with pytest.raises(ValidationError):
-        DatasetInfo(**kwargs)
+        DatabaseEntry(**kwargs)
 
     # not a mapping of str to checksum
     kwargs["files"] = {1: 1}
     with pytest.raises(ValidationError):
-        DatasetInfo(**kwargs)
+        DatabaseEntry(**kwargs)
 
     kwargs["files"] = {"file1": "not a hash"}
     with pytest.raises(ValidationError):
-        DatasetInfo(**kwargs)
+        DatabaseEntry(**kwargs)
 
 
 def test_incorrect_citation():
@@ -59,4 +59,4 @@ def test_incorrect_citation():
     # citation should be a bibtex string
     kwargs["citation"] = "this is not a bibtex string"
     with pytest.raises(ValidationError):
-        DatasetInfo(**kwargs)
+        DatabaseEntry(**kwargs)
