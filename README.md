@@ -14,7 +14,6 @@
 A lightweight python package for recording and analysing configurations and results of coding experiments.
 
 [![PyPI](https://img.shields.io/pypi/v/load-atoms)](https://pypi.org/project/load-atoms/)
-[![PyPI - Downloads](https://img.shields.io/pypi/dm/load-atoms?color=green&label=installs&logo=Python&logoColor=white)](https://pypistats.org/packages/load-atoms)
 [![GitHub](https://img.shields.io/github/license/jla-gardner/load-atoms)](LICENCE.md)
 [![](https://github.com/jla-gardner/load-atoms/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/jla-gardner/load-atoms/actions/workflows/tests.yaml)
 [![codecov](https://codecov.io/gh/jla-gardner/load-atoms/branch/main/graph/badge.svg)](https://codecov.io/gh/jla-gardner/load-atoms)
