@@ -70,14 +70,10 @@ Installation
    :hidden:
 
    api
-
-.. toctree::
-   :maxdepth: 3
-   :hidden:
-
    examples
 
 .. include:: datasets.rst
+
 
 Development & Contributions
 ---------------------------

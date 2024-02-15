@@ -13,6 +13,8 @@ valid_licenses = {
     "MIT": "https://opensource.org/licenses/MIT",
 }
 
+valid_categories = ["Benchmarks", "Potential Fitting", "Synthetic Data"]
+
 
 class DatabaseEntry(BaseModel):
     """
@@ -37,6 +39,12 @@ class DatabaseEntry(BaseModel):
     (used for download validation purposes)
     """
 
+    category: str
+    """
+    The category of the dataset 
+    (e.g. :code:`"Potential Fitting"`, :code:`"Benchmarks"`)
+    """
+
     citation: Optional[str] = None
     """A citation for the dataset (in BibTeX format)"""
 
@@ -54,6 +62,14 @@ class DatabaseEntry(BaseModel):
 
     url_root: Optional[str] = None
     """The root url of the dataset, at which all :code:`files` are located"""
+
+    @field_validator("category")
+    def validate_category(cls, v):
+        if v not in valid_categories:
+            raise ValueError(
+                f"Invalid category: {v}. Must be one of {valid_categories}"
+            )
+        return v
 
     @field_validator("license")
     def validate_license(cls, v):
