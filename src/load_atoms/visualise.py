@@ -44,6 +44,7 @@ def view(atoms: Atoms, show_bonds: bool = False):
     Save the visualisation to an :code:`html` file:
 
     .. code-block:: python
+        :emphasize-lines: 3
 
         from pathlib import Path
 

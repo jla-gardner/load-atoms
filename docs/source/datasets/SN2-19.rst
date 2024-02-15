@@ -43,7 +43,7 @@ SN2-19
             Cl: 8.40%
         properties:
             per atom: (forces)
-            per structure: (dipole_moment, energy, charge)
+            per structure: (charge, dipole_moment, energy)
     
 
 

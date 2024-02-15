@@ -72,7 +72,7 @@ Installation
    api
    examples
 
-.. include:: datasets.rst
+.. include:: datasets-index.rst
 
 
 Development & Contributions
