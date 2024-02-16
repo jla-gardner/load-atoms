@@ -61,6 +61,19 @@ Potential Fitting
     .. grid-item-card::
         :class-item: info-card
     
+        .. centered:: :doc:`Si-GAP-18 <../datasets/Si-GAP-18>`
+    
+        The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model
+        from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
+        The CUR algorithm was used to select representative structures from a larger dataset.
+        Energy and force labels were calculated using the PW91 exchange-correlation functional as implemented in :code:`CASTEP`
+        (see :code:`II.B: Database` of the paper).
+        
+    
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
         .. centered:: :doc:`SiO2-GAP-21 <../datasets/SiO2-GAP-21>`
     
         The training database used to fit the `GAP-21 potential for silica <https://zenodo.org/records/6353684>`_ in: 
@@ -78,5 +91,6 @@ Potential Fitting
     ../datasets/C-GAP-20
     ../datasets/GST-GAP-22
     ../datasets/P-GAP-20
+    ../datasets/Si-GAP-18
     ../datasets/SiO2-GAP-21
 

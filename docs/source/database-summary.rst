@@ -58,6 +58,12 @@ These can be downloaded from the internet (and cached locally) using
       - 4,798
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
       - 2020
+    * - :doc:`Si-GAP-18 <../datasets/Si-GAP-18>`
+      - Si
+      - 171,815
+      - 2,475
+      - `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>`_
+      - 2018
     * - :doc:`SiO2-GAP-21 <../datasets/SiO2-GAP-21>`
       - O, Si
       - 268,118

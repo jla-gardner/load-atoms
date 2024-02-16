@@ -1,0 +1,29 @@
+name: Si-GAP-18
+year: 2018
+files:
+    Si-GAP-18.extxyz: 0095ee3fea57
+description: |
+    The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model
+    from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
+    The CUR algorithm was used to select representative structures from a larger dataset.
+    Energy and force labels were calculated using the PW91 exchange-correlation functional as implemented in :code:`CASTEP`
+    (see :code:`II.B: Database` of the paper).
+category: Potential Fitting
+citation: |
+    @article{Bartok-18-12,
+        title = {
+            Machine {{Learning}} a {{General-Purpose Interatomic Potential}} 
+            for {{Silicon}}
+        },
+        author = {
+            Bart{\'o}k, Albert P. and Kermode, James and Bernstein, 
+            Noam and Cs{\'a}nyi, G{\'a}bor
+        },
+        year = {2018},
+        journal = {Physical Review X},
+        volume = {8},
+        number = {4},
+        pages = {041048},
+    }
+license: CC BY-NC-SA 4.0
+representative_structure: 1283
