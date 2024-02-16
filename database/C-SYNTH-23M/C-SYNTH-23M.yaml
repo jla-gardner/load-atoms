@@ -1,4 +1,5 @@
 name: C-SYNTH-23M
+year: 2022
 url_root: "https://github.com/jla-gardner/carbon-data/raw/main/results/"
 description: |
     The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.

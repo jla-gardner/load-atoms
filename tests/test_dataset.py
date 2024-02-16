@@ -125,7 +125,7 @@ def test_useful_warning(tmp_path):
 
 
 def test_info_and_arrays():
-    dataset = load_dataset("QM7", root="./testing-datasets")
+    dataset = load_dataset("C-GAP-17", root="./testing-datasets")
 
     assert "energy" in dataset.info
     assert isinstance(dataset.info["energy"], np.ndarray)
