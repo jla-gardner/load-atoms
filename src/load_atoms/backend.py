@@ -43,7 +43,11 @@ def get_structures_for(
 
 
 def _download_with_progress(
-    url: str, local_path: Path, progress: Progress, task: TaskID
+    url: str,
+    local_path: Path,
+    progress: Progress,
+    task: TaskID,
+    total_task: TaskID | None = None,
 ):
     """
     download the file at the given url to the given path, and update the given
@@ -66,6 +70,11 @@ def _download_with_progress(
                 if chunk:
                     f.write(chunk)
                     progress.update(task, advance=len(chunk))
+
+    # mark the task as complete, and remove from the progress bar
+    progress.remove_task(task)
+    if total_task is not None:
+        progress.update(total_task, advance=1)
 
 
 def download(url: str, local_path: Path):
@@ -113,12 +122,18 @@ def download_all(urls: list[str], directory: Path):
     )
     futures = []
     with Progress(transient=True) as progress, pool_exectutor as pool:
+        total_task = progress.add_task(
+            f"Downloading {len(urls)} files", total=len(urls), start=True
+        )
         for url in urls:
-            task = progress.add_task(
-                f"Downloading {Path(url).name}", start=False
-            )
+            task = progress.add_task(Path(url).name, start=False)
             future = pool.submit(
-                _download_with_progress, url, directory, progress, task
+                _download_with_progress,
+                url,
+                directory,
+                progress,
+                task,
+                total_task,
             )
             futures.append((future, url))
 
