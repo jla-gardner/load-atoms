@@ -3,6 +3,5 @@
    :hidden:
    :caption: Datasets
 
-   category/benchmarks
    category/potential-fitting
    category/synthetic-data

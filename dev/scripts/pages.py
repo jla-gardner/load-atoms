@@ -9,7 +9,7 @@ import yaml
 from ase.data import chemical_symbols
 from load_atoms import load_dataset, view
 from load_atoms.atoms_dataset import DescribedDataset
-from load_atoms.database import DatabaseEntry, valid_categories, valid_licenses
+from load_atoms.database import DatabaseEntry, valid_licenses
 from load_atoms.utils import lpad
 
 # this file is at dev/scripts/pages.py
@@ -60,12 +60,13 @@ def build_datasets_index():
    :caption: Datasets
 
 """
-    for category in valid_categories:
+    categories = sorted(set(e.category for e in entries))
+    for category in categories:
         toc += f"   category/{category.lower().replace(' ', '-')}\n"
 
     (_DOC_SOURCE / "datasets-index.rst").write_text(toc)
 
-    for category in valid_categories:
+    for category in categories:
         category_entries = [e for e in entries if e.category == category]
         title = (
             "#" * len(category) + "\n" + category + "\n" + "#" * len(category)

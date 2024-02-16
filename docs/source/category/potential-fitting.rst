@@ -34,30 +34,6 @@ Potential Fitting
     .. grid-item-card::
         :class-item: info-card
     
-        .. centered:: :doc:`Cu-ACE-21 <../datasets/Cu-ACE-21>`
-    
-        Dataset used to train the Atomic Cluster Expansion (ACE) model for copper from
-        `Performant Implementation of the Atomic Cluster Expansion (PACE) and Application to Copper and Silicon <https://doi.org/10.1038/s41524-021-00559-9>`_.
-        DFT-PBE energy and force labels, computed with FHI-aims, are included.
-        
-    
-    
-    .. grid-item-card::
-        :class-item: info-card
-    
-        .. centered:: :doc:`Cu-POET-19 <../datasets/Cu-POET-19>`
-    
-        A dataset of copper structures, with DFT labels, originally used for training symbolic
-        interatomic potentials, using the `POET framework <https://gitlab.com/muellergroup/poet>`_.
-        Also included are a selection of low index surfaces for testing. 
-        The script used for converting the `original files <https://gitlab.com/muellergroup/poet/-/tree/master/examples/Cu-POET-19>`_ 
-        to the :code:`extxyz` is available `here <https://github.com/jla-gardner/load-atoms/blob/main/database/Cu-POET-19/script.py>`_.
-        
-    
-    
-    .. grid-item-card::
-        :class-item: info-card
-    
         .. centered:: :doc:`GST-GAP-22 <../datasets/GST-GAP-22>`
     
         The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
@@ -85,18 +61,6 @@ Potential Fitting
     .. grid-item-card::
         :class-item: info-card
     
-        .. centered:: :doc:`Si-GAP-18 <../datasets/Si-GAP-18>`
-    
-        The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model
-        from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
-        The CUR algorithm was used to select representative structures from a larger dataset.
-        Energy and force labels were calculated using DFT and the PW91 exchange-correlation functional.
-        
-    
-    
-    .. grid-item-card::
-        :class-item: info-card
-    
         .. centered:: :doc:`SiO2-GAP-21 <../datasets/SiO2-GAP-21>`
     
         The training database used to fit the `GAP-21 potential for silica <https://zenodo.org/records/6353684>`_ in: 
@@ -112,10 +76,7 @@ Potential Fitting
 
     ../datasets/C-GAP-17
     ../datasets/C-GAP-20
-    ../datasets/Cu-ACE-21
-    ../datasets/Cu-POET-19
     ../datasets/GST-GAP-22
     ../datasets/P-GAP-20
-    ../datasets/Si-GAP-18
     ../datasets/SiO2-GAP-21
 
