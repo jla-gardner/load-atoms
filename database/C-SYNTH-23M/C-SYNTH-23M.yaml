@@ -6,6 +6,7 @@ description: |
     This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
     and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential.
 category: Synthetic Data
+license: MIT
 citation: |
     @article{Gardner-23-03,
       title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},

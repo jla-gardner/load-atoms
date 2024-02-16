@@ -34,6 +34,10 @@ C-SYNTH-23M
     
 
 
+License
+-------
+
+This dataset is licensed under the `MIT <https://opensource.org/licenses/MIT>`_ license.
 
 
 Citation

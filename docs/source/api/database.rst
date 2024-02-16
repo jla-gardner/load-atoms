@@ -40,13 +40,13 @@ These can be downloaded from the internet (and cached locally) using
       - C
       - 1,092,000
       - 5,460
-      - None
+      - `MIT <https://opensource.org/licenses/MIT>`_
       - 2022
     * - :doc:`C-SYNTH-23M <../datasets/C-SYNTH-23M>`
       - C
       - 23,041,200
       - 115,206
-      - None
+      - `MIT <https://opensource.org/licenses/MIT>`_
       - 2022
     * - :doc:`GST-GAP-22 <../datasets/GST-GAP-22>`
       - Ge, Sb, Te

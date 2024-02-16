@@ -73,9 +73,12 @@ Installation
 .. toctree::
    :maxdepth: 3
    :hidden:
+   :caption: API Reference
 
-   api
-   examples
+   api/dataset
+   api/database
+   api/viz
+   api/utils
 
 .. include:: datasets-index.rst
 

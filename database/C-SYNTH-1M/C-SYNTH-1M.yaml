@@ -10,6 +10,7 @@ description: |
     Per-atom energy and force labels from the same potential are included.
     More details can be found in the paper: `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
 category: Synthetic Data
+license: MIT
 citation: |
     @article{Gardner-23-03,
       title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},

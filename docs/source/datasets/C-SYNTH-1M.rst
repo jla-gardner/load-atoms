@@ -36,6 +36,10 @@ C-SYNTH-1M
     
 
 
+License
+-------
+
+This dataset is licensed under the `MIT <https://opensource.org/licenses/MIT>`_ license.
 
 
 Citation
