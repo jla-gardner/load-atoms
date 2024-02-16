@@ -30,13 +30,22 @@ def load_dataset(
 
     Examples
     --------
-    The following are all viable ways to load a dataset:
+    Load a dataset by id:
 
-    * by id: :code:`dataset("C-GAP-17")`
-    * by id, with a custom root directory:
-      :code:`dataset("C-GAP-17", root="./my-datasets")`
-    * from a list of structures: :code:`dataset([Atoms("H2O"), Atoms("H2O2")])`
-    * from a file: :code:`dataset("path/to/file.xyz")`
+    >>> from load_atoms import load_dataset
+    >>> dataset = load_dataset("C-GAP-17")
+
+    Optionally save a dataset to an explicit root directory:
+
+    >>> dataset("C-GAP-17", root="./my-datasets")
+
+    Wrap a list of structures in a dataset:
+
+    >>> dataset([Atoms("H2O"), Atoms("H2O2")])
+
+    Load a dataset from a file:
+
+    >>> dataset("path/to/file.xyz")
     """
 
     if isinstance(thing, list) and all(isinstance(s, ase.Atoms) for s in thing):

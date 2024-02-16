@@ -1,5 +1,5 @@
-Datasets
-========
+Dataset
+=======
 
 The main entry point of :code:`load-atoms` is the :func:`load_dataset <load_atoms.load_dataset>` function:
 

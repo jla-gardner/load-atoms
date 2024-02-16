@@ -15,12 +15,12 @@ hidden
 
    This project is under active development. Until version 1.0.0 is released, breaking changes to the API may occur.
 
-Usage
------
+:code:`load-atoms` is a Python package for downloading, inspecting and manipulating datasets of atomic structures.
 
-Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, inspect and manipulate datasets of atomic structures. The complete collection of (currently available) datasets is available `here <datasets/AC-2D-22.html>`_ .
-
-.. code-block:: pycon
+Quickstart
+----------
+Install using :code:`pip install load-atoms`, and then use 
+:func:`~load_atoms.load_dataset` to download an :class:`~load_atoms.AtomsDataset` (full list available :doc:`here <database-summary>`):
 
    >>> from load_atoms import load_dataset
    >>> dataset = load_dataset("C-GAP-17")
@@ -28,46 +28,34 @@ Use :func:`load_dataset() <load_atoms.load_dataset>` to easily download, inspect
    The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.
    Please cite the C-GAP-17 dataset if you use it in your work.
 
-The resulting :class:`~load_atoms.AtomsDataset` wraps 
-a list of :class:`ase.Atoms <ase.atoms.Atoms>`:
+These are thin wrappers around lists of :class:`ase.Atoms`:
 
-.. code-block:: pycon
-
-   >>> dataset[0] # treat the dataset like a list of ase.Atoms
+   >>> dataset[0]
    Atoms(symbols='C64', pbc=True, cell=[9.483, 9.483, 9.483], force=...)
 
-... and provides useful dataset-level methods and properties:
-
-.. code-block:: pycon
-
-   >>> dataset.info["energy"]  
-   array([-9847.661671, -9886.440245, -9916.681692, ...,  -632.464825,
-           -632.146922,  -632.944571])
-   >>> dataset.structure_sizes  
-   array([64, 64, 64, ...,  4,  4,  4])
-   >>> train, val, test = dataset.random_split([0.8, 0.1, 0.1], seed=42)
-
-For a full list of such methods, see the :class:`~load_atoms.AtomsDataset` documentation. 
-:code:`load-atoms` also contains a :func:`~load_atoms.view` function to interactivley 
-visualize atomic structures directly in a notebook: 
-
-
-.. code-block:: pycon
+:func:`~load_atoms.view` provides interactive visualization of atomic structures:
 
    >>> from load_atoms import view
-   >>> view(dataset[1926], show_bonds=True)  
+   >>> view(dataset[1926], show_bonds=True)
 
 .. raw:: html
    :file: ./_static/c-gap-17-1926.html
 
-         
-Installation
-------------
-.. _installation:
+We provide several :doc:`dataset-level operations <api/dataset>`:
 
-.. code-block:: console
+   >>> small_structures = dataset.filter_by(lambda atoms: len(atoms) < 10)
 
-   $ pip install load-atoms
+   >>> dataset.info["energy"]
+   array([-9847.662, -9886.44 , ...,  -632.465, -632.945])
+
+   >>> trainset, testset = dataset.random_split([0.9, 0.1], seed=42)
+
+
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+
+   Quickstart <self>
 
 
 .. toctree::
@@ -76,7 +64,6 @@ Installation
    :caption: API Reference
 
    api/dataset
-   api/database
    api/viz
    api/utils
 
