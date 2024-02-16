@@ -17,7 +17,9 @@ extensions = [
     "sphinx_copybutton",
     "sphinx_design",
     "sphinx.ext.viewcode",
+    "sphinx_codeautolink",
 ]
+
 
 intersphinx_mapping = {
     "ase": ("https://wiki.fysik.dtu.dk/ase/", None),

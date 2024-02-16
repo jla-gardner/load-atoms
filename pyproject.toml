@@ -43,6 +43,7 @@ dev = [
     "sphinx_autodoc_typehints",
     "sphinx-design",
     "sphinx_copybutton",
+    "sphinx-codeautolink",
 ]
 
 [project.urls]

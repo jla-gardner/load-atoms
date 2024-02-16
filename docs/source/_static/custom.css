@@ -47,3 +47,13 @@ img {
 .table-wrapper td {
     text-align: center;
 }
+
+/* anything that lives in a span wrapped by a .sphinx-codeautolink-a */
+.sphinx-codeautolink-a span {
+    text-decoration: underline;
+    text-decoration-color: var(--color-api-name);
+}
+/* make it obviously clickable on hover by turning bold */
+.sphinx-codeautolink-a span:hover {
+    font-weight: bold;
+}
