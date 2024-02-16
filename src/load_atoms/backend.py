@@ -57,6 +57,8 @@ def _download_with_progress(
         local_path = local_path / Path(url).name
     local_path.parent.mkdir(parents=True, exist_ok=True)
 
+    progress.update(task, visible=True)
+
     with requests.get(url, stream=True) as response:
         # raise an exception if the request was not successful
         response.raise_for_status()
@@ -126,7 +128,7 @@ def download_all(urls: list[str], directory: Path):
             f"Downloading {len(urls)} files", total=len(urls), start=True
         )
         for url in urls:
-            task = progress.add_task(Path(url).name, start=False)
+            task = progress.add_task(Path(url).name, start=False, visible=False)
             future = pool.submit(
                 _download_with_progress,
                 url,
