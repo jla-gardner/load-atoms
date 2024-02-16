@@ -32,9 +32,9 @@ def load_dataset(
     --------
     The following are all viable ways to load a dataset:
 
-    * by id: :code:`dataset("QM7")`
+    * by id: :code:`dataset("C-GAP-17")`
     * by id, with a custom root directory:
-      :code:`dataset("QM7", root="./my-datasets")`
+      :code:`dataset("C-GAP-17", root="./my-datasets")`
     * from a list of structures: :code:`dataset([Atoms("H2O"), Atoms("H2O2")])`
     * from a file: :code:`dataset("path/to/file.xyz")`
     """

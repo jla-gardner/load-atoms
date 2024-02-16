@@ -38,9 +38,10 @@ class AtomsDataset:
         Scalar per-structure properties are turned into an 
         :class:`np.ndarray <numpy.ndarray>`:
 
-        >>> qm7 = load_dataset("QM7")
-        >>> qm7.info["energy"]
-        array([-18.136, -30.914, -24.482, ..., -72.123, -77.327, -83.271])
+        >>> dataset = load_dataset("C-GAP-17")
+        >>> dataset.info["energy"]
+        array([-9847.661671, -9886.440245, -9916.681692, ...,  -632.464825,
+                -632.146922,  -632.944571])
 
         Non-scalar properties are concatenated along a new axis:
 
@@ -58,8 +59,8 @@ class AtomsDataset:
         -------
         Per-atom properties are concatenated along the first axis:
 
-        >>> c_gap_17 = load_dataset("C-GAP-17")
-        >>> c_gap_17.arrays["forces"].shape
+        >>> dataset = load_dataset("C-GAP-17")
+        >>> dataset.arrays["forces"].shape
         (284965, 3)
         """
 
@@ -256,45 +257,41 @@ class AtomsDataset:
         --------
 
         >>> from load_atoms import load_dataset
-        >>> qm7 = load_dataset("QM7")
+        >>> dataset = load_dataset("C-GAP-17")
+        The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.
+        Please cite the C-GAP-17 dataset if you use it in your work.
 
         Get the first structure in the dataset:
 
-        >>> qm7[0]  # returns the first structure in the dataset
-        Atoms(symbols='CH4', pbc=False)
+        >>> dataset[0]
+        Atoms(symbols='C64', pbc=True, cell=[9.483, 9.483, 9.483], force=...)
 
         Create a new dataset with the first 10 structures:
 
-        >>> qm7[:10]
+        >>> dataset[:10]
         Dataset:
             structures: 10
-            atoms: 77
+            atoms: 640
             species:
-                H: 67.53%
-                C: 28.57%
-                O: 3.90%
+                C: 100.00%
             properties:
-                per atom: ()
-                per structure: (energy)
+                per atom: (force)
+                per structure: (config_type, detailed_ct, split, energy)
 
         Create a new dataset of high energy structures using a mask
         (see :func:`~load_atoms.manipulations.filter_by` for a more convenient
         way to do this):
 
-        >>> mask = qm7.info["energy"] / qm7.structure_sizes > -4
-        >>> qm7[mask]
+        >>> mask = dataset.info["energy"] / dataset.structure_sizes > -155
+        >>> dataset[mask]
         Dataset:
-            structures: 155
-            atoms: 2,636
+            structures: 36
+            atoms: 444
             species:
-                H: 63.28%
-                C: 22.76%
-                N: 8.27%
-                O: 4.78%
-                S: 0.91%
+                C: 100.00%
             properties:
-                per atom: ()
-                per structure: (energy)
+                per atom: (force)
+                per structure: (config_type, detailed_ct, split, energy)
         """
         # if the passed index is a slice, return a new Dataset object:
         if isinstance(index, slice):
