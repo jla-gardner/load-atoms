@@ -70,10 +70,10 @@ We provide several :doc:`dataset-level operations <api/dataset>`:
 .. include:: datasets-index.rst
 
 
-Development & Contributions
----------------------------
-We welcome any suggestions and contributions to this project.
-Please visit our `GitHub repository <https://github.com/jla-gardner/load-atoms>`_ to report issues or submit pull requests.
-The `developer guide <https://github.com/jla-gardner/load-atoms/blob/main/dev/developer-guide>`_ contains information on how to set up a development environment and run the tests.
+.. toctree::
+   :maxdepth: 1
+   :hidden:
+   :caption: Contributing
 
+   dev/developer-guide
 
