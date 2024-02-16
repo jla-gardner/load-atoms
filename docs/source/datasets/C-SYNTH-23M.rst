@@ -19,7 +19,7 @@ C-SYNTH-23M
         
 
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> from load_atoms import load_dataset
     >>> load_dataset("C-SYNTH-23M")

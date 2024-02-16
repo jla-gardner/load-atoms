@@ -22,7 +22,7 @@ GST-GAP-22
         
 
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> from load_atoms import load_dataset
     >>> load_dataset("GST-GAP-22")

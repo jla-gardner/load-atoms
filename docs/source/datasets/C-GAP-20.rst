@@ -20,7 +20,7 @@ C-GAP-20
         
 
 
-.. code-block:: python
+.. code-block:: pycon
 
     >>> from load_atoms import load_dataset
     >>> load_dataset("C-GAP-20")

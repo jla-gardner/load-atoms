@@ -160,7 +160,7 @@ def header(dataset: DescribedDataset) -> str:
 def code_block(dataset: DescribedDataset) -> str:
     summary = str(dataset).replace("\n", "\n    ")
     return f"""\
-.. code-block:: python
+.. code-block:: pycon
 
     >>> from load_atoms import load_dataset
     >>> load_dataset("{dataset.description.name}")
