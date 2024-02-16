@@ -1,3 +1,5 @@
+# explicitly not using future annotations since this is not supported
+# by pydantic
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -29,6 +31,9 @@ class DatabaseEntry(BaseModel):
 
     name: str
     """The name of the dataset"""
+
+    year: int
+    """The year the dataset was created"""
 
     description: str
     """A description of the dataset (in :code:`.rst` format)"""

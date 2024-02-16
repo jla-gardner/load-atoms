@@ -24,8 +24,9 @@ testing_dir.mkdir(exist_ok=True)
 
 for name in dataset_names:
     # copy over the folder if it doesn't exist
-    if not (testing_dir / name).exists():
-        shutil.copytree(databaset_root / name, testing_dir / name)
+    shutil.copytree(
+        databaset_root / name, testing_dir / name, dirs_exist_ok=True
+    )
 
 
 @pytest.mark.parametrize("name", dataset_names, ids=dataset_names)

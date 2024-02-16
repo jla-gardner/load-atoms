@@ -1,4 +1,5 @@
 name: P-GAP-20
+year: 2020
 url_root: https://zenodo.org/record/4003703/files/
 description: |
     The complete Phosphorus dataset used to train the `P-GAP-20 <https://zenodo.org/records/4003703>`_ model from 

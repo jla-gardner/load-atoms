@@ -1,4 +1,5 @@
 name: SiO2-GAP-21
+year: 2021
 description: |
     The training database used to fit the `GAP-21 potential for silica <https://zenodo.org/records/6353684>`_ in: 
     `A Machine-Learned Interatomic Potential for Silica and Its Relation to Empirical Models <https://doi.org/10.1038/s41524-022-00768-w>`_.
