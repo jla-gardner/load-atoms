@@ -6,7 +6,7 @@ import ase
 from ase.io import read
 
 from .atoms_dataset import AtomsDataset, DescribedDataset
-from .visualise import view
+from .visualisation import view
 
 __version__ = "0.1.7"
 __all__ = ["load_dataset", "view"]

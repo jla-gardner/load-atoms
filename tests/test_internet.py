@@ -1,5 +1,5 @@
 import pytest
-from load_atoms.processing.backend import download, download_all
+from load_atoms.database.internet import download, download_all
 
 RAW_GITHUB_URL = (
     "https://raw.githubusercontent.com/jla-gardner/load-atoms/main/"
