@@ -4,7 +4,7 @@ import importlib
 import shutil
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Callable, Generic, TypeVar
+from typing import Generic, TypeVar
 
 from ase import Atoms
 from ase.io import read as ase_read
@@ -16,6 +16,19 @@ class Step(ABC, Generic[X, Y]):
     @abstractmethod
     def __call__(self, x: X) -> Y:
         ...
+
+
+class Chain(Generic[X, Y]):
+    def __init__(self, steps: list[Step]):
+        self.steps = steps
+
+    def __call__(self, x: X) -> Y:
+        for step in self.steps:
+            x = step(x)
+        return x  # type: ignore
+
+    def __repr__(self):
+        return f"Chain({', '.join(str(step) for step in self.steps)})"
 
 
 _common_steps: dict[str, type[Step]] = dict()
@@ -37,7 +50,7 @@ def get_step_type(name: str) -> type[Step]:
 
 def parse_steps(
     raw_steps: list[str | dict[str, dict[str, str]]]
-) -> Callable[[Path], list[Atoms]]:
+) -> Chain[Path, list[Atoms]]:
     steps: list[Step] = []
 
     for step in raw_steps:
@@ -47,16 +60,19 @@ def parse_steps(
             name, kwargs = list(step.items())[0]
             steps.append(get_step_type(name)(**kwargs))
 
-    def process(x: Path) -> list[Atoms]:
-        for step in steps:
-            x = step(x)
-        return x  # type: ignore
-
-    return process
+    return Chain(steps)
 
 
 def default_processing():
-    return {"ReadASE": {}}
+    return [
+        {
+            "ForEachFile": {
+                "steps": [
+                    {"ReadASE": {}},
+                ]
+            },
+        }
+    ]
 
 
 @register_step
@@ -66,31 +82,49 @@ class UnZip(Step[Path, Path]):
         shutil.unpack_archive(file, extract_dir=extract_to)
         return extract_to
 
+    def __repr__(self):
+        return "UnZip()"
+
 
 @register_step
 class SelectFile(Step[Path, Path]):
     def __init__(self, file: Path):
-        super().__init__()
         self.file = file
 
     def __call__(self, root: Path) -> Path:
         return root / self.file
 
+    def __repr__(self):
+        return f"SelectFile({self.file})"
+
+
+@register_step
+class ForEachFile(Step[Path, "list[Atoms]"]):
+    def __init__(self, steps: list[str | dict[str, dict[str, str]]]):
+        self.chain = parse_steps(steps)
+
+    def __call__(self, root: Path) -> list[Atoms]:
+        return sum(
+            (self.chain(file) for file in root.iterdir()),
+            start=[],
+        )
+
 
 @register_step
 class ReadASE(Step[Path, "list[Atoms]"]):
     def __init__(self, **kwargs):
-        super().__init__()
         self.kwargs = kwargs
 
     def __call__(self, file: Path) -> list[Atoms]:
         return ase_read(file, index=":", **self.kwargs)  # type: ignore
 
+    def __repr__(self):
+        return f"ReadASE({self.kwargs})"
+
 
 @register_step
 class Custom(Step[Path, "list[Atoms]"]):
     def __init__(self, id: str):
-        super().__init__()
         self.id = id
 
     def __call__(self, file: Path) -> list[Atoms]:
@@ -98,3 +132,6 @@ class Custom(Step[Path, "list[Atoms]"]):
             f"load_atoms.database.processing.{self.id}"
         )
         return module.process(file)
+
+    def __repr__(self):
+        return f"Custom({self.id})"

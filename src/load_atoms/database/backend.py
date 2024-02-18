@@ -14,13 +14,10 @@ from ase.io import read, write
 
 from load_atoms.database import DatabaseEntry
 from load_atoms.database.internet import download, download_all
-from load_atoms.database.processing import parse_steps
 from load_atoms.utils import UnknownDatasetException, matches_checksum
 
 
-def load_structures(
-    dataset_id: str, root: Path
-) -> tuple[list[Atoms], DatabaseEntry]:
+def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     """
     Load the structures comprising the dataset with the given id from the
     given path.
@@ -30,23 +27,23 @@ def load_structures(
 
     Parameters
     ----------
-    dataset_id
+    name
         The id of the dataset to load.
     root
         The root folder to save the structures to.
     """
 
     # we first need to get the DatabaseEntry for the dataset
-    entry_path = root / dataset_id / f"{dataset_id}.yaml"
+    entry_path = root / name / f"{name}.yaml"
     if not (entry_path).exists():
         try:
-            download(DatabaseEntry.remote_url_for(dataset_id), root)
+            download(DatabaseEntry.remote_url_for(name), entry_path)
         except Exception as e:
-            raise UnknownDatasetException(dataset_id) from e
+            raise UnknownDatasetException(name) from e
     entry = DatabaseEntry.from_yaml_file(entry_path)
 
     # now we can get the structures
-    structures_path = root / dataset_id / f"{dataset_id}.xyz"
+    structures_path = root / name / f"{name}.xyz"
     if structures_path.exists():
         # TODO: implement fast reading with progress bar
         return read(structures_path, index=":"), entry  # type: ignore
@@ -57,9 +54,13 @@ def load_structures(
     # 1. download the dataset files
     remote_file_locations = entry.remote_file_locations()
     download_dir = (
-        root / dataset_id / "temp"
+        root / name / "temp"
     )  # TODO use actual temp at some point : read up about this
-    download_all(list(remote_file_locations.values()), download_dir)
+    download_dir.mkdir(parents=True, exist_ok=True)
+    missing_files = set(remote_file_locations.keys()) - set(
+        f.name for f in download_dir.iterdir()
+    )
+    download_all(list(missing_files), download_dir)
 
     # 2. validate the downloaded files
     for file_name, hash in entry.files.items():
@@ -73,11 +74,13 @@ def load_structures(
             )
 
     # 3. process the downloaded files into structures
-    processing_function = parse_steps(entry.processing)
-    structures = processing_function(download_dir)
+    structures = entry.process(download_dir)
 
     # 4. save the structures to disk
     structures_path.parent.mkdir(parents=True, exist_ok=True)
+    for s in structures:
+        s.calc = None
     write(structures_path, structures)
+    # TODO: implement fast writing with progress bar, and removal of calculators
 
     return structures, entry

@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Union
 
 import yaml
+from ase import Atoms
 from pydantic import BaseModel, Field, field_validator
 
 from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
@@ -114,6 +115,10 @@ class DatabaseEntry(BaseModel):
         except Exception as e:
             raise ValueError(f"Invalid processing steps: {v}") from e
         return v
+
+    def process(self, root: Path) -> List[Atoms]:
+        chain = parse_steps(self.processing)
+        return chain(root)
 
     @classmethod
     def from_yaml_file(cls, path: Path) -> "DatabaseEntry":
