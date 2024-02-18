@@ -52,14 +52,11 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     # process them into structures, and save the structures to disk
 
     # 1. download the dataset files
-    remote_file_locations = entry.remote_file_locations()
-    download_dir = (
-        root / name / "temp"
-    )  # TODO use actual temp at some point : read up about this
+    download_dir = root / name / "temp"
+    # TODO use actual temp at some point : read up about this
     download_dir.mkdir(parents=True, exist_ok=True)
-    missing_files = set(remote_file_locations.keys()) - set(
-        f.name for f in download_dir.iterdir()
-    )
+    existing_files = (f.name for f in download_dir.iterdir())
+    missing_files = set(entry.files) - set(existing_files)
     download_all(list(missing_files), download_dir)
 
     # 2. validate the downloaded files
