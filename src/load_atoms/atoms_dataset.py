@@ -9,8 +9,7 @@ import numpy as np
 from ase import Atoms
 from yaml import dump
 
-from .database import DatabaseEntry
-from .processing import backend
+from .database import DatabaseEntry, backend
 from .utils import LazyMapping, frontend_url, intersect, union
 
 
@@ -376,7 +375,7 @@ class DescribedDataset(AtomsDataset):
             root = Path.home() / ".load-atoms"
         root = Path(root)
 
-        all_structures, info = backend.get_structures_for(dataset_id, root)
+        all_structures, info = backend.load_structures(dataset_id, root)
 
         # remove annoying automatic ASE calculators
         for structure in all_structures:

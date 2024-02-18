@@ -23,6 +23,7 @@ _common_steps: dict[str, type[Step]] = dict()
 
 def register_step(step: type[Step]):
     _common_steps[step.__name__] = step
+    return step
 
 
 def get_step_type(name: str) -> type[Step]:
@@ -52,6 +53,10 @@ def parse_steps(
         return x  # type: ignore
 
     return process
+
+
+def default_processing():
+    return {"ReadASE": {}}
 
 
 @register_step
@@ -90,6 +95,6 @@ class Custom(Step[Path, "list[Atoms]"]):
 
     def __call__(self, file: Path) -> list[Atoms]:
         module = importlib.import_module(
-            f"load_atoms.processing.custom_processing.{self.id}"
+            f"load_atoms.database.processing.{self.id}"
         )
         return module.process(file)

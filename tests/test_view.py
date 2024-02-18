@@ -5,7 +5,7 @@
 import pytest
 from ase.build import molecule
 from load_atoms import view
-from load_atoms.visualise import unique_variable_name
+from load_atoms.visualisation import unique_variable_name
 
 
 @pytest.mark.parametrize("show_bonds", [True, False])

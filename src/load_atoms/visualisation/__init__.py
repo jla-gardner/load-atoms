@@ -54,7 +54,7 @@ def view(atoms: Atoms, show_bonds: bool = False):
     scene = x3d_scene(atoms, show_bonds, width="300px", height="300px")
 
     uid = unique_variable_name()
-    js_file = Path(__file__).parent / "visualise.js"
+    js_file = Path(__file__).parent / "view.js"
     js = js_file.read_text().replace("uid", uid)
 
     x3d_script = (Path(__file__).parent / "x3d.script").read_text()

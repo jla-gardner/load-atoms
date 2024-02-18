@@ -1,12 +1,14 @@
 # explicitly not using future annotations since this is not supported
 # by pydantic for python versions we want to target
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import yaml
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 
 from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
+
+from .processing import default_processing, parse_steps
 
 valid_licenses = {
     "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
@@ -68,6 +70,13 @@ class DatabaseEntry(BaseModel):
     url_root: Optional[str] = None
     """The root url of the dataset, at which all :code:`files` are located"""
 
+    processing: List[Union[str, Dict[str, Any]]] = Field(
+        default_factory=default_processing
+    )  # TODO get this working
+    """
+    A function to turn the downloaded file paths into the dataset's structures
+    """
+
     @field_validator("category")
     def validate_category(cls, v):
         if v not in valid_categories:
@@ -98,6 +107,14 @@ class DatabaseEntry(BaseModel):
             return v
         raise ValueError(f"Invalid BibTeX: {v}")
 
+    @field_validator("processing")
+    def validate_processing(cls, v):
+        try:
+            parse_steps(v)
+        except Exception as e:
+            raise ValueError(f"Invalid processing steps: {v}") from e
+        return v
+
     @classmethod
     def from_yaml_file(cls, path: Path) -> "DatabaseEntry":
         with open(path) as f:
@@ -114,5 +131,5 @@ class DatabaseEntry(BaseModel):
         return {base_url + k: v for k, v in self.files.items()}
 
     @classmethod
-    def description_file_url(cls, dataset_id):
+    def remote_url_for(cls, dataset_id):
         return BASE_REMOTE_URL + f"{dataset_id}/{dataset_id}.yaml"
