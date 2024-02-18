@@ -1,5 +1,5 @@
 # explicitly not using future annotations since this is not supported
-# by pydantic
+# by pydantic for python versions we want to target
 from pathlib import Path
 from typing import Dict, Optional
 
