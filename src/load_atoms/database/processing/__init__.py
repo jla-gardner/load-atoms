@@ -77,13 +77,21 @@ def default_processing():
 
 @register_step
 class UnZip(Step[Path, Path]):
-    def __call__(self, file: Path) -> Path:
-        extract_to = file.parent / "extracted"
-        shutil.unpack_archive(file, extract_dir=extract_to)
+    def __init__(self, file: Path | None = None):
+        self.file = file
+
+    def __call__(self, root: Path) -> Path:
+        if self.file is None:
+            # get the first file in the directory
+            extract_from = next(root.iterdir())
+        else:
+            extract_from = root / self.file
+        extract_to = root / "extracted"
+        shutil.unpack_archive(extract_from, extract_dir=extract_to)
         return extract_to
 
     def __repr__(self):
-        return "UnZip()"
+        return "UnZip()" if self.file is None else f"UnZip({self.file})"
 
 
 @register_step

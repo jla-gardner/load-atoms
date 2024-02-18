@@ -17,5 +17,11 @@ citation: |
       number = {1},
       pages = {1--12},
     }
+url_root: https://zenodo.org/records/6353684/files/
 files:
-    SiO2-GAP-21.xyz: 46da1238d6c2
+    sio2_potential_data.zip: 98ea6e58f6d9
+processing:
+    - UnZip
+    - SelectFile:
+          file: sio2_potential_data/database/dataset.scan.2.xyz
+    - ReadASE
