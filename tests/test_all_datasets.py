@@ -17,7 +17,7 @@ project_root = Path(__file__).parent.parent
 databaset_root = project_root / "database"
 dataset_names = sorted([p.name for p in databaset_root.iterdir() if p.is_dir()])
 
-
+# SIMULATE DOWNLOADING THE DATASETS
 # copy over the datasets to a place to test them
 testing_dir = project_root / "testing-datasets"
 testing_dir.mkdir(exist_ok=True)
@@ -27,6 +27,15 @@ for name in dataset_names:
     shutil.copytree(
         databaset_root / name, testing_dir / name, dirs_exist_ok=True
     )
+    (testing_dir / name / "temp").mkdir(exist_ok=True)
+    # move all non yaml files to temp to simulate a download
+    for file in (testing_dir / name).glob("*"):
+        if (
+            file.suffix != ".yaml"
+            and file.name != "temp"
+            and file.name != f"{name}.xyz"
+        ):
+            file.rename(testing_dir / name / "temp" / file.name)
 
 
 @pytest.mark.parametrize("name", dataset_names, ids=dataset_names)
@@ -44,7 +53,7 @@ def test_dataset(name):
 
     # check that all files match their checksums
     for filename, hash in info.files.items():
-        file = testing_dir / name / filename
+        file = testing_dir / name / "temp" / filename
         assert matches_checksum(file, hash)
 
 

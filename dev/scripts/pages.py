@@ -9,7 +9,7 @@ import yaml
 from ase.data import chemical_symbols
 from load_atoms import load_dataset, view
 from load_atoms.atoms_dataset import DescribedDataset
-from load_atoms.database import DatabaseEntry, valid_licenses
+from load_atoms.database.database_entry import DatabaseEntry, valid_licenses
 from load_atoms.utils import lpad
 
 # this file is at dev/scripts/pages.py
@@ -142,7 +142,7 @@ def header(dataset: DescribedDataset) -> str:
 
     info = str(dataset.description.description).replace("\n", "\n        ")
     return f"""\
-.. grid:: 2
+.. grid:: 1 1 2 2
     
     .. grid-item::
 
