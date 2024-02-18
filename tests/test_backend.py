@@ -1,5 +1,5 @@
 import pytest
-from load_atoms.backend import get_structures_for
+from load_atoms.processing.backend import get_structures_for
 from load_atoms.utils import UnknownDatasetException
 
 

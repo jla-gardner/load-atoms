@@ -9,8 +9,8 @@ import numpy as np
 from ase import Atoms
 from yaml import dump
 
-from . import backend
 from .database import DatabaseEntry
+from .processing import backend
 from .utils import LazyMapping, frontend_url, intersect, union
 
 
