@@ -6,8 +6,10 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Generic, TypeVar
 
+import yaml
 from ase import Atoms
 from ase.io import read as ase_read
+from rich.progress import track
 
 X, Y = TypeVar("X"), TypeVar("Y")
 
@@ -64,15 +66,12 @@ def parse_steps(
 
 
 def default_processing():
-    return [
-        {
-            "ForEachFile": {
-                "steps": [
-                    {"ReadASE": {}},
-                ]
-            },
-        }
-    ]
+    default = """\
+- ForEachFile:
+    steps:
+      - ReadASE: {}
+"""
+    return parse_steps(yaml.safe_load(default))
 
 
 @register_step
@@ -108,14 +107,31 @@ class SelectFile(Step[Path, Path]):
 
 @register_step
 class ForEachFile(Step[Path, "list[Atoms]"]):
-    def __init__(self, steps: list[str | dict[str, dict[str, str]]]):
+    def __init__(
+        self,
+        steps: list[str | dict[str, dict[str, str]]],
+        files: list[str] | None = None,
+        pattern: str | None = None,
+    ):
         self.chain = parse_steps(steps)
+        self.files = files
+        self.pattern = pattern
 
     def __call__(self, root: Path) -> list[Atoms]:
-        return sum(
-            (self.chain(file) for file in root.iterdir()),
-            start=[],
-        )
+        if self.files is not None:
+            files = [root / file for file in self.files]
+        elif self.pattern is not None:
+            files = sorted(root.glob(self.pattern))
+        else:
+            files = sorted(root.iterdir())
+
+        results = []
+        for file in track(
+            files,
+            description="Processing files",
+        ):
+            results.extend(self.chain(file))
+        return results
 
 
 @register_step

@@ -74,7 +74,7 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
             )
 
     # 3. process the downloaded files into structures
-    structures = entry.process(download_dir)
+    structures = entry.processing(download_dir)
 
     # 4. save the structures to disk
     structures_path.parent.mkdir(parents=True, exist_ok=True)
