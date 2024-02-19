@@ -21,19 +21,6 @@ Synthetic Data
     .. grid-item-card::
         :class-item: info-card
     
-        .. centered:: :doc:`C-SYNTH-1M <../datasets/C-SYNTH-1M>`
-    
-        One million unique atomic environments from a "synthetic" dataset of carbon structures.
-        These structures, each containing 200 atoms, have been sampled from 546 uncorrelated MD trajectories
-        driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential.
-        Per-atom energy and force labels from the same potential are included.
-        More details can be found in the paper: `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
-        
-    
-    
-    .. grid-item-card::
-        :class-item: info-card
-    
         .. centered:: :doc:`C-SYNTH-23M <../datasets/C-SYNTH-23M>`
     
         The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
@@ -47,6 +34,5 @@ Synthetic Data
     :hidden:
 
     ../datasets/AC-2D-22
-    ../datasets/C-SYNTH-1M
     ../datasets/C-SYNTH-23M
 

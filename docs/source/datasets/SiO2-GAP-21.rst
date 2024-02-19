@@ -3,7 +3,7 @@
 SiO2-GAP-21
 ===========
 
-.. grid:: 2
+.. grid:: 1 1 2 2
     
     .. grid-item::
 

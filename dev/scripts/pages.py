@@ -201,6 +201,21 @@ If you use this dataset in your work, please cite the following:
 """
 
 
+# @register_component
+# def database_entry(dataset: DescribedDataset) -> str:
+#     name = dataset.description.name
+#     file = _PROJECT_ROOT / "database" / name / f"{name}.yaml"
+#     entry = lpad(file.read_text(), 8)
+#     return f"""\
+
+# .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`{name}`
+
+#     .. code-block:: yaml
+
+# {entry}
+# """
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # save expensive information to avoid recomputation
 

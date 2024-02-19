@@ -21,16 +21,3 @@ per_atom_properties:
 per_structure_properties:
     energy: total energy of the cell as labelled by DFT
 representative_structure: 61
-long_description: |
-    Forces and energies were calculated using CASTEP with the following parameters:
-      task            singlepoint
-      xc_functional   LDA        
-      cut_off_energy  650 eV     
-      fix_occupancy   false      
-      opt_strategy    speed      
-      num_dump_cycles 0          
-      max_scf_cycles  500        
-      elec_energy_tol 1e-8 eV
-      smearing_scheme Gaussian
-      smearing_width  0.1 eV
-      WRITE_CHECKPOINT : MINIMAL
