@@ -3,7 +3,7 @@
 C-SYNTH-23M
 ===========
 
-.. grid:: 2
+.. grid:: 1 1 2 2
     
     .. grid-item::
 

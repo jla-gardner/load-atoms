@@ -3,7 +3,7 @@
 GST-GAP-22
 ==========
 
-.. grid:: 2
+.. grid:: 1 1 2 2
     
     .. grid-item::
 

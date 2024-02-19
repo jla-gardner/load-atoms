@@ -34,12 +34,6 @@ These can be downloaded from the internet (and cached locally) using
       - 6,088
       - `CC BY-NC 4.0 <https://creativecommons.org/licenses/by-nc/4.0/deed.en>`_
       - 2020
-    * - :doc:`C-SYNTH-1M <../datasets/C-SYNTH-1M>`
-      - C
-      - 1,092,000
-      - 5,460
-      - `MIT <https://opensource.org/licenses/MIT>`_
-      - 2022
     * - :doc:`C-SYNTH-23M <../datasets/C-SYNTH-23M>`
       - C
       - 23,041,200
