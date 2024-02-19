@@ -9,8 +9,13 @@ description: |
 category: Synthetic Data
 citation: |
     @article{El-Machachi-22-10,
-      title = {Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies},
-      author = {{El-Machachi}, Zakariya and Wilson, Mark and Deringer, Volker L.},
+      title = {
+        Exploring the Configurational Space of Amorphous 
+        Graphene with Machine-Learned Atomic Energies
+      },
+      author = {
+        {El-Machachi}, Zakariya and Wilson, Mark and Deringer, Volker L.
+      },
       year = {2022},
       journal = {Chemical Science},
       doi = {10.1039/D2SC04326B}
