@@ -76,7 +76,7 @@ def default_processing():
 
 @register_step
 class UnZip(Step[Path, Path]):
-    def __init__(self, file: Path | None = None):
+    def __init__(self, file: str | None = None):
         self.file = file
 
     def __call__(self, root: Path) -> Path:
@@ -150,12 +150,15 @@ class ReadASE(Step[Path, "list[Atoms]"]):
 class Custom(Step[Path, "list[Atoms]"]):
     def __init__(self, id: str):
         self.id = id
+        try:
+            self.func = importlib.import_module(
+                f"load_atoms.database.processing.{self.id}"
+            ).process
+        except ModuleNotFoundError:
+            raise ValueError(f"Unknown custom processing: {self.id}") from None
 
     def __call__(self, file: Path) -> list[Atoms]:
-        module = importlib.import_module(
-            f"load_atoms.database.processing.{self.id}"
-        )
-        return module.process(file)
+        return self.func(file)
 
     def __repr__(self):
         return f"Custom({self.id})"
