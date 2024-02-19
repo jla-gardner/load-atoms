@@ -3,6 +3,7 @@ from load_atoms.utils import (
     LazyMapping,
     generate_checksum,
     intersect,
+    lpad,
     matches_checksum,
     union,
 )
@@ -28,6 +29,7 @@ def test_matches_contents(tmp_path):
 def test_intersection():
     assert intersect([[1, 2, 3], [2, 3, 4]]) == {2, 3}
     assert intersect(("hi", "hello")) == {"h"}
+    assert intersect([]) == set()
 
 
 def test_union():
@@ -56,3 +58,19 @@ def test_lazy_mapping():
 
     mapping[1]
     assert _calls == 1
+
+
+def test_lpad():
+    # check multi-line strings
+    s = """\
+hello
+world"""
+    assert (
+        lpad(s)
+        == """\
+    hello
+    world"""
+    )
+
+    # test custom sep
+    assert lpad("hi", 3, fill=":") == ":::hi"
