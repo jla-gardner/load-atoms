@@ -82,7 +82,7 @@ class UnZip(Step[Path, Path]):
 
     def __call__(self, root: Path) -> Path:
         if self.file is None:
-            # get the first file in the directory
+            # get the first (and only) file in the directory
             extract_from = next(root.iterdir())
         else:
             extract_from = root / self.file

@@ -116,6 +116,12 @@ class DatabaseEntry(BaseModel):
             raise ValueError(f"Invalid processing steps: {v}") from e
         return v
 
+    @field_validator("url_root")
+    def validate_url_root(cls, v):
+        if v is not None and not v.endswith("/"):
+            return v + "/"
+        return v
+
     def process(self, root: Path) -> List[Atoms]:
         chain = parse_steps(self.processing)
         return chain(root)
@@ -131,9 +137,9 @@ class DatabaseEntry(BaseModel):
                 f"Error loading dataset description from {path}"
             ) from e
 
-    def remote_file_locations(self) -> Dict[str, str]:
+    def remote_location(self, file: str) -> str:
         base_url = self.url_root or BASE_REMOTE_URL + self.name + "/"
-        return {base_url + k: v for k, v in self.files.items()}
+        return base_url + file
 
     @classmethod
     def remote_url_for(cls, dataset_id):
