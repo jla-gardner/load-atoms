@@ -11,7 +11,7 @@ def get_correct_dictionary():
     """
 
     # this file is root/tests/shared/test_dataset_info.py
-    project_root = Path(__file__).parent.parent
+    project_root = Path(__file__).parent.parent.parent
     correct_yaml_file = project_root / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
     return DatabaseEntry.from_yaml_file(correct_yaml_file).model_dump()
@@ -62,8 +62,10 @@ def test_incorrect_citation():
         DatabaseEntry(**kwargs)
 
 
+# this file is at root/tests/database/test_database_entry.py
+# database is at root/database
 ALL_INFO_FILES = list(
-    (Path(__file__).parent.parent / "database").glob("**/*.yaml")
+    (Path(__file__).parent.parent.parent / "database").glob("**/*.yaml")
 )
 
 

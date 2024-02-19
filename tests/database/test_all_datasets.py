@@ -11,7 +11,7 @@ from load_atoms.database import DatabaseEntry
 from load_atoms.utils import matches_checksum
 
 # this file is at root/tests/database/test_all_datasets.py
-project_root = Path(__file__).parent.parent
+project_root = Path(__file__).parent.parent.parent
 
 # database is at root/database
 databaset_root = project_root / "database"
