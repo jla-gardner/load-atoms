@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 import yaml
-from load_atoms.database.processing import Chain, UnZip, parse_steps
+from load_atoms.database.processing import Chain, SelectFile, UnZip, parse_steps
 
 
 def test_all_steps():
@@ -41,6 +41,25 @@ def test_unzip(tmp_path):
     extracted_dir = UnZip(file="archive.zip")(tmp_path)
     assert (extracted_dir / "file.txt").is_file()
 
+    # now test the same thing, but with an implicit file
+    # remove everything in the tmp_path except the archive
+    for file in tmp_path.iterdir():
+        if file.name != "archive.zip":
+            if file.is_dir():
+                shutil.rmtree(file)
+            else:
+                file.unlink()
+
+    assert next(tmp_path.iterdir()).name == "archive.zip"
+    extracted_dir = UnZip()(tmp_path)
+    assert (extracted_dir / "file.txt").is_file()
+
+
+def test_select_file():
+    root = Path("root")
+    selected = SelectFile(file="file.txt")(root)
+    assert selected == root / "file.txt"
+
 
 def test_custom_step():
     raw = """
@@ -50,3 +69,10 @@ def test_custom_step():
     func = parse_steps(yaml.safe_load(raw))
     assert callable(func)
     assert func(Path("unused")) is not None
+
+    raw = """
+- Custom:
+    id: unknown
+"""
+    with pytest.raises(ValueError, match="Unknown custom processing"):
+        parse_steps(yaml.safe_load(raw))
