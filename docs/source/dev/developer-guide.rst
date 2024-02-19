@@ -66,4 +66,6 @@ For an ad-hoc guide to the internal (i.e. non-user-facing) codebase, see:
 .. toctree::
    :maxdepth: 2
 
-   database-entry
+   dataset-loading
+   dataset-processing
+   building-the-docs

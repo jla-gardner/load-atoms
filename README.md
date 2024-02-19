@@ -47,4 +47,4 @@ https://jla-gardner.github.io/load-atoms/datasets/C-GAP-17.html.
 
 ## Development
 
-Please see the [contributing guidelines](https://raw.githubusercontent.com/jla-gardner/load-atoms/main/dev/devoloper-guide) for information on how to contribute to the project.
+Please see the [contributing guidelines](https://jla-gardner.github.io/load-atoms/dev/developer-guide.html) for information on how to contribute to the project.

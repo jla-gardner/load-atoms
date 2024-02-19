@@ -10,7 +10,9 @@ description: |
 category: Potential Fitting
 citation: |
     @article{Deringer-17,
-        title = {Machine learning based interatomic potential for amorphous carbon},
+        title = {
+            Machine learning based interatomic potential for amorphous carbon
+        },
         volume = {95},
         number = {9},
         journal = {Physical Review B},

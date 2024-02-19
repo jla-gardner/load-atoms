@@ -15,16 +15,32 @@ X, Y = TypeVar("X"), TypeVar("Y")
 
 
 class Step(ABC, Generic[X, Y]):
+    """
+    Represents a single step in a processing
+    :class:`~load_atoms.database.processing.Chain`.
+    """
+
     @abstractmethod
     def __call__(self, x: X) -> Y:
+        """Perform the step, transforming the input into the output."""
         ...
 
 
 class Chain(Generic[X, Y]):
+    """
+    Represents a chain of processing steps.
+
+    Parameters
+    ----------
+    steps
+        The steps to perform in order.
+    """
+
     def __init__(self, steps: list[Step]):
         self.steps = steps
 
     def __call__(self, x: X) -> Y:
+        """Perform the steps in order."""
         for step in self.steps:
             x = step(x)
         return x  # type: ignore
@@ -76,6 +92,38 @@ def default_processing():
 
 @register_step
 class UnZip(Step[Path, Path]):
+    """
+    UnZips an archive folder, and returns the path to the extracted folder.
+
+    Parameters
+    ----------
+    file
+        The name of the file to extract. If not provided, it is assumed that
+        only a single archive file is present in the directory.
+
+    Examples
+    --------
+    Unzip the downloaded file:
+
+    .. code-block:: yaml
+
+            processing:
+            - UnZip
+
+    Unzip a specific file:
+
+    .. code-block:: yaml
+
+        processing:
+            - UnZip:
+                file: "archive.zip"
+
+    Behaviour:
+
+    >>> UnZip()(Path("root"))
+    Path("root/extracted")
+    """
+
     def __init__(self, file: str | None = None):
         self.file = file
 
@@ -95,7 +143,31 @@ class UnZip(Step[Path, Path]):
 
 @register_step
 class SelectFile(Step[Path, Path]):
-    def __init__(self, file: Path):
+    """
+    Alters the input path to point to a specific file.
+
+    Parameters
+    ----------
+    file
+        The name of the file to select.
+
+    Examples
+    --------
+    Select a specific file:
+
+    .. code-block:: yaml
+
+        processing:
+            - SelectFile:
+                file: "file.txt"
+
+    Behaviour:
+
+    >>> SelectFile("file.txt")(Path("root"))
+    Path("root/file.txt")
+    """
+
+    def __init__(self, file: str):
         self.file = file
 
     def __call__(self, root: Path) -> Path:
@@ -107,6 +179,35 @@ class SelectFile(Step[Path, Path]):
 
 @register_step
 class ForEachFile(Step[Path, "list[Atoms]"]):
+    """
+    Apply a chain of processing steps to each file in a directory.
+
+    Parameters
+    ----------
+    steps
+        The steps to apply to each file.
+    files
+        The files to apply the steps to. If not provided, all files in the
+        directory are processed.
+    pattern
+        A pattern to match files in the directory. If not provided, all files
+        in the directory are processed.
+
+    Examples
+    --------
+    Apply a chain of processing steps to all files in a directory:
+
+    .. code-block:: yaml
+
+        processing:
+            - ForEachFile:
+                steps:
+                  - ReadASE: {}
+                files:
+                  - "file1.xyz"
+                  - "file2.xyz"
+    """
+
     def __init__(
         self,
         steps: list[str | dict[str, dict[str, str]]],
@@ -136,6 +237,31 @@ class ForEachFile(Step[Path, "list[Atoms]"]):
 
 @register_step
 class ReadASE(Step[Path, "list[Atoms]"]):
+    """
+    Read the atoms from an ASE-readable file.
+
+    Parameters
+    ----------
+    kwargs
+        Additional keyword arguments to pass to :func:`ase.io.read`.
+
+    Examples
+    --------
+    Read all atoms from an xyz file:
+
+    .. code-block:: yaml
+
+        processing:
+            - SelectFile:
+                file: "structures.xyz"
+            - ReadASE
+
+    Behaviour:
+
+    >>> ReadASE()(Path("root/structures.xyz"))
+    [Atoms(...), Atoms(...), ...]
+    """
+
     def __init__(self, **kwargs):
         self.kwargs = kwargs
 
@@ -148,6 +274,32 @@ class ReadASE(Step[Path, "list[Atoms]"]):
 
 @register_step
 class Custom(Step[Path, "list[Atoms]"]):
+    """
+    Apply a custom processing function for a dataset.
+
+    This should be implemented in
+    :code:`load_atoms.database.processing.custom.<id>::process`, taking the
+    path to the download directory as an argument, and returning a list of
+    :code:`ase.Atoms` objects.
+
+    Parameters
+    ----------
+
+    id
+        The id of the custom processing function to apply.
+
+    Examples
+    --------
+
+    Apply a custom processing function:
+
+    .. code-block:: yaml
+
+        processing:
+            - Custom:
+                id: "<id>"
+    """
+
     def __init__(self, id: str):
         self.id = id
         try:
