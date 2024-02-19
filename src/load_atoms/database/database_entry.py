@@ -1,11 +1,11 @@
 # explicitly not using future annotations since this is not supported
 # by pydantic for python versions we want to target
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Union
+from typing import Callable, Dict, List, Optional
 
 import yaml
 from ase import Atoms
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, field_validator
 
 from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
 
@@ -71,11 +71,9 @@ class DatabaseEntry(BaseModel):
     url_root: Optional[str] = None
     """The root url of the dataset, at which all :code:`files` are located"""
 
-    processing: List[Union[str, Dict[str, Any]]] = Field(
-        default_factory=default_processing
-    )  # TODO get this working
+    processing: Callable[[Path], List[Atoms]]
     """
-    A function to turn the downloaded file paths into the dataset's structures
+    A function to turn the root downloaded path into the dataset's structures
     """
 
     @field_validator("category")
@@ -108,28 +106,20 @@ class DatabaseEntry(BaseModel):
             return v
         raise ValueError(f"Invalid BibTeX: {v}")
 
-    @field_validator("processing")
-    def validate_processing(cls, v):
-        try:
-            parse_steps(v)
-        except Exception as e:
-            raise ValueError(f"Invalid processing steps: {v}") from e
-        return v
-
     @field_validator("url_root")
     def validate_url_root(cls, v):
         if v is not None and not v.endswith("/"):
             return v + "/"
         return v
 
-    def process(self, root: Path) -> List[Atoms]:
-        chain = parse_steps(self.processing)
-        return chain(root)
-
     @classmethod
     def from_yaml_file(cls, path: Path) -> "DatabaseEntry":
         with open(path) as f:
             data = yaml.safe_load(f)
+        if "processing" in data:
+            data["processing"] = parse_steps(data["processing"])
+        else:
+            data["processing"] = default_processing()
         try:
             return cls(**data)
         except Exception as e:
