@@ -18,8 +18,8 @@ These can be downloaded from the internet (and cached locally) using
       - Year
     * - :doc:`AC-2D-22 <../datasets/AC-2D-22>`
       - C
-      - 35,000
-      - 175
+      - 30,000
+      - 150
       - `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>`_
       - 2022
     * - :doc:`C-GAP-17 <../datasets/C-GAP-17>`

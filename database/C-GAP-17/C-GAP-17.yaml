@@ -6,7 +6,7 @@ description: |
     The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
     interatomic potential for amorphous carbon.
     This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order.
-    More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_.
+    More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`__.
 category: Potential Fitting
 citation: |
     @article{Deringer-17,
