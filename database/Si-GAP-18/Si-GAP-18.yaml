@@ -1,7 +1,5 @@
 name: Si-GAP-18
 year: 2018
-files:
-    Si-GAP-18.extxyz: 0095ee3fea57
 description: |
     The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model
     from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
@@ -27,3 +25,11 @@ citation: |
     }
 license: CC BY-NC-SA 4.0
 representative_structure: 1283
+url_root: https://zenodo.org/record/1250555/files/libAtoms
+files:
+    silicon-testing-framework-v1.0.zip: 97eb063f9655
+processing:
+    - UnZip
+    - SelectFile:
+          file: libAtoms-silicon-testing-framework-fc252cb 2/models/GAP/gp_iter6_sparse9k.xml.xyz
+    - ReadASE

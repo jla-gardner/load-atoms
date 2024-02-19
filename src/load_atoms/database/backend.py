@@ -57,7 +57,10 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     download_dir.mkdir(parents=True, exist_ok=True)
     existing_files = (f.name for f in download_dir.iterdir())
     missing_files = set(entry.files) - set(existing_files)
-    download_all(list(missing_files), download_dir)
+    download_all(
+        [entry.remote_location(file) for file in missing_files],
+        download_dir,
+    )
 
     # 2. validate the downloaded files
     for file_name, hash in entry.files.items():
