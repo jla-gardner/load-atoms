@@ -39,7 +39,7 @@ def view(atoms: Atoms, show_bonds: bool = False):
         view(ethanol, show_bonds=True)
 
     .. raw:: html
-        :file: ../../docs/source/_static/ethanol.html
+        :file: ../../../docs/source/_static/ethanol.html
 
     Save the visualisation to an :code:`html` file:
 
