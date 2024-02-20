@@ -11,8 +11,6 @@
 
 <div align="center">
     
-A lightweight python package for recording and analysing configurations and results of coding experiments.
-
 [![PyPI](https://img.shields.io/pypi/v/load-atoms)](https://pypi.org/project/load-atoms/)
 [![GitHub](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![](https://github.com/jla-gardner/load-atoms/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/jla-gardner/load-atoms/actions/workflows/tests.yaml)
@@ -35,16 +33,34 @@ See the [documentation](https://jla-gardner.github.io/load-atoms/) for more info
 
 ## Usage
 
+
 ```pycon
 >>> from load_atoms import load_dataset
 >>> dataset = load_dataset("C-GAP-17")
+
 Downloading C-GAP-17.extxyz | ███████████████████████ | 100.0% 
-The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.
-Please cite the C-GAP-17 dataset if you use it in your work.
-For more information about the C-GAP-17 dataset, visit
+The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license. 
+Please cite the C-GAP-17 dataset if you use it in your work. 
+For more information about the C-GAP-17 dataset, visit 
 https://jla-gardner.github.io/load-atoms/datasets/C-GAP-17.html.
+
+>>> print(dataset)
+
+C-GAP-17:
+    structures: 4,530
+    atoms: 284,965
+    species:
+        C: 100.00%
+    properties:
+        per atom: (force)
+        per structure: (config_type, detailed_ct, energy, split)
 ```
+
 
 ## Development
 
 Please see the [contributing guidelines](https://jla-gardner.github.io/load-atoms/dev/developer-guide.html) for information on how to contribute to the project.
+
+---
+
+**`load-atoms`** is maintained by me, John Gardner ([GitHub](https://github.com/jla-gardner) - [website](https://jla-gardner.github.io)), as part of my PhD research activities within the [Deringer Group](https://www.chem.ox.ac.uk/people/volker-deringer/).
