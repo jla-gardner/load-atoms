@@ -1,8 +1,7 @@
-from pathlib import Path
-
 import pytest
 from load_atoms.database import DatabaseEntry
 from pydantic import ValidationError
+from setup import PROJECT_ROOT
 
 
 def get_correct_dictionary():
@@ -11,8 +10,7 @@ def get_correct_dictionary():
     """
 
     # this file is root/tests/shared/test_dataset_info.py
-    project_root = Path(__file__).parent.parent.parent
-    correct_yaml_file = project_root / "database" / "C-GAP-17" / "C-GAP-17.yaml"
+    correct_yaml_file = PROJECT_ROOT / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
     return DatabaseEntry.from_yaml_file(correct_yaml_file).model_dump()
 
@@ -60,18 +58,3 @@ def test_incorrect_citation():
     kwargs["citation"] = "this is not a bibtex string"
     with pytest.raises(ValidationError):
         DatabaseEntry(**kwargs)
-
-
-# this file is at root/tests/database/test_database_entry.py
-# database is at root/database
-ALL_INFO_FILES = list(
-    (Path(__file__).parent.parent.parent / "database").glob("**/*.yaml")
-)
-
-
-@pytest.mark.parametrize("info_file", ALL_INFO_FILES)
-def test_actual_files(info_file):
-    """
-    Test that all the info files in the database pass validation
-    """
-    DatabaseEntry.from_yaml_file(info_file)

@@ -7,8 +7,10 @@ from ase.io import read, write
 from load_atoms import load_dataset
 from load_atoms.atoms_dataset import AtomsDataset, summarise_dataset
 from load_atoms.utils import UnknownDatasetException
+from setup import TESTING_DIR
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
+GAP17 = load_dataset("C-GAP-17", root=TESTING_DIR)
 
 
 def _is_water_dataset(dataset):
@@ -82,8 +84,7 @@ def test_indexing():
 
 def test_can_load_from_id():
     # don't pass a root to mimic the default behaviour
-    structures = load_dataset("C-GAP-17", root="./testing-datasets")
-    assert len(structures) == 4530
+    assert len(GAP17) == 4530
 
     with pytest.raises(UnknownDatasetException):
         load_dataset("made_up_dataset")
@@ -94,8 +95,7 @@ def test_summarise():
     summary = summarise_dataset(dataset)
     assert "Dataset" in summary, "The summary should contain the dataset name"
 
-    dataset = load_dataset("C-GAP-17", root="./testing-datasets")
-    summary = repr(dataset)
+    summary = repr(GAP17)
     assert "energy" in summary, "The summary should contain the property names"
 
 
@@ -125,13 +125,11 @@ def test_useful_warning(tmp_path):
 
 
 def test_info_and_arrays():
-    dataset = load_dataset("C-GAP-17", root="./testing-datasets")
+    assert "energy" in GAP17.info
+    assert isinstance(GAP17.info["energy"], np.ndarray)
 
-    assert "energy" in dataset.info
-    assert isinstance(dataset.info["energy"], np.ndarray)
-
-    assert "positions" in dataset.arrays
-    assert dataset.arrays["positions"].shape[-1] == 3
+    assert "positions" in GAP17.arrays
+    assert GAP17.arrays["positions"].shape[-1] == 3
 
 
 def test_properties():
@@ -140,3 +138,40 @@ def test_properties():
     assert len(dataset) == 2
     assert dataset.n_atoms == 7
     assert (dataset.structure_sizes == [3, 4]).all()
+
+
+def test_random_split():
+    # request integer splits
+    train, test = GAP17.random_split([100, 50])
+    assert len(train) == 100
+    assert len(test) == 50
+
+    # request float splits
+    n = len(GAP17)
+    a, b, c = GAP17.random_split([0.5, 0.25, 0.25])
+    assert len(a) == n // 2
+    assert len(b) in [n // 4, n // 4 + 1]
+    assert len(c) in [n // 4, n // 4 + 1]
+
+
+def test_k_fold_split():
+    # atoms are not hashable, so we set a unique id for each structure
+    for i, structure in enumerate(GAP17):
+        structure.info["id"] = i
+
+    a, b = GAP17.k_fold_split(5, fold=0)
+    assert len(a) == 3624
+    assert len(b) == 906
+    assert set(a.info["id"]) & set(b.info["id"]) == set()
+
+    c, d = GAP17.k_fold_split(5, fold=1)
+    # ensure that b is completely wihin c
+    assert set(b.info["id"]) <= set(c.info["id"])
+
+    # ensure that the folds completely cover the dataset
+    all_test = []
+    for i in range(5):
+        _, test = GAP17.k_fold_split(5, fold=i)
+        all_test.extend(test.info["id"])
+
+    assert len(set(all_test)) == len(GAP17)
