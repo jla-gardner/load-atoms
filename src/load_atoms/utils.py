@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import string
+from collections import defaultdict
 from pathlib import Path
 from typing import Callable, Generic, Iterable, Sequence, TypeVar
 
@@ -36,6 +37,7 @@ def matches_checksum(file_path: Path, hash: str) -> bool:
 
 T = TypeVar("T")
 Y = TypeVar("Y")
+G = TypeVar("G")
 
 
 class LazyMapping(Generic[T, Y]):
@@ -145,3 +147,44 @@ def random_split(
         [things[x] for x in idxs[i:j]]
         for i, j in zip([0, *cumulative_sum], cumulative_sum)
     ]
+
+
+def k_fold_split(
+    things: list[T],
+    k: int,
+    fold: int,
+) -> tuple[list[T], list[T]]:
+    assert 0 <= fold < k
+
+    idxs = np.arange(len(things))
+    idxs = np.roll(idxs, fold * len(things) // k)
+    n_test = len(things) // k
+    train, test = idxs[:-n_test], idxs[-n_test:]
+    return [things[i] for i in train], [things[i] for i in test]
+
+
+def split_keeping_ratio(
+    things_to_split: list[T],
+    group_ids: list[G],
+    splitting_function: Callable[[list[T]], Sequence[list[T]]],
+):
+    assert len(things_to_split) == len(group_ids)
+
+    # 1. separate into groups
+    groups: dict[G, list[T]] = defaultdict(list)
+    for thing, group_id in zip(things_to_split, group_ids):
+        groups[group_id].append(thing)
+
+    # 2. split each group
+    splits_by_group: dict[G, Sequence[list[T]]] = {
+        key: splitting_function(value) for key, value in groups.items()
+    }
+
+    # 3. merge the splits, thus keeping the ratio
+    n_splits = len(splits_by_group[list(groups.keys())[0]])
+    final_splits: list[list[T]] = [[] for _ in range(n_splits)]
+    for group_splits in splits_by_group.values():
+        for i, split in enumerate(group_splits):
+            final_splits[i].extend(split)
+
+    return final_splits
