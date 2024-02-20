@@ -5,6 +5,7 @@ from load_atoms.utils import (
     intersect,
     lpad,
     matches_checksum,
+    random_split,
     union,
 )
 
@@ -74,3 +75,17 @@ world"""
 
     # test custom sep
     assert lpad("hi", 3, fill=":") == ":::hi"
+
+
+def test_random_split():
+    x = list(range(10))
+
+    # test floats
+    a, b = random_split(x, [0.5, 0.5])
+    assert len(a) == len(b) == 5
+    assert len(set(a) & set(b)) == 0, "splits should not overlap"
+
+    # test ints
+    a, b = random_split(x, [3, 3])
+    assert len(a) == len(b) == 3
+    assert len(set(a) & set(b)) == 0, "splits should not overlap"

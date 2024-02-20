@@ -62,6 +62,8 @@ push = false
 "src/load_atoms/__init__.py" = ["{version}"]
 "docs/source/conf.py" = ['release = "{version}"']
 
+[tool.pytest]
+norecursedirs = "tests/setup"
 
 [tool.ruff]
 include = ["dev/**/*.py", "src/**/*.py", "tests/**/*.py"]

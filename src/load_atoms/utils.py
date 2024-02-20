@@ -5,6 +5,8 @@ import string
 from pathlib import Path
 from typing import Callable, Generic, Iterable, Sequence, TypeVar
 
+import numpy as np
+
 FRONTEND_URL = "https://jla-gardner.github.io/load-atoms/datasets/"
 BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database/"
 
@@ -120,3 +122,26 @@ def lpad(thing: str, length: int = 4, fill: str = " "):
     """Left pad a string with a given fill character."""
     sep = f"{fill * length}"
     return sep + thing.replace("\n", f"\n{sep}")
+
+
+def random_split(
+    things: list[T],
+    splits: list[int] | list[float],
+    seed: int = 0,
+) -> list[list[T]]:
+    """Split a list into random chunks of given sizes."""
+
+    if isinstance(splits[0], float):
+        splits = [int(s * len(things)) for s in splits]
+    if sum(splits) > len(things):
+        raise ValueError(
+            "The sum of the splits cannot exceed the dataset size."
+        )
+
+    cumulative_sum = np.cumsum(splits)
+
+    idxs = np.random.RandomState(seed).permutation(len(things))
+    return [
+        [things[x] for x in idxs[i:j]]
+        for i, j in zip([0, *cumulative_sum], cumulative_sum)
+    ]
