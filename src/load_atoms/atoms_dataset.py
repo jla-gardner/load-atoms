@@ -210,23 +210,23 @@ class AtomsDataset:
             ]
 
         if keep_ratio not in self.info:
-            raise ValueError(
+            raise KeyError(
                 f"Unknown key {keep_ratio}. "
                 "Available keys are: " + ", ".join(self.info.keys)
             )
 
         if isinstance(splits[0], int):  # TODO: fix type error
             final_sizes: list[int] = splits  # type: ignore
-            fractional_splits = [s / len(self) for s in splits]
         else:
             final_sizes = [int(s * len(self)) for s in splits]  # type: ignore
-            fractional_splits = splits
+
+        normalised_fractional_splits = [s / sum(splits) for s in splits]
 
         structure_splits: list[list[Atoms]] = split_keeping_ratio(
             self.structures,
             group_ids=self.info[keep_ratio],
             splitting_function=partial(
-                random_split, seed=seed, splits=fractional_splits
+                random_split, seed=seed, splits=normalised_fractional_splits
             ),
         )
 
@@ -286,7 +286,7 @@ class AtomsDataset:
             train_idxs, test_idxs = k_fold_split(idxs.tolist(), k, fold)
         else:
             if keep_ratio not in self.info:
-                raise ValueError(
+                raise KeyError(
                     f"Unknown key {keep_ratio}. "
                     "Available keys are: " + ", ".join(self.info.keys)
                 )

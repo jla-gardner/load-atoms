@@ -92,6 +92,10 @@ def test_random_split():
     assert len(a) == len(b) == 3
     assert len(set(a) & set(b)) == 0, "splits should not overlap"
 
+    # test error
+    with pytest.raises(ValueError):
+        random_split(x, [10, 10, 10])
+
 
 def test_k_fold_split():
     x = list(range(10))

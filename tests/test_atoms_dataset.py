@@ -140,6 +140,10 @@ def test_properties():
     assert (dataset.structure_sizes == [3, 4]).all()
 
 
+def _get_proportion(config_type, dataset):
+    return np.sum(dataset.info["config_type"] == config_type) / len(dataset)
+
+
 def test_random_split():
     # request integer splits
     train, test = GAP17.random_split([100, 50])
@@ -153,11 +157,39 @@ def test_random_split():
     assert len(b) in [n // 4, n // 4 + 1]
     assert len(c) in [n // 4, n // 4 + 1]
 
+    # test keep ratio
+    assert "config_type" in GAP17.info
+    assert "bulk_amo" in GAP17.info["config_type"]
+
+    # ... with floats
+    a, b = GAP17.random_split([0.5, 0.5], keep_ratio="config_type")
+    assert len(a) + len(b) == len(GAP17)
+    assert np.isclose(
+        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", GAP17)
+    )
+
+    # ... with ints
+    a, b = GAP17.random_split([500, 500], keep_ratio="config_type")
+    assert np.isclose(
+        _get_proportion("bulk_amo", a),
+        _get_proportion("bulk_amo", GAP17),
+        atol=0.01,
+    )
+    assert len(a) == len(b) == 500
+
+    # test error
+    assert "made_up" not in GAP17.info
+    with pytest.raises(KeyError):
+        GAP17.random_split([0.5, 0.5], keep_ratio="made_up")
+
 
 def test_k_fold_split():
     # atoms are not hashable, so we set a unique id for each structure
     for i, structure in enumerate(GAP17):
         structure.info["id"] = i
+
+    a, b = GAP17.k_fold_split(5, fold=0, shuffle=False)
+    assert a[0] == GAP17[0]
 
     a, b = GAP17.k_fold_split(5, fold=0)
     assert len(a) == 3624
@@ -175,3 +207,14 @@ def test_k_fold_split():
         all_test.extend(test.info["id"])
 
     assert len(set(all_test)) == len(GAP17)
+
+    # test keep ratio
+    a, b = GAP17.k_fold_split(k=5, fold=0, keep_ratio="config_type")
+    assert np.isclose(
+        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", GAP17)
+    )
+
+    # test error
+    assert "made_up" not in GAP17.info
+    with pytest.raises(KeyError):
+        GAP17.k_fold_split(5, fold=0, keep_ratio="made_up")
