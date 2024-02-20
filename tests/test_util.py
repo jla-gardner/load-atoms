@@ -3,9 +3,11 @@ from load_atoms.utils import (
     LazyMapping,
     generate_checksum,
     intersect,
+    k_fold_split,
     lpad,
     matches_checksum,
     random_split,
+    split_keeping_ratio,
     union,
 )
 
@@ -89,3 +91,55 @@ def test_random_split():
     a, b = random_split(x, [3, 3])
     assert len(a) == len(b) == 3
     assert len(set(a) & set(b)) == 0, "splits should not overlap"
+
+
+def test_k_fold_split():
+    x = list(range(10))
+
+    a, b = k_fold_split(x, k=5, fold=0)
+    assert a == list(range(8))
+    assert b == [8, 9]
+
+    a, b = k_fold_split(x, k=2, fold=1)
+    assert a == list(range(5, 10))
+    assert b == list(range(5))
+
+
+def test_split_keeping_ratio():
+    things = []
+    for i in range(24):
+        things.append(
+            {
+                "id": i,
+                "group": 0 if i < 6 else 1 if i < 18 else 2,
+            }
+        )
+    group_ids = [x["group"] for x in things]
+
+    # random split
+    a, b, c = split_keeping_ratio(
+        things, group_ids, lambda x: random_split(x, [1 / 3, 1 / 3, 1 / 3])
+    )
+    assert len(a) == len(b) == len(c) == 8
+
+    def proportions(things):
+        counts = {0: 0, 1: 0, 2: 0}
+        for x in things:
+            counts[x["group"]] += 1
+        max_count = max(counts.values())
+        return {k: v / max_count for k, v in counts.items()}
+
+    assert (
+        proportions(a)
+        == proportions(b)
+        == proportions(c)
+        == proportions(things)
+    )
+
+    # k-fold split
+    x, y = split_keeping_ratio(
+        things, group_ids, lambda x: k_fold_split(x, k=3, fold=0)
+    )
+    assert len(x) == 16
+    assert len(y) == 8
+    assert proportions(x) == proportions(y) == proportions(things)

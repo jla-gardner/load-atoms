@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import warnings
-from collections import defaultdict
+from functools import partial
 from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator, overload
 
@@ -11,7 +11,15 @@ from ase import Atoms
 from yaml import dump
 
 from .database import DatabaseEntry, backend
-from .utils import LazyMapping, frontend_url, intersect, random_split, union
+from .utils import (
+    LazyMapping,
+    frontend_url,
+    intersect,
+    k_fold_split,
+    random_split,
+    split_keeping_ratio,
+    union,
+)
 
 
 class AtomsDataset:
@@ -174,23 +182,23 @@ class AtomsDataset:
         ...     values, counts = np.unique(thing, return_counts=True)
         ...     max_len = max(len(str(v)) for v in values)
         ...     for v, c in zip(values, counts / counts.sum()):
-        ...         print(f"{v:>{max_len}}: {c:>5.1%}")
+        ...         print(f"{v:>{max_len}}: {c:>6.2%}")
         ...
         >>> dataset = load_dataset("C-GAP-17")
         >>> ratios(dataset.info["config_type"])
-          bulk_amo: 75.3%
-        bulk_cryst:  8.8%
-             dimer:  0.7%
-          surf_amo: 15.2%
+          bulk_amo: 75.28%
+        bulk_cryst:  8.83%
+             dimer:  0.66%
+          surf_amo: 15.23%
         >>> train, val, test = dataset.random_split(
         ...     [0.6, 0.2, 0.2],
         ...     keep_ratio="config_type"
         ... )
         >>> ratios(train.info["config_type"])
-          bulk_amo: 75.3%
-        bulk_cryst:  8.8%
-                dimer:  0.7%
-            surf_amo: 15.2%
+          bulk_amo: 75.28%
+        bulk_cryst:  8.83%
+             dimer:  0.66%
+          surf_amo: 15.23%
         """
 
         if keep_ratio is None:
@@ -201,45 +209,34 @@ class AtomsDataset:
                 )
             ]
 
-        # the keep_ratio functionality is complicated if the user wants a
-        # specific number of structures in each split. To side-step this,
-        # we perform ratio-maintaining splits on the entire dataset, and then
-        # randomly sample the correct number of structures from each split.
-        if isinstance(splits[0], int):
-            final_sizes = splits
+        if keep_ratio not in self.info:
+            raise ValueError(
+                f"Unknown key {keep_ratio}. "
+                "Available keys are: " + ", ".join(self.info.keys)
+            )
+
+        if isinstance(splits[0], int):  # TODO: fix type error
+            final_sizes: list[int] = splits  # type: ignore
             fractional_splits = [s / len(self) for s in splits]
         else:
-            final_sizes = [int(s * len(self)) for s in splits]
+            final_sizes = [int(s * len(self)) for s in splits]  # type: ignore
             fractional_splits = splits
 
-        # 1. separate into groups
-        groups: dict[str, list[Atoms]] = defaultdict(list)
-        for structure in self.structures:
-            groups[structure.info[keep_ratio]].append(structure)
+        structure_splits: list[list[Atoms]] = split_keeping_ratio(
+            self.structures,
+            group_ids=self.info[keep_ratio],
+            splitting_function=partial(
+                random_split, seed=seed, splits=fractional_splits
+            ),
+        )
 
-        # 2. split each group
-        split_groups: dict[str, list[list[Atoms]]] = {
-            key: random_split(value, fractional_splits, seed)
-            for key, value in groups.items()
-        }
+        def choose_n(structures: list[Atoms], n: int) -> list[Atoms]:
+            idxs = np.random.RandomState(seed).permutation(len(structures))
+            return [structures[i] for i in idxs[:n]]
 
-        # 3. merge the splits
-        final_splits: list[list[Atoms]] = [[] for _ in range(len(splits))]
-        for group_splits in split_groups.values():
-            for i, split in enumerate(group_splits):
-                final_splits[i].extend(split)
-
-        # 4. shuffle the splits
-        def shuffle(thing):
-            idx = np.random.RandomState(seed).permutation(len(thing))
-            return [thing[i] for i in idx]
-
-        final_splits = [shuffle(split) for split in final_splits]
-
-        # 5. sample the correct number of structures from each split
         return [
-            AtomsDataset(split[:size])
-            for split, size in zip(final_splits, final_sizes)
+            AtomsDataset(choose_n(split, size))
+            for split, size in zip(structure_splits, final_sizes)
         ]
 
     def k_fold_split(
@@ -248,6 +245,7 @@ class AtomsDataset:
         fold: int = 0,
         shuffle: bool = True,
         seed: int = 42,
+        keep_ratio: str | None = None,
     ) -> tuple[AtomsDataset, AtomsDataset]:
         """
         Generate (an optionally shuffled) train/test split for cross-validation.
@@ -284,11 +282,21 @@ class AtomsDataset:
         else:
             idxs = np.arange(len(self))
 
-        idxs = np.roll(idxs, fold * len(idxs) // k)
-        n_test = len(self) // k
-        train, test = idxs[:-n_test], idxs[-n_test:]
+        if keep_ratio is None:
+            train_idxs, test_idxs = k_fold_split(idxs.tolist(), k, fold)
+        else:
+            if keep_ratio not in self.info:
+                raise ValueError(
+                    f"Unknown key {keep_ratio}. "
+                    "Available keys are: " + ", ".join(self.info.keys)
+                )
 
-        return self[train], self[test]
+            group_ids = self.info[keep_ratio][idxs]
+            train_idxs, test_idxs = split_keeping_ratio(
+                idxs.tolist(), group_ids, partial(k_fold_split, k=k, fold=fold)
+            )
+
+        return self[train_idxs], self[test_idxs]
 
     def __len__(self) -> int:
         """The number of structures in the dataset."""
