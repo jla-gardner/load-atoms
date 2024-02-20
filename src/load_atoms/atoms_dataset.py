@@ -174,31 +174,35 @@ class AtomsDataset:
 
         >>> train, val, test = dataset.random_split([1_000, 100, 100])
 
-        Maintain the ratio of structures with various :code:`config_type`\ s:
+        Maintain the ratio of :code:`config_type` values in each split:
 
-        >>> from load_atoms import load_dataset
-        >>> import numpy as np
-        >>> def ratios(thing):
-        ...     values, counts = np.unique(thing, return_counts=True)
-        ...     max_len = max(len(str(v)) for v in values)
-        ...     for v, c in zip(values, counts / counts.sum()):
-        ...         print(f"{v:>{max_len}}: {c:>6.2%}")
-        ...
-        >>> dataset = load_dataset("C-GAP-17")
-        >>> ratios(dataset.info["config_type"])
-          bulk_amo: 75.28%
-        bulk_cryst:  8.83%
-             dimer:  0.66%
-          surf_amo: 15.23%
-        >>> train, val, test = dataset.random_split(
-        ...     [0.6, 0.2, 0.2],
-        ...     keep_ratio="config_type"
-        ... )
-        >>> ratios(train.info["config_type"])
-          bulk_amo: 75.28%
-        bulk_cryst:  8.83%
-             dimer:  0.66%
-          surf_amo: 15.23%
+        .. code-block:: pycon
+            :emphasize-lines: 16-19
+
+            >>> from load_atoms import load_dataset
+            >>> import numpy as np
+            >>> # helper function
+            >>> def ratios(thing):
+            ...     values, counts = np.unique(thing, return_counts=True)
+            ...     max_len = max(len(str(v)) for v in values)
+            ...     for v, c in zip(values, counts / counts.sum()):
+            ...         print(f"{v:>{max_len}}: {c:>6.2%}")
+            ...
+            >>> dataset = load_dataset("C-GAP-17")
+            >>> ratios(dataset.info["config_type"])
+              bulk_amo: 75.28%
+            bulk_cryst:  8.83%
+                 dimer:  0.66%
+              surf_amo: 15.23%
+            >>> train, val, test = dataset.random_split(
+            ...     [0.6, 0.2, 0.2],
+            ...     keep_ratio="config_type"
+            ... )
+            >>> ratios(train.info["config_type"])
+              bulk_amo: 75.28%
+            bulk_cryst:  8.83%
+                 dimer:  0.66%
+              surf_amo: 15.23%
         """
 
         if keep_ratio is None:
@@ -260,6 +264,10 @@ class AtomsDataset:
             Whether to shuffle the dataset before splitting.
         seed
             The random seed to use for shuffling the dataset.
+        keep_ratio
+            If not :code:`None`, splits will be generated to maintain the
+            ratio of structures in each split with the specified :code:`.info`
+            value.
 
         Returns
         -------
@@ -269,13 +277,31 @@ class AtomsDataset:
         Example
         -------
 
+        Basic usage:
+
         .. code-block:: pycon
             :emphasize-lines: 2
 
             >>> for i in range(5):
             ...     train, test = dataset.k_fold_split(k=5, fold=i)
             ...     ...  # do something, e.g. train a model
+
+        Maintain the ratio of :code:`config_type` values in each split
+        (see also :func:`~load_atoms.AtomsDataset.random_split` for a more
+        detailed example of this feature):
+
+        .. code-block:: pycon
+
+            >>> train, test = dataset.k_fold_split(
+            ...     k=5, fold=0, keep_ratio="config_type"
+            ... )
+
         """
+
+        if k < 2:
+            raise ValueError("k must be at least 2")
+
+        fold = fold % k
 
         if shuffle:
             idxs = np.random.RandomState(seed).permutation(len(self))
@@ -289,6 +315,10 @@ class AtomsDataset:
                 raise KeyError(
                     f"Unknown key {keep_ratio}. "
                     "Available keys are: " + ", ".join(self.info.keys)
+                )
+            if not shuffle:
+                raise ValueError(
+                    "Keep ratio splits are only supported when shuffling."
                 )
 
             group_ids = self.info[keep_ratio][idxs]
@@ -353,8 +383,8 @@ class AtomsDataset:
                 per structure: (config_type, detailed_ct, split, energy)
 
         Create a new dataset of high energy structures using a mask
-        (see :func:`~load_atoms.manipulations.filter_by` for a more convenient
-        way to do this):
+        (see :func:`~load_atoms.AtomsDataset.filter_by`
+        for a more convenient way to do this):
 
         >>> mask = dataset.info["energy"] / dataset.structure_sizes > -155
         >>> dataset[mask]
