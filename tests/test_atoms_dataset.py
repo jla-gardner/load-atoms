@@ -184,6 +184,10 @@ def test_random_split():
 
 
 def test_k_fold_split():
+    # error messages
+    with pytest.raises(ValueError, match="k must be at least 2"):
+        GAP17.k_fold_split(k=1)
+
     # atoms are not hashable, so we set a unique id for each structure
     for i, structure in enumerate(GAP17):
         structure.info["id"] = i
@@ -218,3 +222,6 @@ def test_k_fold_split():
     assert "made_up" not in GAP17.info
     with pytest.raises(KeyError):
         GAP17.k_fold_split(5, fold=0, keep_ratio="made_up")
+
+    with pytest.raises(ValueError, match="only supported when shuffling"):
+        GAP17.k_fold_split(5, fold=0, keep_ratio="config_type", shuffle=False)
