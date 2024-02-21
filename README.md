@@ -22,10 +22,10 @@
 
 </br>
 
-`load-atoms` is a Python package for **L**oading **O**pen **A**ccess **D**atasets for **Ato**mistic **M**aterials **S**cience (LOAD-AtoMS). 
+**`load-atoms`** is a Python package for **L**oading **O**pen **A**ccess **D**atasets for **Ato**mistic **M**aterials **S**cience (LOAD-AtoMS). 
 See the [documentation](https://jla-gardner.github.io/load-atoms/) for more information.
 
-
+**`load-atoms`** is maintained by me, John Gardner ([GitHub](https://github.com/jla-gardner) - [website](https://jla-gardner.github.io)), as part of my PhD research activities within the [Deringer Group](https://www.chem.ox.ac.uk/people/volker-deringer/).
 
 ## Installation
 
@@ -60,7 +60,3 @@ C-GAP-17:
 ## Development
 
 Please see the [contributing guidelines](https://jla-gardner.github.io/load-atoms/dev/developer-guide.html) for information on how to contribute to the project.
-
----
-
-**`load-atoms`** is maintained by me, John Gardner ([GitHub](https://github.com/jla-gardner) - [website](https://jla-gardner.github.io)), as part of my PhD research activities within the [Deringer Group](https://www.chem.ox.ac.uk/people/volker-deringer/).
