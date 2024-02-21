@@ -12,7 +12,7 @@ from pathlib import Path
 from ase import Atoms
 from ase.io import read, write
 
-from load_atoms.database import DatabaseEntry
+from load_atoms.database.database_entry import DatabaseEntry, FileInformation
 from load_atoms.database.internet import download, download_all
 from load_atoms.utils import UnknownDatasetException, matches_checksum
 
@@ -53,21 +53,25 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
 
     # 1. download the dataset files
     download_dir = root / name / "temp"
-    # TODO use actual temp at some point : read up about this
+    # TODO use actual temp dir
     download_dir.mkdir(parents=True, exist_ok=True)
-    existing_files = (f.name for f in download_dir.iterdir())
-    missing_files = set(entry.files) - set(existing_files)
+    existing_files: list[str] = list(f.name for f in download_dir.iterdir())
+
+    missing_files: list[FileInformation] = [
+        file for file in entry.files if file.name not in existing_files
+    ]
+
     download_all(
-        [entry.remote_location(file) for file in missing_files],
+        [file.url for file in missing_files],
         download_dir,
     )
 
     # 2. validate the downloaded files
-    for file_name, hash in entry.files.items():
-        file = download_dir / file_name
-        if not matches_checksum(file, hash):
+    for file_info in entry.files:
+        file = download_dir / file_info.name
+        if not matches_checksum(file, file_info.hash):
             warnings.warn(
-                f"Checksum of {file_name} does not match the "
+                f"Checksum of {file_info.name} does not match the "
                 "expected value. This means that the downloaded dataset "
                 "may be corrupted.",
                 stacklevel=2,
@@ -82,5 +86,7 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
         s.calc = None
     write(structures_path, structures)
     # TODO: implement fast writing with progress bar, and removal of calculators
+
+    # TODO: remove the temp dir
 
     return structures, entry

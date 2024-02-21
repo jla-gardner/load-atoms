@@ -1,7 +1,7 @@
 import pytest
 from load_atoms import load_dataset
 from load_atoms.database import DatabaseEntry
-from load_atoms.utils import matches_checksum
+from load_atoms.utils import BASE_REMOTE_URL, matches_checksum
 from setup import (
     AVAILABLE_DATASETS,
     DATABASE_ROOT,
@@ -16,15 +16,17 @@ def test_correctness(name):
     info = DatabaseEntry.from_yaml_file(DATABASE_ROOT / name / f"{name}.yaml")
 
     # if the files are hosted on a remote server, finish the test here
-    if info.url_root is not None:
+    if not all(BASE_REMOTE_URL in file.url for file in info.files):
         return
 
     load_dataset(name, root=TESTING_DIR)
 
     # check that all files match their checksums
-    for filename, hash in info.files.items():
-        file = TESTING_DIR / name / "temp" / filename
-        assert matches_checksum(file, hash)
+    for file_info in info.files:
+        file = TESTING_DIR / name / "temp" / file_info.name
+        assert matches_checksum(
+            file, file_info.hash
+        ), f"Checksum mismatch for {file}"
 
 
 @pytest.mark.parametrize("name", AVAILABLE_DATASETS, ids=AVAILABLE_DATASETS)

@@ -1,7 +1,7 @@
 # explicitly not using future annotations since this is not supported
 # by pydantic for python versions we want to target
 from pathlib import Path
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, List, Optional, Union
 
 import yaml
 from ase import Atoms
@@ -15,6 +15,7 @@ valid_licenses = {
     "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
     "CC BY-NC 4.0": "https://creativecommons.org/licenses/by-nc/4.0/deed.en",
     "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.en",
+    "CC0": "https://creativecommons.org/publicdomain/zero/1.0/",
     "MIT": "https://opensource.org/licenses/MIT",
     "GPLv3": "https://www.gnu.org/licenses/gpl-3.0.html",
 }
@@ -33,6 +34,40 @@ class PropertyDescription(BaseModel):
 
     units: Optional[str] = None
     """The units of the property"""
+
+
+class FileInformation(BaseModel):
+    """
+    Holds metadata for a remote file
+
+    Partial speficiation are allowed:
+
+    Speficiations of the following form assume that the file is available at
+    :code:`database/{name}/{filename}`.
+
+    .. code-block:: yaml
+
+        name: <filename>
+        hash: <checksum>
+
+    Speficiations of the following form assume that the :code:`filename`
+    is the last part of the URL.
+
+    .. code-block:: yaml
+
+        url: <url>
+        hash: <checksum>
+    """
+
+    name: str
+    hash: str
+    url: str
+
+    @field_validator("hash")
+    def validate_hash(cls, v):
+        if not valid_checksum(v):
+            raise ValueError(f"Invalid checksum: {v}")
+        return v
 
 
 class DatabaseEntry(BaseModel):
@@ -55,10 +90,10 @@ class DatabaseEntry(BaseModel):
     description: str
     """A description of the dataset (in :code:`.rst` format)"""
 
-    files: Dict[str, str]
+    files: List[FileInformation]
     """
-    A mapping from file names to their checksums 
-    (used for download validation purposes)
+    A list of files that are part of the dataset, along with their checksums
+    and URLs.
     """
 
     category: str
@@ -82,9 +117,6 @@ class DatabaseEntry(BaseModel):
     per_structure_properties: Optional[Dict[str, PropertyDescription]] = None
     """A mapping from per-structure properties to their descriptions"""
 
-    url_root: Optional[str] = None
-    """The root url of the dataset, at which all :code:`files` are located"""
-
     processing: Callable[[Path], List[Atoms]]
     """
     A function to turn the root downloaded path into the dataset's structures
@@ -106,13 +138,6 @@ class DatabaseEntry(BaseModel):
             )
         return v
 
-    @field_validator("files")
-    def validate_files(cls, v):
-        for data in v.values():
-            if not valid_checksum(data):
-                raise ValueError(f"Invalid checksum: {data}")
-        return v
-
     @field_validator("citation")
     def validate_citation(cls, v):
         v = v.strip()
@@ -120,30 +145,30 @@ class DatabaseEntry(BaseModel):
             return v
         raise ValueError(f"Invalid BibTeX: {v}")
 
-    @field_validator("url_root")
-    def validate_url_root(cls, v):
-        if v is not None and not v.endswith("/"):
-            return v + "/"
-        return v
-
     @classmethod
-    def from_yaml_file(cls, path: Path) -> "DatabaseEntry":
+    def from_yaml_file(cls, path: Union[Path, str]) -> "DatabaseEntry":
         with open(path) as f:
             data = yaml.safe_load(f)
+
+        # parse processing : TODO: pydantic-ify this
         if "processing" in data:
             data["processing"] = parse_steps(data["processing"])
         else:
             data["processing"] = default_processing()
+
+        # process defaults for file structure
+        for file in data["files"]:
+            if "url" not in file:
+                file["url"] = BASE_REMOTE_URL + f"{data['name']}/{file['name']}"
+            elif "name" not in file:
+                file["name"] = file["url"].split("/")[-1]
+
         try:
             return cls(**data)
         except Exception as e:
             raise ValueError(
                 f"Error loading dataset description from {path}"
             ) from e
-
-    def remote_location(self, file: str) -> str:
-        base_url = self.url_root or BASE_REMOTE_URL + self.name + "/"
-        return base_url + file
 
     @classmethod
     def remote_url_for(cls, dataset_id):
