@@ -16,9 +16,23 @@ valid_licenses = {
     "CC BY-NC 4.0": "https://creativecommons.org/licenses/by-nc/4.0/deed.en",
     "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.en",
     "MIT": "https://opensource.org/licenses/MIT",
+    "GPLv3": "https://www.gnu.org/licenses/gpl-3.0.html",
 }
 
 valid_categories = ["Benchmarks", "Potential Fitting", "Synthetic Data"]
+
+
+class PropertyDescription(BaseModel):
+    """
+    Holds a description of a property, such that it can be automatically
+    validated upon creation.
+    """
+
+    desc: str
+    """A description of the property"""
+
+    units: Optional[str] = None
+    """The units of the property"""
 
 
 class DatabaseEntry(BaseModel):
@@ -62,10 +76,10 @@ class DatabaseEntry(BaseModel):
     representative_structure: Optional[int] = None
     """The index of a representative structure (for visualisation purposes)"""
 
-    per_atom_properties: Optional[dict] = None
+    per_atom_properties: Optional[Dict[str, PropertyDescription]] = None
     """A mapping from per-atom properties to their descriptions"""
 
-    per_structure_properties: Optional[dict] = None
+    per_structure_properties: Optional[Dict[str, PropertyDescription]] = None
     """A mapping from per-structure properties to their descriptions"""
 
     url_root: Optional[str] = None

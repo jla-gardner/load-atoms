@@ -33,3 +33,13 @@ processing:
     - SelectFile:
           file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
     - ReadASE
+    - Rename:
+          force: forces
+per_atom_properties:
+    forces:
+        desc: force vectors
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: total energy of the cell
+        units: eV

@@ -9,7 +9,6 @@ def get_correct_dictionary():
     get a dictionary that passes validation
     """
 
-    # this file is root/tests/shared/test_dataset_info.py
     correct_yaml_file = PROJECT_ROOT / "database" / "C-GAP-17" / "C-GAP-17.yaml"
 
     return DatabaseEntry.from_yaml_file(correct_yaml_file).model_dump()

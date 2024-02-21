@@ -1,11 +1,12 @@
 name: AC-2D-22
 year: 2022
+category: Synthetic Data
+license: CC BY-NC-SA 4.0
 description: |
     Amorphous, 2D graphene structures generated using a Monte Carlo bond-switching algorithm,
     as described in Figure 3 of the paper: `Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies <https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b>`_.
     Files are downloaded from `Zenodo <https://zenodo.org/records/7221166>`_ and processed using
     a `custom script <https://github.com/jla-gardner/load-atoms/blob/main/src/load_atoms/database/processing/AC-2D-22.py>`_ to extract the structures and information.
-category: Synthetic Data
 citation: |
     @article{El-Machachi-22-10,
       title = {
@@ -19,11 +20,14 @@ citation: |
       journal = {Chemical Science},
       doi = {10.1039/D2SC04326B}
     }
-license: CC BY-NC-SA 4.0
 per_atom_properties:
-    forces: as labelled by DFT
+    forces:
+        desc: as labelled by DFT
+        units: eV/Å
 per_structure_properties:
-    energy: total energy of the cell as labelled by DFT
+    energy:
+        desc: total energy of the cell as labelled by DFT
+        units: eV
 representative_structure: 61
 url_root: https://zenodo.org/record/7221166/files
 files:

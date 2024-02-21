@@ -23,7 +23,11 @@ citation: |
     }
 license: CC BY 4.0
 per_atom_properties:
-    forces: labelled using the PBE functional
+    forces:
+        desc: labelled using the PBE functional
+        units: eV/Å
 per_structure_properties:
-    energy: total energy of the cell as labelled using the PBE functional
+    energy:
+        desc: total energy of the cell as labelled using the PBE functional
+        units: eV
 representative_structure: 1894
