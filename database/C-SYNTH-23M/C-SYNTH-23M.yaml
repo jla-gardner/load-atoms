@@ -3,13 +3,18 @@ year: 2022
 description: |
     The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
     This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
-    and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential.
+    and sampled every 1ps. The structures cover a wide range of densities, temperatures and degrees of dis/order.
 category: Synthetic Data
 license: MIT
 citation: |
     @article{Gardner-23-03,
-      title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},
-      author = {Gardner, John L. A. and Beaulieu, Zo{\'e} Faure and Deringer, Volker L.},
+      title = {
+        Synthetic Data Enable Experiments in Atomistic Machine Learning
+      },
+      author = {
+        Gardner, John L. A. and Beaulieu, Zo{\'e} Faure 
+        and Deringer, Volker L.
+      },
       year = {2023},
       journal = {Digital Discovery},
       doi = {10.1039/D2DD00137C},
@@ -24,10 +29,25 @@ processing:
           pattern: "**/*.extxyz"
           steps:
               - ReadASE
+    - Rename:
+          gap17_forces: forces
+          gap17_energy: local_energies
 per_atom_properties:
-    gap17_forces:
-        desc: labelled by C-GAP-17
+    forces:
+        desc: force vectors (C-GAP-17)
         units: eV/Å
-    gap17_energy:
-        desc: local energy, as labelled by C-GAP-17
+    local_energies:
+        desc: local energies (C-GAP-17)
         units: eV
+per_structure_properties:
+    anneal_T:
+        desc: annealing temperature
+        units: K
+    density:
+        desc: density of the structure
+        units: g cm\ :math:`{}^{-3}`
+    run_id:
+        desc: unique identifier for the trajectory
+    time:
+        desc: timestep of the structure in the trajectory
+        units: ps

@@ -1,7 +1,7 @@
 name: C-GAP-17
 year: 2017
 files:
-    C-GAP-17.extxyz: cf1d5b067076
+    C-GAP-17.extxyz: 8dd037b59c88
 description: |
     The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
     interatomic potential for amorphous carbon.
@@ -24,16 +24,18 @@ citation: |
 license: CC BY-NC-SA 4.0
 per_atom_properties:
     forces:
-        desc: labelled by DFT
+        desc: force vectors (DFT)
         units: eV/Å
 per_structure_properties:
     energy:
-        desc: total energy of the cell as labelled by DFT
+        desc: total structure energy (DFT)
         units: eV
     config_type:
-        desc: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
-    detailed_ct:
-        desc: additional sub-categories of structures
+        desc: |
+            | category of structure 
+            | (:code:`dimer` | :code:`bulk_amo` | :code:`bulk_cryst` | :code:`surf_amo`)
     split:
-        desc: train or test - the original split of the dataset
+        desc: |
+            | the original test/train split
+            | (:code:`train` | :code:`test`)
 representative_structure: 1926

@@ -1,14 +1,13 @@
 name: GST-GAP-22
 year: 2022
 files:
-    refitted_GST-GAP-22_PBE.xyz: 0d3ac69a3d33
+    refitted_GST-GAP-22_PBE.xyz: e4c467026dc0
 description: |
     The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
     as labelled using the PBE functional.
     This dataset covers a range of compositions along the :math:`\text{GeTe} \rightarrow \text{Sb}_2\text{Te}_3` pseudo-binary line, and
     was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`__.
-    The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_. DFT energy and force labels have been
-    renamed to :code:`energy` and :code:`forces` respectively.
+    The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_.
 category: Potential Fitting
 citation: |
     @article{Zhou-23-10,
@@ -24,10 +23,15 @@ citation: |
 license: CC BY 4.0
 per_atom_properties:
     forces:
-        desc: labelled using the PBE functional
+        desc: force vectors (PBE DFT)
         units: eV/Å
 per_structure_properties:
     energy:
-        desc: total energy of the cell as labelled using the PBE functional
+        desc: total structure energy (PBE DFT)
         units: eV
+    virial:
+        desc: virial stress tensor (PBE DFT)
+        units: eV
+    config_type:
+        desc: category of structure
 representative_structure: 1894

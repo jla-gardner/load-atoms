@@ -31,7 +31,7 @@ Si-GAP-18
         species:
             Si: 100.00%
         properties:
-            per atom: (force)
+            per atom: (forces)
             per structure: (config_type, cutoff, energy, nneightol)
     
 
@@ -51,8 +51,8 @@ If you use this dataset in your work, please cite the following:
     
     @article{Bartok-18-12,
         title = {
-            Machine {{Learning}} a {{General-Purpose Interatomic Potential}} 
-            for {{Silicon}}
+            Machine Learning a General-Purpose Interatomic 
+            Potential for Silicon
         },
         author = {
             Bart{\'o}k, Albert P. and Kermode, James and Bernstein, 
@@ -64,3 +64,42 @@ If you use this dataset in your work, please cite the following:
         number = {4},
         pages = {041048},
     }
+
+
+Properties
+----------
+
+**Per-atom**:
+
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`forces`
+      - eV/Å
+      - :class:`ndarray(N, 3) <numpy.ndarray>`
+      - force vectors (DFT)
+
+
+**Per-structure**:
+    
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`energy`
+      - eV
+      - :class:`~float64`
+      - total structure energy (DFT)
+
+    * - :code:`config_type`
+      - 
+      - :class:`~str`
+      - category of structure
+

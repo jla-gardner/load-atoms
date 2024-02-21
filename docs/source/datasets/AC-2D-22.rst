@@ -60,3 +60,57 @@ If you use this dataset in your work, please cite the following:
       journal = {Chemical Science},
       doi = {10.1039/D2SC04326B}
     }
+
+
+Properties
+----------
+
+**Per-atom**:
+
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`forces`
+      - eV/Å
+      - :class:`ndarray(N, 3) <numpy.ndarray>`
+      - force vectors (C-GAP-17)
+
+    * - :code:`local_energy`
+      - eV
+      - :class:`ndarray(N,) <numpy.ndarray>`
+      - local energy of each atom (C-GAP-17)
+
+    * - :code:`nn_local_energy`
+      - eV
+      - :class:`ndarray(N,) <numpy.ndarray>`
+      - average nearest neighbour local energy (C-GAP-17)
+
+
+**Per-structure**:
+    
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`beta`
+      - 1/eV
+      - :class:`~float64`
+      - β used for MC bond-switching
+
+    * - :code:`criterion`
+      - 
+      - :class:`~str`
+      - energy term used in MC criterion
+
+    * - :code:`config`
+      - 
+      - :class:`~str`
+      - type of the structure (paracrystalline | CRN)
+

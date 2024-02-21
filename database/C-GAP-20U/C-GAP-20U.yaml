@@ -1,7 +1,7 @@
 name: C-GAP-20U
 year: 2020
 files:
-    C-GAP-20U.extxyz: 6efca6d549f7
+    C-GAP-20U.xyz: da0462802df1
 description: |
     The complete dataset used for training the 
     `C-GAP-20U <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_
@@ -22,20 +22,22 @@ citation: |
 license: GPLv3
 per_atom_properties:
     forces:
-        desc: labelled by DFT
+        desc: force vectors (DFT)
         units: eV/Å
 per_structure_properties:
     energy:
-        desc: total energy of the cell as labelled by DFT
+        desc: total structure energy (DFT)
         units: eV
     free_energy:
-        desc: free energy of the cell as labelled by DFT
+        desc: total structure free energy (DFT)
         units: eV
-    config_type:
-        desc: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
     virial:
-        desc: virial stress tensor as labelled by DFT
-        units: eV/Å^3
+        desc: virial stress tensor (DFT)
+        units: eV
     stress:
-        desc: stress tensor as labelled by DFT
-        units: eV/Å^3
+        desc: |
+            | stress tensor (DFT)
+            | (:code:`- virial / cell.volume`)
+        units: eV Å\ :math:`{}^{-3}`
+    config_type:
+        desc: category of structure

@@ -26,7 +26,7 @@ Synthetic Data
     
         The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
         This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
-        and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential.
+        and sampled every 1ps. The structures cover a wide range of densities, temperatures and degrees of dis/order.
         
     
 

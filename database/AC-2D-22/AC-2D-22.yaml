@@ -22,12 +22,23 @@ citation: |
     }
 per_atom_properties:
     forces:
-        desc: as labelled by DFT
+        desc: force vectors (C-GAP-17)
         units: eV/Å
-per_structure_properties:
-    energy:
-        desc: total energy of the cell as labelled by DFT
+    local_energy:
+        desc: local energy of each atom (C-GAP-17)
         units: eV
+    nn_local_energy:
+        desc: average nearest neighbour local energy (C-GAP-17)
+        units: eV
+per_structure_properties:
+    beta:
+        desc: β used for MC bond-switching
+        units: 1/eV
+    criterion:
+        desc: energy term used in MC criterion
+    config:
+        desc: type of the structure (paracrystalline | CRN)
+
 representative_structure: 61
 url_root: https://zenodo.org/record/7221166/files
 files:

@@ -2,14 +2,18 @@ from __future__ import annotations
 
 import shutil
 from pathlib import Path
-from typing import Callable, TypedDict
+from typing import Any, Callable, TypedDict
 
 import numpy as np
 import yaml
 from ase.data import chemical_symbols
 from load_atoms import load_dataset, view
 from load_atoms.atoms_dataset import DescribedDataset
-from load_atoms.database.database_entry import DatabaseEntry, valid_licenses
+from load_atoms.database.database_entry import (
+    DatabaseEntry,
+    PropertyDescription,
+    valid_licenses,
+)
 from load_atoms.utils import lpad
 
 # this file is at dev/scripts/pages.py
@@ -198,6 +202,92 @@ If you use this dataset in your work, please cite the following:
 .. code-block:: latex
     
     {citation}
+"""
+
+
+def _build_table(
+    descriptions: dict[str, PropertyDescription],
+    mappping: dict[str, Any],
+    replace_first_dim: bool,
+):
+    def get_type(name: str):
+        values = mappping[name]
+        if isinstance(values, np.ndarray):
+            shape = list(values.shape)
+            if replace_first_dim:
+                shape[0] = "N"  # type: ignore
+            to_show = f"ndarray{tuple(shape)}".replace("'", "")
+            _type = f":class:`{to_show} <numpy.ndarray>`"
+        else:
+            _type = f":class:`~{type(values).__name__}`"
+        return _type
+
+    header = """\
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+"""
+
+    rows = []
+    for name, description in descriptions.items():
+        units = description.units if description.units is not None else ""
+        desc = description.desc.replace("\n", "\n        ")
+        rows.append(
+            f"""\
+    * - :code:`{name}`
+      - {units}
+      - {get_type(name)}
+      - {desc}
+"""
+        )
+
+    return header + "\n".join(rows)
+
+
+@register_component
+def property_info(dataset: DescribedDataset) -> str:
+    if dataset.description.per_atom_properties is None:
+        per_atom_properties = ""
+    else:
+        per_atom_properties = """\
+**Per-atom**:
+
+{}""".format(
+            _build_table(
+                dataset.description.per_atom_properties,
+                dataset[0].arrays,
+                replace_first_dim=True,
+            )
+        )
+
+    if dataset.description.per_structure_properties is None:
+        per_structure = ""
+    else:
+        per_structure = """\
+**Per-structure**:
+    
+{}""".format(
+            _build_table(
+                dataset.description.per_structure_properties,
+                dataset[0].info,
+                replace_first_dim=False,
+            )
+        )
+
+    if not (per_atom_properties + per_structure):
+        return ""
+
+    return f"""\
+Properties
+----------
+
+{per_atom_properties}
+
+{per_structure}
 """
 
 

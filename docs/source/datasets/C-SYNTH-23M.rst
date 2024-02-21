@@ -15,7 +15,7 @@ C-SYNTH-23M
 
         The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
         This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
-        and sampled every 1fs. The dataset contains per-atom energy and force labels from the same potential.
+        and sampled every 1ps. The structures cover a wide range of densities, temperatures and degrees of dis/order.
         
 
 
@@ -29,7 +29,7 @@ C-SYNTH-23M
         species:
             C: 100.00%
         properties:
-            per atom: (gap17_energy, gap17_forces)
+            per atom: (forces, local_energies)
             per structure: (anneal_T, density, run_id, time)
     
 
@@ -48,9 +48,68 @@ If you use this dataset in your work, please cite the following:
 .. code-block:: latex
     
     @article{Gardner-23-03,
-      title = {Synthetic Data Enable Experiments in Atomistic Machine Learning},
-      author = {Gardner, John L. A. and Beaulieu, Zo{\'e} Faure and Deringer, Volker L.},
+      title = {
+        Synthetic Data Enable Experiments in Atomistic Machine Learning
+      },
+      author = {
+        Gardner, John L. A. and Beaulieu, Zo{\'e} Faure 
+        and Deringer, Volker L.
+      },
       year = {2023},
       journal = {Digital Discovery},
       doi = {10.1039/D2DD00137C},
     }
+
+
+Properties
+----------
+
+**Per-atom**:
+
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`forces`
+      - eV/Å
+      - :class:`ndarray(N, 3) <numpy.ndarray>`
+      - force vectors (C-GAP-17)
+
+    * - :code:`local_energies`
+      - eV
+      - :class:`ndarray(N,) <numpy.ndarray>`
+      - local energies (C-GAP-17)
+
+
+**Per-structure**:
+    
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`anneal_T`
+      - K
+      - :class:`~int64`
+      - annealing temperature
+
+    * - :code:`density`
+      - g cm\ :math:`{}^{-3}`
+      - :class:`~float64`
+      - density of the structure
+
+    * - :code:`run_id`
+      - 
+      - :class:`~int64`
+      - unique identifier for the trajectory
+
+    * - :code:`time`
+      - ps
+      - :class:`~int64`
+      - timestep of the structure in the trajectory
+

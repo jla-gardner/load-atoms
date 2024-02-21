@@ -10,8 +10,8 @@ category: Potential Fitting
 citation: |
     @article{Bartok-18-12,
         title = {
-            Machine {{Learning}} a {{General-Purpose Interatomic Potential}} 
-            for {{Silicon}}
+            Machine Learning a General-Purpose Interatomic 
+            Potential for Silicon
         },
         author = {
             Bart{\'o}k, Albert P. and Kermode, James and Bernstein, 
@@ -34,12 +34,17 @@ processing:
           file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
     - ReadASE
     - Rename:
-          force: forces
+          DFT_force: forces
+          dft_force: forces
+          DFT_energy: energy
+          dft_energy: energy
 per_atom_properties:
     forces:
-        desc: force vectors
+        desc: force vectors (DFT)
         units: eV/Å
 per_structure_properties:
     energy:
-        desc: total energy of the cell
+        desc: total structure energy (DFT)
         units: eV
+    config_type:
+        desc: category of structure
