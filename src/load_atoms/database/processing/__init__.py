@@ -314,3 +314,23 @@ class Custom(Step[Path, "list[Atoms]"]):
 
     def __repr__(self):
         return f"Custom({self.id})"
+
+
+@register_step
+class Rename(Step["list[Atoms]", "list[Atoms]"]):
+    """
+    Rename fields on the atoms objects.
+
+    """
+
+    def __init__(self, **name_mapping):
+        self.name_mapping = name_mapping
+
+    def __call__(self, atoms: list[Atoms]) -> list[Atoms]:
+        for atom in atoms:
+            for old, new in self.name_mapping.items():
+                if old in atom.arrays:
+                    atom.arrays[new] = atom.arrays.pop(old)
+                elif old in atom.info:
+                    atom.info[new] = atom.info.pop(old)
+        return atoms
