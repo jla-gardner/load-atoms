@@ -44,5 +44,10 @@ per_structure_properties:
     virial:
         desc: virial stress tensor (DFT)
         units: eV
+    stress:
+        desc: |
+            | stress tensor (DFT)
+            | (:code:`- virial / cell.volume`)
+        units: eV Å\ :math:`{}^{-3}`
     config_type:
         desc: category of structure

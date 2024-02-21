@@ -26,15 +26,17 @@ TESTING_DIR.mkdir(exist_ok=True)
 
 for name in AVAILABLE_DATASETS:
     # copy over the folder if it doesn't exist
-    shutil.copytree(
-        DATABASE_ROOT / name, TESTING_DIR / name, dirs_exist_ok=True
+    (TESTING_DIR / name).mkdir(exist_ok=True)
+    shutil.copy(
+        DATABASE_ROOT / name / f"{name}.yaml",
+        TESTING_DIR / name / f"{name}.yaml",
     )
-    (TESTING_DIR / name / "temp").mkdir(exist_ok=True)
-    # move all non yaml files to temp to simulate a download
-    for file in (TESTING_DIR / name).glob("*"):
-        if (
-            file.suffix != ".yaml"
-            and file.name != "temp"
-            and file.name != f"{name}.xyz"
-        ):
-            file.rename(TESTING_DIR / name / "temp" / file.name)
+    # simulate download by moving any non-yaml files to the temp folder
+    for file in (DATABASE_ROOT / name).glob("*"):
+        if file.suffix == ".yaml":
+            continue
+        # copy file
+        relative_path = file.relative_to(DATABASE_ROOT / name)
+        temp_folder = TESTING_DIR / name / "temp"
+        temp_folder.mkdir(exist_ok=True)
+        shutil.copy(file, temp_folder / relative_path)

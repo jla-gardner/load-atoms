@@ -101,7 +101,7 @@ Properties
       - Description
     * - :code:`beta`
       - 1/eV
-      - :class:`~float64`
+      - :class:`~float`
       - β used for MC bond-switching
 
     * - :code:`criterion`

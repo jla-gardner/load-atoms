@@ -103,6 +103,13 @@ Properties
       - :class:`ndarray(3, 3) <numpy.ndarray>`
       - virial stress tensor (DFT)
 
+    * - :code:`stress`
+      - eV Å\ :math:`{}^{-3}`
+      - :class:`ndarray(3, 3) <numpy.ndarray>`
+      - | stress tensor (DFT)
+        | (:code:`- virial / cell.volume`)
+        
+
     * - :code:`config_type`
       - 
       - :class:`~str`
