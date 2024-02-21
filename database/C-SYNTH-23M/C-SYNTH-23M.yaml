@@ -24,3 +24,10 @@ processing:
           pattern: "**/*.extxyz"
           steps:
               - ReadASE
+per_atom_properties:
+    gap17_forces:
+        desc: labelled by C-GAP-17
+        units: eV/Å
+    gap17_energy:
+        desc: local energy, as labelled by C-GAP-17
+        units: eV

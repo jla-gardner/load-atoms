@@ -1,0 +1,41 @@
+name: C-GAP-20U
+year: 2020
+files:
+    C-GAP-20U.extxyz: 6efca6d549f7
+description: |
+    The complete dataset used for training the 
+    `C-GAP-20U <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_
+    interatomic potential for carbon.
+    Suitably converged labels were obtained with revised DFT settings, see `CAM.840-6 <https://doi.org/10.17863/CAM.84096>`_.
+category: Potential Fitting
+citation: |
+    @article{Rowe-20-07,
+        title = {An Accurate and Transferable Machine Learning Potential for Carbon},
+        author = {Rowe, Patrick and Deringer, Volker L. and Gasparotto, Piero and Cs{\'a}nyi, G{\'a}bor and Michaelides, Angelos},
+        year = {2020},
+        journal = {The Journal of Chemical Physics},
+        volume = {153},
+        number = {3},
+        pages = {034702},
+        doi = {10.1063/5.0005084},
+    }
+license: GPLv3
+per_atom_properties:
+    forces:
+        desc: labelled by DFT
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: total energy of the cell as labelled by DFT
+        units: eV
+    free_energy:
+        desc: free energy of the cell as labelled by DFT
+        units: eV
+    config_type:
+        desc: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
+    virial:
+        desc: virial stress tensor as labelled by DFT
+        units: eV/Å^3
+    stress:
+        desc: stress tensor as labelled by DFT
+        units: eV/Å^3

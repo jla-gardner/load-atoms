@@ -25,3 +25,11 @@ processing:
     - SelectFile:
           file: sio2_potential_data/database/dataset.scan.2.xyz
     - ReadASE
+per_atom_properties:
+    forces:
+        desc: force vectors
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: total energy of the cell
+        units: eV

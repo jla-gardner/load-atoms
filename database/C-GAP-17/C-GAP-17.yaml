@@ -23,10 +23,17 @@ citation: |
     }
 license: CC BY-NC-SA 4.0
 per_atom_properties:
-    force: labelled by DFT
+    forces:
+        desc: labelled by DFT
+        units: eV/Å
 per_structure_properties:
-    energy: total energy of the cell as labelled by DFT
-    config_type: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
-    detailed_ct: additional sub-categories of structures
-    split: train or test - the original split of the dataset
+    energy:
+        desc: total energy of the cell as labelled by DFT
+        units: eV
+    config_type:
+        desc: category of structure (dimer, bulk_amo, bulk_cryst, surface, etc)
+    detailed_ct:
+        desc: additional sub-categories of structures
+    split:
+        desc: train or test - the original split of the dataset
 representative_structure: 1926
