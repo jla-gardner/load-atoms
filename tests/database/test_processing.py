@@ -3,7 +3,14 @@ from pathlib import Path
 
 import pytest
 import yaml
-from load_atoms.database.processing import Chain, SelectFile, UnZip, parse_steps
+from ase import Atoms
+from load_atoms.database.processing import (
+    Chain,
+    Rename,
+    SelectFile,
+    UnZip,
+    parse_steps,
+)
 
 
 def test_all_steps():
@@ -14,6 +21,8 @@ def test_all_steps():
 - ReadASE
 - Custom:
     id: 1-dummy
+- Rename:
+    a: b
 """
     processing_func = parse_steps(yaml.safe_load(raw))
     assert isinstance(processing_func, Chain)
@@ -76,3 +85,17 @@ def test_custom_step():
 """
     with pytest.raises(ValueError, match="Unknown custom processing"):
         parse_steps(yaml.safe_load(raw))
+
+
+def test_rename():
+    structure = Atoms("H2")
+    structure.info["a"] = 1.23
+    structure.arrays["y"] = [1, 2]
+
+    Rename(a="b", y="z")([structure])
+
+    assert "a" not in structure.info
+    assert structure.info["b"] == 1.23
+
+    assert "y" not in structure.arrays
+    assert structure.arrays["z"] == [1, 2]
