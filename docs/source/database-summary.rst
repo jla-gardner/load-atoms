@@ -28,11 +28,11 @@ These can be downloaded from the internet (and cached locally) using
       - 4,530
       - `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>`_
       - 2017
-    * - :doc:`C-GAP-20 <../datasets/C-GAP-20>`
+    * - :doc:`C-GAP-20U <../datasets/C-GAP-20U>`
       - C
       - 400,275
       - 6,088
-      - `CC BY-NC 4.0 <https://creativecommons.org/licenses/by-nc/4.0/deed.en>`_
+      - `GPLv3 <https://www.gnu.org/licenses/gpl-3.0.html>`_
       - 2020
     * - :doc:`C-SYNTH-23M <../datasets/C-SYNTH-23M>`
       - C
@@ -58,9 +58,9 @@ These can be downloaded from the internet (and cached locally) using
       - 2,475
       - `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>`_
       - 2018
-    * - :doc:`SiO2-GAP-21 <../datasets/SiO2-GAP-21>`
+    * - :doc:`SiO2-GAP-22 <../datasets/SiO2-GAP-22>`
       - O, Si
       - 268,118
       - 3,074
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
-      - 2021
+      - 2022

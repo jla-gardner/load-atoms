@@ -16,9 +16,8 @@ GST-GAP-22
         The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
         as labelled using the PBE functional.
         This dataset covers a range of compositions along the :math:`\text{GeTe} \rightarrow \text{Sb}_2\text{Te}_3` pseudo-binary line, and
-        was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`_.
-        The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_. DFT energy and force labels have been
-        renamed to :code:`energy` and :code:`forces` respectively.
+        was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`__.
+        The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_.
         
 
 
@@ -34,8 +33,8 @@ GST-GAP-22
             Ge: 23.64%
             Sb: 21.85%
         properties:
-            per atom: (Masses, forces)
-            per structure: (config_type, energy, sub_config, virial_stress)
+            per atom: (forces)
+            per structure: (config_type, energy, sub_config, virial)
     
 
 
@@ -62,3 +61,47 @@ If you use this dataset in your work, please cite the following:
         pages = {746--754},
         doi = {10.1038/s41928-023-01030-x},
     }
+
+
+Properties
+----------
+
+**Per-atom**:
+
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`forces`
+      - eV/Å
+      - :class:`ndarray(N, 3) <numpy.ndarray>`
+      - force vectors (PBE DFT)
+
+
+**Per-structure**:
+    
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`energy`
+      - eV
+      - :class:`~float64`
+      - total structure energy (PBE DFT)
+
+    * - :code:`virial`
+      - eV
+      - :class:`ndarray(3, 3) <numpy.ndarray>`
+      - virial stress tensor (PBE DFT)
+
+    * - :code:`config_type`
+      - 
+      - :class:`~str`
+      - category of structure
+

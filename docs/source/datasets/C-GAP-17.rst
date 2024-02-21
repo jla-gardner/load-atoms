@@ -16,7 +16,7 @@ C-GAP-17
         The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
         interatomic potential for amorphous carbon.
         This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order.
-        More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`_.
+        More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`__.
         
 
 
@@ -30,7 +30,7 @@ C-GAP-17
         species:
             C: 100.00%
         properties:
-            per atom: (force)
+            per atom: (forces)
             per structure: (config_type, detailed_ct, energy, split)
     
 
@@ -49,7 +49,9 @@ If you use this dataset in your work, please cite the following:
 .. code-block:: latex
     
     @article{Deringer-17,
-        title = {Machine learning based interatomic potential for amorphous carbon},
+        title = {
+            Machine learning based interatomic potential for amorphous carbon
+        },
         volume = {95},
         number = {9},
         journal = {Physical Review B},
@@ -58,3 +60,51 @@ If you use this dataset in your work, please cite the following:
         pages = {094203},
         doi = {10.1103/PhysRevB.95.094203},
     }
+
+
+Properties
+----------
+
+**Per-atom**:
+
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`forces`
+      - eV/Å
+      - :class:`ndarray(N, 3) <numpy.ndarray>`
+      - force vectors (DFT)
+
+
+**Per-structure**:
+    
+.. list-table::
+    :header-rows: 1
+
+    * - Property
+      - Units
+      - Type
+      - Description
+    * - :code:`energy`
+      - eV
+      - :class:`~float64`
+      - total structure energy (DFT)
+
+    * - :code:`config_type`
+      - 
+      - :class:`~str`
+      - | category of structure 
+        | (:code:`dimer` | :code:`bulk_amo` | :code:`bulk_cryst` | :code:`surf_amo`)
+        
+
+    * - :code:`split`
+      - 
+      - :class:`~str`
+      - | the original test/train split
+        | (:code:`train` | :code:`test`)
+        
+
