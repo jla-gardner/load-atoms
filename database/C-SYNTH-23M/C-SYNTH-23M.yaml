@@ -20,9 +20,9 @@ citation: |
       doi = {10.1039/D2DD00137C},
     }
 representative_structure: 199
-url_root: https://zenodo.org/records/7704087/files/jla-gardner/
 files:
-    carbon-data-v1.0.zip: b43fc702ef6d
+    - url: https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip
+      hash: b43fc702ef6d
 processing:
     - UnZip
     - ForEachFile:

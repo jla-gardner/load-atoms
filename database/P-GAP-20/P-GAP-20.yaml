@@ -1,6 +1,5 @@
 name: P-GAP-20
 year: 2020
-url_root: https://zenodo.org/record/4003703/files/
 description: |
     The complete Phosphorus dataset used to train the `P-GAP-20 <https://zenodo.org/records/4003703>`_ model from 
     `A General-Purpose Machine-Learning Force Field for Bulk and Nanostructured Phosphorus <https://doi.org/10.1038/s41467-020-19168-z>`_.
@@ -25,7 +24,8 @@ citation: |
       doi = {10.1038/s41467-020-19168-z},
     }
 files:
-    P_GAP_20_fitting_data.xyz: ab3059018068
+    - url: https://zenodo.org/record/4003703/files/P_GAP_20_fitting_data.xyz
+      hash: ab3059018068
 license: CC BY 4.0
 representative_structure: 280
 per_atom_properties:

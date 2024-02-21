@@ -1,7 +1,8 @@
 name: GST-GAP-22
 year: 2022
 files:
-    refitted_GST-GAP-22_PBE.xyz: e4c467026dc0
+    - name: refitted_GST-GAP-22_PBE.xyz
+      hash: e4c467026dc0
 description: |
     The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
     as labelled using the PBE functional.

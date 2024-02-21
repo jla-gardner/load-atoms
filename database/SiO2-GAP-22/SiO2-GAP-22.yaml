@@ -23,9 +23,10 @@ citation: |
       number = {1},
       pages = {1--12},
     }
-url_root: https://zenodo.org/records/6353684/files/
+url_root:
 files:
-    sio2_potential_data.zip: 98ea6e58f6d9
+    - url: https://zenodo.org/records/6353684/files/sio2_potential_data.zip
+      hash: 98ea6e58f6d9
 processing:
     - UnZip
     - SelectFile:

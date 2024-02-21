@@ -40,9 +40,10 @@ per_structure_properties:
         desc: type of the structure (paracrystalline | CRN)
 
 representative_structure: 61
-url_root: https://zenodo.org/record/7221166/files
+url_root:
 files:
-    data.tar.gz: 023de5805f15
+    - url: https://zenodo.org/record/7221166/files/data.tar.gz
+      hash: 023de5805f15
 processing:
     - Custom:
           id: AC-2D-22

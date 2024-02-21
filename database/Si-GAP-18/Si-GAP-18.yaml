@@ -25,9 +25,9 @@ citation: |
     }
 license: CC BY-NC-SA 4.0
 representative_structure: 1283
-url_root: https://zenodo.org/record/1250555/files/libAtoms
 files:
-    silicon-testing-framework-v1.0.zip: 97eb063f9655
+    - url: https://zenodo.org/record/1250555/files/libAtoms-silicon-testing-framework-v1.0.zip
+      hash: 97eb063f9655
 processing:
     - UnZip
     - SelectFile:

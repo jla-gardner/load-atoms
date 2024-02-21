@@ -1,7 +1,8 @@
 name: C-GAP-17
 year: 2017
 files:
-    C-GAP-17.extxyz: 8dd037b59c88
+    - name: C-GAP-17.extxyz
+      hash: 8dd037b59c88
 description: |
     The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
     interatomic potential for amorphous carbon.
