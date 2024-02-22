@@ -1,26 +1,27 @@
 from __future__ import annotations
 
+import contextlib
 import importlib
 import shutil
-from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Generic, TypeVar
+from typing import Generic, Protocol, TypeVar
 
 import yaml
 from ase import Atoms
 from ase.io import read as ase_read
 
-X, Y = TypeVar("X"), TypeVar("Y")
+from load_atoms.progress import Progress
+
+X, Y = TypeVar("X", contravariant=True), TypeVar("Y", covariant=True)
 
 
-class Step(ABC, Generic[X, Y]):
+class Step(Protocol, Generic[X, Y]):
     """
     Represents a single step in a processing
     :class:`~load_atoms.database.processing.Chain`.
     """
 
-    @abstractmethod
-    def __call__(self, x: X) -> Y:
+    def __call__(self, x: X, progress: Progress | None = None) -> Y:
         """Perform the step, transforming the input into the output."""
         ...
 
@@ -38,10 +39,10 @@ class Chain(Step[X, Y]):
     def __init__(self, steps: list[Step]):
         self.steps = steps
 
-    def __call__(self, x: X) -> Y:
+    def __call__(self, x: X, progress: Progress | None = None) -> Y:
         """Perform the steps in order."""
         for step in self.steps:
-            x = step(x)
+            x = step(x, progress)
         return x  # type: ignore
 
     def __repr__(self):
@@ -80,11 +81,11 @@ def parse_steps(
     return Chain(steps)
 
 
-def default_processing():
-    default = """\
-- ForEachFile:
-    steps:
-      - ReadASE: {}
+def default_processing(file_name: str) -> Chain[Path, list[Atoms]]:
+    default = f"""\
+- SelectFile:
+    file: "{file_name}"
+- ReadASE
 """
     return parse_steps(yaml.safe_load(default))
 
@@ -126,14 +127,20 @@ class UnZip(Step[Path, Path]):
     def __init__(self, file: str | None = None):
         self.file = file
 
-    def __call__(self, root: Path) -> Path:
+    def __call__(self, root: Path, progress: Progress | None = None) -> Path:
         if self.file is None:
             # get the first (and only) file in the directory
             extract_from = next(root.iterdir())
         else:
             extract_from = root / self.file
         extract_to = root / f"{extract_from.name}-extracted"
-        shutil.unpack_archive(extract_from, extract_dir=extract_to)
+
+        if progress is not None:
+            context = progress.new_task(f"Extracting {extract_from.name}")
+        else:
+            context = contextlib.nullcontext()
+        with context:
+            shutil.unpack_archive(extract_from, extract_dir=extract_to)
         return extract_to
 
     def __repr__(self):
@@ -169,7 +176,7 @@ class SelectFile(Step[Path, Path]):
     def __init__(self, file: str):
         self.file = file
 
-    def __call__(self, root: Path) -> Path:
+    def __call__(self, root: Path, progress: Progress | None = None) -> Path:
         return root / self.file
 
     def __repr__(self):
@@ -217,7 +224,9 @@ class ForEachFile(Step[Path, "list[Atoms]"]):
         self.files = files
         self.pattern = pattern
 
-    def __call__(self, root: Path) -> list[Atoms]:
+    def __call__(
+        self, root: Path, progress: Progress | None = None
+    ) -> list[Atoms]:
         if self.files is not None:
             files = [root / file for file in self.files]
         elif self.pattern is not None:
@@ -225,13 +234,19 @@ class ForEachFile(Step[Path, "list[Atoms]"]):
         else:
             files = sorted(root.iterdir())
 
+        if progress is None:
+            results = []
+            for file in files:
+                results.extend(self.chain(file))
+            return results
+
         results = []
-        # for file in track(
-        #     files,
-        #     description="Processing files",
-        # ):
-        for file in files:
-            results.extend(self.chain(file))
+        with progress.new_task("Processing files", total=len(files)) as task:
+            for file in files:
+                # explicitly ignore the progress
+                results.extend(self.chain(file, progress=None))
+                task.update(advance=1)
+
         return results
 
 
@@ -265,7 +280,13 @@ class ReadASE(Step[Path, "list[Atoms]"]):
     def __init__(self, **kwargs):
         self.kwargs = kwargs
 
-    def __call__(self, file: Path) -> list[Atoms]:
+    def __call__(
+        self, file: Path, progress: Progress | None = None
+    ) -> list[Atoms]:
+        if progress is not None:
+            with progress.new_task(f"Reading {file.name}"):
+                return ase_read(file, index=":", **self.kwargs)  # type: ignore
+
         return ase_read(file, index=":", **self.kwargs)  # type: ignore
 
     def __repr__(self):
@@ -309,7 +330,9 @@ class Custom(Step[Path, "list[Atoms]"]):
         except ModuleNotFoundError:
             raise ValueError(f"Unknown custom processing: {self.id}") from None
 
-    def __call__(self, file: Path) -> list[Atoms]:
+    def __call__(
+        self, file: Path, progress: Progress | None = None
+    ) -> list[Atoms]:
         return self.func(file)
 
     def __repr__(self):
@@ -326,7 +349,9 @@ class Rename(Step["list[Atoms]", "list[Atoms]"]):
     def __init__(self, **name_mapping):
         self.name_mapping = name_mapping
 
-    def __call__(self, atoms: list[Atoms]) -> list[Atoms]:
+    def __call__(
+        self, atoms: list[Atoms], progress: Progress | None = None
+    ) -> list[Atoms]:
         for atom in atoms:
             for old, new in self.name_mapping.items():
                 if old in atom.arrays:

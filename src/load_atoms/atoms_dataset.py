@@ -13,7 +13,6 @@ from yaml import dump
 from .database import DatabaseEntry, backend
 from .utils import (
     LazyMapping,
-    frontend_url,
     intersect,
     k_fold_split,
     random_split,
@@ -427,26 +426,6 @@ class AtomsDataset:
         return summarise_dataset(self.structures)
 
 
-def usage_info(info: DatabaseEntry) -> str:
-    lines = []
-    if info.license is not None:
-        lines.append(
-            f"The {info.name} dataset is covered by the "
-            f"{info.license} license."
-        )
-    if info.citation is not None:
-        lines.append(
-            f"Please cite the {info.name} dataset "
-            "if you use it in your work."
-        )
-    lines.append(
-        f"For more information about the {info.name} dataset, visit\n"
-        f"{frontend_url(info)}."
-    )
-
-    return "\n".join(lines)
-
-
 class DescribedDataset(AtomsDataset):
     def __init__(
         self,
@@ -461,7 +440,6 @@ class DescribedDataset(AtomsDataset):
         cls,
         dataset_id: str,
         root: Path | (str | None) = None,
-        verbose: bool = True,
     ) -> AtomsDataset:
         """
         Load a dataset by id.
@@ -486,8 +464,6 @@ class DescribedDataset(AtomsDataset):
         for structure in all_structures:
             structure.calc = None
 
-        if verbose:
-            print(usage_info(info))
         return cls(all_structures, info)
 
     def __repr__(self):
