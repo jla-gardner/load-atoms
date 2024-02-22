@@ -82,12 +82,11 @@ def test_indexing():
     ), "Indexing should return the correct number of structures"
 
 
-def test_can_load_from_id():
-    # don't pass a root to mimic the default behaviour
+def test_can_load_from_id(tmp_path):
     assert len(GAP17) == 4530
 
     with pytest.raises(UnknownDatasetException):
-        load_dataset("made_up_dataset")
+        load_dataset("made_up_dataset", root=tmp_path)
 
 
 def test_summarise():

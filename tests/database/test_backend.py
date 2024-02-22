@@ -15,8 +15,7 @@ def test_get_structures_for(tmp_path):
 
     folder = tmp_path / "C-GAP-17"
     assert (folder / "C-GAP-17.yaml").exists(), "Dataset description missing"
-    assert (folder / "temp" / "C-GAP-17.extxyz").exists(), "Download is missing"
-    assert (folder / "C-GAP-17.xyz").exists(), "Structures are missing"
+    assert (folder / "C-GAP-17.pkl").exists(), "Structures are missing"
 
     with pytest.raises(UnknownDatasetException):
         load_structures("made_up_dataset", tmp_path)

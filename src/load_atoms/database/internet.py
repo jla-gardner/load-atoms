@@ -25,6 +25,9 @@ def download(url: str, local_path: Path, progress: Progress):
         The progress bar to add the download to.
     """
 
+    if local_path.is_dir():
+        local_path = local_path / Path(url).name
+
     with requests.get(url, stream=True) as response, progress.new_task(
         f"Downloading {Path(url).name}"
     ) as task, open(local_path, "wb") as f:
