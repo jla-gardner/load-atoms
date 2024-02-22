@@ -57,10 +57,11 @@ def _load_structures(name, root, progress):
             download(
                 DatabaseEntry.remote_url_for(name),
                 entry_path,
-                Progress("Downloading dataset description", transient=True),
+                Progress("", transient=True),
             )
         except Exception as e:
             raise UnknownDatasetException(name) from e
+
     entry = DatabaseEntry.from_yaml_file(entry_path)
 
     # try to load the structures from disk
