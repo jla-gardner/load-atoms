@@ -20,7 +20,7 @@ QM9
         134 kilo molecules <https://doi.org/10.1038/sdata.2014.22>`_.
         Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_, 
         and using a `custom script <https://github.com/jla-gardner/load-atoms/blob/main/src/load_atoms/database/processing/read_qm9_xyz.py>`__.
-        Unit conversions have been used to remain consistent with other datasets in :code:`load-atoms`.
+        Energy labels are quoted in eV, relative to the isolated atoms of the molecule.
         
 
 
@@ -39,8 +39,8 @@ QM9
             F: 0.14%
         properties:
             per atom: (partial_charges)
-            per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, homo, inchi,
-                index, lumo, mu, r2, smiles, zpve)
+            per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, geometry,
+                homo, inchi, index, lumo, mu, r2, smiles, zpve)
     
 
 
@@ -201,9 +201,19 @@ Properties
       - free energy at 298.15 K
 
     * - :code:`Cv`
-      - eV / K
+      - cal mol :math:`^{-1}` K :math:`^{-1}`
       - :class:`~float`
       - heat capacity at 298.15 K
+
+    * - :code:`frequencies`
+      - cm\ :math:`^{-1}`
+      - :class:`~list`
+      - harmonic frequencies
+
+    * - :code:`geometry`
+      - 
+      - :class:`~bool`
+      - final geometry check passed
 
     * - :code:`smiles`
       - 
