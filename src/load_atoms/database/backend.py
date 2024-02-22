@@ -63,7 +63,7 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
 
     download_all(
         [file.url for file in missing_files],
-        download_dir,
+        [download_dir / file.name for file in missing_files],
     )
 
     # 2. validate the downloaded files

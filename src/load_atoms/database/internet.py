@@ -66,7 +66,7 @@ def download(url: str, local_path: Path):
         _download_with_progress(url, local_path, progress, task)
 
 
-def download_all(urls: Sequence[str], directory: Path):
+def download_all(urls: Sequence[str], local_paths: Sequence[Path]):
     """
     Download all files from the given urls to the given directory.
 
@@ -82,7 +82,7 @@ def download_all(urls: Sequence[str], directory: Path):
         return
 
     if len(urls) == 1:
-        download(urls[0], directory)
+        download(urls[0], local_paths[0])
         return
 
     pool_exectutor = ThreadPoolExecutor(
@@ -93,12 +93,12 @@ def download_all(urls: Sequence[str], directory: Path):
         total_task = progress.add_task(
             f"Downloading {len(urls)} files", total=len(urls), start=True
         )
-        for url in urls:
+        for url, local_path in zip(urls, local_paths):
             task = progress.add_task(Path(url).name, start=False, visible=False)
             future = pool.submit(
                 _download_with_progress,
                 url,
-                directory,
+                local_path,
                 progress,
                 task,
                 total_task,

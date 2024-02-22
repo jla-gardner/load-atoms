@@ -133,7 +133,7 @@ class UnZip(Step[Path, Path]):
             extract_from = next(root.iterdir())
         else:
             extract_from = root / self.file
-        extract_to = root / "extracted"
+        extract_to = root / f"{extract_from.name}-extracted"
         shutil.unpack_archive(extract_from, extract_dir=extract_to)
         return extract_to
 
