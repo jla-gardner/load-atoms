@@ -6,11 +6,12 @@ storing them locally, and serving them to :code:`load-atoms` via the
 
 from __future__ import annotations
 
+import pickle
+import shutil
 import warnings
 from pathlib import Path
 
 from ase import Atoms
-from ase.io import read, write
 
 from load_atoms.database.database_entry import DatabaseEntry, FileInformation
 from load_atoms.database.internet import download, download_all
@@ -33,8 +34,13 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
         The root folder to save the structures to.
     """
 
-    # we first need to get the DatabaseEntry for the dataset
     entry_path = root / name / f"{name}.yaml"
+    structures_path = root / name / f"{name}.pkl"
+    temp_path = root / name / "temp"
+
+    entry_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # we first need to get the DatabaseEntry for the dataset
     if not (entry_path).exists():
         try:
             download(DatabaseEntry.remote_url_for(name), entry_path)
@@ -42,33 +48,31 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
             raise UnknownDatasetException(name) from e
     entry = DatabaseEntry.from_yaml_file(entry_path)
 
-    # now we can get the structures
-    structures_path = root / name / f"{name}.xyz"
+    # try to load the structures from disk
     if structures_path.exists():
-        # TODO: implement fast reading with progress bar
-        return read(structures_path, index=":"), entry  # type: ignore
+        with open(structures_path, "rb") as f:
+            return pickle.load(f), entry
 
-    # if the structures don't exist, we need to download files, validate them,
-    # process them into structures, and save the structures to disk
+    # else, download and process the dataset
 
     # 1. download the dataset files
-    download_dir = root / name / "temp"
-    # TODO use actual temp dir
-    download_dir.mkdir(parents=True, exist_ok=True)
-    existing_files: list[str] = list(f.name for f in download_dir.iterdir())
+    temp_path.mkdir(parents=True, exist_ok=True)
 
+    # the following lines add no performance overhead, but are useful for
+    # when debugging the adding of new datasets
+    existing_files: list[str] = [f.name for f in temp_path.iterdir()]
     missing_files: list[FileInformation] = [
         file for file in entry.files if file.name not in existing_files
     ]
 
     download_all(
         [file.url for file in missing_files],
-        [download_dir / file.name for file in missing_files],
+        [temp_path / file.name for file in missing_files],
     )
 
     # 2. validate the downloaded files
     for file_info in entry.files:
-        file = download_dir / file_info.name
+        file = temp_path / file_info.name
         if not matches_checksum(file, file_info.hash):
             warnings.warn(
                 f"Checksum of {file_info.name} does not match the "
@@ -78,15 +82,18 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
             )
 
     # 3. process the downloaded files into structures
-    structures = entry.processing(download_dir)
-
-    # 4. save the structures to disk
-    structures_path.parent.mkdir(parents=True, exist_ok=True)
+    structures = entry.processing(temp_path)
+    # remove annoying default calculators
     for s in structures:
         s.calc = None
-    write(structures_path, structures)
-    # TODO: implement fast writing with progress bar, and removal of calculators
 
-    # TODO: remove the temp dir
+    # 4. save the structures to disk
+    with open(structures_path, "wb") as f:
+        pickle.dump(structures, f)
+
+    # 5. clean up the download directory
+    # if debugging, comment out this line to inspect the downloaded files
+    # rather than deleting them
+    shutil.rmtree(temp_path)
 
     return structures, entry
