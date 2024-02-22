@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+from rich.align import Align
 from rich.live import Live
 from rich.panel import Panel
 from rich.progress import (
@@ -12,6 +13,7 @@ from rich.progress import (
     TextColumn,
 )
 from rich.progress import Progress as RichProgress
+from rich.table import Column, Table
 from rich.text import Text
 
 
@@ -19,12 +21,11 @@ class TimeElapsedColumn(ProgressColumn):
     """Renders time elapsed."""
 
     def render(self, task) -> Text:
-        """Show time remaining."""
         elapsed = task.finished_time if task.finished else task.elapsed
         if elapsed is None:
-            return Text("-:--:--", style="black")
+            return Text("--:--", style="black")
         delta = timedelta(seconds=int(elapsed))
-        return Text(str(delta), style="black")
+        return Text(":".join(str(delta).split(":")[1:]), style="black")
 
 
 class PercentColumn(ProgressColumn):
@@ -40,7 +41,7 @@ class PercentColumn(ProgressColumn):
 
 
 class Progress:
-    def __init__(self, description: str):
+    def __init__(self, description: str, transient: bool = False):
         self._progress = RichProgress(
             SpinnerColumn(
                 spinner_name="point",
@@ -48,13 +49,24 @@ class Progress:
                 speed=0.5,
                 style="black",
             ),
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
+            TextColumn(
+                "[progress.description]{task.description}",
+                table_column=Column(max_width=40, overflow="fold"),
+            ),
+            BarColumn(bar_width=20),
             PercentColumn(),
             TimeElapsedColumn(),
         )
+        self._table = Table.grid()
+        self._table.add_row()
+        self._table.add_row(self._progress)
         self._live = Live(
-            Panel.fit(self._progress, title=description), refresh_per_second=10
+            Panel.fit(
+                self._table,
+                title=f"[bold]{description}",
+            ),
+            refresh_per_second=10,
+            transient=transient,
         )
 
     def new_task(
@@ -69,6 +81,9 @@ class Progress:
             self._progress,
             transient,
         )
+
+    def log_below(self, text: str, align: str = "center"):
+        self._table.add_row(Align(Text.from_markup(text), align=align))  # type: ignore
 
     def __enter__(self):
         self._live.__enter__()

@@ -13,10 +13,14 @@ from pathlib import Path
 
 from ase import Atoms
 
-from load_atoms.database.database_entry import DatabaseEntry, FileInformation
-from load_atoms.database.internet import download, download_all
+from load_atoms.database.database_entry import DatabaseEntry, valid_licenses
+from load_atoms.database.internet import download
 from load_atoms.progress import Progress
-from load_atoms.utils import UnknownDatasetException, matches_checksum
+from load_atoms.utils import (
+    UnknownDatasetException,
+    frontend_url,
+    matches_checksum,
+)
 
 
 def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
@@ -34,7 +38,7 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     root
         The root folder to save the structures to.
     """
-    with Progress(f"Loading {name}") as progress:
+    with Progress(f"[bold]{name}") as progress:
         result = _load_structures(name, root, progress)
         progress._live.refresh()
     return result
@@ -50,7 +54,11 @@ def _load_structures(name, root, progress):
     # we first need to get the DatabaseEntry for the dataset
     if not (entry_path).exists():
         try:
-            download(DatabaseEntry.remote_url_for(name), entry_path)
+            download(
+                DatabaseEntry.remote_url_for(name),
+                entry_path,
+                Progress("Downloading dataset description", transient=True),
+            )
         except Exception as e:
             raise UnknownDatasetException(name) from e
     entry = DatabaseEntry.from_yaml_file(entry_path)
@@ -61,6 +69,9 @@ def _load_structures(name, root, progress):
             structures_path, "rb"
         ) as f:
             structures = pickle.load(f)
+
+        log_usage_information(entry, progress)
+
         return structures, entry
 
     # else, download and process the dataset
@@ -71,14 +82,15 @@ def _load_structures(name, root, progress):
     # the following lines add no performance overhead, but are useful for
     # when debugging the adding of new datasets
     existing_files: list[str] = [f.name for f in temp_path.iterdir()]
-    missing_files: list[FileInformation] = [
-        file for file in entry.files if file.name not in existing_files
-    ]
+    for file in entry.files:
+        if file.name in existing_files:
+            continue
 
-    download_all(
-        [file.url for file in missing_files],
-        [temp_path / file.name for file in missing_files],
-    )
+        download(
+            file.url,
+            temp_path / file.name,
+            progress,
+        )
 
     # 2. validate the downloaded files
     for file_info in entry.files:
@@ -92,7 +104,7 @@ def _load_structures(name, root, progress):
             )
 
     # 3. process the downloaded files into structures
-    structures = entry.processing(temp_path)
+    structures = entry.processing(temp_path, progress)
     # remove annoying default calculators
     for s in structures:
         s.calc = None
@@ -104,8 +116,29 @@ def _load_structures(name, root, progress):
     # 5. clean up the download directory
     # if debugging, comment out this line to inspect the downloaded files
     # rather than deleting them
-
     with progress.new_task("Cleaning up", transient=True):
         shutil.rmtree(temp_path)
 
+    log_usage_information(entry, progress)
+
     return structures, entry
+
+
+def log_usage_information(info: DatabaseEntry, progress: Progress):
+    progress.log_below("\n")
+
+    name = f"[bold]{info.name}[/bold]"
+    if info.license is not None:
+        style = f"dodger_blue2 link={valid_licenses[info.license]} underline"
+        progress.log_below(
+            f"The {name} dataset is covered by the "
+            f"[{style}]{info.license}[/] license."
+        )
+    if info.citation is not None:
+        progress.log_below(
+            f"Please cite the {name} dataset " "if you use it in your work."
+        )
+    progress.log_below(f"For more information about the {name} dataset, visit:")
+    url = frontend_url(info)
+    url_style = f"dodger_blue2 underline link={url}"
+    progress.log_below(f"[{url_style}]load-atoms/{info.name}")

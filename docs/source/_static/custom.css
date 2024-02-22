@@ -57,3 +57,8 @@ img {
 .sphinx-codeautolink-a span:hover {
     font-weight: bold;
 }
+
+/* change the line-height of the pre with id=codecell0 within the section with id=quickstart */
+#quickstart pre#codecell0 {
+    line-height: 1.3;
+}

@@ -7,6 +7,7 @@ import yaml
 from ase import Atoms
 from pydantic import BaseModel, field_validator
 
+from load_atoms.progress import Progress
 from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
 
 from .processing import default_processing, parse_steps
@@ -117,7 +118,7 @@ class DatabaseEntry(BaseModel):
     per_structure_properties: Optional[Dict[str, PropertyDescription]] = None
     """A mapping from per-structure properties to their descriptions"""
 
-    processing: Callable[[Path], List[Atoms]]
+    processing: Callable[[Path, Progress], List[Atoms]]
     """
     A function to turn the root downloaded path into the dataset's structures
     """
@@ -150,18 +151,24 @@ class DatabaseEntry(BaseModel):
         with open(path) as f:
             data = yaml.safe_load(f)
 
-        # parse processing : TODO: pydantic-ify this
-        if "processing" in data:
-            data["processing"] = parse_steps(data["processing"])
-        else:
-            data["processing"] = default_processing()
-
         # process defaults for file structure
         for file in data["files"]:
             if "url" not in file:
                 file["url"] = BASE_REMOTE_URL + f"{data['name']}/{file['name']}"
             elif "name" not in file:
                 file["name"] = file["url"].split("/")[-1]
+
+        # parse processing : TODO: pydantic-ify this
+        if "processing" in data:
+            data["processing"] = parse_steps(data["processing"])
+        else:
+            files = data["files"]
+            if not len(files) == 1:
+                raise ValueError(
+                    "If no processing is provided, the dataset must have "
+                    "exactly one file."
+                )
+            data["processing"] = default_processing(files[0]["name"])
 
         try:
             return cls(**data)

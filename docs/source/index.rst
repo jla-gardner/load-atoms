@@ -24,10 +24,18 @@ Install using :code:`pip install load-atoms`, and then use
 
    >>> from load_atoms import load_dataset
    >>> dataset = load_dataset("C-GAP-17")
-   Downloading C-GAP-17.extxyz | ███████████████████████ | 100.0% 
-   The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.
-   Please cite the C-GAP-17 dataset if you use it in your work.
-
+   ╭─────────────────────────── C-GAP-17 ────────────────────────────╮
+   │                                                                 │
+   │   Downloading C-GAP-17.extxyz ━━━━━━━━━━━━━━━━━━━━ 100% 00:00   │
+   │   Reading C-GAP-17.extxyz     ━━━━━━━━━━━━━━━━━━━━ 100% 00:01   │
+   │   Caching to disk             ━━━━━━━━━━━━━━━━━━━━ 100% 00:00   │
+   │                                                                 │
+   │ The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license. │
+   │  Please cite the C-GAP-17 dataset if you use it in your work.   │
+   │     For more information about the C-GAP-17 dataset, visit      │
+   │                       load-atoms/C-GAP-17                       │
+   ╰─────────────────────────────────────────────────────────────────╯
+   
 These are thin wrappers around lists of :class:`ase.Atoms`:
 
    >>> dataset[0]
