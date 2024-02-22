@@ -31,7 +31,7 @@ files:
 processing:
     - UnZip
     - SelectFile:
-          file: libAtoms/silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
+          file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
     - ReadASE
     - Rename:
           DFT_force: forces
