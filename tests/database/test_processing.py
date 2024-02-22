@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import shutil
 from pathlib import Path
 
@@ -8,9 +10,12 @@ from load_atoms.database.processing import (
     Chain,
     Rename,
     SelectFile,
+    Step,
     UnZip,
     parse_steps,
+    register_step,
 )
+from load_atoms.progress import Progress
 
 
 def test_all_steps():
@@ -38,7 +43,11 @@ def test_unknown_step():
         parse_steps(yaml.safe_load(raw))
 
 
-def test_unzip(tmp_path):
+@pytest.mark.parametrize(
+    "progress",
+    (None, Progress("")),
+)
+def test_unzip(tmp_path, progress):
     # make a zip file
     (tmp_path / "test_unzip").mkdir(exist_ok=True, parents=True)
     (tmp_path / "test_unzip" / "file.txt").write_text("fake file")
@@ -47,7 +56,7 @@ def test_unzip(tmp_path):
     shutil.make_archive(tmp_path / "archive", "zip", tmp_path / "test_unzip")
 
     # unzip it
-    extracted_dir = UnZip(file="archive.zip")(tmp_path)
+    extracted_dir = UnZip(file="archive.zip")(tmp_path, progress)
     assert (extracted_dir / "file.txt").is_file()
 
     # now test the same thing, but with an implicit file
@@ -60,7 +69,7 @@ def test_unzip(tmp_path):
                 file.unlink()
 
     assert next(tmp_path.iterdir()).name == "archive.zip"
-    extracted_dir = UnZip()(tmp_path)
+    extracted_dir = UnZip()(tmp_path, progress)
     assert (extracted_dir / "file.txt").is_file()
 
 
@@ -99,3 +108,52 @@ def test_rename():
 
     assert "y" not in structure.arrays
     assert structure.arrays["z"] == [1, 2]
+
+
+@pytest.mark.parametrize(
+    "progress",
+    (None, Progress("")),
+)
+def test_for_each_file(tmp_path, progress):
+    # make a few files
+    (tmp_path / "file1.txt").write_text("file1")
+    (tmp_path / "file2.txt").write_text("file2")
+    (tmp_path / "file3.csv").write_text("a,b,c")
+
+    @register_step
+    class DummyStep(Step):
+        def __call__(self, file: Path, progress: None = None) -> list[str]:
+            return [file.stem]
+
+    # test with no kwargs
+    raw = """
+- ForEachFile:
+    steps:
+        - DummyStep
+"""
+    func = parse_steps(yaml.safe_load(raw))
+    result = func(tmp_path, progress)
+    assert result == ["file1", "file2", "file3"]
+
+    # test with files
+    raw = """
+- ForEachFile:
+    steps:
+        - DummyStep
+    files:
+        - file3.csv
+"""
+    func = parse_steps(yaml.safe_load(raw))
+    result = func(tmp_path, progress)
+    assert result == ["file3"]
+
+    # test with pattern
+    raw = """
+- ForEachFile:
+    steps:
+        - DummyStep
+    pattern: "*.txt"
+"""
+    func = parse_steps(yaml.safe_load(raw))
+    result = func(tmp_path, progress)
+    assert result == ["file1", "file2"]
