@@ -26,12 +26,12 @@ citation: |
 license: CC BY-NC-SA 4.0
 representative_structure: 1283
 files:
-    - url: https://zenodo.org/record/1250555/files/libAtoms-silicon-testing-framework-v1.0.zip
+    - url: https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip
       hash: 97eb063f9655
 processing:
     - UnZip
     - SelectFile:
-          file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
+          file: libAtoms/silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
     - ReadASE
     - Rename:
           DFT_force: forces
