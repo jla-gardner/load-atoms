@@ -15,6 +15,7 @@ from ase import Atoms
 
 from load_atoms.database.database_entry import DatabaseEntry, FileInformation
 from load_atoms.database.internet import download, download_all
+from load_atoms.progress import Progress
 from load_atoms.utils import UnknownDatasetException, matches_checksum
 
 
@@ -33,7 +34,13 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     root
         The root folder to save the structures to.
     """
+    with Progress(f"Loading {name}") as progress:
+        result = _load_structures(name, root, progress)
+        progress._live.refresh()
+    return result
 
+
+def _load_structures(name, root, progress):
     entry_path = root / name / f"{name}.yaml"
     structures_path = root / name / f"{name}.pkl"
     temp_path = root / name / "temp"
@@ -50,8 +57,11 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
 
     # try to load the structures from disk
     if structures_path.exists():
-        with open(structures_path, "rb") as f:
-            return pickle.load(f), entry
+        with progress.new_task("Reading from disk"), open(
+            structures_path, "rb"
+        ) as f:
+            structures = pickle.load(f)
+        return structures, entry
 
     # else, download and process the dataset
 
@@ -88,12 +98,14 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
         s.calc = None
 
     # 4. save the structures to disk
-    with open(structures_path, "wb") as f:
+    with progress.new_task("Caching to disk"), open(structures_path, "wb") as f:
         pickle.dump(structures, f)
 
     # 5. clean up the download directory
     # if debugging, comment out this line to inspect the downloaded files
     # rather than deleting them
-    shutil.rmtree(temp_path)
+
+    with progress.new_task("Cleaning up", transient=True):
+        shutil.rmtree(temp_path)
 
     return structures, entry

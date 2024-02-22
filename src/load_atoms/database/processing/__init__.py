@@ -9,7 +9,6 @@ from typing import Generic, TypeVar
 import yaml
 from ase import Atoms
 from ase.io import read as ase_read
-from rich.progress import track
 
 X, Y = TypeVar("X"), TypeVar("Y")
 
@@ -26,7 +25,7 @@ class Step(ABC, Generic[X, Y]):
         ...
 
 
-class Chain(Generic[X, Y]):
+class Chain(Step[X, Y]):
     """
     Represents a chain of processing steps.
 
@@ -227,10 +226,11 @@ class ForEachFile(Step[Path, "list[Atoms]"]):
             files = sorted(root.iterdir())
 
         results = []
-        for file in track(
-            files,
-            description="Processing files",
-        ):
+        # for file in track(
+        #     files,
+        #     description="Processing files",
+        # ):
+        for file in files:
             results.extend(self.chain(file))
         return results
 
