@@ -22,6 +22,8 @@ from load_atoms.utils import (
     matches_checksum,
 )
 
+_REMOVE_TEMP = True
+
 
 def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     """
@@ -117,8 +119,9 @@ def _load_structures(name, root, progress):
     # 5. clean up the download directory
     # if debugging, comment out this line to inspect the downloaded files
     # rather than deleting them
-    with progress.new_task("Cleaning up", transient=True):
-        shutil.rmtree(temp_path)
+    if _REMOVE_TEMP:
+        with progress.new_task("Cleaning up", transient=True):
+            shutil.rmtree(temp_path)
 
     log_usage_information(entry, progress)
 

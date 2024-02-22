@@ -13,6 +13,10 @@ https://stackoverflow.com/a/46976704
 import shutil
 from pathlib import Path
 
+from load_atoms.database import backend
+
+backend._REMOVE_TEMP = False
+
 # this file is at root/tests/setup/__init__.py
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATABASE_ROOT = PROJECT_ROOT / "database"
@@ -20,7 +24,7 @@ AVAILABLE_DATASETS = sorted(
     [p.stem for p in sorted(DATABASE_ROOT.glob("**/*.yaml"))]
 )
 
-# simulate downalding the datasets
+# simulate downloading the datasets
 TESTING_DIR = PROJECT_ROOT / "testing-datasets"
 TESTING_DIR.mkdir(exist_ok=True)
 
