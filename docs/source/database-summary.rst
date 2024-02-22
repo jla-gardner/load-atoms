@@ -52,6 +52,18 @@ These can be downloaded from the internet (and cached locally) using
       - 4,798
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
       - 2020
+    * - :doc:`QM7 <../datasets/QM7>`
+      - H, C, N, O, S
+      - 110,650
+      - 7,165
+      - None
+      - 2012
+    * - :doc:`QM9 <../datasets/QM9>`
+      - H, C, N, O, F
+      - 2,407,753
+      - 133,885
+      - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
+      - 2014
     * - :doc:`Si-GAP-18 <../datasets/Si-GAP-18>`
       - Si
       - 171,815

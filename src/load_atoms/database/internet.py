@@ -29,7 +29,7 @@ def download(url: str, local_path: Path, progress: Progress):
         local_path = local_path / Path(url).name
 
     with requests.get(url, stream=True) as response, progress.new_task(
-        f"Downloading {Path(url).name}"
+        f"Downloading {local_path.name}"
     ) as task, open(local_path, "wb") as f:
         response.raise_for_status()
         file_size = int(response.headers["content-length"])

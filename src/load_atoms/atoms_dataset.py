@@ -43,7 +43,7 @@ class AtomsDataset:
         Examples
         --------
         Scalar per-structure properties are turned into an 
-        :class:`np.ndarray <numpy.ndarray>`:
+        :class:`~numpy.ndarray`:
 
         >>> dataset = load_dataset("C-GAP-17")
         >>> dataset.info["energy"]
@@ -149,7 +149,7 @@ class AtomsDataset:
         ----------
         splits
             The number of structures to put in each split.
-            If a list of :class:`float`s, the splits will be
+            If a list of :class:`float`\ s, the splits will be
             calculated as a fraction of the dataset size.
         seed
             The random seed to use for shuffling the dataset.
