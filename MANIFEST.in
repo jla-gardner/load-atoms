@@ -1,5 +1,5 @@
 # MANIFEST.in
 
-include src/load_atoms/visualise/view.js
-include src/load_atoms/visualise/x3d.script
+include src/load_atoms/visualisation/view.js
+include src/load_atoms/visualisation/x3d.script
 include src/load_atoms/database/processing/bad_qm9.txt

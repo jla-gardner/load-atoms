@@ -16,7 +16,7 @@ jobs:
                   cache-dependency-path: pyproject.toml
                   python-version: 3.8
             - name: Install dependencies
-              run: pip install -e ".[dev]"
+              run: pip install ".[dev]"
             - name: Install pandoc
               run: $APT_INSTALL pandoc
             - name: Sphinx build
