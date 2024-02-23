@@ -59,7 +59,7 @@ class Progress:
         )
         self._table = Table.grid()
         self._table.add_row()
-        self._table.add_row(self._progress)
+        self._table.add_row(Align(self._progress, align="center"))
         self._live = Live(
             Panel.fit(
                 self._table,

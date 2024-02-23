@@ -21,3 +21,4 @@ dev/scripts/info
 testing*
 
 **/*.npz
+**/*.pkl
