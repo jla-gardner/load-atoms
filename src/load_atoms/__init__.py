@@ -8,7 +8,7 @@ from ase.io import read
 from .atoms_dataset import AtomsDataset, DescribedDataset
 from .visualisation import view
 
-__version__ = "0.2.6"
+__version__ = "0.2.7"
 __all__ = ["load_dataset", "view"]
 
 
