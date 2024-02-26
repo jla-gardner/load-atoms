@@ -44,6 +44,7 @@ dev = [
     "sphinx-design",
     "sphinx_copybutton",
     "sphinx-codeautolink",
+    "sphinxext-opengraph",
 ]
 
 [project.urls]
@@ -75,7 +76,7 @@ target-version = "py38"
 select = ["E", "F", "UP", "B", "SIM", "I"]
 fixable = ["ALL"]
 unfixable = []
-ignore = ["SIM300", "E402", "E703", "B017"]
+ignore = ["SIM300", "E402", "E703", "B017", "I001"]
 
 [tool.ruff.format]
 quote-style = "double"
