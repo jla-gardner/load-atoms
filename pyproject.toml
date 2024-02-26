@@ -91,6 +91,3 @@ exclude_also = [
     "@(abc\\.)?abstractmethod",
     "\\.\\.\\.",
 ]
-
-[tool.coverage.paths]
-source = ["src", "*/site-packages"]
