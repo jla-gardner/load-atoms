@@ -60,6 +60,15 @@ We provide several :doc:`dataset-level operations <api/dataset>`:
    >>> trainset, testset = dataset.random_split([0.9, 0.1], seed=42)
 
 
+Contributing
+------------
+
+`load-atoms <.>`_ was originally conceived and developed by me, `John Gardner <https://jla-gardner.github.io>`_, 
+as part of my PhD research at the University of Oxford within the `Deringer Group <https://www.chem.ox.ac.uk/people/volker-deringer>`_.
+
+If you are interested in contributing to the project, be that adding new functionality, 
+suggesting a dataset or fixing a bug, please see the :doc:`developer guide <dev/developer-guide>` and feel free to open an issue or pull request on the `GitHub repository <https://github.com/jla-gardner/load-atoms>`_.
+
 .. toctree::
    :maxdepth: 1
    :hidden:
