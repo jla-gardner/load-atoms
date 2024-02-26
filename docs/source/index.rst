@@ -1,5 +1,5 @@
-hidden
-======
+load-atoms
+==========
 
 .. raw:: html
     :file: hide-title.html

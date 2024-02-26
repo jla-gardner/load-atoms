@@ -18,6 +18,7 @@ extensions = [
     "sphinx_design",
     "sphinx.ext.viewcode",
     "sphinx_codeautolink",
+    "sphinxext.opengraph",
 ]
 
 
@@ -55,3 +56,6 @@ html_title = "load-atoms"
 pygments_dark_style = "monokai"
 html_css_files = ["custom.css"]
 html_favicon = "favicon.svg"
+
+
+ogp_image = "_static/homepage-grab.png"
