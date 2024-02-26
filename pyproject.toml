@@ -93,4 +93,4 @@ exclude_also = [
 ]
 
 [tool.coverage.paths]
-source = ["src", "*/site-packages/*"]
+source = ["src", "*/site-packages"]
