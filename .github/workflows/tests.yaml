@@ -16,6 +16,6 @@ jobs:
             - name: Install dependencies
               run: pip install ".[dev]"
             - name: Run tests
-              run: pytest --cov=load-atoms
+              run: pytest --cov src
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v3
