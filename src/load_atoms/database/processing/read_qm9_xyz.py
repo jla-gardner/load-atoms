@@ -27,7 +27,7 @@ OFFSETS = {
 # taken from https://figshare.com/ndownloader/files/3195404
 BAD_IDS = [
     int(id)
-    for id in Path("src/load_atoms/database/processing/bad_qm9.txt")
+    for id in (Path(__file__).parent / "bad_qm9_xyz.py")
     .read_text()
     .splitlines()
 ]
