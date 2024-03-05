@@ -1,3 +1,6 @@
+from __future__ import annotations
+
+import json
 import xml.etree.ElementTree as ET
 from datetime import datetime
 from pathlib import Path
@@ -14,7 +17,11 @@ BOND_RADIUS = 0.17
 MIN_ATOM_RADIUS = BOND_RADIUS + 0.1
 
 
-def view(atoms: Atoms, show_bonds: bool = False):
+def view(
+    atoms: Atoms,
+    show_bonds: bool = False,
+    start_rotation: bool | None = None,
+):
     """
     Generate an interactive visualisation of an :class:`ase.Atoms` object.
 
@@ -24,6 +31,9 @@ def view(atoms: Atoms, show_bonds: bool = False):
         The atoms object to visualise.
     show_bonds:
         Whether to show bonds between atoms.
+    start_rotation:
+        Whether to start the visualisation rotating. If :code:`None`, the
+        default is to start rotating if there are fewer than 400 atoms.
 
     Example
     -------
@@ -53,9 +63,24 @@ def view(atoms: Atoms, show_bonds: bool = False):
     """
     scene = x3d_scene(atoms, show_bonds, width="300px", height="300px")
 
+    if start_rotation is None:
+        start_rotation = len(atoms) <= 400
+
     uid = unique_variable_name()
     js_file = Path(__file__).parent / "view.js"
-    js = js_file.read_text().replace("uid", uid)
+    config = {
+        "id": uid,
+        "currentlyRotating": start_rotation,
+        "rotationSpeed": 0.3,
+    }
+    js = js_file.read_text()
+    # replace everythong between "    // start of replace me" and
+    # "    // end of replace me" with the config
+    lines = js.splitlines()
+    start = lines.index("    // start of replace me") + 1
+    end = lines.index("    // end of replace me")
+    replacement = "    const config = " + json.dumps(config) + ";"
+    js = "\n".join(lines[:start] + [replacement] + lines[end + 1 :])
 
     x3d_script = (Path(__file__).parent / "x3d.script").read_text()
 
