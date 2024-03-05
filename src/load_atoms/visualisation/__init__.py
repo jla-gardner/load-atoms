@@ -205,7 +205,7 @@ def x3d_atoms(atoms: Atoms, show_bonds: bool = False):
         atoms.wrap()
         show_cell = True
     else:
-        atoms.center(vacuum=0.1)
+        atoms.center(vacuum=0.1 if len(atoms) > 1 else 2.5)
         show_cell = False
 
     scale = 0.6 if show_bonds else 1.0
