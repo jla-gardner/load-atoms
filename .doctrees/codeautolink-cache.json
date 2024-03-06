@@ -1,0 +1,1175 @@
+{
+  "api/dataset": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"QM9\")\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 QM9 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502                                                                       \u2502\n\u2502   Downloading dsgdb9nsd.xyz.tar.bz2 \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:09   \u2502\n\u2502   Extracting dsgdb9nsd.xyz.tar.bz2  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:18   \u2502\n\u2502   Processing files                  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:19   \u2502\n\u2502   Caching to disk                   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:02   \u2502\n\u2502                                                                       \u2502\n\u2502            The QM9 dataset is covered by the CC0 license.             \u2502\n\u2502        Please cite the QM9 dataset if you use it in your work.        \u2502\n\u2502          For more information about the QM9 dataset, visit:           \u2502\n\u2502                            load-atoms/QM9                             \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n>>> dataset\nQM9:\n    structures: 133,885\n    atoms: 2,407,753\n    species:\n        H: 51.09%\n        C: 35.16%\n        O: 7.81%\n        N: 5.80%\n        F: 0.14%\n    properties:\n        per atom: (partial_charges)\n        per structure: (\n            A, B, C, Cv, G, H, U, U0, alpha,\n            frequencies, gap, geometry, homo, inchi, index,\n            lumo, mu, r2, smiles, zpve\n        )",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 42
+    },
+    {
+      "source": ">>> load_dataset(\"QM9\", root=\"./my-datasets\")",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 46
+    },
+    {
+      "source": ">>> load_dataset([Atoms(\"H2O\"), Atoms(\"H2O2\")])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 50
+    },
+    {
+      "source": ">>> load_dataset(\"path/to/file.xyz\")",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 54
+    },
+    {
+      "source": ">>> dataset = load_dataset(\"C-GAP-17\")\n>>> dataset.info[\"energy\"]\narray([-9847.661671, -9886.440245, -9916.681692, ...,  -632.464825,\n        -632.146922,  -632.944571])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 11
+    },
+    {
+      "source": ">>> c_gap_20 = load_dataset(\"C-GAP-20\")\n>>> c_gap_20.info[\"virial\"].shape\n(6088, 3, 3)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 17
+    },
+    {
+      "source": ">>> dataset = load_dataset(\"C-GAP-17\")\n>>> dataset.arrays[\"forces\"].shape\n(284965, 3)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 9
+    },
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"C-GAP-17\")\n>>> dataset.filter_by(\n...     lambda structure: len(structure) < 50,\n...     lambda structure: structure.arrays[\"force\"].max() > 5,\n...     config_type=\"bulk_amo\"\n... )\nDataset:\n    structures: 609\n    atoms: 23,169\n    species:\n        C: 100.00%\n    properties:\n        per atom: (force)\n        per structure: (config_type, detailed_ct, split, energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 14
+    },
+    {
+      "source": ">>> train, test = dataset.random_split([0.8, 0.2])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 18
+    },
+    {
+      "source": ">>> train, val, test = dataset.random_split([1_000, 100, 100])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 22
+    },
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> import numpy as np\n>>> # helper function\n>>> def ratios(thing):\n...     values, counts = np.unique(thing, return_counts=True)\n...     max_len = max(len(str(v)) for v in values)\n...     for v, c in zip(values, counts / counts.sum()):\n...         print(f\"{v:>{max_len}}: {c:>6.2%}\")\n...\n>>> dataset = load_dataset(\"C-GAP-17\")\n>>> ratios(dataset.info[\"config_type\"])\n  bulk_amo: 75.28%\nbulk_cryst:  8.83%\n     dimer:  0.66%\n  surf_amo: 15.23%\n>>> train, val, test = dataset.random_split(\n...     [0.6, 0.2, 0.2],\n...     keep_ratio=\"config_type\"\n... )\n>>> ratios(train.info[\"config_type\"])\n  bulk_amo: 75.28%\nbulk_cryst:  8.83%\n     dimer:  0.66%\n  surf_amo: 15.23%",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "numpy"
+          ],
+          "code_str": "numpy",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "numpy"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "unique"
+          ],
+          "code_str": "np.unique",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "numpy.unique"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "max"
+          ],
+          "code_str": "max",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "max"
+        },
+        {
+          "import_components": [
+            "zip"
+          ],
+          "code_str": "zip",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "zip"
+        },
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "print"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 26
+    },
+    {
+      "source": ">>> for i in range(5):\n...     train, test = dataset.k_fold_split(k=5, fold=i)\n...     ...  # do something, e.g. train a model",
+      "names": [
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 18
+    },
+    {
+      "source": ">>> train, test = dataset.k_fold_split(\n...     k=5, fold=0, keep_ratio=\"config_type\"\n... )",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 29
+    },
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"C-GAP-17\")\nThe C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.\nPlease cite the C-GAP-17 dataset if you use it in your work.",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 10
+    },
+    {
+      "source": ">>> dataset[0]\nAtoms(symbols='C64', pbc=True, cell=[9.483, 9.483, 9.483], force=...)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 15
+    },
+    {
+      "source": ">>> dataset[:10]\nDataset:\n    structures: 10\n    atoms: 640\n    species:\n        C: 100.00%\n    properties:\n        per atom: (force)\n        per structure: (config_type, detailed_ct, split, energy)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 27
+    },
+    {
+      "source": ">>> mask = dataset.info[\"energy\"] / dataset.structure_sizes > -155\n>>> dataset[mask]\nDataset:\n    structures: 36\n    atoms: 444\n    species:\n        C: 100.00%\n    properties:\n        per atom: (force)\n        per structure: (config_type, detailed_ct, split, energy)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 42
+    }
+  ],
+  "api/utils": [
+    {
+      "source": ">>> def loader(key):\n...     print(f\"Loading value for key={key}\")\n...     return key * 2\n...\n>>> mapping = LazyMapping([1, 2, 3], loader)\n>>> mapping[3]\nLoading value for key=3\n6\n>>> mapping[3]\n6\n>>> 1 in mapping\nTrue\n>>> 4 in mapping\nFalse",
+      "names": [
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "print"
+        }
+      ],
+      "example": {
+        "document": "api/utils",
+        "ref_id": "utilities",
+        "headings": [
+          "Utilities"
+        ]
+      },
+      "doc_lineno": 27
+    }
+  ],
+  "api/viz": [
+    {
+      "source": "from ase.build import molecule\nfrom load_atoms import view\n\nethanol = molecule(\"CH3CH2OH\")\nview(ethanol, show_bonds=True)",
+      "names": [
+        {
+          "import_components": [
+            "ase",
+            "build"
+          ],
+          "code_str": "ase.build",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "ase.build"
+        },
+        {
+          "import_components": [
+            "ase",
+            "build",
+            "molecule"
+          ],
+          "code_str": "molecule",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "ase.build.molecule"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "load_atoms.view"
+        },
+        {
+          "import_components": [
+            "ase",
+            "build",
+            "molecule"
+          ],
+          "code_str": "molecule",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "ase.build.molecule"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "load_atoms.view"
+        }
+      ],
+      "example": {
+        "document": "api/viz",
+        "ref_id": "visualise",
+        "headings": [
+          "Visualise"
+        ]
+      },
+      "doc_lineno": 12
+    },
+    {
+      "source": "from pathlib import Path\n\nviz = view(ethanol, show_bonds=True)\nPath(\"ethanol.html\").write_text(viz.data)",
+      "names": [
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()",
+            "write_text"
+          ],
+          "code_str": "write_text",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "after_call",
+          "resolved_location": "pathlib.Path.write_text"
+        }
+      ],
+      "example": {
+        "document": "api/viz",
+        "ref_id": "visualise",
+        "headings": [
+          "Visualise"
+        ]
+      },
+      "doc_lineno": 26
+    }
+  ],
+  "category/benchmarks": [],
+  "category/potential-fitting": [],
+  "category/synthetic-data": [],
+  "database-summary": [],
+  "datasets-index": [],
+  "datasets/AC-2D-22": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"AC-2D-22\")\nAC-2D-22:\n    structures: 150\n    atoms: 30,000\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces, local_energy, nn_local_energy)\n        per structure: (beta, config, criterion)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/AC-2D-22",
+        "ref_id": "ac-2d-22",
+        "headings": [
+          "AC-2D-22"
+        ]
+      },
+      "doc_lineno": 23
+    }
+  ],
+  "datasets/C-GAP-17": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"C-GAP-17\")\nC-GAP-17:\n    structures: 4,530\n    atoms: 284,965\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, detailed_ct, energy, split)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-GAP-17",
+        "ref_id": "c-gap-17",
+        "headings": [
+          "C-GAP-17"
+        ]
+      },
+      "doc_lineno": 23
+    }
+  ],
+  "datasets/C-GAP-20U": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"C-GAP-20U\")\nC-GAP-20U:\n    structures: 6,088\n    atoms: 400,275\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, energy, free_energy, stress, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-GAP-20U",
+        "ref_id": "c-gap-20u",
+        "headings": [
+          "C-GAP-20U"
+        ]
+      },
+      "doc_lineno": 23
+    }
+  ],
+  "datasets/C-SYNTH-23M": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"C-SYNTH-23M\")\nC-SYNTH-23M:\n    structures: 115,206\n    atoms: 23,041,200\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces, local_energies)\n        per structure: (anneal_T, density, run_id, time)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-SYNTH-23M",
+        "ref_id": "c-synth-23m",
+        "headings": [
+          "C-SYNTH-23M"
+        ]
+      },
+      "doc_lineno": 22
+    }
+  ],
+  "datasets/GST-GAP-22": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"GST-GAP-22\")\nGST-GAP-22:\n    structures: 2,692\n    atoms: 341,132\n    species:\n        Te: 54.51%\n        Ge: 23.64%\n        Sb: 21.85%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, energy, sub_config, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/GST-GAP-22",
+        "ref_id": "gst-gap-22",
+        "headings": [
+          "GST-GAP-22"
+        ]
+      },
+      "doc_lineno": 24
+    }
+  ],
+  "datasets/P-GAP-20": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"P-GAP-20\")\nP-GAP-20:\n    structures: 4,798\n    atoms: 140,910\n    species:\n        P: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/P-GAP-20",
+        "ref_id": "p-gap-20",
+        "headings": [
+          "P-GAP-20"
+        ]
+      },
+      "doc_lineno": 23
+    }
+  ],
+  "datasets/QM7": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"QM7\")\nQM7:\n    structures: 7,165\n    atoms: 110,650\n    species:\n        H: 56.00%\n        C: 32.32%\n        N: 6.01%\n        O: 5.40%\n        S: 0.27%\n    properties:\n        per atom: ()\n        per structure: (energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/QM7",
+        "ref_id": "qm7",
+        "headings": [
+          "QM7"
+        ]
+      },
+      "doc_lineno": 23
+    }
+  ],
+  "datasets/QM9": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"QM9\")\nQM9:\n    structures: 133,885\n    atoms: 2,407,753\n    species:\n        H: 51.09%\n        C: 35.16%\n        O: 7.81%\n        N: 5.80%\n        F: 0.14%\n    properties:\n        per atom: (partial_charges)\n        per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, geometry,\n            homo, inchi, index, lumo, mu, r2, smiles, zpve)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/QM9",
+        "ref_id": "qm9",
+        "headings": [
+          "QM9"
+        ]
+      },
+      "doc_lineno": 27
+    }
+  ],
+  "datasets/Si-GAP-18": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"Si-GAP-18\")\nSi-GAP-18:\n    structures: 2,475\n    atoms: 171,815\n    species:\n        Si: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, cutoff, energy, nneightol)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/Si-GAP-18",
+        "ref_id": "si-gap-18",
+        "headings": [
+          "Si-GAP-18"
+        ]
+      },
+      "doc_lineno": 24
+    }
+  ],
+  "datasets/SiO2-GAP-22": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"SiO2-GAP-22\")\nSiO2-GAP-22:\n    structures: 3,074\n    atoms: 268,118\n    species:\n        O: 66.47%\n        Si: 33.53%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, energy, free_energy, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/SiO2-GAP-22",
+        "ref_id": "sio2-gap-22",
+        "headings": [
+          "SiO2-GAP-22"
+        ]
+      },
+      "doc_lineno": 23
+    }
+  ],
+  "dev/building-the-docs": [],
+  "dev/dataset-loading": [],
+  "dev/dataset-processing": [
+    {
+      "source": ">>> UnZip()(Path(\"root\"))\nPath(\"root/extracted\")",
+      "names": [],
+      "example": {
+        "document": "dev/dataset-processing",
+        "ref_id": "available-steps",
+        "headings": [
+          "Dataset Processing",
+          "Available Steps"
+        ]
+      },
+      "doc_lineno": 26
+    },
+    {
+      "source": ">>> SelectFile(\"file.txt\")(Path(\"root\"))\nPath(\"root/file.txt\")",
+      "names": [],
+      "example": {
+        "document": "dev/dataset-processing",
+        "ref_id": "available-steps",
+        "headings": [
+          "Dataset Processing",
+          "Available Steps"
+        ]
+      },
+      "doc_lineno": 18
+    },
+    {
+      "source": ">>> ReadASE()(Path(\"root/structures.xyz\"))\n[Atoms(...), Atoms(...), ...]",
+      "names": [],
+      "example": {
+        "document": "dev/dataset-processing",
+        "ref_id": "available-steps",
+        "headings": [
+          "Dataset Processing",
+          "Available Steps"
+        ]
+      },
+      "doc_lineno": 19
+    }
+  ],
+  "dev/developer-guide": [],
+  "index": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"QM9\")\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 QM9 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502                                                                       \u2502\n\u2502   Downloading dsgdb9nsd.xyz.tar.bz2 \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:09   \u2502\n\u2502   Extracting dsgdb9nsd.xyz.tar.bz2  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:18   \u2502\n\u2502   Processing files                  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:19   \u2502\n\u2502   Caching to disk                   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:02   \u2502\n\u2502                                                                       \u2502\n\u2502            The QM9 dataset is covered by the CC0 license.             \u2502\n\u2502        Please cite the QM9 dataset if you use it in your work.        \u2502\n\u2502          For more information about the QM9 dataset, visit:           \u2502\n\u2502                            load-atoms/QM9                             \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> dataset[0]\nAtoms(symbols='CH4', pbc=False, partial_charges=...)",
+      "names": [],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> from load_atoms import view\n>>> view(dataset[23_810], show_bonds=True)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.view"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.view"
+        }
+      ],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> small_structures = dataset.filter_by(lambda atoms: len(atoms) < 10)",
+      "names": [
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> dataset.info[\"energy\"]\narray([-10.5498, -6.9933,  ...,  -5.7742, -6.3021])",
+      "names": [],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> trainset, testset = dataset.random_split([0.9, 0.1], seed=42)",
+      "names": [],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    }
+  ]
+}
