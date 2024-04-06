@@ -25,7 +25,7 @@ citation: |
         pages = {1927},
         doi = {10.1038/s41467-024-45840-9},
     }
-
+representative_structure: 7390
 url_root:
 files:
     - url: https://zenodo.org/records/10419194/files/database.zip
