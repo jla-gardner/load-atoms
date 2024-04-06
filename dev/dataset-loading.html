@@ -1,0 +1,474 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Dataset Loading" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="dev/dataset-loading.html" />
+<meta property="og:site_name" content="load-atoms" />
+<meta property="og:description" content="load-atoms exposes the ability to download named datasets from the internet. The DatabaseEntry class defines a schema for the metadata of such named datasets. These are serialised as a.yaml file fo..." />
+<meta property="og:image" content="_static/homepage-grab.png" />
+<meta property="og:image:alt" content="load-atoms" />
+<meta name="description" content="load-atoms exposes the ability to download named datasets from the internet. The DatabaseEntry class defines a schema for the metadata of such named datasets. These are serialised as a.yaml file fo..." />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="Dataset Processing" href="dataset-processing.html" /><link rel="prev" title="Development" href="developer-guide.html" />
+
+    <link rel="shortcut icon" href="../_static/favicon.svg"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+        <title>Dataset Loading - load-atoms</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-codeautolink.css?v=125d5c1c" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=afd88a32" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">load-atoms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/viz.html">Visualise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database-summary.html">Summary</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../category/benchmarks.html">Benchmarks</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Benchmarks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/QM7.html">QM7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/QM9.html">QM9</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../category/potential-fitting.html">Potential Fitting</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Potential Fitting</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/C-GAP-17.html">C-GAP-17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/C-GAP-20U.html">C-GAP-20U</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/GST-GAP-22.html">GST-GAP-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/P-GAP-20.html">P-GAP-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/Si-GAP-18.html">Si-GAP-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/SiO2-GAP-22.html">SiO2-GAP-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/SiOx-ACE-24.html">SiOx-ACE-24</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../category/synthetic-data.html">Synthetic Data</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Synthetic Data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/AC-2D-22.html">AC-2D-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/C-SYNTH-23M.html">C-SYNTH-23M</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul class="current">
+<li class="toctree-l1 current has-children"><a class="reference internal" href="developer-guide.html">Development</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Development</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Dataset Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset-processing.html">Dataset Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="building-the-docs.html">Building the Docs</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="dataset-loading">
+<h1>Dataset Loading<a class="headerlink" href="#dataset-loading" title="Permalink to this heading">#</a></h1>
+<p><code class="code docutils literal notranslate"><span class="pre">load-atoms</span></code> exposes the ability to download named datasets from the internet.
+The <a class="reference internal" href="#load_atoms.database.DatabaseEntry" title="load_atoms.database.DatabaseEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatabaseEntry</span></code></a> class defines a schema for
+the metadata of such named datasets. These are serialised as a <code class="code docutils literal notranslate"><span class="pre">.yaml</span></code> file for each dataset,
+and hosted in our repo on <a class="reference external" href="https://github.com/jla-gardner/load-atoms/blob/main/database/C-GAP-17/C-GAP-17.yaml">GitHub</a>.</p>
+<p>Loading a dataset by name is handled within <a class="reference internal" href="#load_atoms.database.backend.load_structures" title="load_atoms.database.backend.load_structures"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_structures(name,</span> <span class="pre">root)</span></code></a>.
+Calling this function for the first time will trigger the following steps:</p>
+<ol class="arabic simple">
+<li><p>We donwload the associated <a class="reference internal" href="#load_atoms.database.DatabaseEntry" title="load_atoms.database.DatabaseEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatabaseEntry</span></code></a>
+file to <code class="code docutils literal notranslate"><span class="pre">root/name/name.yaml</span></code>.</p></li>
+<li><p>Each <a class="reference internal" href="#load_atoms.database.DatabaseEntry" title="load_atoms.database.DatabaseEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatabaseEntry</span></code></a> object has a <code class="code docutils literal notranslate"><span class="pre">files</span></code> attribute,
+which maps a collection of urls for download to their checksums.
+We download all of these to a temporary directory, and validate them.</p></li>
+<li><p>Each <a class="reference internal" href="#load_atoms.database.DatabaseEntry" title="load_atoms.database.DatabaseEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatabaseEntry</span></code></a> defines a procedure, <code class="code docutils literal notranslate"><span class="pre">processing</span></code>, that maps
+the root folder of the downloaded files to a list of <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atoms</span></code></a> objects.
+If not explicitly defined, the default procedure is to read all files
+in the root directory using <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/io/io.html#ase.io.read" title="(in ASE)"><code class="xref py py-func docutils literal notranslate"><span class="pre">read()</span></code></a>. For more details, see <a class="reference internal" href="dataset-processing.html"><span class="doc">Dataset Processing</span></a>.</p></li>
+<li><p>We cache the list of <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atoms</span></code></a> objects to <code class="code docutils literal notranslate"><span class="pre">root/name/name.xyz</span></code>,
+and return the list.</p></li>
+</ol>
+<p>Subsequent calls to <a class="reference internal" href="#load_atoms.database.backend.load_structures" title="load_atoms.database.backend.load_structures"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_structures()</span></code></a> with the same dataset name will
+simply read the cached <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atoms</span></code></a> objects from <code class="code docutils literal notranslate"><span class="pre">root/name/name.xyz</span></code>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="load_atoms.database.backend.load_structures">
+<span class="sig-prename descclassname"><span class="pre">load_atoms.database.backend.</span></span><span class="sig-name descname"><span class="pre">load_structures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.12)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Atoms</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#load_atoms.database.DatabaseEntry" title="load_atoms.database.DatabaseEntry"><span class="pre">DatabaseEntry</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/load_atoms/database/backend.html#load_structures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.database.backend.load_structures" title="Permalink to this definition">#</a></dt>
+<dd><p>Load the structures comprising the dataset with the given id from the
+given path.</p>
+<p>If these structures are not currently present, download and process
+them first.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – The id of the dataset to load.</p></li>
+<li><p><strong>root</strong> – The root folder to save the structures to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">load_atoms.database.</span></span><span class="sig-name descname"><span class="pre">DatabaseEntry</span></span><a class="reference internal" href="../_modules/load_atoms/database/database_entry.html#DatabaseEntry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.database.DatabaseEntry" title="Permalink to this definition">#</a></dt>
+<dd><p>Holds all the required metadata for a named dataset, such that it can be
+automatically downloaded using
+<a class="reference internal" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_dataset(dataset_name)</span></code></a>, and so that
+documentation can be automatically generated.</p>
+<p>Subclassing pydantic’s BaseModel, which means that automatic
+validation occurs upon creation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.name" title="Permalink to this definition">#</a></dt>
+<dd><p>The name of the dataset</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.year">
+<span class="sig-name descname"><span class="pre">year</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.year" title="Permalink to this definition">#</a></dt>
+<dd><p>The year the dataset was created</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.description">
+<span class="sig-name descname"><span class="pre">description</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.description" title="Permalink to this definition">#</a></dt>
+<dd><p>A description of the dataset (in <code class="code docutils literal notranslate"><span class="pre">.rst</span></code> format)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.files">
+<span class="sig-name descname"><span class="pre">files</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><span class="pre">FileInformation</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.files" title="Permalink to this definition">#</a></dt>
+<dd><p>A list of files that are part of the dataset, along with their checksums
+and URLs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.category">
+<span class="sig-name descname"><span class="pre">category</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.category" title="Permalink to this definition">#</a></dt>
+<dd><p>The category of the dataset
+(e.g. <code class="code docutils literal notranslate"><span class="pre">&quot;Potential</span> <span class="pre">Fitting&quot;</span></code>, <code class="code docutils literal notranslate"><span class="pre">&quot;Benchmarks&quot;</span></code>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.citation">
+<span class="sig-name descname"><span class="pre">citation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.citation" title="Permalink to this definition">#</a></dt>
+<dd><p>A citation for the dataset (in BibTeX format)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.license">
+<span class="sig-name descname"><span class="pre">license</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.license" title="Permalink to this definition">#</a></dt>
+<dd><p>The license identifier of the dataset (e.g. <code class="code docutils literal notranslate"><span class="pre">&quot;CC</span> <span class="pre">BY-NC-SA</span> <span class="pre">4.0&quot;</span></code>)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ComputedFieldInfo</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.model_computed_fields" title="Permalink to this definition">#</a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.representative_structure">
+<span class="sig-name descname"><span class="pre">representative_structure</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.representative_structure" title="Permalink to this definition">#</a></dt>
+<dd><p>The index of a representative structure (for visualisation purposes)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.per_atom_properties">
+<span class="sig-name descname"><span class="pre">per_atom_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PropertyDescription</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.per_atom_properties" title="Permalink to this definition">#</a></dt>
+<dd><p>A mapping from per-atom properties to their descriptions</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.per_structure_properties">
+<span class="sig-name descname"><span class="pre">per_structure_properties</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.12)"><span class="pre">Dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">PropertyDescription</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.per_structure_properties" title="Permalink to this definition">#</a></dt>
+<dd><p>A mapping from per-structure properties to their descriptions</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="load_atoms.database.DatabaseEntry.processing">
+<span class="sig-name descname"><span class="pre">processing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><span class="pre">Path</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Progress</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><span class="pre">Atoms</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#load_atoms.database.DatabaseEntry.processing" title="Permalink to this definition">#</a></dt>
+<dd><p>A function to turn the root downloaded path into the dataset’s structures</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="dataset-processing.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Dataset Processing</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="developer-guide.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Development</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, John Gardner
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Dataset Loading</a><ul>
+<li><a class="reference internal" href="#load_atoms.database.backend.load_structures"><code class="docutils literal notranslate"><span class="pre">load_structures()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry</span></code></a><ul>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.name"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.name</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.year"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.year</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.description"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.description</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.files"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.files</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.category"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.category</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.citation"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.citation</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.license"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.license</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.model_computed_fields"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.model_computed_fields</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.representative_structure"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.representative_structure</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.per_atom_properties"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.per_atom_properties</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.per_structure_properties"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.per_structure_properties</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.database.DatabaseEntry.processing"><code class="docutils literal notranslate"><span class="pre">DatabaseEntry.processing</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=09e433cd"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
+</html>

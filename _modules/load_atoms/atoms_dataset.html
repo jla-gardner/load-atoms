@@ -1,0 +1,834 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
+
+    <link rel="shortcut icon" href="../../_static/favicon.svg"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.01.29 -->
+        <title>load_atoms.atoms_dataset - load-atoms</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=135e06be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-codeautolink.css?v=125d5c1c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=36a5483c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=afd88a32" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">load-atoms</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../_static/logo.svg" alt="Logo"/>
+  </div>
+  
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/dataset.html">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/viz.html">Visualise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/utils.html">Utilities</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../database-summary.html">Summary</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../category/benchmarks.html">Benchmarks</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Benchmarks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/QM7.html">QM7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/QM9.html">QM9</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../category/potential-fitting.html">Potential Fitting</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Potential Fitting</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/C-GAP-17.html">C-GAP-17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/C-GAP-20U.html">C-GAP-20U</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/GST-GAP-22.html">GST-GAP-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/P-GAP-20.html">P-GAP-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/Si-GAP-18.html">Si-GAP-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/SiO2-GAP-22.html">SiO2-GAP-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/SiOx-ACE-24.html">SiOx-ACE-24</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../category/synthetic-data.html">Synthetic Data</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Synthetic Data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/AC-2D-22.html">AC-2D-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../datasets/C-SYNTH-23M.html">C-SYNTH-23M</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../dev/developer-guide.html">Development</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Development</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../dev/dataset-loading.html">Dataset Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../dev/dataset-processing.html">Dataset Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../dev/building-the-docs.html">Building the Docs</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <h1>Source code for load_atoms.atoms_dataset</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">overload</span>
+
+<span class="kn">import</span> <span class="nn">ase</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">ase</span> <span class="kn">import</span> <span class="n">Atoms</span>
+<span class="kn">from</span> <span class="nn">yaml</span> <span class="kn">import</span> <span class="n">dump</span>
+
+<span class="kn">from</span> <span class="nn">.database</span> <span class="kn">import</span> <span class="n">DatabaseEntry</span><span class="p">,</span> <span class="n">backend</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">LazyMapping</span><span class="p">,</span>
+    <span class="n">intersect</span><span class="p">,</span>
+    <span class="n">k_fold_split</span><span class="p">,</span>
+    <span class="n">random_split</span><span class="p">,</span>
+    <span class="n">split_keeping_ratio</span><span class="p">,</span>
+    <span class="n">union</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="AtomsDataset"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset">[docs]</a><span class="k">class</span> <span class="nc">AtomsDataset</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;An immutable wrapper around a list of :class:`ase.Atoms` objects.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ase</span><span class="o">.</span><span class="n">Atoms</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">structures</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="s2">&quot;Creating a dataset with a single structure. &quot;</span>
+                <span class="s2">&quot;Typically, datasets contain multiple structures - &quot;</span>
+                <span class="s2">&quot;did you mean to do this?&quot;</span><span class="p">,</span>
+                <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">structures</span> <span class="o">=</span> <span class="n">structures</span>
+
+        <span class="n">keys</span><span class="p">,</span> <span class="n">loader</span> <span class="o">=</span> <span class="n">_get_info_loader</span><span class="p">(</span><span class="n">structures</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span> <span class="n">LazyMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">LazyMapping</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">loader</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A key-value mapping of per-structure properties.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Scalar per-structure properties are turned into an </span>
+<span class="sd">        :class:`~numpy.ndarray`:</span>
+
+<span class="sd">        &gt;&gt;&gt; dataset = load_dataset(&quot;C-GAP-17&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; dataset.info[&quot;energy&quot;]</span>
+<span class="sd">        array([-9847.661671, -9886.440245, -9916.681692, ...,  -632.464825,</span>
+<span class="sd">                -632.146922,  -632.944571])</span>
+
+<span class="sd">        Non-scalar properties are concatenated along a new axis:</span>
+
+<span class="sd">        &gt;&gt;&gt; c_gap_20 = load_dataset(&quot;C-GAP-20&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; c_gap_20.info[&quot;virial&quot;].shape</span>
+<span class="sd">        (6088, 3, 3)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">keys</span><span class="p">,</span> <span class="n">loader</span> <span class="o">=</span> <span class="n">_get_arrays_loader</span><span class="p">(</span><span class="n">structures</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arrays</span><span class="p">:</span> <span class="n">LazyMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="n">LazyMapping</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">loader</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A key-value mapping of per-atom properties.</span>
+<span class="sd">        </span>
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        Per-atom properties are concatenated along the first axis:</span>
+
+<span class="sd">        &gt;&gt;&gt; dataset = load_dataset(&quot;C-GAP-17&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; dataset.arrays[&quot;forces&quot;].shape</span>
+<span class="sd">        (284965, 3)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">structure_sizes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The number of atoms in each structure.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_atoms</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The total number of atoms in the dataset.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structure_sizes</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<div class="viewcode-block" id="AtomsDataset.filter_by"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset.filter_by">[docs]</a>    <span class="k">def</span> <span class="nf">filter_by</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">functions</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">ase</span><span class="o">.</span><span class="n">Atoms</span><span class="p">],</span> <span class="nb">bool</span><span class="p">],</span> <span class="o">**</span><span class="n">info_kwargs</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AtomsDataset</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a new dataset containing only the structures that match the</span>
+<span class="sd">        given criteria.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataset</span>
+<span class="sd">            The dataset to filter.</span>
+<span class="sd">        functions</span>
+<span class="sd">            Functions to filter the dataset by. Each function should take an</span>
+<span class="sd">            ASE Atoms object as input and return a boolean.</span>
+<span class="sd">        info_kwargs</span>
+<span class="sd">            Keyword arguments to filter the dataset by. Only atoms objects with</span>
+<span class="sd">            matching info keys and values will be returned.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+<span class="sd">        Get small, amorphous structures with large forces:</span>
+
+<span class="sd">        .. code-block:: pycon</span>
+<span class="sd">            :emphasize-lines: 3-7</span>
+
+<span class="sd">            &gt;&gt;&gt; from load_atoms import load_dataset</span>
+<span class="sd">            &gt;&gt;&gt; dataset = load_dataset(&quot;C-GAP-17&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; dataset.filter_by(</span>
+<span class="sd">            ...     lambda structure: len(structure) &lt; 50,</span>
+<span class="sd">            ...     lambda structure: structure.arrays[&quot;force&quot;].max() &gt; 5,</span>
+<span class="sd">            ...     config_type=&quot;bulk_amo&quot;</span>
+<span class="sd">            ... )</span>
+<span class="sd">            Dataset:</span>
+<span class="sd">                structures: 609</span>
+<span class="sd">                atoms: 23,169</span>
+<span class="sd">                species:</span>
+<span class="sd">                    C: 100.00%</span>
+<span class="sd">                properties:</span>
+<span class="sd">                    per atom: (force)</span>
+<span class="sd">                    per structure: (config_type, detailed_ct, split, energy)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">matches_info</span><span class="p">(</span><span class="n">structure</span><span class="p">:</span> <span class="n">ase</span><span class="o">.</span><span class="n">Atoms</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">info_kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">structure</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">!=</span> <span class="n">value</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="n">functions</span> <span class="o">=</span> <span class="p">(</span><span class="o">*</span><span class="n">functions</span><span class="p">,</span> <span class="n">matches_info</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">the_filter</span><span class="p">(</span><span class="n">structure</span><span class="p">:</span> <span class="n">ase</span><span class="o">.</span><span class="n">Atoms</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">functions</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">AtomsDataset</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="n">the_filter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="AtomsDataset.random_split"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset.random_split">[docs]</a>    <span class="k">def</span> <span class="nf">random_split</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">splits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="n">keep_ratio</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AtomsDataset</span><span class="p">]:</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Randomly split the dataset into multiple, disjoint parts.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        splits</span>
+<span class="sd">            The number of structures to put in each split.</span>
+<span class="sd">            If a list of :class:`float`\ s, the splits will be</span>
+<span class="sd">            calculated as a fraction of the dataset size.</span>
+<span class="sd">        seed</span>
+<span class="sd">            The random seed to use for shuffling the dataset.</span>
+<span class="sd">        keep_ratio</span>
+<span class="sd">            If not :code:`None`, splits will be generated to maintain the</span>
+<span class="sd">            ratio of structures in each split with the specified :code:`.info`</span>
+<span class="sd">            value.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        list[AtomsDataset]</span>
+<span class="sd">            A list of new datasets, each containing a subset of the original</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        Split a :code:`dataset` into 80% training and 20% test sets:</span>
+
+<span class="sd">        &gt;&gt;&gt; train, test = dataset.random_split([0.8, 0.2])</span>
+
+<span class="sd">        Split a :code:`dataset` into 3 parts:</span>
+
+<span class="sd">        &gt;&gt;&gt; train, val, test = dataset.random_split([1_000, 100, 100])</span>
+
+<span class="sd">        Maintain the ratio of :code:`config_type` values in each split:</span>
+
+<span class="sd">        .. code-block:: pycon</span>
+<span class="sd">            :emphasize-lines: 16-19</span>
+
+<span class="sd">            &gt;&gt;&gt; from load_atoms import load_dataset</span>
+<span class="sd">            &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">            &gt;&gt;&gt; # helper function</span>
+<span class="sd">            &gt;&gt;&gt; def ratios(thing):</span>
+<span class="sd">            ...     values, counts = np.unique(thing, return_counts=True)</span>
+<span class="sd">            ...     max_len = max(len(str(v)) for v in values)</span>
+<span class="sd">            ...     for v, c in zip(values, counts / counts.sum()):</span>
+<span class="sd">            ...         print(f&quot;{v:&gt;{max_len}}: {c:&gt;6.2%}&quot;)</span>
+<span class="sd">            ...</span>
+<span class="sd">            &gt;&gt;&gt; dataset = load_dataset(&quot;C-GAP-17&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; ratios(dataset.info[&quot;config_type&quot;])</span>
+<span class="sd">              bulk_amo: 75.28%</span>
+<span class="sd">            bulk_cryst:  8.83%</span>
+<span class="sd">                 dimer:  0.66%</span>
+<span class="sd">              surf_amo: 15.23%</span>
+<span class="sd">            &gt;&gt;&gt; train, val, test = dataset.random_split(</span>
+<span class="sd">            ...     [0.6, 0.2, 0.2],</span>
+<span class="sd">            ...     keep_ratio=&quot;config_type&quot;</span>
+<span class="sd">            ... )</span>
+<span class="sd">            &gt;&gt;&gt; ratios(train.info[&quot;config_type&quot;])</span>
+<span class="sd">              bulk_amo: 75.28%</span>
+<span class="sd">            bulk_cryst:  8.83%</span>
+<span class="sd">                 dimer:  0.66%</span>
+<span class="sd">              surf_amo: 15.23%</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">keep_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span>
+                <span class="n">AtomsDataset</span><span class="p">(</span><span class="n">split_structures</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">split_structures</span> <span class="ow">in</span> <span class="n">random_split</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">,</span> <span class="n">splits</span><span class="p">,</span> <span class="n">seed</span>
+                <span class="p">)</span>
+            <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">keep_ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown key </span><span class="si">{</span><span class="n">keep_ratio</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Available keys are: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>  <span class="c1"># TODO: fix type error</span>
+            <span class="n">final_sizes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">splits</span>  <span class="c1"># type: ignore</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">final_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+
+        <span class="n">normalised_fractional_splits</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">splits</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">]</span>
+
+        <span class="n">structure_splits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">]]</span> <span class="o">=</span> <span class="n">split_keeping_ratio</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">,</span>
+            <span class="n">group_ids</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">keep_ratio</span><span class="p">],</span>
+            <span class="n">splitting_function</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span>
+                <span class="n">random_split</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">splits</span><span class="o">=</span><span class="n">normalised_fractional_splits</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">choose_n</span><span class="p">(</span><span class="n">structures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">],</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">]:</span>
+            <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">structures</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">structures</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">idxs</span><span class="p">[:</span><span class="n">n</span><span class="p">]]</span>
+
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="n">AtomsDataset</span><span class="p">(</span><span class="n">choose_n</span><span class="p">(</span><span class="n">split</span><span class="p">,</span> <span class="n">size</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">split</span><span class="p">,</span> <span class="n">size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">structure_splits</span><span class="p">,</span> <span class="n">final_sizes</span><span class="p">)</span>
+        <span class="p">]</span></div>
+
+<div class="viewcode-block" id="AtomsDataset.k_fold_split"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset.k_fold_split">[docs]</a>    <span class="k">def</span> <span class="nf">k_fold_split</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">fold</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+        <span class="n">keep_ratio</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">AtomsDataset</span><span class="p">,</span> <span class="n">AtomsDataset</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generate (an optionally shuffled) train/test split for cross-validation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        k</span>
+<span class="sd">            The number of folds to use.</span>
+<span class="sd">        fold</span>
+<span class="sd">            The fold to use for testing.</span>
+<span class="sd">        shuffle</span>
+<span class="sd">            Whether to shuffle the dataset before splitting.</span>
+<span class="sd">        seed</span>
+<span class="sd">            The random seed to use for shuffling the dataset.</span>
+<span class="sd">        keep_ratio</span>
+<span class="sd">            If not :code:`None`, splits will be generated to maintain the</span>
+<span class="sd">            ratio of structures in each split with the specified :code:`.info`</span>
+<span class="sd">            value.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Tuple[Dataset, Dataset]</span>
+<span class="sd">            The train and test datasets.</span>
+
+<span class="sd">        Example</span>
+<span class="sd">        -------</span>
+
+<span class="sd">        Basic usage:</span>
+
+<span class="sd">        .. code-block:: pycon</span>
+<span class="sd">            :emphasize-lines: 2</span>
+
+<span class="sd">            &gt;&gt;&gt; for i in range(5):</span>
+<span class="sd">            ...     train, test = dataset.k_fold_split(k=5, fold=i)</span>
+<span class="sd">            ...     ...  # do something, e.g. train a model</span>
+
+<span class="sd">        Maintain the ratio of :code:`config_type` values in each split</span>
+<span class="sd">        (see also :func:`~load_atoms.AtomsDataset.random_split` for a more</span>
+<span class="sd">        detailed example of this feature):</span>
+
+<span class="sd">        .. code-block:: pycon</span>
+
+<span class="sd">            &gt;&gt;&gt; train, test = dataset.k_fold_split(</span>
+<span class="sd">            ...     k=5, fold=0, keep_ratio=&quot;config_type&quot;</span>
+<span class="sd">            ... )</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;k must be at least 2&quot;</span><span class="p">)</span>
+
+        <span class="n">fold</span> <span class="o">=</span> <span class="n">fold</span> <span class="o">%</span> <span class="n">k</span>
+
+        <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+            <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">keep_ratio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">train_idxs</span><span class="p">,</span> <span class="n">test_idxs</span> <span class="o">=</span> <span class="n">k_fold_split</span><span class="p">(</span><span class="n">idxs</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">k</span><span class="p">,</span> <span class="n">fold</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">keep_ratio</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Unknown key </span><span class="si">{</span><span class="n">keep_ratio</span><span class="si">}</span><span class="s2">. &quot;</span>
+                    <span class="s2">&quot;Available keys are: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">keys</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">shuffle</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Keep ratio splits are only supported when shuffling.&quot;</span>
+                <span class="p">)</span>
+
+            <span class="n">group_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">keep_ratio</span><span class="p">][</span><span class="n">idxs</span><span class="p">]</span>
+            <span class="n">train_idxs</span><span class="p">,</span> <span class="n">test_idxs</span> <span class="o">=</span> <span class="n">split_keeping_ratio</span><span class="p">(</span>
+                <span class="n">idxs</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">group_ids</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">k_fold_split</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">fold</span><span class="o">=</span><span class="n">fold</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">train_idxs</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="n">test_idxs</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="AtomsDataset.__len__"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset.__len__">[docs]</a>    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The number of structures in the dataset.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">)</span></div>
+
+    <span class="nd">@overload</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ase</span><span class="o">.</span><span class="n">Atoms</span><span class="p">:</span>
+        <span class="o">...</span>
+
+    <span class="nd">@overload</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">slice</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AtomsDataset</span><span class="p">:</span>
+        <span class="o">...</span>
+
+    <span class="nd">@overload</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AtomsDataset</span><span class="p">:</span>
+        <span class="o">...</span>
+
+    <span class="nd">@overload</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">AtomsDataset</span><span class="p">:</span>
+        <span class="o">...</span>
+
+<div class="viewcode-block" id="AtomsDataset.__getitem__"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset.__getitem__">[docs]</a>    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="n">Any</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Index the dataset.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index</span>
+<span class="sd">            specifies the structure/s to select from the dataset.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        &gt;&gt;&gt; from load_atoms import load_dataset</span>
+<span class="sd">        &gt;&gt;&gt; dataset = load_dataset(&quot;C-GAP-17&quot;)</span>
+<span class="sd">        The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.</span>
+<span class="sd">        Please cite the C-GAP-17 dataset if you use it in your work.</span>
+
+<span class="sd">        Get the first structure in the dataset:</span>
+
+<span class="sd">        &gt;&gt;&gt; dataset[0]</span>
+<span class="sd">        Atoms(symbols=&#39;C64&#39;, pbc=True, cell=[9.483, 9.483, 9.483], force=...)</span>
+
+<span class="sd">        Create a new dataset with the first 10 structures:</span>
+
+<span class="sd">        &gt;&gt;&gt; dataset[:10]</span>
+<span class="sd">        Dataset:</span>
+<span class="sd">            structures: 10</span>
+<span class="sd">            atoms: 640</span>
+<span class="sd">            species:</span>
+<span class="sd">                C: 100.00%</span>
+<span class="sd">            properties:</span>
+<span class="sd">                per atom: (force)</span>
+<span class="sd">                per structure: (config_type, detailed_ct, split, energy)</span>
+
+<span class="sd">        Create a new dataset of high energy structures using a mask</span>
+<span class="sd">        (see :func:`~load_atoms.AtomsDataset.filter_by`</span>
+<span class="sd">        for a more convenient way to do this):</span>
+
+<span class="sd">        &gt;&gt;&gt; mask = dataset.info[&quot;energy&quot;] / dataset.structure_sizes &gt; -155</span>
+<span class="sd">        &gt;&gt;&gt; dataset[mask]</span>
+<span class="sd">        Dataset:</span>
+<span class="sd">            structures: 36</span>
+<span class="sd">            atoms: 444</span>
+<span class="sd">            species:</span>
+<span class="sd">                C: 100.00%</span>
+<span class="sd">            properties:</span>
+<span class="sd">                per atom: (force)</span>
+<span class="sd">                per structure: (config_type, detailed_ct, split, energy)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># if the passed index is a slice, return a new Dataset object:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">AtomsDataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+
+        <span class="c1"># if the index is iterable, return a new Dataset object:</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;__iter__&quot;</span><span class="p">):</span>
+            <span class="c1"># if the index is a np index, we want to keep the same behaviour</span>
+            <span class="c1"># (e.g. passing array of indices, or a boolean array)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">to_keep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))[</span><span class="n">index</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">AtomsDataset</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">to_keep</span><span class="p">])</span>
+
+            <span class="c1"># some other iterable, e.g. a list of indices</span>
+            <span class="k">return</span> <span class="n">AtomsDataset</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">index</span><span class="p">])</span>  <span class="c1"># type: ignore</span>
+
+        <span class="c1"># otherwise, we assume the index is an integer,</span>
+        <span class="c1"># and return a single structure</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="AtomsDataset.__iter__"><a class="viewcode-back" href="../../api/dataset.html#load_atoms.AtomsDataset.__iter__">[docs]</a>    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">ase</span><span class="o">.</span><span class="n">Atoms</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate over the structures in the dataset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">summarise_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">DescribedDataset</span><span class="p">(</span><span class="n">AtomsDataset</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">structures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">],</span>
+        <span class="n">description</span><span class="p">:</span> <span class="n">DatabaseEntry</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">structures</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_id</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">dataset_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">root</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="p">(</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AtomsDataset</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a dataset by id.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        dataset_id : str</span>
+<span class="sd">            the id of the dataset to load</span>
+<span class="sd">        root : Union[Path, str, None], optional</span>
+<span class="sd">            the root directory to cache the dataset to, by default None</span>
+<span class="sd">        verbose : bool, optional</span>
+<span class="sd">            whether to print information about the dataset, by default True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;.load-atoms&quot;</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+
+        <span class="n">all_structures</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">backend</span><span class="o">.</span><span class="n">load_structures</span><span class="p">(</span><span class="n">dataset_id</span><span class="p">,</span> <span class="n">root</span><span class="p">)</span>
+
+        <span class="c1"># remove annoying automatic ASE calculators</span>
+        <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">all_structures</span><span class="p">:</span>
+            <span class="n">structure</span><span class="o">.</span><span class="n">calc</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">all_structures</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">summarise_dataset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structures</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_get_info_loader</span><span class="p">(</span>
+    <span class="n">structures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">intersect</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loader</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">structure</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span> <span class="n">loader</span>
+
+
+<span class="k">def</span> <span class="nf">_get_arrays_loader</span><span class="p">(</span>
+    <span class="n">structures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Any</span><span class="p">]]:</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="n">intersect</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">loader</span><span class="p">(</span><span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">structure</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">keys</span><span class="p">),</span> <span class="n">loader</span>
+
+
+<span class="k">def</span> <span class="nf">summarise_dataset</span><span class="p">(</span>
+    <span class="n">structures</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Atoms</span><span class="p">]</span> <span class="o">|</span> <span class="n">AtomsDataset</span><span class="p">,</span>
+    <span class="n">description</span><span class="p">:</span> <span class="n">DatabaseEntry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">description</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;Dataset&quot;</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">structures</span><span class="p">)</span>
+    <span class="n">number_atoms</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">structure</span><span class="p">)</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">])</span>
+
+    <span class="n">per_atom_properties</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">intersect</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">)</span>
+        <span class="o">-</span> <span class="p">{</span><span class="s2">&quot;numbers&quot;</span><span class="p">,</span> <span class="s2">&quot;positions&quot;</span><span class="p">}</span>
+    <span class="p">)</span>
+    <span class="n">per_structure_properties</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">intersect</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">species</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="n">union</span><span class="p">(</span><span class="n">structure</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">()</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">species_counts</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">s</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">structure</span><span class="o">.</span><span class="n">get_chemical_symbols</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">structures</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">species</span>
+    <span class="p">}</span>
+    <span class="n">species_counts</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">k</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">v</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">number_atoms</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">species_counts</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">item</span><span class="p">:</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="n">N</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">N</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">if</span> <span class="n">number_atoms</span> <span class="o">&gt;=</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="n">number_atoms</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number_atoms</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;structures&quot;</span><span class="p">:</span> <span class="n">N</span><span class="p">,</span>
+        <span class="s2">&quot;atoms&quot;</span><span class="p">:</span> <span class="n">number_atoms</span><span class="p">,</span>
+        <span class="s2">&quot;species&quot;</span><span class="p">:</span> <span class="n">species_counts</span><span class="p">,</span>
+        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;per atom&quot;</span><span class="p">:</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">per_atom_properties</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;per structure&quot;</span><span class="p">:</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">per_structure_properties</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">dump</span><span class="p">({</span><span class="n">name</span><span class="p">:</span> <span class="n">fields</span><span class="p">},</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2024, John Gardner
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=09e433cd"></script>
+    <script src="../../_static/doctools.js?v=888ff710"></script>
+    <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/scripts/furo.js?v=32e29ea5"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=36754332"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    </body>
+</html>
