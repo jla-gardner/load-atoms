@@ -80,6 +80,19 @@ Potential Fitting
         `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41524-022-00768-w/MediaObjects/41524_2022_768_MOESM1_ESM.pdf>`_.
         
     
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
+        .. centered:: :doc:`SiOx-ACE-24 <../datasets/SiOx-ACE-24>`
+    
+        The training database used to fit the `SiOx-ACE-24 potential <https://zenodo.org/records/10419194>`_ in: 
+        `Modelling atomic and nanoscale structure in the silicon-oxygen system through active machine-learning <https://www.nature.com/articles/s41467-024-45840-9>`_.
+        The dataset comprises structures taken from the `Si-GAP-18 <https://jla-gardner.github.io/load-atoms/datasets/Si-GAP-18.html>`__ 
+        and `SiO2-GAP-22 <https://jla-gardner.github.io/load-atoms/datasets/SiO2-GAP-22.html>`__ datasets, together
+        with new structures generated using an active-learning approach.
+        
+    
 
 .. toctree::
     :maxdepth: 1
@@ -91,4 +104,5 @@ Potential Fitting
     ../datasets/P-GAP-20
     ../datasets/Si-GAP-18
     ../datasets/SiO2-GAP-22
+    ../datasets/SiOx-ACE-24
 

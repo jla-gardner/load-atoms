@@ -76,3 +76,9 @@ These can be downloaded from the internet (and cached locally) using
       - 3,074
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
       - 2022
+    * - :doc:`SiOx-ACE-24 <../datasets/SiOx-ACE-24>`
+      - O, Si
+      - 1,258,198
+      - 11,428
+      - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
+      - 2024
