@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import warnings
+from collections.abc import Sequence
 from functools import partial
 from pathlib import Path
 from typing import Any, Callable, Iterable, Iterator, overload
@@ -21,7 +22,7 @@ from .utils import (
 )
 
 
-class AtomsDataset:
+class AtomsDataset(Sequence):
     """An immutable wrapper around a list of :class:`ase.Atoms` objects."""
 
     def __init__(self, structures: list[ase.Atoms]):
@@ -416,14 +417,16 @@ class AtomsDataset:
         return self.structures[int(index)]
 
     def __iter__(self) -> Iterator[ase.Atoms]:
-        """
-        Iterate over the structures in the dataset.
-        """
+        """Iterate over the structures in the dataset."""
 
         return iter(self.structures)
 
     def __repr__(self):
         return summarise_dataset(self.structures)
+
+    def __contains__(self, item: Any) -> bool:
+        """Check if an item is in the dataset."""
+        return item in self.structures
 
 
 class DescribedDataset(AtomsDataset):
