@@ -1,8 +1,5 @@
 name: C-GAP-20U
 year: 2020
-files:
-    - name: C-GAP-20U.xyz
-      hash: da0462802df1
 description: |
     The complete dataset used for training the 
     `C-GAP-20U <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_

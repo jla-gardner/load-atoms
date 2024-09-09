@@ -5,9 +5,6 @@ description: |
     with geometries relaxed using an empirical potential. Atomisation energies were calculated similarly to a FHI-AIMS implementation of the Perdew-Burke-Ernzerhof hybrid functional (PBE0).
     Original files were obtained from `quantum-machine.org <http://quantum-machine.org/datasets/>`_.
     Energies have been converted from kcal/mol to eV.
-files:
-    - name: QM7.extxyz
-      hash: c9dcec505f4d
 category: Benchmarks
 per_structure_properties:
     energy:

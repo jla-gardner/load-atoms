@@ -1,14 +1,13 @@
 # explicitly not using future annotations since this is not supported
 # by pydantic for python versions we want to target
+
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Union
+from typing import Dict, Optional, Union
 
 import yaml
-from ase import Atoms
 from pydantic import BaseModel, field_validator
 
-from load_atoms.progress import Progress
-from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
+from load_atoms.utils import BASE_REMOTE_URL
 
 valid_licenses = {
     "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
@@ -35,40 +34,6 @@ class PropertyDescription(BaseModel):
     """The units of the property"""
 
 
-class FileInformation(BaseModel):
-    """
-    Holds metadata for a remote file
-
-    Partial speficiation are allowed:
-
-    Speficiations of the following form assume that the file is available at
-    :code:`database/{name}/{filename}`.
-
-    .. code-block:: yaml
-
-        name: <filename>
-        hash: <checksum>
-
-    Speficiations of the following form assume that the :code:`filename`
-    is the last part of the URL.
-
-    .. code-block:: yaml
-
-        url: <url>
-        hash: <checksum>
-    """
-
-    name: str
-    hash: str
-    url: str
-
-    @field_validator("hash")
-    def validate_hash(cls, v):
-        if not valid_checksum(v):
-            raise ValueError(f"Invalid checksum: {v}")
-        return v
-
-
 class DatabaseEntry(BaseModel):
     """
     Holds all the required metadata for a named dataset, such that it can be
@@ -88,12 +53,6 @@ class DatabaseEntry(BaseModel):
 
     description: str
     """A description of the dataset (in :code:`.rst` format)"""
-
-    files: List[FileInformation]
-    """
-    A list of files that are part of the dataset, along with their checksums
-    and URLs.
-    """
 
     category: str
     """
@@ -143,13 +102,6 @@ class DatabaseEntry(BaseModel):
     def from_yaml_file(cls, path: Union[Path, str]) -> "DatabaseEntry":
         with open(path) as f:
             data = yaml.safe_load(f)
-
-        # process defaults for file structure
-        for file in data["files"]:
-            if "url" not in file:
-                file["url"] = BASE_REMOTE_URL + f"{data['name']}/{file['name']}"
-            elif "name" not in file:
-                file["name"] = file["url"].split("/")[-1]
 
         try:
             return cls(**data)

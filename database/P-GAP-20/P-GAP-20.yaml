@@ -23,9 +23,6 @@ citation: |
       pages = {5461},
       doi = {10.1038/s41467-020-19168-z},
     }
-files:
-    - url: https://zenodo.org/record/4003703/files/P_GAP_20_fitting_data.xyz
-      hash: ab3059018068
 license: CC BY 4.0
 representative_structure: 280
 per_atom_properties:

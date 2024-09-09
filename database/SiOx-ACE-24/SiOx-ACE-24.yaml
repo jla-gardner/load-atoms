@@ -26,21 +26,6 @@ citation: |
         doi = {10.1038/s41467-024-45840-9},
     }
 representative_structure: 7390
-url_root:
-files:
-    - url: https://zenodo.org/records/10419194/files/database.zip
-      hash: 42eb5808b0aa
-processing:
-    - UnZip
-    - SelectFile:
-          file: database/training.general_purpose.SiOx.xyz
-    - ReadASE
-    - Rename:
-          dft_forces: forces
-          dft_energy: energy
-          dft_free_energy: free_energy
-          dft_stress: stress
-          dft_virials: virial
 per_atom_properties:
     forces:
         desc: force vectors (DFT)

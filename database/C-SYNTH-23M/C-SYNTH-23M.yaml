@@ -20,18 +20,6 @@ citation: |
       doi = {10.1039/D2DD00137C},
     }
 representative_structure: 199
-files:
-    - url: https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip
-      hash: b43fc702ef6d
-processing:
-    - UnZip
-    - ForEachFile:
-          pattern: "**/*.extxyz"
-          steps:
-              - ReadASE
-    - Rename:
-          gap17_forces: forces
-          gap17_energy: local_energies
 per_atom_properties:
     forces:
         desc: force vectors (C-GAP-17)
