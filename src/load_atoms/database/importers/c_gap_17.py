@@ -1,7 +1,4 @@
-from load_atoms.database.processing.importer import (
-    BASE_GITHUB_URL,
-    SingleFileImporter,
-)
+from load_atoms.database.importer import BASE_GITHUB_URL, SingleFileImporter
 
 
 class Importer(SingleFileImporter):

@@ -40,6 +40,9 @@ per_atom_properties:
         desc: local energies (C-GAP-17)
         units: eV
 per_structure_properties:
+    energy:
+        desc: total energy of the structure (C-GAP-17)
+        units: eV
     anneal_T:
         desc: annealing temperature
         units: K

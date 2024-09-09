@@ -3,8 +3,7 @@ from typing import Iterator
 
 import ase.io
 from ase import Atoms
-
-from load_atoms.database.processing.importer import (
+from load_atoms.database.importer import (
     BaseImporter,
     FileDownload,
     rename,
@@ -18,31 +17,28 @@ class Importer(BaseImporter):
         super().__init__(
             files_to_download=[
                 FileDownload(
-                    url="https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip",
-                    expected_hash="da0462802df1",
-                    local_name="zip-file.zip",
+                    url="https://zenodo.org/records/10419194/files/database.zip",
+                    expected_hash="42eb5808b0aa",
                 )
-            ]
+            ],
         )
 
     def get_structures(
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
-        zip_file = tmp_dir / self.files_to_download[0].local_name
+        # unzip
+        contents = unzip_file(tmp_dir / "database.zip")
 
-        # 1. unzip the file
-        contents_path = unzip_file(zip_file)
-
-        # 2. read the xyz
         for structure in ase.io.iread(
-            contents_path / "models/GAP/gp_iter6_sparse9k.xml.xyz"
+            contents / "database/training.general_purpose.SiOx.xyz"
         ):
             yield rename(
                 structure,
                 {
-                    "DFT_force": "forces",
-                    "dft_force": "forces",
-                    "DFT_energy": "energy",
+                    "dft_forces": "forces",
                     "dft_energy": "energy",
+                    "dft_free_energy": "free_energy",
+                    "dft_stress": "stress",
+                    "dft_virials": "virial",
                 },
             )

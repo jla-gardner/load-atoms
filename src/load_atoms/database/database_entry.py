@@ -10,8 +10,6 @@ from pydantic import BaseModel, field_validator
 from load_atoms.progress import Progress
 from load_atoms.utils import BASE_REMOTE_URL, valid_checksum
 
-from .processing import default_processing, parse_steps
-
 valid_licenses = {
     "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
     "CC BY-NC 4.0": "https://creativecommons.org/licenses/by-nc/4.0/deed.en",
@@ -118,11 +116,6 @@ class DatabaseEntry(BaseModel):
     per_structure_properties: Optional[Dict[str, PropertyDescription]] = None
     """A mapping from per-structure properties to their descriptions"""
 
-    processing: Callable[[Path, Progress], List[Atoms]]
-    """
-    A function to turn the root downloaded path into the dataset's structures
-    """
-
     @field_validator("category")
     def validate_category(cls, v):
         if v not in valid_categories:
@@ -157,18 +150,6 @@ class DatabaseEntry(BaseModel):
                 file["url"] = BASE_REMOTE_URL + f"{data['name']}/{file['name']}"
             elif "name" not in file:
                 file["name"] = file["url"].split("/")[-1]
-
-        # parse processing : TODO: pydantic-ify this
-        if "processing" in data:
-            data["processing"] = parse_steps(data["processing"])
-        else:
-            files = data["files"]
-            if not len(files) == 1:
-                raise ValueError(
-                    "If no processing is provided, the dataset must have "
-                    "exactly one file."
-                )
-            data["processing"] = default_processing(files[0]["name"])
 
         try:
             return cls(**data)

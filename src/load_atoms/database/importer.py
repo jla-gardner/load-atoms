@@ -13,7 +13,7 @@ from ase import Atoms
 from load_atoms.atoms_dataset import AtomsDataset
 from load_atoms.database.internet import download as _download
 from load_atoms.progress import Progress
-from load_atoms.utils import matches_checksum
+from load_atoms.utils import debug_mode, matches_checksum
 
 BASE_GITHUB_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database"
 
@@ -128,7 +128,7 @@ class BaseImporter(ABC):
                 list(self.get_structures(tmp_dir, progress=progress))
             )
         finally:
-            if self.cleanup:
+            if self.cleanup and not debug_mode():
                 shutil.rmtree(tmp_dir)
 
 
@@ -162,7 +162,8 @@ def unzip_file(file_path: Path) -> Path:
     """Unzip a file and return the path to the extracted directory."""
 
     extract_to = file_path.parent / f"{file_path.name}-extracted"
-    shutil.unpack_archive(file_path, extract_dir=extract_to)
+    if not extract_to.exists():
+        shutil.unpack_archive(file_path, extract_dir=extract_to)
     return extract_to
 
 

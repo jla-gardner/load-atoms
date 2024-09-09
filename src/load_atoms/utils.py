@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import string
 from collections import defaultdict
 from pathlib import Path
@@ -10,6 +11,11 @@ import numpy as np
 
 FRONTEND_URL = "https://jla-gardner.github.io/load-atoms/datasets/"
 BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database/"
+
+
+def debug_mode() -> bool:
+    """Check if debug mode is enabled."""
+    return os.environ.get("LOAD_ATOMS_DEBUG", "0") == "1"
 
 
 def generate_checksum(file_path: Path | str) -> str:
