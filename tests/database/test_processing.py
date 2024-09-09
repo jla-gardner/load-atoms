@@ -122,7 +122,7 @@ def test_for_each_file(tmp_path, progress):
 
     @register_step
     class DummyStep(Step):
-        def __call__(self, file: Path, progress: None = None) -> list[str]:
+        def __call__(self, file: Path, progress: None = None) -> list[str]:  # type: ignore
             return [file.stem]
 
     # test with no kwargs

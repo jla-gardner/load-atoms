@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import shutil
+import warnings
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
 
@@ -16,36 +18,54 @@ from load_atoms.utils import matches_checksum
 BASE_GITHUB_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database"
 
 
-def download_file(url: str, file_path: Path, expected_hash: str):
+@dataclass
+class FileDownload:
+    url: str
+    expected_hash: str
+    local_name: str = None  # type: ignore
+
+    def __post_init__(self):
+        if self.local_name is None:
+            self.local_name = Path(self.url).name
+
+
+def download_all(files: list[FileDownload], tmp_dir: Path, progress: Progress):
     """
-    Download a file from the given URL and verify its checksum.
+    Download all files and verify their checksums.
 
     Parameters
     ----------
-    url : str
-        The URL to download the file from.
-    file_path : Path
-        The path where the file should be saved.
-    expected_hash : str
-        The expected hash of the downloaded file.
-
-    Raises
-    ------
-    ValueError
-        If the downloaded file's checksum doesn't match the expected hash.
+    files
+        A list of FileDownloads
+    tmp_dir
+        The directory where the files should be saved.
+    progress
+        A Progress object to track the download progress.
     """
-    progress = Progress("Downloading", transient=True)
-    _download(url, file_path, progress)
 
-    if not matches_checksum(file_path, expected_hash):
-        raise ValueError(f"Checksum mismatch for downloaded file: {file_path}")
+    # 1. download any missing files
+    for file in files:
+        local_path = tmp_dir / file.local_name
+        if not local_path.exists():
+            _download(file.url, local_path, progress)
+
+    # 2. verify the hashes of all files
+    for file in files:
+        local_path = tmp_dir / file.local_name
+        if not matches_checksum(local_path, file.expected_hash):
+            warnings.warn(
+                f"Checksum mismatch for file: {local_path}",
+                stacklevel=2,
+            )
 
 
 class BaseImporter(ABC):
+    # TODO: add expected format to the init
+
     def __init__(
         self,
-        urls: dict[str, str],
-        processing_dir: str,
+        files_to_download: list[FileDownload],
+        tmp_dirname: str | None = None,
         cleanup: bool = True,
     ):
         """
@@ -53,21 +73,28 @@ class BaseImporter(ABC):
 
         Parameters
         ----------
-        processing_dir
-            The relative directory where the dataset is processed.
-        urls
-            A mapping from urls to expected file hashes.
+        files_to_download
+            A list of :class:`FileDownload` s
+        tmp_dirname
+            The name of the temporary directory to download the files to.
         cleanup
             Whether to clean up the temporary directory after processing.
         """
-        self.urls = urls
-        self.processing_dir = processing_dir
+
+        self.files_to_download = files_to_download
+        self.tmp_dirname = tmp_dirname or "tmp"
         self.cleanup = cleanup
 
     @abstractmethod
-    def process(self, tmp_dir: Path) -> Iterator[Atoms]:
+    def get_structures(
+        self,
+        tmp_dir: Path,
+        progress: Progress,
+    ) -> Iterator[Atoms]:
         """
-        Iterate over ase.Atoms objects.
+        Iterate over ase.Atoms objects. All files passed
+        to the base class will have already been downloaded
+        and verified.
 
         Parameters
         ----------
@@ -80,39 +107,71 @@ class BaseImporter(ABC):
             An iterator of ASE Atoms objects processed from the downloaded files
         """
 
-    def get_dataset(self, root_dir: Path) -> AtomsDataset:
-        """
-        Get the dataset for this importer.
-        """
-        # create a temporary directory for the dataset
-        tmp_dir = root_dir / self.processing_dir
-        tmp_dir.mkdir(parents=True, exist_ok=True)
-        print(tmp_dir)
+    def get_dataset(
+        self,
+        root_dir: Path,
+        progress: Progress | None = None,
+    ) -> AtomsDataset:
+        """Get the dataset for this importer."""
 
-        for url, hash in self.urls.items():
-            file_name = Path(url).name
-            file_path = tmp_dir / file_name
-            if not file_path.exists():
-                download_file(url, file_path, hash)
+        if progress is None:
+            progress = Progress("Processing", transient=True)
+
+        # create a temporary directory for the dataset
+        tmp_dir = root_dir / self.tmp_dirname
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+
+        download_all(self.files_to_download, tmp_dir, progress)
 
         try:
-            return AtomsDataset(list(self.process(tmp_dir)))
+            return AtomsDataset(
+                list(self.get_structures(tmp_dir, progress=progress))
+            )
         finally:
             if self.cleanup:
                 shutil.rmtree(tmp_dir)
 
 
 class SingleFileImporter(BaseImporter):
-    def __init__(self, processing_dir: str, url: str, hash: str):
-        super().__init__({url: hash}, processing_dir, cleanup=False)
+    def __init__(self, url: str, hash: str):
+        super().__init__(
+            [FileDownload(url, hash)],
+            tmp_dirname=".",
+            cleanup=False,
+        )
 
-    def process(self, tmp_dir: Path) -> Iterator[Atoms]:
-        file_path = tmp_dir / Path(next(iter(self.urls))).name
-        for atoms in self._read_file(file_path):
-            yield self.process_atoms(atoms)
+    def get_structures(
+        self, tmp_dir: Path, progress: Progress
+    ) -> Iterator[Atoms]:
+        file_path = tmp_dir / Path(self.files_to_download[0].local_name)
+        with progress.new_task(
+            f"Reading {file_path.resolve()}",
+            transient=True,
+        ):
+            for atoms in self._read_file(file_path):
+                yield self.process_atoms(atoms)
 
     def process_atoms(self, atoms: Atoms) -> Atoms:
         return atoms
 
     def _read_file(self, file_path: Path) -> Iterator[Atoms]:
         yield from ase.io.iread(file_path, index=":")
+
+
+def unzip_file(file_path: Path) -> Path:
+    """Unzip a file and return the path to the extracted directory."""
+
+    extract_to = file_path.parent / f"{file_path.name}-extracted"
+    shutil.unpack_archive(file_path, extract_dir=extract_to)
+    return extract_to
+
+
+def rename(atoms: Atoms, mapping: dict[str, str]) -> Atoms:
+    """Rename the properties of an Atoms object."""
+
+    for old_name, new_name in mapping.items():
+        if old_name in atoms.arrays:
+            atoms.arrays[new_name] = atoms.arrays.pop(old_name)
+        elif old_name in atoms.info:
+            atoms.info[new_name] = atoms.info.pop(old_name)
+    return atoms

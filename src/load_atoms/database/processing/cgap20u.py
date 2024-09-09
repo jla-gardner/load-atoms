@@ -7,6 +7,6 @@ from load_atoms.database.processing.importer import (
 class Importer(SingleFileImporter):
     def __init__(self):
         super().__init__(
-            url=f"{BASE_GITHUB_URL}/C-GAP-17/C-GAP-17.extxyz",
-            hash="8dd037b59c88",
+            url=f"{BASE_GITHUB_URL}/C-GAP-20U/C-GAP-20U.xyz",
+            hash="da0462802df1",
         )
