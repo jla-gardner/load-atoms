@@ -38,10 +38,11 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     return result
 
 
-def _load_structures(name, root, progress):
+def _load_structures(
+    name: str, root: Path, progress: Progress
+) -> tuple[list[Atoms], DatabaseEntry]:
     entry_path = root / name / f"{name}.yaml"
     structures_path = root / name / f"{name}.pkl"
-    temp_path = root / name / "temp"
 
     entry_path.parent.mkdir(parents=True, exist_ok=True)
 

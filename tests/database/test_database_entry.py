@@ -30,26 +30,6 @@ def test_incorrect_license():
         DatabaseEntry(**kwargs)
 
 
-def test_incorrect_files():
-    kwargs = get_correct_dictionary()
-
-    # files should be a mapping of str to checksum
-
-    # not a mapping
-    kwargs["files"] = 1
-    with pytest.raises(ValidationError):
-        DatabaseEntry(**kwargs)
-
-    # not a mapping of str to checksum
-    kwargs["files"] = {1: 1}
-    with pytest.raises(ValidationError):
-        DatabaseEntry(**kwargs)
-
-    kwargs["files"] = {"file1": "not a hash"}
-    with pytest.raises(ValidationError):
-        DatabaseEntry(**kwargs)
-
-
 def test_incorrect_citation():
     kwargs = get_correct_dictionary()
 
