@@ -94,9 +94,6 @@ def test_summarise():
     summary = summarise_dataset(dataset)
     assert "Dataset" in summary, "The summary should contain the dataset name"
 
-    print(GAP17)
-    print(GAP17[0])
-    print(GAP17[0].info)
     summary = repr(GAP17)
     assert "energy" in summary, "The summary should contain the property names"
 
