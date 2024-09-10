@@ -19,3 +19,9 @@ To update the documentation to reflect changes to all datasets, run:
 
     python dev/scripts/rebuild_all_docs.py
 
+
+To preview the docs locally, run:
+
+.. code-block:: bash
+
+    sphinx-autobuild docs/source docs/build

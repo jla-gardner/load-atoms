@@ -67,5 +67,4 @@ For an ad-hoc guide to the internal (i.e. non-user-facing) codebase, see:
    :maxdepth: 2
 
    dataset-loading
-   dataset-processing
    building-the-docs
