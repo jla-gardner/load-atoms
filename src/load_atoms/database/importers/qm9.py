@@ -31,7 +31,7 @@ class Importer(BaseImporter):
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         # Unzip the file
-        contents_path = unzip_file(tmp_dir / "qm9.tar.bz2")
+        contents_path = unzip_file(tmp_dir / "qm9.tar.bz2", progress)
 
         # Process each XYZ file
         xyz_files = sorted(contents_path.glob("*.xyz"))

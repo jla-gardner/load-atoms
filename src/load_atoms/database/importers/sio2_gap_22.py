@@ -27,7 +27,7 @@ class Importer(BaseImporter):
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         # unzip
-        contents = unzip_file(tmp_dir / "sio2_potential_data.zip")
+        contents = unzip_file(tmp_dir / "sio2_potential_data.zip", progress)
 
         for structure in ase.io.iread(
             contents / "sio2_potential_data/database/dataset.scan.2.xyz"

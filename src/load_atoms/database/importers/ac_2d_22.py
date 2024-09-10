@@ -29,7 +29,7 @@ class Importer(BaseImporter):
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         # untar the file
-        contents_path = unzip_file(tmp_dir / "data.tar.gz")
+        contents_path = unzip_file(tmp_dir / "data.tar.gz", progress)
         root = contents_path / "data/fig_3"
 
         table = [
@@ -84,13 +84,15 @@ class Importer(BaseImporter):
         ]
 
         for path, info in table:
-            structures = self.read_structures(root / path)
+            structures = self.read_structures(root / path, progress)
             for structure in structures:
                 structure.info.update(info)
                 yield self.process_structure(structure)
 
-    def read_structures(self, archive_dir: Path) -> list[Atoms]:
-        extracted = unzip_file(archive_dir / "fin_run.tar.gz")
+    def read_structures(
+        self, archive_dir: Path, progress: Progress
+    ) -> list[Atoms]:
+        extracted = unzip_file(archive_dir / "fin_run.tar.gz", progress)
         return [read(file) for file in sorted(extracted.glob("**/*.xyz"))]  # type: ignore
 
     def process_structure(self, structure: Atoms) -> Atoms:

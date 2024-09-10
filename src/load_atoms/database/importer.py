@@ -61,6 +61,19 @@ def download_all(files: list[FileDownload], tmp_dir: Path, progress: Progress):
 
 
 class BaseImporter(ABC):
+    """
+    Base class to inherit from to create new, dataset-specific importers.
+
+    Parameters
+    ----------
+    files_to_download
+        A list of :class:`FileDownload` s
+    tmp_dirname
+        The name of the temporary directory to download the files to.
+    cleanup
+        Whether to clean up the temporary directory after processing.
+    """
+
     # TODO: add expected format to the init
 
     def __init__(
@@ -69,19 +82,6 @@ class BaseImporter(ABC):
         tmp_dirname: str | None = None,
         cleanup: bool = True,
     ):
-        """
-        Initialize the BaseImporter.
-
-        Parameters
-        ----------
-        files_to_download
-            A list of :class:`FileDownload` s
-        tmp_dirname
-            The name of the temporary directory to download the files to.
-        cleanup
-            Whether to clean up the temporary directory after processing.
-        """
-
         self.files_to_download = files_to_download
         self.tmp_dirname = tmp_dirname or "tmp"
         self.cleanup = cleanup
@@ -93,9 +93,9 @@ class BaseImporter(ABC):
         progress: Progress,
     ) -> Iterator[Atoms]:
         """
-        Iterate over ase.Atoms objects. All files passed
+        Iterate over :class:`ase.Atoms` objects. All files passed
         to the base class will have already been downloaded
-        and verified.
+        and verified when this is called.
 
         Parameters
         ----------
@@ -114,7 +114,17 @@ class BaseImporter(ABC):
         database_entry: DatabaseEntry,
         progress: Progress | None = None,
     ) -> AtomsDataset:
-        """Get the dataset for this importer."""
+        """Get the dataset for this importer.
+
+        Parameters
+        ----------
+        root_dir
+            The root directory to download the dataset to.
+        database_entry
+            The database entry for the dataset.
+        progress
+            A :class:`Progress` object to track the download progress.
+        """
 
         if progress is None:
             progress = Progress("Processing", transient=True)
@@ -162,12 +172,23 @@ class SingleFileImporter(BaseImporter):
         yield from ase.io.iread(file_path, index=":")
 
 
-def unzip_file(file_path: Path) -> Path:
-    """Unzip a file and return the path to the extracted directory."""
+def unzip_file(file_path: Path, progress: Progress) -> Path:
+    """Unzip a file and return the path to the extracted directory.
+
+    Parameters
+    ----------
+    file_path
+        The path to the file to unzip.
+    progress
+        A :class:`Progress` object to track the unzip progress.
+    """
 
     extract_to = file_path.parent / f"{file_path.name}-extracted"
     if not extract_to.exists():
-        shutil.unpack_archive(file_path, extract_dir=extract_to)
+        with progress.new_task(
+            f"Unzipping {file_path.resolve()}",
+        ):
+            shutil.unpack_archive(file_path, extract_dir=extract_to)
     return extract_to
 
 

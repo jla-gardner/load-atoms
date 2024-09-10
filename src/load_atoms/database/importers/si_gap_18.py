@@ -31,7 +31,7 @@ class Importer(BaseImporter):
         zip_file = tmp_dir / self.files_to_download[0].local_name
 
         # 1. unzip the file
-        contents_path = unzip_file(zip_file)
+        contents_path = unzip_file(zip_file, progress)
 
         # 2. read the xyz
         for structure in ase.io.iread(

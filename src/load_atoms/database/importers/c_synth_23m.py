@@ -29,10 +29,16 @@ class Importer(BaseImporter):
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         # Unzip the file
-        contents_path = unzip_file(tmp_dir / "carbon-data-v1.0.zip")
+        contents_path = unzip_file(tmp_dir / "carbon-data-v1.0.zip", progress)
+
+        extxyz_files = sorted(contents_path.glob("**/*.extxyz"))
+        task = progress.new_task(
+            f"Processing {len(extxyz_files)} .extxyz files",
+            total=len(extxyz_files),
+        )
 
         # Iterate through all .extxyz files
-        for file_path in sorted(contents_path.glob("**/*.extxyz")):
+        for file_path in extxyz_files:
             structures = read(file_path, index=":")
             for structure in structures:
                 assert isinstance(structure, Atoms)
@@ -47,3 +53,5 @@ class Importer(BaseImporter):
                     "local_energies"
                 ].sum()
                 yield structure
+
+            task.update(advance=1)
