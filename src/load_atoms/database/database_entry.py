@@ -57,7 +57,7 @@ class DatabaseEntry(BaseModel):
     (e.g. ``"Potential Fitting"``, ``"Benchmarks"``)
     """
 
-    minimum_load_atoms_version: str
+    minimum_load_atoms_version: Union[str, None] = None
     """
     The minimum version of load-atoms that is required to load the dataset.
     """
@@ -102,10 +102,13 @@ class DatabaseEntry(BaseModel):
 
     @field_validator("minimum_load_atoms_version", mode="before")
     def convert_minimum_version_to_str(cls, v):
+        if v is None:
+            return None
         return str(v)
 
     @classmethod
     def from_yaml_file(cls, path: Union[Path, str]) -> "DatabaseEntry":
+        path = Path(path).resolve()
         with open(path) as f:
             data = yaml.safe_load(f)
 
@@ -113,7 +116,10 @@ class DatabaseEntry(BaseModel):
             return cls(**data)
         except Exception as e:
             raise ValueError(
-                f"Error loading dataset description from {path}"
+                f"Error loading dataset description from {path}. It may be "
+                "that you have a stale version of this dataset's yaml file on "
+                "disk. Please delete the file and try again:\n"
+                f'   $ rm "{path}"'
             ) from e
 
     @classmethod

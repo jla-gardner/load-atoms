@@ -84,7 +84,10 @@ def get_database_entry(
 
     db_entry = DatabaseEntry.from_yaml_file(yaml_file_path)
 
-    if db_entry.minimum_load_atoms_version > load_atoms_version:
+    if (
+        db_entry.minimum_load_atoms_version is not None
+        and db_entry.minimum_load_atoms_version > load_atoms_version
+    ):
         raise Exception(
             f"Dataset {dataset_id} requires load-atoms version "
             f">={db_entry.minimum_load_atoms_version} "
