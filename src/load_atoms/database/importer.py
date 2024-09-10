@@ -135,12 +135,14 @@ class BaseImporter(ABC):
 
         download_all(self.files_to_download, tmp_dir, progress)
 
-        # TODO: clean up structures, e.g. remove annoying default calculators
+        structures = []
+        for structure in self.get_structures(tmp_dir, progress=progress):
+            del structure.calc
+            structures.append(structure)
+
         try:
-            return AtomsDataset(
-                list(self.get_structures(tmp_dir, progress=progress)),
-                database_entry,
-            )
+            return AtomsDataset(structures, database_entry)
+
         finally:
             if self.cleanup and not debug_mode() and not testing():
                 shutil.rmtree(tmp_dir)

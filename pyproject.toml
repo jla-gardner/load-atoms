@@ -16,7 +16,7 @@ classifiers = [
 ]
 keywords = ["chemistry", "machine learning", "datasets"]
 dependencies = [
-    "ase",
+    "ase==3.22.1",
     "pyyaml",
     "requests",
     "numpy",
