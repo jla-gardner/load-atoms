@@ -13,10 +13,6 @@ https://stackoverflow.com/a/46976704
 import shutil
 from pathlib import Path
 
-from load_atoms.database import backend
-
-backend._REMOVE_TEMP = False
-
 # this file is at root/tests/setup/__init__.py
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 DATABASE_ROOT = PROJECT_ROOT / "database"
@@ -41,6 +37,6 @@ for name in AVAILABLE_DATASETS:
             continue
         # copy file
         relative_path = file.relative_to(DATABASE_ROOT / name)
-        temp_folder = TESTING_DIR / name / "temp"
+        temp_folder = TESTING_DIR / "raw-downloads"
         temp_folder.mkdir(exist_ok=True)
         shutil.copy(file, temp_folder / relative_path)
