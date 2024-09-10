@@ -6,6 +6,7 @@ description: |
     and sampled every 1ps. The structures cover a wide range of densities, temperatures and degrees of dis/order.
 category: Synthetic Data
 license: MIT
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Gardner-23-03,
       title = {

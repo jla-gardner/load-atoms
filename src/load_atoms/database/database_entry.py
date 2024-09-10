@@ -57,6 +57,11 @@ class DatabaseEntry(BaseModel):
     (e.g. ``"Potential Fitting"``, ``"Benchmarks"``)
     """
 
+    minimum_load_atoms_version: str
+    """
+    The minimum version of load-atoms that is required to load the dataset.
+    """
+
     citation: Optional[str] = None
     """A citation for the dataset (in BibTeX format)"""
 
@@ -94,6 +99,10 @@ class DatabaseEntry(BaseModel):
         if v.startswith("@") and v.endswith("}"):
             return v
         raise ValueError(f"Invalid BibTeX: {v}")
+
+    @field_validator("minimum_load_atoms_version", mode="before")
+    def convert_minimum_version_to_str(cls, v):
+        return str(v)
 
     @classmethod
     def from_yaml_file(cls, path: Union[Path, str]) -> "DatabaseEntry":

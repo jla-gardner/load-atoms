@@ -70,6 +70,8 @@ def get_database_entry(
     yaml_file_path: Path,
     progress: Progress,
 ) -> DatabaseEntry:
+    from load_atoms import __version__ as load_atoms_version
+
     if not yaml_file_path.exists():
         try:
             download(
@@ -80,7 +82,18 @@ def get_database_entry(
         except Exception as e:
             raise UnknownDatasetException(dataset_id) from e
 
-    return DatabaseEntry.from_yaml_file(yaml_file_path)
+    db_entry = DatabaseEntry.from_yaml_file(yaml_file_path)
+
+    if db_entry.minimum_load_atoms_version > load_atoms_version:
+        raise Exception(
+            f"Dataset {dataset_id} requires load-atoms version "
+            f">={db_entry.minimum_load_atoms_version} "
+            f"(current version: {load_atoms_version}). "
+            "Please upgrade load-atoms to load this dataset "
+            "(e.g. `pip install --upgrade load-atoms`)."
+        )
+
+    return db_entry
 
 
 def import_dataset(

@@ -7,6 +7,7 @@ description: |
     Energy and force labels were calculated using the PW91 exchange-correlation functional as implemented in :code:`CASTEP`
     (see :code:`II.B: Database` of the paper).
 category: Potential Fitting
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Bartok-18-12,
         title = {

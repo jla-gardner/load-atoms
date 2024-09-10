@@ -6,6 +6,7 @@ description: |
     Original files were obtained from `quantum-machine.org <http://quantum-machine.org/datasets/>`_.
     Energies have been converted from kcal/mol to eV.
 category: Benchmarks
+minimum_load_atoms_version: 0.2
 per_structure_properties:
     energy:
         desc: atomisation energy (DFT)

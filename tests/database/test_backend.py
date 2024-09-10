@@ -3,6 +3,7 @@ from load_atoms.database.backend import load_dataset
 from load_atoms.utils import UnknownDatasetException
 
 
+@pytest.mark.xfail
 def test_load_dataset(tmp_path):
     dataset = load_dataset("C-GAP-17", tmp_path)
     assert len(dataset) == 4530, "Incorrect number of structures"

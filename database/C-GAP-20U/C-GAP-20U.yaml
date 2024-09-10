@@ -6,6 +6,7 @@ description: |
     interatomic potential for carbon.
     Suitably converged labels were obtained with revised DFT settings, see `CAM.840-6 <https://doi.org/10.17863/CAM.84096>`_.
 category: Potential Fitting
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Rowe-20-07,
         title = {An Accurate and Transferable Machine Learning Potential for Carbon},
