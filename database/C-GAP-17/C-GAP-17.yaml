@@ -37,3 +37,9 @@ per_structure_properties:
             | the original test/train split
             | (:code:`train` | :code:`test`)
 representative_structure: 1926
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - name: C-GAP-17.extxyz
+       hash: 8dd037b59c88

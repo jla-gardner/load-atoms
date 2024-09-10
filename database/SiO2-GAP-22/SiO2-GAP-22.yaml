@@ -41,3 +41,17 @@ per_structure_properties:
         units: eV Å\ :math:`{}^{-3}`
     config_type:
         desc: category of structure
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+    - url: https://zenodo.org/records/6353684/files/sio2_potential_data.zip
+      hash: 98ea6e58f6d9
+processing:
+    - UnZip
+    - SelectFile:
+        file: sio2_potential_data/database/dataset.scan.2.xyz
+    - ReadASE
+    - Rename:
+        virials: virial

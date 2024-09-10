@@ -35,3 +35,20 @@ per_structure_properties:
         units: eV
     config_type:
         desc: category of structure
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - url: https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip
+       hash: 97eb063f9655
+ processing:
+     - UnZip
+     - SelectFile:
+           file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
+     - ReadASE
+     - Rename:
+           DFT_force: forces
+           dft_force: forces
+           DFT_energy: energy
+           dft_energy: energy

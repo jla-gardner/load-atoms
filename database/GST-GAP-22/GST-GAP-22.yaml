@@ -33,3 +33,10 @@ per_structure_properties:
     config_type:
         desc: category of structure
 representative_structure: 1894
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - name: refitted_GST-GAP-22_PBE.xyz
+       hash: e4c467026dc0

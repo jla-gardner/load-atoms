@@ -39,3 +39,10 @@ per_structure_properties:
         units: eV Å\ :math:`{}^{-3}`
     config_type:
         desc: category of structure
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - name: C-GAP-20U.xyz
+       hash: da0462802df1

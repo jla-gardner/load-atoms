@@ -113,3 +113,19 @@ per_structure_properties:
         desc: "`SMILES <https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system>`_ string"
     inchi:
         desc: "`InChI <https://en.wikipedia.org/wiki/International_Chemical_Identifier>`_ identifier"
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+url_root: https://figshare.com/files
+ files:
+     - url: https://figshare.com/ndownloader/files/3195389
+       name: dsgdb9nsd.xyz.tar.bz2
+       hash: 3a63848ac806
+ processing:
+     - UnZip
+     - ForEachFile:
+           pattern: "**/*.xyz"
+           steps:
+               - Custom:
+                     id: read_qm9_xyz

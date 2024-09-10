@@ -33,3 +33,10 @@ per_structure_properties:
     energy:
         desc: total structure energy (DFT + MBD)
         units: eV
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - url: https://zenodo.org/record/4003703/files/P_GAP_20_fitting_data.xyz
+       hash: ab3059018068

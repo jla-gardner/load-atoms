@@ -40,3 +40,12 @@ per_structure_properties:
         desc: type of the structure (paracrystalline | CRN)
 representative_structure: 61
 
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - url: https://zenodo.org/record/7221166/files/data.tar.gz
+       hash: 023de5805f15
+ processing:
+     - Custom:
+           id: AC-2D-22
+

@@ -42,3 +42,19 @@ per_structure_properties:
     time:
         desc: timestep of the structure in the trajectory
         units: ps
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - url: https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip
+       hash: b43fc702ef6d
+ processing:
+     - UnZip
+     - ForEachFile:
+           pattern: "**/*.extxyz"
+           steps:
+               - ReadASE
+     - Rename:
+           gap17_forces: forces
+           gap17_energy: local_energies
