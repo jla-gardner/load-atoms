@@ -6,6 +6,7 @@ description: |
     and sampled every 1ps. The structures cover a wide range of densities, temperatures and degrees of dis/order.
 category: Synthetic Data
 license: MIT
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Gardner-23-03,
       title = {
@@ -20,18 +21,6 @@ citation: |
       doi = {10.1039/D2DD00137C},
     }
 representative_structure: 199
-files:
-    - url: https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip
-      hash: b43fc702ef6d
-processing:
-    - UnZip
-    - ForEachFile:
-          pattern: "**/*.extxyz"
-          steps:
-              - ReadASE
-    - Rename:
-          gap17_forces: forces
-          gap17_energy: local_energies
 per_atom_properties:
     forces:
         desc: force vectors (C-GAP-17)
@@ -40,6 +29,9 @@ per_atom_properties:
         desc: local energies (C-GAP-17)
         units: eV
 per_structure_properties:
+    energy:
+        desc: total energy of the structure (C-GAP-17)
+        units: eV
     anneal_T:
         desc: annealing temperature
         units: K
@@ -51,3 +43,19 @@ per_structure_properties:
     time:
         desc: timestep of the structure in the trajectory
         units: ps
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - url: https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip
+       hash: b43fc702ef6d
+processing:
+     - UnZip
+     - ForEachFile:
+           pattern: "**/*.extxyz"
+           steps:
+               - ReadASE
+     - Rename:
+           gap17_forces: forces
+           gap17_energy: local_energies

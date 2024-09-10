@@ -6,6 +6,7 @@ description: |
     The dataset was generated using an iterative approach, in some cases driven by an emprical potential. More details are available in the 
     `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41524-022-00768-w/MediaObjects/41524_2022_768_MOESM1_ESM.pdf>`_.
 category: Potential Fitting
+minimum_load_atoms_version: 0.2
 license: CC BY 4.0
 citation: |
     @article{Erhard-22-04,
@@ -23,17 +24,6 @@ citation: |
       number = {1},
       pages = {1--12},
     }
-url_root:
-files:
-    - url: https://zenodo.org/records/6353684/files/sio2_potential_data.zip
-      hash: 98ea6e58f6d9
-processing:
-    - UnZip
-    - SelectFile:
-          file: sio2_potential_data/database/dataset.scan.2.xyz
-    - ReadASE
-    - Rename:
-          virials: virial
 per_atom_properties:
     forces:
         desc: force vectors (DFT)
@@ -52,3 +42,17 @@ per_structure_properties:
         units: eV Å\ :math:`{}^{-3}`
     config_type:
         desc: category of structure
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+    - url: https://zenodo.org/records/6353684/files/sio2_potential_data.zip
+      hash: 98ea6e58f6d9
+processing:
+    - UnZip
+    - SelectFile:
+        file: sio2_potential_data/database/dataset.scan.2.xyz
+    - ReadASE
+    - Rename:
+        virials: virial

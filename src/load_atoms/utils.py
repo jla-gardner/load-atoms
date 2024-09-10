@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import hashlib
-import string
+import os
 from collections import defaultdict
 from pathlib import Path
 from typing import Callable, Generic, Iterable, Sequence, TypeVar
@@ -10,6 +10,16 @@ import numpy as np
 
 FRONTEND_URL = "https://jla-gardner.github.io/load-atoms/datasets/"
 BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database/"
+
+
+def debug_mode() -> bool:
+    """Check if debug mode is enabled."""
+    return os.environ.get("LOAD_ATOMS_DEBUG", "0") == "1"
+
+
+def testing() -> bool:
+    """Check if testing mode is enabled."""
+    return "PYTEST_CURRENT_TEST" in os.environ
 
 
 def generate_checksum(file_path: Path | str) -> str:
@@ -21,13 +31,6 @@ def generate_checksum(file_path: Path | str) -> str:
             sha256_hash.update(byte_block)
 
     return sha256_hash.hexdigest()[:12]
-
-
-def valid_checksum(hash: str) -> bool:
-    """Check if a hash is valid."""
-    if len(hash) != 12:
-        return False
-    return all(c in string.hexdigits for c in hash)
 
 
 def matches_checksum(file_path: Path, hash: str) -> bool:

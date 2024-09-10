@@ -11,18 +11,7 @@ description: |
     Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_, 
     and using a `custom script <https://github.com/jla-gardner/load-atoms/blob/main/src/load_atoms/database/processing/read_qm9_xyz.py>`__.
     Energy labels are quoted in eV, relative to the isolated atoms of the molecule.
-url_root: https://figshare.com/files
-files:
-    - url: https://figshare.com/ndownloader/files/3195389
-      name: dsgdb9nsd.xyz.tar.bz2
-      hash: 3a63848ac806
-processing:
-    - UnZip
-    - ForEachFile:
-          pattern: "**/*.xyz"
-          steps:
-              - Custom:
-                    id: read_qm9_xyz
+minimum_load_atoms_version: 0.2
 representative_structure: 23810
 citation: |
     @article{Ramakrishnan-17,
@@ -125,3 +114,18 @@ per_structure_properties:
         desc: "`SMILES <https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system>`_ string"
     inchi:
         desc: "`InChI <https://en.wikipedia.org/wiki/International_Chemical_Identifier>`_ identifier"
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+    - url: https://figshare.com/ndownloader/files/3195389
+      name: dsgdb9nsd.xyz.tar.bz2
+      hash: 3a63848ac806
+processing:
+    - UnZip
+    - ForEachFile:
+          pattern: "**/*.xyz"
+          steps:
+              - Custom:
+                    id: read_qm9_xyz

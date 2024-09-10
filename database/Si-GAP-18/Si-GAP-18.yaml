@@ -7,6 +7,7 @@ description: |
     Energy and force labels were calculated using the PW91 exchange-correlation functional as implemented in :code:`CASTEP`
     (see :code:`II.B: Database` of the paper).
 category: Potential Fitting
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Bartok-18-12,
         title = {
@@ -25,19 +26,6 @@ citation: |
     }
 license: CC BY-NC-SA 4.0
 representative_structure: 1283
-files:
-    - url: https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip
-      hash: 97eb063f9655
-processing:
-    - UnZip
-    - SelectFile:
-          file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
-    - ReadASE
-    - Rename:
-          DFT_force: forces
-          dft_force: forces
-          DFT_energy: energy
-          dft_energy: energy
 per_atom_properties:
     forces:
         desc: force vectors (DFT)
@@ -48,3 +36,20 @@ per_structure_properties:
         units: eV
     config_type:
         desc: category of structure
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - url: https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip
+       hash: 97eb063f9655
+processing:
+     - UnZip
+     - SelectFile:
+           file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
+     - ReadASE
+     - Rename:
+           DFT_force: forces
+           dft_force: forces
+           DFT_energy: energy
+           dft_energy: energy

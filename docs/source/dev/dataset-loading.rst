@@ -1,4 +1,3 @@
-
 Dataset Loading
 ===============
 
@@ -7,26 +6,24 @@ The :class:`~load_atoms.database.DatabaseEntry` class defines a schema for
 the metadata of such named datasets. These are serialised as a :code:`.yaml` file for each dataset,
 and hosted in our repo on `GitHub <https://github.com/jla-gardner/load-atoms/blob/main/database/C-GAP-17/C-GAP-17.yaml>`_.
 
-Loading a dataset by name is handled within :func:`load_structures(name, root) <load_atoms.database.backend.load_structures>`. 
+Loading a dataset by name is handled within :func:`~load_atoms.database.backend.load_dataset`. 
 Calling this function for the first time will trigger the following steps:
 
-1. We donwload the associated :class:`~load_atoms.database.DatabaseEntry` 
-   file to :code:`root/name/name.yaml`. 
-2. Each :class:`~load_atoms.database.DatabaseEntry` object has a :code:`files` attribute, 
-   which maps a collection of urls for download to their checksums. 
-   We download all of these to a temporary directory, and validate them.
-3. Each :class:`~load_atoms.database.DatabaseEntry` defines a procedure, :code:`processing`, that maps
-   the root folder of the downloaded files to a list of :class:`~ase.Atoms` objects.
-   If not explicitly defined, the default procedure is to read all files 
-   in the root directory using :func:`~ase.io.read`. For more details, see :doc:`dataset-processing`.
-4. We cache the list of :class:`~ase.Atoms` objects to :code:`root/name/name.xyz`, 
-   and return the list.
+1. We download the associated :class:`~load_atoms.database.DatabaseEntry` 
+   file to :code:`root/name/name.yaml`.
+2. We check if the dataset is compatible with the current version of load-atoms.
+3. If the dataset hasn't been cached yet:
+   a. We download and execute a dataset-specific importer script.
+   b. The importer is responsible for downloading and processing the raw data files.
+   c. The importer returns an :class:`~load_atoms.atoms_dataset.AtomsDataset` object.
+4. We cache the :class:`~load_atoms.atoms_dataset.AtomsDataset` object to :code:`root/name/name.pkl`.
+5. We display usage information, including license and citation details.
 
-Subsequent calls to :func:`~load_atoms.database.backend.load_structures` with the same dataset name will
-simply read the cached :class:`~ase.Atoms` objects from :code:`root/name/name.xyz`.
+Subsequent calls to :func:`~load_atoms.database.backend.load_dataset` with the same dataset name will
+simply read the cached :class:`~load_atoms.atoms_dataset.AtomsDataset` object from :code:`root/name/name.pkl`.
 
 
-.. autofunction:: load_atoms.database.backend.load_structures
+.. autofunction:: load_atoms.database.backend.load_dataset
 
 .. autoclass:: load_atoms.database.DatabaseEntry()
    :members:

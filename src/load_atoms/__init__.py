@@ -5,7 +5,8 @@ from pathlib import Path
 import ase
 from ase.io import read
 
-from .atoms_dataset import AtomsDataset, DescribedDataset
+from .atoms_dataset import AtomsDataset
+from .database import backend
 from .visualisation import view
 
 __version__ = "0.2.14"
@@ -89,6 +90,7 @@ def load_dataset(
             "or a path to a file."
         )
 
+    # TODO: this should check is file and exists, not just exists
     if Path(thing).exists():
         # thing is a string/path to a file that exists
         # assume it is a file containing structures and load them
@@ -100,4 +102,6 @@ def load_dataset(
         raise ValueError(f"The provided path does not exist. ({thing})")
 
     # assume thing is a dataset ID, and try to load it
-    return DescribedDataset.from_id(thing, root)
+    if root is None:
+        root = Path.home() / ".load-atoms"
+    return backend.load_dataset(thing, Path(root))

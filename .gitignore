@@ -19,6 +19,7 @@ dev/scripts/info
 !**/examples/*.ipynb
 
 testing*
+blah
 
 **/*.npz
 **/*.pkl

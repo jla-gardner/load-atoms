@@ -5,10 +5,8 @@ description: |
     with geometries relaxed using an empirical potential. Atomisation energies were calculated similarly to a FHI-AIMS implementation of the Perdew-Burke-Ernzerhof hybrid functional (PBE0).
     Original files were obtained from `quantum-machine.org <http://quantum-machine.org/datasets/>`_.
     Energies have been converted from kcal/mol to eV.
-files:
-    - name: QM7.extxyz
-      hash: c9dcec505f4d
 category: Benchmarks
+minimum_load_atoms_version: 0.2
 per_structure_properties:
     energy:
         desc: atomisation energy (DFT)
@@ -48,3 +46,10 @@ citation: |
         pages = {058301},
         doi = {10.1103/PhysRevLett.108.058301}
     }
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - name: QM7.extxyz
+       hash: c9dcec505f4d

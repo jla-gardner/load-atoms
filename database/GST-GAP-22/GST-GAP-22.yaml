@@ -1,8 +1,5 @@
 name: GST-GAP-22
 year: 2022
-files:
-    - name: refitted_GST-GAP-22_PBE.xyz
-      hash: e4c467026dc0
 description: |
     The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
     as labelled using the PBE functional.
@@ -10,6 +7,7 @@ description: |
     was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`__.
     The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_.
 category: Potential Fitting
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Zhou-23-10,
         title = {Device-Scale Atomistic Modelling of Phase-Change Memory Materials},
@@ -36,3 +34,10 @@ per_structure_properties:
     config_type:
         desc: category of structure
 representative_structure: 1894
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - name: refitted_GST-GAP-22_PBE.xyz
+       hash: e4c467026dc0

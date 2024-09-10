@@ -1,14 +1,12 @@
 name: C-GAP-20U
 year: 2020
-files:
-    - name: C-GAP-20U.xyz
-      hash: da0462802df1
 description: |
     The complete dataset used for training the 
     `C-GAP-20U <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_
     interatomic potential for carbon.
     Suitably converged labels were obtained with revised DFT settings, see `CAM.840-6 <https://doi.org/10.17863/CAM.84096>`_.
 category: Potential Fitting
+minimum_load_atoms_version: 0.2
 citation: |
     @article{Rowe-20-07,
         title = {An Accurate and Transferable Machine Learning Potential for Carbon},
@@ -42,3 +40,10 @@ per_structure_properties:
         units: eV Å\ :math:`{}^{-3}`
     config_type:
         desc: category of structure
+
+
+# TODO: remove after Dec 2024
+# backwards compatability: unused as of 0.3.0
+files:
+     - name: C-GAP-20U.xyz
+       hash: da0462802df1

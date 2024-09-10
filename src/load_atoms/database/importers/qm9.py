@@ -2,10 +2,48 @@ from __future__ import annotations
 
 from io import StringIO
 from pathlib import Path
+from typing import Iterator
 
 from ase import Atoms
 from ase.io import read
 from ase.units import Hartree, eV
+from load_atoms.database.importer import (
+    BaseImporter,
+    FileDownload,
+    unzip_file,
+)
+from load_atoms.progress import Progress
+
+
+class Importer(BaseImporter):
+    def __init__(self):
+        super().__init__(
+            files_to_download=[
+                FileDownload(
+                    url="https://figshare.com/ndownloader/files/3195389",
+                    expected_hash="3a63848ac806",
+                    local_name="qm9.tar.bz2",
+                )
+            ]
+        )
+
+    def get_structures(
+        self, tmp_dir: Path, progress: Progress
+    ) -> Iterator[Atoms]:
+        # Unzip the file
+        contents_path = unzip_file(tmp_dir / "qm9.tar.bz2", progress)
+
+        # Process each XYZ file
+        xyz_files = sorted(contents_path.glob("*.xyz"))
+        total_files = len(xyz_files)
+
+        with progress.new_task(
+            "Processing QM9 structures", total=total_files
+        ) as task:
+            for xyz_file in xyz_files:
+                yield read_qm9(xyz_file)
+                task.update(advance=1)
+
 
 PROPERTY_KEYS = "index A B C mu alpha homo lumo gap r2 zpve U0 U H G Cv".split()
 assert len(PROPERTY_KEYS) == 16
@@ -33,7 +71,7 @@ BAD_IDS = [
 ]
 
 
-def process(file: Path) -> list[Atoms]:
+def read_qm9(file: Path) -> Atoms:
     """
     Read in a single XYZ file from the QM9 dataset, and return it
     as a list of a single Atoms object.
@@ -58,7 +96,6 @@ def process(file: Path) -> list[Atoms]:
     # ignore first "gdb" property
     property_values = [float(v) for v in property_values.split()[1:]]
     property_values[0] = int(property_values[0])
-    # if property_values[0] in BAD_IDS:
 
     assert len(property_values) == 16
     properties: dict = dict(zip(PROPERTY_KEYS, property_values))
@@ -80,4 +117,4 @@ def process(file: Path) -> list[Atoms]:
 
     atoms.info = properties
 
-    return [atoms]
+    return atoms
