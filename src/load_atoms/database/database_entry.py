@@ -9,7 +9,7 @@ from pydantic import BaseModel, field_validator
 
 from load_atoms.utils import BASE_REMOTE_URL
 
-valid_licenses = {
+LICENSE_URLS = {
     "CC BY-NC-SA 4.0": "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en",
     "CC BY-NC 4.0": "https://creativecommons.org/licenses/by-nc/4.0/deed.en",
     "CC BY 4.0": "https://creativecommons.org/licenses/by/4.0/deed.en",
@@ -17,8 +17,9 @@ valid_licenses = {
     "MIT": "https://opensource.org/licenses/MIT",
     "GPLv3": "https://www.gnu.org/licenses/gpl-3.0.html",
 }
+VALID_LICENSES = list(LICENSE_URLS.keys())
 
-valid_categories = ["Benchmarks", "Potential Fitting", "Synthetic Data"]
+VALID_CATEGORIES = ["Benchmarks", "Potential Fitting", "Synthetic Data"]
 
 
 class PropertyDescription(BaseModel):
@@ -37,12 +38,8 @@ class PropertyDescription(BaseModel):
 class DatabaseEntry(BaseModel):
     """
     Holds all the required metadata for a named dataset, such that it can be
-    automatically downloaded using
-    :func:`load_dataset(dataset_name) <load_atoms.load_dataset>`, and so that
+    automatically downloaded using :func:`~load_atoms.load_dataset`, and so that
     documentation can be automatically generated.
-
-    Subclassing pydantic's BaseModel, which means that automatic
-    validation occurs upon creation.
     """
 
     name: str
@@ -52,19 +49,19 @@ class DatabaseEntry(BaseModel):
     """The year the dataset was created"""
 
     description: str
-    """A description of the dataset (in :code:`.rst` format)"""
+    """A description of the dataset (in ``.rst`` format)"""
 
     category: str
     """
     The category of the dataset 
-    (e.g. :code:`"Potential Fitting"`, :code:`"Benchmarks"`)
+    (e.g. ``"Potential Fitting"``, ``"Benchmarks"``)
     """
 
     citation: Optional[str] = None
     """A citation for the dataset (in BibTeX format)"""
 
     license: Optional[str] = None
-    """The license identifier of the dataset (e.g. :code:`"CC BY-NC-SA 4.0"`)"""
+    """The license identifier of the dataset (e.g. ``"CC BY-NC-SA 4.0"``)"""
 
     representative_structure: Optional[int] = None
     """The index of a representative structure (for visualisation purposes)"""
@@ -77,17 +74,17 @@ class DatabaseEntry(BaseModel):
 
     @field_validator("category")
     def validate_category(cls, v):
-        if v not in valid_categories:
+        if v not in VALID_CATEGORIES:
             raise ValueError(
-                f"Invalid category: {v}. Must be one of {valid_categories}"
+                f"Invalid category: {v}. Must be one of {VALID_CATEGORIES}"
             )
         return v
 
     @field_validator("license")
     def validate_license(cls, v):
-        if v not in valid_licenses:
+        if v not in VALID_LICENSES:
             raise ValueError(
-                f"Invalid license: {v}. Must be one of {list(valid_licenses)}"
+                f"Invalid license: {v}. Must be one of {VALID_LICENSES}"
             )
         return v
 
@@ -111,5 +108,14 @@ class DatabaseEntry(BaseModel):
             ) from e
 
     @classmethod
-    def remote_url_for(cls, dataset_id):
+    def remote_url_for_yaml(cls, dataset_id: str) -> str:
         return BASE_REMOTE_URL + f"{dataset_id}/{dataset_id}.yaml"
+
+    @classmethod
+    def importer_file_stem(cls, dataset_id: str) -> str:
+        return dataset_id.lower().replace("-", "_")
+
+    @classmethod
+    def remote_url_for_importer(cls, dataset_id: str) -> str:
+        fname = DatabaseEntry.importer_file_stem(dataset_id)
+        return BASE_REMOTE_URL + f"src/load_atoms/database/importers/{fname}.py"

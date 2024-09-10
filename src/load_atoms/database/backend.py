@@ -6,24 +6,25 @@ storing them locally, and serving them to :code:`load-atoms` via the
 
 from __future__ import annotations
 
-import pickle
 from pathlib import Path
 
-from ase import Atoms
-
-from load_atoms.database.database_entry import DatabaseEntry, valid_licenses
+from load_atoms.atoms_dataset import AtomsDataset
+from load_atoms.database.database_entry import (
+    LICENSE_URLS,
+    DatabaseEntry,
+)
 from load_atoms.database.internet import download
 from load_atoms.progress import Progress
 from load_atoms.utils import UnknownDatasetException, frontend_url
 
 
-def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
+def load_dataset(
+    dataset_id: str,
+    root: Path,
+) -> AtomsDataset:
     """
-    Load the structures comprising the dataset with the given id from the
-    given path.
-
-    If these structures are not currently present, download and process
-    them first.
+    Load the :class:`AtomsDataset` and corresponding :class:`DatabaseEntry` for
+    the given dataset id, using the given ``root`` directory to cache data.
 
     Parameters
     ----------
@@ -32,72 +33,91 @@ def load_structures(name: str, root: Path) -> tuple[list[Atoms], DatabaseEntry]:
     root
         The root folder to save the structures to.
     """
-    with Progress(f"[bold]{name}") as progress:
-        result = _load_structures(name, root, progress)
-        progress._live.refresh()
-    return result
 
+    # prepare local paths
+    yaml_file_path = root / dataset_id / f"{dataset_id}.yaml"
+    data_file_path = root / dataset_id / f"{dataset_id}.pkl"
+    yaml_file_path.parent.mkdir(parents=True, exist_ok=True)
 
-def _load_structures(
-    name: str, root: Path, progress: Progress
-) -> tuple[list[Atoms], DatabaseEntry]:
-    entry_path = root / name / f"{name}.yaml"
-    structures_path = root / name / f"{name}.pkl"
-
-    entry_path.parent.mkdir(parents=True, exist_ok=True)
-
-    # we first need to get the DatabaseEntry for the dataset
-    if not (entry_path).exists():
-        try:
-            download(
-                DatabaseEntry.remote_url_for(name),
-                entry_path,
-                Progress("", transient=True),
-            )
-        except Exception as e:
-            raise UnknownDatasetException(name) from e
-    entry = DatabaseEntry.from_yaml_file(entry_path)
-
-    # try to load the structures from disk
-    if structures_path.exists():
-        with progress.new_task("Reading from disk"), open(
-            structures_path, "rb"
-        ) as f:
-            structures = pickle.load(f)
-
-    # otherwise, import the structures
-    else:
-        from load_atoms.database.importer import BaseImporter
-
-        # import the "Importer" class from load_atoms.database.importers.<name>
-        filename = name.lower().replace("-", "_")
-        # TODO: fail nicely if the importer doesn't exist
-
-        importer: BaseImporter = __import__(
-            f"load_atoms.database.importers.{filename}",
-            fromlist=["Importer"],
-        ).Importer()
-
-        structures = list(
-            importer.get_dataset(
-                root_dir=root / "raw-downloads",
-                progress=progress,
-            )
+    with Progress(f"[bold]{dataset_id}") as progress:
+        database_entry = get_database_entry(
+            dataset_id, yaml_file_path, progress
         )
 
-        # remove annoying default calculators
-        for s in structures:
-            s.calc = None
+        # load the structures from disk if they exist
+        if data_file_path.exists():
+            with progress.new_task("Reading from disk"):
+                dataset = AtomsDataset.load(data_file_path)
 
-        # cache the structures to disk
-        with progress.new_task("Caching to disk"), open(
-            structures_path, "wb"
-        ) as f:
-            pickle.dump(structures, f)
+        # otherwise, use the importer to get the structures
+        else:
+            dataset = import_dataset(dataset_id, root, progress, database_entry)
 
-    log_usage_information(entry, progress)
+            # cache the structures to disk for future re-use
+            with progress.new_task("Caching to disk"):
+                dataset.save(data_file_path)
 
-    return structures, entry
+        log_usage_information(database_entry, progress)
+
+        # refresh the progress bar to ensure the final message is displayed
+        progress._live.refresh()
+
+    return dataset
+
+
+def get_database_entry(
+    dataset_id: str,
+    yaml_file_path: Path,
+    progress: Progress,
+) -> DatabaseEntry:
+    if not yaml_file_path.exists():
+        try:
+            download(
+                DatabaseEntry.remote_url_for_yaml(dataset_id),
+                yaml_file_path,
+                progress,
+            )
+        except Exception as e:
+            raise UnknownDatasetException(dataset_id) from e
+
+    return DatabaseEntry.from_yaml_file(yaml_file_path)
+
+
+def import_dataset(
+    dataset_id: str,
+    root: Path,
+    progress: Progress,
+    database_entry: DatabaseEntry,
+) -> AtomsDataset:
+    from load_atoms.database.importer import BaseImporter
+
+    importer_name = DatabaseEntry.importer_file_stem(dataset_id)
+    expected_importer_path = (
+        Path(__file__).parent / "importers" / f"{importer_name}.py"
+    )
+
+    if not expected_importer_path.exists():
+        try:
+            download(
+                DatabaseEntry.remote_url_for_importer(dataset_id),
+                expected_importer_path,
+                progress,
+            )
+        except Exception as e:
+            # couldn't download the importer:
+            raise UnknownDatasetException(dataset_id) from e
+
+    # TODO: nice error messages?
+    importer: BaseImporter = __import__(
+        f"load_atoms.database.importers.{importer_name}",
+        fromlist=["Importer"],
+    ).Importer()
+
+    return importer.get_dataset(
+        root_dir=root / "raw-downloads",
+        database_entry=database_entry,
+        progress=progress,
+    )
 
 
 def log_usage_information(info: DatabaseEntry, progress: Progress):
@@ -105,7 +125,7 @@ def log_usage_information(info: DatabaseEntry, progress: Progress):
 
     name = f"[bold]{info.name}[/bold]"
     if info.license is not None:
-        style = f"dodger_blue2 link={valid_licenses[info.license]} underline"
+        style = f"dodger_blue2 link={LICENSE_URLS[info.license]} underline"
         progress.log_below(
             f"The {name} dataset is covered by the "
             f"[{style}]{info.license}[/] license."

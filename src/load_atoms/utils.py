@@ -17,6 +17,11 @@ def debug_mode() -> bool:
     return os.environ.get("LOAD_ATOMS_DEBUG", "0") == "1"
 
 
+def testing() -> bool:
+    """Check if testing mode is enabled."""
+    return "PYTEST_CURRENT_TEST" in os.environ
+
+
 def generate_checksum(file_path: Path | str) -> str:
     """Generate a checksum for a file."""
 

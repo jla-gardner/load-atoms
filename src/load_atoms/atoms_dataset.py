@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pickle
 import warnings
 from collections.abc import Sequence
 from functools import partial
@@ -11,7 +12,7 @@ import numpy as np
 from ase import Atoms
 from yaml import dump
 
-from .database import DatabaseEntry, backend
+from .database import DatabaseEntry
 from .utils import (
     LazyMapping,
     intersect,
@@ -25,7 +26,11 @@ from .utils import (
 class AtomsDataset(Sequence):
     """An immutable wrapper around a list of :class:`ase.Atoms` objects."""
 
-    def __init__(self, structures: list[ase.Atoms]):
+    def __init__(
+        self,
+        structures: list[ase.Atoms],
+        description: DatabaseEntry | None = None,
+    ):
         if len(structures) == 1:
             warnings.warn(
                 "Creating a dataset with a single structure. "
@@ -35,6 +40,7 @@ class AtomsDataset(Sequence):
             )
 
         self.structures = structures
+        self.description = description
 
         keys, loader = _get_info_loader(structures)
         self.info: LazyMapping[str, Any] = LazyMapping(keys, loader)
@@ -422,55 +428,42 @@ class AtomsDataset(Sequence):
         return iter(self.structures)
 
     def __repr__(self):
-        return summarise_dataset(self.structures)
+        return summarise_dataset(self.structures, self.description)
 
     def __contains__(self, item: Any) -> bool:
         """Check if an item is in the dataset."""
         return item in self.structures
 
-
-class DescribedDataset(AtomsDataset):
-    def __init__(
-        self,
-        structures: list[Atoms],
-        description: DatabaseEntry,
-    ):
-        super().__init__(structures)
-        self.description = description
-
-    @classmethod
-    def from_id(
-        cls,
-        dataset_id: str,
-        root: Path | (str | None) = None,
-    ) -> AtomsDataset:
+    def save(self, path: Path):
         """
-        Load a dataset by id.
+        Save the dataset to a file.
 
         Parameters
         ----------
-        dataset_id : str
-            the id of the dataset to load
-        root : Union[Path, str, None], optional
-            the root directory to cache the dataset to, by default None
-        verbose : bool, optional
-            whether to print information about the dataset, by default True
+        path
+            The path to save the dataset to.
+        """
+        path.parent.mkdir(parents=True, exist_ok=True)
+        to_save = {
+            "structures": self.structures,
+            "description": self.description,
+        }
+        with open(path, "wb") as f:
+            pickle.dump(to_save, f)
+
+    @classmethod
+    def load(cls, path: Path) -> AtomsDataset:
+        """
+        Load the dataset from a file.
+
+        Parameters
+        ----------
+        path
+            The path to load the dataset from.
         """
 
-        if root is None:
-            root = Path.home() / ".load-atoms"
-        root = Path(root)
-
-        all_structures, info = backend.load_structures(dataset_id, root)
-
-        # remove annoying automatic ASE calculators
-        for structure in all_structures:
-            structure.calc = None
-
-        return cls(all_structures, info)
-
-    def __repr__(self):
-        return summarise_dataset(self.structures, self.description)
+        with open(path, "rb") as f:
+            return cls(**pickle.load(f))
 
 
 def _get_info_loader(

@@ -11,9 +11,10 @@ import ase.io
 from ase import Atoms
 
 from load_atoms.atoms_dataset import AtomsDataset
+from load_atoms.database.database_entry import DatabaseEntry
 from load_atoms.database.internet import download as _download
 from load_atoms.progress import Progress
-from load_atoms.utils import debug_mode, matches_checksum
+from load_atoms.utils import debug_mode, matches_checksum, testing
 
 BASE_GITHUB_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database"
 
@@ -110,6 +111,7 @@ class BaseImporter(ABC):
     def get_dataset(
         self,
         root_dir: Path,
+        database_entry: DatabaseEntry,
         progress: Progress | None = None,
     ) -> AtomsDataset:
         """Get the dataset for this importer."""
@@ -123,12 +125,14 @@ class BaseImporter(ABC):
 
         download_all(self.files_to_download, tmp_dir, progress)
 
+        # TODO: clean up structures, e.g. remove annoying default calculators
         try:
             return AtomsDataset(
-                list(self.get_structures(tmp_dir, progress=progress))
+                list(self.get_structures(tmp_dir, progress=progress)),
+                database_entry,
             )
         finally:
-            if self.cleanup and not debug_mode():
+            if self.cleanup and not debug_mode() and not testing():
                 shutil.rmtree(tmp_dir)
 
 
