@@ -19,9 +19,13 @@ jobs:
               run: pip install -e ".[dev]"
             - name: Install pandoc
               run: $APT_INSTALL pandoc
+            - name: Get latest tag
+              id: get_latest_tag
+              run: echo "LATEST_TAG=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
             - name: Sphinx build
               run: sphinx-build docs/source docs/build
             - name: Deploy
+              if: github.ref == 'refs/tags/${{ steps.get_latest_tag.outputs.LATEST_TAG }}'
               uses: peaceiris/actions-gh-pages@v3
               with:
                   publish_branch: gh-pages
