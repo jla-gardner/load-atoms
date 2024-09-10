@@ -9,7 +9,7 @@ from .atoms_dataset import AtomsDataset
 from .database import backend
 from .visualisation import view
 
-__version__ = "0.2.14"
+__version__ = "0.3.0"
 __all__ = ["load_dataset", "view"]
 
 
