@@ -90,8 +90,7 @@ def load_dataset(
             "or a path to a file."
         )
 
-    # TODO: this should check is file and exists, not just exists
-    if Path(thing).exists():
+    if Path(thing).exists() and Path(thing).is_file():
         # thing is a string/path to a file that exists
         # assume it is a file containing structures and load them
         structures = read(Path(thing), index=":")

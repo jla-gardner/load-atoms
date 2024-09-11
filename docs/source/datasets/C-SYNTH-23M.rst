@@ -30,7 +30,7 @@ C-SYNTH-23M
             C: 100.00%
         properties:
             per atom: (forces, local_energies)
-            per structure: (anneal_T, density, run_id, time)
+            per structure: (anneal_T, density, energy, run_id, time)
     
 
 
@@ -93,6 +93,11 @@ Properties
       - Units
       - Type
       - Description
+    * - :code:`energy`
+      - eV
+      - :class:`~float64`
+      - total energy of the structure (C-GAP-17)
+
     * - :code:`anneal_T`
       - K
       - :class:`~int64`

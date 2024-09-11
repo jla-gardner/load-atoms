@@ -100,7 +100,7 @@ Properties
 
     * - :code:`virial`
       - eV
-      - :class:`ndarray(3, 3) <numpy.ndarray>`
+      - :class:`ndarray(9,) <numpy.ndarray>`
       - virial stress tensor (DFT)
 
     * - :code:`stress`
