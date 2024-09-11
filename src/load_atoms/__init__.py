@@ -5,7 +5,7 @@ from pathlib import Path
 import ase
 from ase.io import read
 
-from .atoms_dataset import AtomsDataset
+from .atoms_dataset import AtomsDataset, InMemoryAtomsDataset
 from .database import backend
 from .visualisation import view
 
@@ -81,7 +81,7 @@ def load_dataset(
 
     if isinstance(thing, list) and all(isinstance(s, ase.Atoms) for s in thing):
         # thing is a list of structures
-        return AtomsDataset(thing)
+        return InMemoryAtomsDataset(thing)
 
     if not isinstance(thing, (Path, str)):
         raise TypeError(
@@ -95,7 +95,9 @@ def load_dataset(
         # thing is a string/path to a file that exists
         # assume it is a file containing structures and load them
         structures = read(Path(thing), index=":")
-        return AtomsDataset(structures)  # type: ignore
+        if isinstance(structures, ase.Atoms):
+            structures = [structures]
+        return InMemoryAtomsDataset(structures)
 
     if isinstance(thing, Path):
         # thing is a path to a file that does not exist

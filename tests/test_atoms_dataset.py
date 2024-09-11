@@ -25,9 +25,11 @@ def test_dataset_from_structures():
 
 def test_dataset_writeable_and_readable(tmp_path):
     dataset = load_dataset(STRUCTURES)
-    write(tmp_path / "test.xyz", dataset)  # type: ignore
+    write(tmp_path / "test.xyz", dataset)
 
-    dataset2 = load_dataset(read(tmp_path / "test.xyz", index=":"))  # type: ignore
+    structures = read(tmp_path / "test.xyz", index=":")
+    assert isinstance(structures, list)
+    dataset2 = load_dataset(structures)
     _is_water_dataset(dataset2)
 
     dataset3 = load_dataset(tmp_path / "test.xyz")
@@ -114,7 +116,7 @@ def test_useful_error_message():
 
 def test_useful_warning(tmp_path):
     structure = Atoms("H2O")
-    write(tmp_path / "test.xyz", structure)  # type: ignore
+    write(tmp_path / "test.xyz", structure)
 
     with pytest.warns(
         UserWarning,

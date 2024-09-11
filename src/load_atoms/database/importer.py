@@ -10,7 +10,7 @@ from typing import Iterator
 import ase.io
 from ase import Atoms
 
-from load_atoms.atoms_dataset import AtomsDataset
+from load_atoms.atoms_dataset import AtomsDataset, InMemoryAtomsDataset
 from load_atoms.database.database_entry import DatabaseEntry
 from load_atoms.database.internet import download as _download
 from load_atoms.progress import Progress
@@ -137,11 +137,11 @@ class BaseImporter(ABC):
 
         structures = []
         for structure in self.get_structures(tmp_dir, progress=progress):
-            del structure.calc
+            structure.calc = None
             structures.append(structure)
 
         try:
-            return AtomsDataset(structures, database_entry)
+            return InMemoryAtomsDataset(structures, database_entry)
 
         finally:
             if self.cleanup and not debug_mode() and not testing():

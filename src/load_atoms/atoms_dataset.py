@@ -2,19 +2,21 @@ from __future__ import annotations
 
 import pickle
 import warnings
-from collections.abc import Sequence
+from abc import ABC, abstractmethod
 from functools import partial
 from pathlib import Path
-from typing import Any, Callable, Iterable, Iterator, overload
+from typing import Any, Callable, Iterator, Mapping, Sequence, TypeVar, overload
 
 import ase
 import numpy as np
 from ase import Atoms
+from typing_extensions import override
 from yaml import dump
 
 from .database import DatabaseEntry
 from .utils import (
     LazyMapping,
+    choose_n,
     intersect,
     k_fold_split,
     random_split,
@@ -22,83 +24,95 @@ from .utils import (
     union,
 )
 
+T = TypeVar("T", bound="AtomsDataset")
 
-class AtomsDataset(Sequence):
-    """An immutable wrapper around a list of :class:`ase.Atoms` objects."""
 
-    def __init__(
-        self,
-        structures: list[ase.Atoms],
-        description: DatabaseEntry | None = None,
-    ):
-        if len(structures) == 1:
-            warnings.warn(
-                "Creating a dataset with a single structure. "
-                "Typically, datasets contain multiple structures - "
-                "did you mean to do this?",
-                stacklevel=2,
-            )
+class AtomsDataset(
+    ABC,
+    Sequence[Atoms],
+):
+    """
+    An abstract base class for datasets of :class:`ase.Atoms` objects.
 
-        self.structures = structures
+    This class provides a common interface for interacting with datasets of
+    atomic structures, abstracting over the underlying storage mechanism.
+    """
+
+    def __init__(self, description: DatabaseEntry | None = None):
         self.description = description
 
-        keys, loader = _get_info_loader(structures)
-        self.info: LazyMapping[str, Any] = LazyMapping(keys, loader)
-        """
-        A key-value mapping of per-structure properties.
-        
-        Examples
-        --------
-        Scalar per-structure properties are turned into an 
-        :class:`~numpy.ndarray`:
+    @property
+    @abstractmethod
+    def structure_sizes(self) -> np.ndarray:
+        pass
 
-        >>> dataset = load_dataset("C-GAP-17")
-        >>> dataset.info["energy"]
-        array([-9847.661671, -9886.440245, -9916.681692, ...,  -632.464825,
-                -632.146922,  -632.944571])
+    @abstractmethod
+    def __len__(self) -> int:
+        pass
 
-        Non-scalar properties are concatenated along a new axis:
+    @overload
+    @abstractmethod
+    def __getitem__(self, index: int) -> Atoms:
+        ...
 
-        >>> c_gap_20 = load_dataset("C-GAP-20")
-        >>> c_gap_20.info["virial"].shape
-        (6088, 3, 3)
-        """
+    @overload
+    @abstractmethod
+    def __getitem__(self: T, index: list[int] | np.ndarray | slice) -> T:
+        ...
 
-        keys, loader = _get_arrays_loader(structures)
-        self.arrays: LazyMapping[str, np.ndarray] = LazyMapping(keys, loader)
-        """
-        A key-value mapping of per-atom properties.
-        
-        Example
-        -------
-        Per-atom properties are concatenated along the first axis:
+    @abstractmethod
+    def __getitem__(
+        self: T, index: int | list[int] | np.ndarray | slice
+    ) -> Atoms | T:
+        ...
 
-        >>> dataset = load_dataset("C-GAP-17")
-        >>> dataset.arrays["forces"].shape
-        (284965, 3)
-        """
+    @abstractmethod
+    def __iter__(self) -> Iterator[ase.Atoms]:
+        pass
+
+    @abstractmethod
+    def __repr__(self) -> str:
+        pass
 
     @property
-    def structure_sizes(self) -> np.ndarray:
-        """The number of atoms in each structure."""
-        return np.array([len(s) for s in self.structures])
+    @abstractmethod
+    def info(self) -> Mapping[str, Any]:
+        pass
+
+    @property
+    @abstractmethod
+    def arrays(self) -> Mapping[str, np.ndarray]:
+        pass
+
+    @abstractmethod
+    def save(self, path: Path):
+        pass
+
+    @classmethod
+    @abstractmethod
+    def load(cls: type[T], path: Path) -> T:
+        pass
+
+    # concrete methods
+
+    def __contains__(self, item: Any) -> bool:
+        return any(item == other for other in self)
 
     @property
     def n_atoms(self) -> int:
-        """The total number of atoms in the dataset."""
         return int(self.structure_sizes.sum())
 
     def filter_by(
-        self, *functions: Callable[[ase.Atoms], bool], **info_kwargs: Any
-    ) -> AtomsDataset:
+        self: T,
+        *functions: Callable[[ase.Atoms], bool],
+        **info_kwargs: Any,
+    ) -> T:
         """
         Return a new dataset containing only the structures that match the
         given criteria.
 
         Parameters
         ----------
-        dataset
-            The dataset to filter.
         functions
             Functions to filter the dataset by. Each function should take an
             ASE Atoms object as input and return a boolean.
@@ -141,14 +155,15 @@ class AtomsDataset(Sequence):
         def the_filter(structure: ase.Atoms) -> bool:
             return all(f(structure) for f in functions)
 
-        return AtomsDataset(list(filter(the_filter, self)))
+        index = [i for i, structure in enumerate(self) if the_filter(structure)]
+        return self[index]
 
     def random_split(
-        self,
-        splits: list[float] | list[int],
+        self: T,
+        splits: Sequence[float] | Sequence[int],
         seed: int = 42,
         keep_ratio: str | None = None,
-    ) -> list[AtomsDataset]:
+    ) -> list[T]:
         r"""
         Randomly split the dataset into multiple, disjoint parts.
 
@@ -167,7 +182,7 @@ class AtomsDataset(Sequence):
 
         Returns
         -------
-        list[AtomsDataset]
+        list[T]
             A list of new datasets, each containing a subset of the original
 
         Examples
@@ -213,50 +228,44 @@ class AtomsDataset(Sequence):
 
         if keep_ratio is None:
             return [
-                AtomsDataset(split_structures)
-                for split_structures in random_split(
-                    self.structures, splits, seed
-                )
+                self[split]
+                for split in random_split(range(len(self)), splits, seed)
             ]
 
         if keep_ratio not in self.info:
             raise KeyError(
                 f"Unknown key {keep_ratio}. "
-                "Available keys are: " + ", ".join(self.info.keys)
+                "Available keys are: " + ", ".join(self.info.keys())
             )
 
-        if isinstance(splits[0], int):  # TODO: fix type error
+        if isinstance(splits[0], int):
             final_sizes: list[int] = splits  # type: ignore
         else:
-            final_sizes = [int(s * len(self)) for s in splits]  # type: ignore
+            final_sizes = [int(s * len(self)) for s in splits]
 
         normalised_fractional_splits = [s / sum(splits) for s in splits]
 
-        structure_splits: list[list[Atoms]] = split_keeping_ratio(
-            self.structures,
+        split_idxs = split_keeping_ratio(
+            range(len(self)),
             group_ids=self.info[keep_ratio],
             splitting_function=partial(
                 random_split, seed=seed, splits=normalised_fractional_splits
             ),
         )
 
-        def choose_n(structures: list[Atoms], n: int) -> list[Atoms]:
-            idxs = np.random.RandomState(seed).permutation(len(structures))
-            return [structures[i] for i in idxs[:n]]
-
         return [
-            AtomsDataset(choose_n(split, size))
-            for split, size in zip(structure_splits, final_sizes)
+            self[choose_n(split, size, seed)]
+            for split, size in zip(split_idxs, final_sizes)
         ]
 
     def k_fold_split(
-        self,
+        self: T,
         k: int = 5,
         fold: int = 0,
         shuffle: bool = True,
         seed: int = 42,
         keep_ratio: str | None = None,
-    ) -> tuple[AtomsDataset, AtomsDataset]:
+    ) -> tuple[T, T]:
         """
         Generate (an optionally shuffled) train/test split for cross-validation.
 
@@ -320,7 +329,7 @@ class AtomsDataset(Sequence):
             if keep_ratio not in self.info:
                 raise KeyError(
                     f"Unknown key {keep_ratio}. "
-                    "Available keys are: " + ", ".join(self.info.keys)
+                    "Available keys are: " + ", ".join(self.info.keys())
                 )
             if not shuffle:
                 raise ValueError(
@@ -334,136 +343,99 @@ class AtomsDataset(Sequence):
 
         return self[train_idxs], self[test_idxs]
 
+
+class InMemoryAtomsDataset(AtomsDataset):
+    """An in-memory implementation of AtomsDataset."""
+
+    def __init__(
+        self,
+        structures: list[ase.Atoms],
+        description: DatabaseEntry | None = None,
+    ):
+        super().__init__(description)
+
+        if len(structures) == 1:
+            warnings.warn(
+                "Creating a dataset with a single structure. "
+                "Typically, datasets contain multiple structures - "
+                "did you mean to do this?",
+                stacklevel=2,
+            )
+
+        self._structures = structures
+
+        keys, loader = _get_info_loader(structures)
+        self._info: LazyMapping[str, Any] = LazyMapping(keys, loader)
+
+        keys, loader = _get_arrays_loader(structures)
+        self._arrays: LazyMapping[str, np.ndarray] = LazyMapping(keys, loader)
+
+    @property
+    @override
+    def info(self) -> LazyMapping[str, Any]:
+        return self._info
+
+    @property
+    @override
+    def arrays(self) -> LazyMapping[str, np.ndarray]:
+        return self._arrays
+
+    @property
+    @override
+    def structure_sizes(self) -> np.ndarray:
+        return np.array([len(s) for s in self._structures])
+
+    @override
     def __len__(self) -> int:
-        """The number of structures in the dataset."""
-        return len(self.structures)
+        return len(self._structures)
 
-    @overload
-    def __getitem__(self, index: int) -> ase.Atoms:
-        ...
-
-    @overload
-    def __getitem__(self, index: slice) -> AtomsDataset:
-        ...
-
-    @overload
-    def __getitem__(self, index: np.ndarray) -> AtomsDataset:
-        ...
-
-    @overload
-    def __getitem__(self, index: Iterable[int]) -> AtomsDataset:
-        ...
-
-    def __getitem__(self, index: Any):
-        """
-        Index the dataset.
-
-        Parameters
-        ----------
-        index
-            specifies the structure/s to select from the dataset.
-
-        Examples
-        --------
-
-        >>> from load_atoms import load_dataset
-        >>> dataset = load_dataset("C-GAP-17")
-        The C-GAP-17 dataset is covered by the CC BY-NC-SA 4.0 license.
-        Please cite the C-GAP-17 dataset if you use it in your work.
-
-        Get the first structure in the dataset:
-
-        >>> dataset[0]
-        Atoms(symbols='C64', pbc=True, cell=[9.483, 9.483, 9.483], force=...)
-
-        Create a new dataset with the first 10 structures:
-
-        >>> dataset[:10]
-        Dataset:
-            structures: 10
-            atoms: 640
-            species:
-                C: 100.00%
-            properties:
-                per atom: (force)
-                per structure: (config_type, detailed_ct, split, energy)
-
-        Create a new dataset of high energy structures using a mask
-        (see :func:`~load_atoms.AtomsDataset.filter_by`
-        for a more convenient way to do this):
-
-        >>> mask = dataset.info["energy"] / dataset.structure_sizes > -155
-        >>> dataset[mask]
-        Dataset:
-            structures: 36
-            atoms: 444
-            species:
-                C: 100.00%
-            properties:
-                per atom: (force)
-                per structure: (config_type, detailed_ct, split, energy)
-        """
-        # if the passed index is a slice, return a new Dataset object:
+    @override
+    def __getitem__(  # type: ignore
+        self,
+        index: int | list[int] | np.ndarray | slice,
+    ) -> Atoms | InMemoryAtomsDataset:
         if isinstance(index, slice):
-            return AtomsDataset(self.structures[index])
-
-        # if the index is iterable, return a new Dataset object:
+            return InMemoryAtomsDataset(
+                self._structures[index], self.description
+            )
         if hasattr(index, "__iter__"):
-            # if the index is a np index, we want to keep the same behaviour
-            # (e.g. passing array of indices, or a boolean array)
+            assert not isinstance(index, int)
             if isinstance(index, np.ndarray):
                 to_keep = np.arange(len(self))[index]
-                return AtomsDataset([self.structures[i] for i in to_keep])
+                return InMemoryAtomsDataset(
+                    [self._structures[i] for i in to_keep], self.description
+                )
+            return InMemoryAtomsDataset(
+                [self._structures[i] for i in index], self.description
+            )
 
-            # some other iterable, e.g. a list of indices
-            return AtomsDataset([self.structures[i] for i in index])  # type: ignore
+        index = int(index)  # type: ignore
+        return self._structures[index]
 
-        # otherwise, we assume the index is an integer,
-        # and return a single structure
-        return self.structures[int(index)]
-
+    @override
     def __iter__(self) -> Iterator[ase.Atoms]:
-        """Iterate over the structures in the dataset."""
+        return iter(self._structures)
 
-        return iter(self.structures)
+    @override
+    def __repr__(self) -> str:
+        return summarise_dataset(self._structures, self.description)
 
-    def __repr__(self):
-        return summarise_dataset(self.structures, self.description)
-
-    def __contains__(self, item: Any) -> bool:
-        """Check if an item is in the dataset."""
-        return item in self.structures
-
+    @override
     def save(self, path: Path):
-        """
-        Save the dataset to a file.
-
-        Parameters
-        ----------
-        path
-            The path to save the dataset to.
-        """
         path.parent.mkdir(parents=True, exist_ok=True)
         to_save = {
-            "structures": self.structures,
+            "structures": self._structures,
             "description": self.description,
         }
         with open(path, "wb") as f:
             pickle.dump(to_save, f)
 
     @classmethod
-    def load(cls, path: Path) -> AtomsDataset:
-        """
-        Load the dataset from a file.
-
-        Parameters
-        ----------
-        path
-            The path to load the dataset from.
-        """
-
+    @override
+    def load(cls, path: Path) -> InMemoryAtomsDataset:
         with open(path, "rb") as f:
-            return cls(**pickle.load(f))
+            data = pickle.load(f)
+        return cls(**data)
 
 
 def _get_info_loader(

@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from load_atoms.atoms_dataset import AtomsDataset
+from load_atoms.atoms_dataset import AtomsDataset, InMemoryAtomsDataset
 from load_atoms.database.database_entry import (
     LICENSE_URLS,
     DatabaseEntry,
@@ -47,7 +47,7 @@ def load_dataset(
         # load the structures from disk if they exist
         if data_file_path.exists():
             with progress.new_task("Reading from disk"):
-                dataset = AtomsDataset.load(data_file_path)
+                dataset = InMemoryAtomsDataset.load(data_file_path)
 
         # otherwise, use the importer to get the structures
         else:
