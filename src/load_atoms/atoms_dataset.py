@@ -3,11 +3,22 @@ from __future__ import annotations
 import pickle
 import warnings
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 from functools import partial
 from pathlib import Path
-from typing import Any, Callable, Iterator, Mapping, Sequence, TypeVar, overload
+from typing import (
+    Any,
+    Callable,
+    Iterable,
+    Iterator,
+    Mapping,
+    Sequence,
+    TypeVar,
+    overload,
+)
 
 import ase
+import lmdb
 import numpy as np
 from ase import Atoms
 from typing_extensions import override
@@ -27,10 +38,7 @@ from .utils import (
 T = TypeVar("T", bound="AtomsDataset")
 
 
-class AtomsDataset(
-    ABC,
-    Sequence[Atoms],
-):
+class AtomsDataset(ABC, Sequence[Atoms]):
     """
     An abstract base class for datasets of :class:`ase.Atoms` objects.
 
@@ -84,9 +92,15 @@ class AtomsDataset(
     def arrays(self) -> Mapping[str, np.ndarray]:
         pass
 
+    @classmethod
     @abstractmethod
-    def save(self, path: Path):
-        pass
+    def save(
+        cls,
+        path: Path,
+        structures: Iterable[Atoms],
+        description: DatabaseEntry | None = None,
+    ):
+        ...
 
     @classmethod
     @abstractmethod
@@ -421,11 +435,17 @@ class InMemoryAtomsDataset(AtomsDataset):
         return summarise_dataset(self._structures, self.description)
 
     @override
-    def save(self, path: Path):
+    @classmethod
+    def save(
+        cls,
+        path: Path,
+        structures: Iterable[Atoms],
+        description: DatabaseEntry | None = None,
+    ):
         path.parent.mkdir(parents=True, exist_ok=True)
         to_save = {
-            "structures": self._structures,
-            "description": self.description,
+            "structures": structures,
+            "description": description,
         }
         with open(path, "wb") as f:
             pickle.dump(to_save, f)
@@ -436,6 +456,150 @@ class InMemoryAtomsDataset(AtomsDataset):
         with open(path, "rb") as f:
             data = pickle.load(f)
         return cls(**data)
+
+
+@dataclass
+class LmdbMetadata:
+    structure_sizes: np.ndarray
+    per_atom_properties: list[str]
+    per_structure_properties: list[str]
+
+
+class LmdbAtomsDataset(AtomsDataset):
+    """An LMDB-backed implementation of AtomsDataset."""
+
+    def __init__(self, path: Path, idx_subset: np.ndarray | None = None):
+        self.path = path
+
+        # setup lmdb environment, and keep a transaction open for the lifetime
+        # of the dataset (to enable fast reads)
+        self.env = lmdb.open(path, readonly=True, lock=False, map_async=True)
+        self.txn = self.env.begin(write=False)
+
+        self.metadata: LmdbMetadata = pickle.loads(
+            self.txn.get("metadata".encode("ascii"))
+        )
+        self.idx_subset = (
+            idx_subset
+            if idx_subset is not None
+            else np.arange(len(self.metadata.structure_sizes))
+        )
+
+        self._info: LazyMapping[str, Any] = LazyMapping(
+            self.metadata.per_structure_properties,
+            lambda key: np.array([structure.info[key] for structure in self]),
+        )
+        self._arrays: LazyMapping[str, np.ndarray] = LazyMapping(
+            self.metadata.per_atom_properties,
+            lambda key: np.concatenate(
+                [structure.arrays[key] for structure in self]
+            ),
+        )
+
+    def close(self):
+        self.txn.close()
+        self.env.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def _get_structure_by_idx(self, idx: int) -> Atoms:
+        pickled_data = self.txn.get(f"{idx}".encode("ascii"))
+        return pickle.loads(pickled_data)
+
+    @property
+    @override
+    def structure_sizes(self) -> np.ndarray:
+        sizes = self.metadata.structure_sizes
+        if self.idx_subset is not None:
+            return sizes[self.idx_subset]
+        return sizes
+
+    @override
+    def __len__(self) -> int:
+        return len(self.structure_sizes)
+
+    @override
+    def __getitem__(  # type: ignore
+        self,
+        index: int | list[int] | np.ndarray | slice,
+    ) -> Atoms | LmdbAtomsDataset:
+        if isinstance(index, int):
+            return self._get_structure_by_idx(index)
+        else:
+            return LmdbAtomsDataset(self.path, self.idx_subset[index])
+
+    @override
+    def __iter__(self) -> Iterator[ase.Atoms]:
+        for idx in self.idx_subset:
+            yield self._get_structure_by_idx(idx)
+
+    @override
+    def __repr__(self) -> str:
+        return "TODO"
+
+    @property
+    @override
+    def info(self) -> LazyMapping[str, Any]:
+        return self._info
+
+    @property
+    @override
+    def arrays(self) -> LazyMapping[str, np.ndarray]:
+        return self._arrays
+
+    @classmethod
+    @override
+    def load(cls, path: Path) -> LmdbAtomsDataset:
+        return cls(path)
+
+    @classmethod
+    @override
+    def save(
+        cls,
+        path: Path,
+        structures: Iterable[Atoms],
+        description: DatabaseEntry | None = None,
+    ):
+        path.mkdir(parents=True, exist_ok=True)
+
+        one_TB = int(1e12)
+        env = lmdb.open(str(path), map_size=one_TB)
+
+        with env.begin(write=True) as txn:
+            structure_sizes = []
+            per_atom_properties = set()
+            per_structure_properties = set()
+
+            for idx, structure in enumerate(structures):
+                # Save structure
+                txn.put(f"{idx}".encode("ascii"), pickle.dumps(structure))
+
+                # Update metadata
+                structure_sizes.append(len(structure))
+                per_atom_properties.update(
+                    structure.arrays.keys() - {"numbers", "positions"}
+                )
+                per_structure_properties.update(structure.info.keys())
+
+            # Save metadata
+            metadata = LmdbMetadata(
+                structure_sizes=np.array(structure_sizes),
+                per_atom_properties=sorted(per_atom_properties),
+                per_structure_properties=sorted(per_structure_properties),
+            )
+            txn.put("metadata".encode("ascii"), pickle.dumps(metadata))
+
+            # Save description if provided
+            if description:
+                txn.put(
+                    "description".encode("ascii"), pickle.dumps(description)
+                )
+
+        env.close()
 
 
 def _get_info_loader(

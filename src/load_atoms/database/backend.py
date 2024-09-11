@@ -51,11 +51,9 @@ def load_dataset(
 
         # otherwise, use the importer to get the structures
         else:
-            dataset = import_dataset(dataset_id, root, progress, database_entry)
-
-            # cache the structures to disk for future re-use
-            with progress.new_task("Caching to disk"):
-                dataset.save(data_file_path)
+            dataset = import_and_save_dataset(
+                dataset_id, root, progress, database_entry
+            )
 
         log_usage_information(database_entry, progress)
 
@@ -99,7 +97,7 @@ def get_database_entry(
     return db_entry
 
 
-def import_dataset(
+def import_and_save_dataset(
     dataset_id: str,
     root: Path,
     progress: Progress,
@@ -129,8 +127,9 @@ def import_dataset(
         fromlist=["Importer"],
     ).Importer()
 
-    return importer.get_dataset(
-        root_dir=root / "raw-downloads",
+    return importer.save_and_load_dataset(
+        temp_dir=root / "raw-downloads" / dataset_id,
+        data_file_stem=root / dataset_id,
         database_entry=database_entry,
         progress=progress,
     )
