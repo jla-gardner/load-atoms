@@ -9,8 +9,12 @@ from typing import Iterator
 
 import ase.io
 from ase import Atoms
+from typing_extensions import override
 
-from load_atoms.atoms_dataset import AtomsDataset, InMemoryAtomsDataset
+from load_atoms.atoms_dataset import (
+    AtomsDataset,
+    get_file_extension_and_dataset_class,
+)
 from load_atoms.database.database_entry import DatabaseEntry
 from load_atoms.database.internet import download as _download
 from load_atoms.progress import Progress
@@ -79,11 +83,9 @@ class BaseImporter(ABC):
     def __init__(
         self,
         files_to_download: list[FileDownload],
-        tmp_dirname: str | None = None,
         cleanup: bool = True,
     ):
         self.files_to_download = files_to_download
-        self.tmp_dirname = tmp_dirname or "tmp"
         self.cleanup = cleanup
 
     @abstractmethod
@@ -130,8 +132,10 @@ class BaseImporter(ABC):
             A :class:`Progress` object to track the download progress.
         """
 
-        dataset_class = InMemoryAtomsDataset
-        extension = ".pkl"
+        (extension, dataset_class) = get_file_extension_and_dataset_class(
+            database_entry.format
+        )
+
         data_file = data_file_stem.with_suffix(extension)
 
         # ensure file structure exists
@@ -162,10 +166,10 @@ class SingleFileImporter(BaseImporter):
     def __init__(self, url: str, hash: str):
         super().__init__(
             [FileDownload(url, hash)],
-            tmp_dirname=".",
             cleanup=False,
         )
 
+    @override
     def get_structures(
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:

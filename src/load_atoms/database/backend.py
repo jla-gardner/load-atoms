@@ -8,7 +8,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from load_atoms.atoms_dataset import AtomsDataset, InMemoryAtomsDataset
+from load_atoms.atoms_dataset import (
+    AtomsDataset,
+    get_file_extension_and_dataset_class,
+)
 from load_atoms.database.database_entry import (
     LICENSE_URLS,
     DatabaseEntry,
@@ -36,7 +39,6 @@ def load_dataset(
 
     # prepare local paths
     yaml_file_path = root / dataset_id / f"{dataset_id}.yaml"
-    data_file_path = root / dataset_id / f"{dataset_id}.pkl"
     yaml_file_path.parent.mkdir(parents=True, exist_ok=True)
 
     with Progress(f"[bold]{dataset_id}") as progress:
@@ -44,15 +46,26 @@ def load_dataset(
             dataset_id, yaml_file_path, progress
         )
 
+        extension, dataset_class = get_file_extension_and_dataset_class(
+            database_entry.format
+        )
+        data_file_stem = root / dataset_id / dataset_id
+        data_file_path = data_file_stem.with_suffix(extension)
+
         # load the structures from disk if they exist
         if data_file_path.exists():
             with progress.new_task("Reading from disk"):
-                dataset = InMemoryAtomsDataset.load(data_file_path)
+                dataset = dataset_class.load(data_file_path)
 
         # otherwise, use the importer to get the structures
         else:
+            temp_dir = root / "raw-downloads" / dataset_id
             dataset = import_and_save_dataset(
-                dataset_id, root, progress, database_entry
+                dataset_id,
+                temp_dir,
+                data_file_stem,
+                progress,
+                database_entry,
             )
 
         log_usage_information(database_entry, progress)
@@ -99,7 +112,8 @@ def get_database_entry(
 
 def import_and_save_dataset(
     dataset_id: str,
-    root: Path,
+    temp_dir: Path,
+    data_file_stem: Path,
     progress: Progress,
     database_entry: DatabaseEntry,
 ) -> AtomsDataset:
@@ -128,8 +142,8 @@ def import_and_save_dataset(
     ).Importer()
 
     return importer.save_and_load_dataset(
-        temp_dir=root / "raw-downloads" / dataset_id,
-        data_file_stem=root / dataset_id,
+        temp_dir=temp_dir,
+        data_file_stem=data_file_stem,
         database_entry=database_entry,
         progress=progress,
     )

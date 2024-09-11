@@ -103,7 +103,7 @@ class LazyMapping(Mapping[T, Y]):
         return key in self._keys
 
     def __repr__(self) -> str:
-        return f"LazyMapping(keys={self.keys})"
+        return f"LazyMapping(keys={self._keys})"
 
     def __len__(self):
         return len(self._keys)

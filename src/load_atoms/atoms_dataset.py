@@ -11,6 +11,7 @@ from typing import (
     Callable,
     Iterable,
     Iterator,
+    Literal,
     Mapping,
     Sequence,
     TypeVar,
@@ -444,7 +445,7 @@ class InMemoryAtomsDataset(AtomsDataset):
     ):
         path.parent.mkdir(parents=True, exist_ok=True)
         to_save = {
-            "structures": structures,
+            "structures": list(structures),
             "description": description,
         }
         with open(path, "wb") as f:
@@ -473,7 +474,9 @@ class LmdbAtomsDataset(AtomsDataset):
 
         # setup lmdb environment, and keep a transaction open for the lifetime
         # of the dataset (to enable fast reads)
-        self.env = lmdb.open(path, readonly=True, lock=False, map_async=True)
+        self.env = lmdb.open(
+            str(path), readonly=True, lock=False, map_async=True
+        )
         self.txn = self.env.begin(write=False)
 
         self.metadata: LmdbMetadata = pickle.loads(
@@ -677,3 +680,12 @@ def summarise_dataset(
     }
 
     return dump({name: fields}, sort_keys=False, indent=4)
+
+
+def get_file_extension_and_dataset_class(
+    format: Literal["lmdb", "memory"]
+) -> tuple[str, type[AtomsDataset]]:
+    return {
+        "lmdb": (".lmdb", LmdbAtomsDataset),
+        "memory": (".pkl", InMemoryAtomsDataset),
+    }[format]
