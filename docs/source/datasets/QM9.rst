@@ -32,11 +32,11 @@ QM9
         structures: 133,885
         atoms: 2,407,753
         species:
-            H: 51.09%
-            C: 35.16%
-            O: 7.81%
-            N: 5.80%
-            F: 0.14%
+            H: '  51.09%'
+            C: '  35.16%'
+            O: '   7.81%'
+            N: '   5.80%'
+            F: '   0.14%'
         properties:
             per atom: (partial_charges)
             per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, geometry,
@@ -225,3 +225,152 @@ Properties
       - :class:`~str`
       - `InChI <https://en.wikipedia.org/wiki/International_Chemical_Identifier>`_ identifier
 
+
+
+Miscellaneous information
+-------------------------
+
+``QM9`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`QM9`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/qm9.py
+       :language: python
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`QM9`
+
+    .. code-block:: yaml
+
+        name: QM9
+        year: 2014
+        license: CC0
+        category: Benchmarks
+        description: |
+            134k stable organic molecules made up of CHONF and containing up to 9 heavy atoms.
+            Each molecule's geometry was relaxed at the PM7 semi-empirical level of theory, before
+            being labelled with DFT. 
+            For more information, see `Quantum chemistry structures and properties of 
+            134 kilo molecules <https://doi.org/10.1038/sdata.2014.22>`_.
+            Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_,.
+            Energy labels are quoted in eV, relative to the isolated atoms of the molecule.
+        minimum_load_atoms_version: 0.2
+        representative_structure: 23810
+        citation: |
+            @article{Ramakrishnan-17,
+               author={
+                    Ramakrishnan, Raghunathan and Dral, Pavlo O and 
+                    Rupp, Matthias and von Lilienfeld, O Anatole
+               },
+               title = {Data for 133885 GDB-9 molecules},
+               year = {2017},
+               month = {6},
+               doi = {10.6084/m9.figshare.978904_D12}
+            }
+            @article{Ramakrishnan-14,
+                title={
+                    Quantum chemistry structures and properties of 134 kilo molecules
+                },
+                author={
+                    Ramakrishnan, Raghunathan and Dral, Pavlo O and 
+                    Rupp, Matthias and von Lilienfeld, O Anatole
+                },
+                journal={Scientific Data},
+                volume={1},
+                year={2014},
+                publisher={Nature Publishing Group}
+            }
+            @article{Ruddigkeit-12,
+                title = {
+                    Enumeration of 166 {{Billion Organic Small Molecules}} 
+                    in the {{Chemical Universe Database GDB-17}}
+                },
+                author = {
+                    Ruddigkeit, Lars and {van Deursen}, Ruud and 
+                    Blum, Lorenz C. and Reymond, Jean-Louis
+                },
+                year = {2012},
+                journal = {Journal of Chemical Information and Modeling},
+                volume = {52},
+                number = {11},
+                pages = {2864--2875},
+                doi = {10.1021/ci300415d},
+            }
+        per_atom_properties:
+            partial_charges:
+                desc: Mulliken partial atomic charges
+                units: e
+        per_structure_properties:
+            index:
+                desc: consecutive index of molecule
+            A:
+                desc: Rotational constant A
+                units: GHz
+            B:
+                desc: Rotational constant B
+                units: GHz
+            C:
+                desc: Rotational constant C
+                units: GHz
+            mu:
+                desc: Dipole moment
+                units: Debye
+            alpha:
+                desc: Isotropic polarizability
+                units: Bohr\ :math:`^3`
+            homo:
+                desc: HOMO energy
+                units: eV
+            lumo:
+                desc: LUMO energy
+                units: eV
+            gap:
+                desc: HOMO-LUMO energy gap
+                units: eV
+            r2:
+                desc: electronic spatial extent
+                units: Bohr\ :math:`^2`
+            zpve:
+                desc: zero point vibrational energy
+                units: eV
+            U0:
+                desc: internal energy at 0 K
+                units: eV
+            U:
+                desc: internal energy at 298.15 K
+                units: eV
+            H:
+                desc: enthalpy at 298.15 K
+                units: eV
+            G:
+                desc: free energy at 298.15 K
+                units: eV
+            Cv:
+                desc: heat capacity at 298.15 K
+                units: "cal mol\ :math:`^{-1}` K\ :math:`^{-1}`"
+            frequencies:
+                desc: harmonic frequencies
+                units: cm\ :math:`^{-1}`
+            geometry:
+                desc: final geometry check passed
+            smiles:
+                desc: "`SMILES <https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system>`_ string"
+            inchi:
+                desc: "`InChI <https://en.wikipedia.org/wiki/International_Chemical_Identifier>`_ identifier"
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+            - url: https://figshare.com/ndownloader/files/3195389
+              name: dsgdb9nsd.xyz.tar.bz2
+              hash: 3a63848ac806
+        processing:
+            - UnZip
+            - ForEachFile:
+                  pattern: "**/*.xyz"
+                  steps:
+                      - Custom:
+                            id: read_qm9_xyz

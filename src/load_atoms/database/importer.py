@@ -9,8 +9,12 @@ from typing import Iterator
 
 import ase.io
 from ase import Atoms
+from typing_extensions import override
 
-from load_atoms.atoms_dataset import AtomsDataset
+from load_atoms.atoms_dataset import (
+    AtomsDataset,
+    get_file_extension_and_dataset_class,
+)
 from load_atoms.database.database_entry import DatabaseEntry
 from load_atoms.database.internet import download as _download
 from load_atoms.progress import Progress
@@ -79,11 +83,9 @@ class BaseImporter(ABC):
     def __init__(
         self,
         files_to_download: list[FileDownload],
-        tmp_dirname: str | None = None,
         cleanup: bool = True,
     ):
         self.files_to_download = files_to_download
-        self.tmp_dirname = tmp_dirname or "tmp"
         self.cleanup = cleanup
 
     @abstractmethod
@@ -108,54 +110,66 @@ class BaseImporter(ABC):
             An iterator of ASE Atoms objects processed from the downloaded files
         """
 
-    def get_dataset(
+    def save_and_load_dataset(
         self,
-        root_dir: Path,
+        temp_dir: Path,
+        data_file_stem: Path,
         database_entry: DatabaseEntry,
-        progress: Progress | None = None,
+        progress: Progress,
     ) -> AtomsDataset:
         """Get the dataset for this importer.
 
         Parameters
         ----------
-        root_dir
-            The root directory to download the dataset to.
+        temp_dir
+            The temporary directory to download the dataset to.
+        data_file_stem
+            The file path stem (i.e. the file name without the extension) to
+            save the final dataset.
         database_entry
             The database entry for the dataset.
         progress
             A :class:`Progress` object to track the download progress.
         """
 
-        if progress is None:
-            progress = Progress("Processing", transient=True)
+        (extension, dataset_class) = get_file_extension_and_dataset_class(
+            database_entry.format
+        )
 
-        # create a temporary directory for the dataset
-        tmp_dir = root_dir / self.tmp_dirname
-        tmp_dir.mkdir(parents=True, exist_ok=True)
+        data_file = data_file_stem.with_suffix(extension)
 
-        download_all(self.files_to_download, tmp_dir, progress)
+        # ensure file structure exists
+        temp_dir.mkdir(parents=True, exist_ok=True)
+        data_file_stem.parent.mkdir(parents=True, exist_ok=True)
+        if data_file.exists():
+            raise FileExistsError(f"Dataset already exists at {data_file}")
 
-        structures = []
-        for structure in self.get_structures(tmp_dir, progress=progress):
-            del structure.calc
-            structures.append(structure)
+        # download all the required files
+        download_all(self.files_to_download, temp_dir, progress)
+
+        # save and load the dataset
+        def iterator():
+            for structure in self.get_structures(temp_dir, progress=progress):
+                structure.calc = None
+                yield structure
 
         try:
-            return AtomsDataset(structures, database_entry)
+            dataset_class.save(data_file, iterator(), database_entry)
+            return dataset_class.load(data_file)
 
         finally:
             if self.cleanup and not debug_mode() and not testing():
-                shutil.rmtree(tmp_dir)
+                shutil.rmtree(temp_dir)
 
 
 class SingleFileImporter(BaseImporter):
     def __init__(self, url: str, hash: str):
         super().__init__(
             [FileDownload(url, hash)],
-            tmp_dirname=".",
             cleanup=False,
         )
 
+    @override
     def get_structures(
         self, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:

@@ -2,7 +2,7 @@
 # by pydantic for python versions we want to target
 
 from pathlib import Path
-from typing import Dict, Optional, Union
+from typing import Dict, Literal, Optional, Union
 
 import yaml
 from pydantic import BaseModel, field_validator
@@ -56,6 +56,9 @@ class DatabaseEntry(BaseModel):
     The category of the dataset 
     (e.g. ``"Potential Fitting"``, ``"Benchmarks"``)
     """
+
+    format: Literal["lmdb", "memory"] = "memory"
+    """The format of the dataset"""
 
     minimum_load_atoms_version: Union[str, None] = None
     """

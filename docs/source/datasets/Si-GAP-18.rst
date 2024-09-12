@@ -29,7 +29,7 @@ Si-GAP-18
         structures: 2,475
         atoms: 171,815
         species:
-            Si: 100.00%
+            Si: ' 100.00%'
         properties:
             per atom: (forces)
             per structure: (config_type, cutoff, energy, nneightol)
@@ -103,3 +103,77 @@ Properties
       - :class:`~str`
       - category of structure
 
+
+
+Miscellaneous information
+-------------------------
+
+``Si-GAP-18`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`Si-GAP-18`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/si_gap_18.py
+       :language: python
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`Si-GAP-18`
+
+    .. code-block:: yaml
+
+        name: Si-GAP-18
+        year: 2018
+        description: |
+            The complete dataset used to train the `Si-GAP-18 <https://zenodo.org/records/1250555>`_ model
+            from `Machine Learning a General-Purpose Interatomic Potential for Silicon <https://doi.org/10.1103/PhysRevX.8.041048>`_.
+            The CUR algorithm was used to select representative structures from a larger dataset.
+            Energy and force labels were calculated using the PW91 exchange-correlation functional as implemented in :code:`CASTEP`
+            (see :code:`II.B: Database` of the paper).
+        category: Potential Fitting
+        minimum_load_atoms_version: 0.2
+        citation: |
+            @article{Bartok-18-12,
+                title = {
+                    Machine Learning a General-Purpose Interatomic 
+                    Potential for Silicon
+                },
+                author = {
+                    Bart{\'o}k, Albert P. and Kermode, James and Bernstein, 
+                    Noam and Cs{\'a}nyi, G{\'a}bor
+                },
+                year = {2018},
+                journal = {Physical Review X},
+                volume = {8},
+                number = {4},
+                pages = {041048},
+            }
+        license: CC BY-NC-SA 4.0
+        representative_structure: 1283
+        per_atom_properties:
+            forces:
+                desc: force vectors (DFT)
+                units: eV/Å
+        per_structure_properties:
+            energy:
+                desc: total structure energy (DFT)
+                units: eV
+            config_type:
+                desc: category of structure
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - url: https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip
+               hash: 97eb063f9655
+        processing:
+             - UnZip
+             - SelectFile:
+                   file: libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz
+             - ReadASE
+             - Rename:
+                   DFT_force: forces
+                   dft_force: forces
+                   DFT_energy: energy
+                   dft_energy: energy

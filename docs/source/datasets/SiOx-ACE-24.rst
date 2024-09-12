@@ -29,8 +29,8 @@ SiOx-ACE-24
         structures: 11,428
         atoms: 1,258,198
         species:
-            O: 55.82%
-            Si: 44.18%
+            O: '  55.82%'
+            Si: '  44.18%'
         properties:
             per atom: (charge_bader, forces)
             per structure: (config_type, energy, free_energy, stress, virial)
@@ -122,3 +122,90 @@ Properties
       - :class:`~str`
       - category of structure
 
+
+
+Miscellaneous information
+-------------------------
+
+``SiOx-ACE-24`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`SiOx-ACE-24`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/siox_ace_24.py
+       :language: python
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`SiOx-ACE-24`
+
+    .. code-block:: yaml
+
+        name: SiOx-ACE-24
+        year: 2024
+        description: |
+            The training database used to fit the `SiOx-ACE-24 potential <https://zenodo.org/records/10419194>`_ in: 
+            `Modelling atomic and nanoscale structure in the silicon-oxygen system through active machine-learning <https://www.nature.com/articles/s41467-024-45840-9>`_.
+            The dataset comprises structures taken from the `Si-GAP-18 <https://jla-gardner.github.io/load-atoms/datasets/Si-GAP-18.html>`__ 
+            and `SiO2-GAP-22 <https://jla-gardner.github.io/load-atoms/datasets/SiO2-GAP-22.html>`__ datasets, together
+            with new structures generated using an active-learning approach.
+        category: Potential Fitting
+        minimum_load_atoms_version: 0.2
+        license: CC BY 4.0
+        citation: |
+            @article{Erhard-24-03,
+                title = {
+                    Modelling Atomic and Nanoscale Structure in the 
+                    Silicon--Oxygen System through Active Machine Learning
+                },
+                author = {
+                    Erhard, Linus C. and Rohrer, Jochen 
+                    and Albe, Karsten and Deringer, Volker L.
+                },
+                year = {2024},
+                journal = {Nature Communications},
+                volume = {15},
+                number = {1},
+                pages = {1927},
+                doi = {10.1038/s41467-024-45840-9},
+            }
+        representative_structure: 7390
+        per_atom_properties:
+            forces:
+                desc: force vectors (DFT)
+                units: eV/Å
+        per_structure_properties:
+            energy:
+                desc: total structure energy (DFT)
+                units: eV
+            free_energy:
+                desc: total structure free energy (DFT)
+                units: eV
+            virial:
+                desc: virial stress tensor (DFT)
+                units: eV
+            stress:
+                desc: |
+                    | stress tensor (DFT)
+                    | (:code:`- virial / cell.volume`)
+                units: eV Å\ :math:`{}^{-3}`
+            config_type:
+                desc: category of structure
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+            - url: https://zenodo.org/records/10419194/files/database.zip
+              hash: 42eb5808b0aa
+        processing:
+            - UnZip
+            - SelectFile:
+                file: database/training.general_purpose.SiOx.xyz
+            - ReadASE
+            - Rename:
+                dft_forces: forces
+                dft_energy: energy
+                dft_free_energy: free_energy
+                dft_stress: stress
+                dft_virials: virial

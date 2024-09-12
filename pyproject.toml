@@ -23,6 +23,7 @@ dependencies = [
     "pydantic>2.0.0",
     "rich",
     "ipywidgets",
+    "lmdb",
 ]
 requires-python = ">=3.8"
 

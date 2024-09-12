@@ -29,9 +29,9 @@ GST-GAP-22
         structures: 2,692
         atoms: 341,132
         species:
-            Te: 54.51%
-            Ge: 23.64%
-            Sb: 21.85%
+            Te: '  54.51%'
+            Ge: '  23.64%'
+            Sb: '  21.85%'
         properties:
             per atom: (forces)
             per structure: (config_type, energy, sub_config, virial)
@@ -105,3 +105,65 @@ Properties
       - :class:`~str`
       - category of structure
 
+
+
+Miscellaneous information
+-------------------------
+
+``GST-GAP-22`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`GST-GAP-22`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/gst_gap_22.py
+       :language: python
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`GST-GAP-22`
+
+    .. code-block:: yaml
+
+        name: GST-GAP-22
+        year: 2022
+        description: |
+            The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
+            as labelled using the PBE functional.
+            This dataset covers a range of compositions along the :math:`\text{GeTe} \rightarrow \text{Sb}_2\text{Te}_3` pseudo-binary line, and
+            was created using a two-step iterative process. More details are available in the paper's `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41928-023-01030-x/MediaObjects/41928_2023_1030_MOESM1_ESM.pdf>`__.
+            The original data were obtained from `Zenodo <https://zenodo.org/records/8208202>`_.
+        category: Potential Fitting
+        minimum_load_atoms_version: 0.2
+        citation: |
+            @article{Zhou-23-10,
+                title = {Device-Scale Atomistic Modelling of Phase-Change Memory Materials},
+                author = {Zhou, Yuxing and Zhang, Wei and Ma, En and Deringer, Volker L.},
+                year = {2023},
+                journal = {Nature Electronics},
+                volume = {6},
+                number = {10},
+                pages = {746--754},
+                doi = {10.1038/s41928-023-01030-x},
+            }
+        license: CC BY 4.0
+        per_atom_properties:
+            forces:
+                desc: force vectors (PBE DFT)
+                units: eV/Å
+        per_structure_properties:
+            energy:
+                desc: total structure energy (PBE DFT)
+                units: eV
+            virial:
+                desc: virial stress tensor (PBE DFT)
+                units: eV
+            config_type:
+                desc: category of structure
+        representative_structure: 1894
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - name: refitted_GST-GAP-22_PBE.xyz
+               hash: e4c467026dc0

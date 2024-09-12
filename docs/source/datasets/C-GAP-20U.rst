@@ -28,7 +28,7 @@ C-GAP-20U
         structures: 6,088
         atoms: 400,275
         species:
-            C: 100.00%
+            C: ' 100.00%'
         properties:
             per atom: (forces)
             per structure: (config_type, energy, free_energy, stress, virial)
@@ -114,3 +114,71 @@ Properties
       - :class:`~str`
       - category of structure
 
+
+
+Miscellaneous information
+-------------------------
+
+``C-GAP-20U`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`C-GAP-20U`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/c_gap_20u.py
+       :language: python
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`C-GAP-20U`
+
+    .. code-block:: yaml
+
+        name: C-GAP-20U
+        year: 2020
+        description: |
+            The complete dataset used for training the 
+            `C-GAP-20U <https://pubs.aip.org/aip/jcp/article/153/3/034702/1062660/An-accurate-and-transferable-machine-learning>`_
+            interatomic potential for carbon.
+            Suitably converged labels were obtained with revised DFT settings, see `CAM.840-6 <https://doi.org/10.17863/CAM.84096>`_.
+        category: Potential Fitting
+        minimum_load_atoms_version: 0.2
+        citation: |
+            @article{Rowe-20-07,
+                title = {An Accurate and Transferable Machine Learning Potential for Carbon},
+                author = {Rowe, Patrick and Deringer, Volker L. and Gasparotto, Piero and Cs{\'a}nyi, G{\'a}bor and Michaelides, Angelos},
+                year = {2020},
+                journal = {The Journal of Chemical Physics},
+                volume = {153},
+                number = {3},
+                pages = {034702},
+                doi = {10.1063/5.0005084},
+            }
+        license: GPLv3
+        per_atom_properties:
+            forces:
+                desc: force vectors (DFT)
+                units: eV/Å
+        per_structure_properties:
+            energy:
+                desc: total structure energy (DFT)
+                units: eV
+            free_energy:
+                desc: total structure free energy (DFT)
+                units: eV
+            virial:
+                desc: virial stress tensor (DFT)
+                units: eV
+            stress:
+                desc: |
+                    | stress tensor (DFT)
+                    | (:code:`- virial / cell.volume`)
+                units: eV Å\ :math:`{}^{-3}`
+            config_type:
+                desc: category of structure
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - name: C-GAP-20U.xyz
+               hash: da0462802df1

@@ -4,7 +4,7 @@ import hashlib
 import os
 from collections import defaultdict
 from pathlib import Path
-from typing import Callable, Generic, Iterable, Sequence, TypeVar
+from typing import Callable, Iterable, KeysView, Mapping, Sequence, TypeVar
 
 import numpy as np
 
@@ -43,7 +43,7 @@ Y = TypeVar("Y")
 G = TypeVar("G")
 
 
-class LazyMapping(Generic[T, Y]):
+class LazyMapping(Mapping[T, Y]):
     """
     A mapping that lazily loads its values.
 
@@ -82,22 +82,31 @@ class LazyMapping(Generic[T, Y]):
         keys: Sequence[T],
         loader: Callable[[T], Y],
     ):
-        self.keys = keys
+        self._keys = keys
         self.loader = loader
         self._mapping = {}
 
     def __getitem__(self, key: T) -> Y:
-        if key not in self.keys:
+        if key not in self._keys:
             raise KeyError(key)
         if key not in self._mapping:
             self._mapping[key] = self.loader(key)
         return self._mapping[key]
 
-    def __contains__(self, key: T):
-        return key in self.keys
+    def keys(self):
+        return KeysView(self)
+
+    def __iter__(self):
+        return iter(self._keys)
+
+    def __contains__(self, key: object) -> bool:
+        return key in self._keys
 
     def __repr__(self) -> str:
-        return f"LazyMapping(keys={self.keys})"
+        return f"LazyMapping(keys={self._keys})"
+
+    def __len__(self):
+        return len(self._keys)
 
 
 def frontend_url(dataset_info):
@@ -130,8 +139,8 @@ def lpad(thing: str, length: int = 4, fill: str = " "):
 
 
 def random_split(
-    things: list[T],
-    splits: list[int] | list[float],
+    things: Sequence[T],
+    splits: Sequence[int] | Sequence[float],
     seed: int = 0,
 ) -> list[list[T]]:
     """Split a list into random chunks of given sizes."""
@@ -167,8 +176,8 @@ def k_fold_split(
 
 
 def split_keeping_ratio(
-    things_to_split: list[T],
-    group_ids: list[G],
+    things_to_split: Sequence[T],
+    group_ids: Sequence[G],
     splitting_function: Callable[[list[T]], Sequence[list[T]]],
 ):
     assert len(things_to_split) == len(group_ids)
@@ -191,3 +200,48 @@ def split_keeping_ratio(
             final_splits[i].extend(split)
 
     return final_splits
+
+
+def choose_n(things: Sequence[Y], n: int, seed: int = 42) -> list[Y]:
+    idxs = np.random.RandomState(seed).permutation(len(things))
+    return [things[i] for i in idxs[:n]]
+
+
+_default_error_msg = (
+    "This dictionary is read-only: any modifications are ignored."
+)
+
+
+class FrozenDict(dict):
+    """
+    A dictionary that raises an error when any modifications are attempted.
+    """
+
+    def __init__(self, d: dict, error_msg: str = _default_error_msg):
+        super().__init__(d)
+        self.error_msg = error_msg
+
+    def __setitem__(self, key, value):
+        raise ValueError(self.error_msg)
+
+    def __delitem__(self, key):
+        raise ValueError(self.error_msg)
+
+    def clear(self):
+        raise ValueError(self.error_msg)
+
+    def update(self, *args, **kwargs):
+        raise ValueError(self.error_msg)
+
+    def setdefault(self, key, default=None):
+        raise ValueError(self.error_msg)
+
+    def pop(self, key, default=None):
+        raise ValueError(self.error_msg)
+
+    def popitem(self):
+        raise ValueError(self.error_msg)
+
+
+def freeze_dict(d: dict, error_msg: str = _default_error_msg) -> FrozenDict:
+    return FrozenDict(d, error_msg)

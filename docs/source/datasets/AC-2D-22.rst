@@ -25,10 +25,10 @@ AC-2D-22
     >>> from load_atoms import load_dataset
     >>> load_dataset("AC-2D-22")
     AC-2D-22:
-        structures: 150
+        structures: '150'
         atoms: 30,000
         species:
-            C: 100.00%
+            C: ' 100.00%'
         properties:
             per atom: (forces, local_energy, nn_local_energy)
             per structure: (beta, config, criterion)
@@ -114,3 +114,74 @@ Properties
       - :class:`~str`
       - type of the structure (paracrystalline | CRN)
 
+
+
+Miscellaneous information
+-------------------------
+
+``AC-2D-22`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`AC-2D-22`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/ac_2d_22.py
+       :language: python
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`AC-2D-22`
+
+    .. code-block:: yaml
+
+        name: AC-2D-22
+        year: 2022
+        category: Synthetic Data
+        license: CC BY-NC-SA 4.0
+        minimum_load_atoms_version: 0.2
+        description: |
+            Amorphous, 2D graphene structures generated using a Monte Carlo bond-switching algorithm,
+            as described in Figure 3 of the paper: `Exploring the Configurational Space of Amorphous Graphene with Machine-Learned Atomic Energies <https://pubs.rsc.org/en/content/articlelanding/2022/sc/d2sc04326b>`_.
+            Files are downloaded from `Zenodo <https://zenodo.org/records/7221166>`_.
+        citation: |
+            @article{El-Machachi-22-10,
+              title = {
+                Exploring the Configurational Space of Amorphous 
+                Graphene with Machine-Learned Atomic Energies
+              },
+              author = {
+                {El-Machachi}, Zakariya and Wilson, Mark and Deringer, Volker L.
+              },
+              year = {2022},
+              journal = {Chemical Science},
+              doi = {10.1039/D2SC04326B}
+            }
+        per_atom_properties:
+            forces:
+                desc: force vectors (C-GAP-17)
+                units: eV/Å
+            local_energy:
+                desc: local energy of each atom (C-GAP-17)
+                units: eV
+            nn_local_energy:
+                desc: average nearest neighbour local energy (C-GAP-17)
+                units: eV
+        per_structure_properties:
+            beta:
+                desc: β used for MC bond-switching
+                units: 1/eV
+            criterion:
+                desc: energy term used in MC criterion
+            config:
+                desc: type of the structure (paracrystalline | CRN)
+        representative_structure: 61
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - url: https://zenodo.org/record/7221166/files/data.tar.gz
+               hash: 023de5805f15
+        processing:
+             - Custom:
+                   id: AC-2D-22
+        
+        

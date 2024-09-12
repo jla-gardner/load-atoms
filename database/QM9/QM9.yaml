@@ -8,8 +8,7 @@ description: |
     being labelled with DFT. 
     For more information, see `Quantum chemistry structures and properties of 
     134 kilo molecules <https://doi.org/10.1038/sdata.2014.22>`_.
-    Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_, 
-    and using a `custom script <https://github.com/jla-gardner/load-atoms/blob/main/src/load_atoms/database/processing/read_qm9_xyz.py>`__.
+    Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_,.
     Energy labels are quoted in eV, relative to the isolated atoms of the molecule.
 minimum_load_atoms_version: 0.2
 representative_structure: 23810

@@ -36,7 +36,7 @@ class Importer(BaseImporter):
         # 2. read the xyz
         for structure in ase.io.iread(
             contents_path
-            / "libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz"
+            / "libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz"  # noqa: E501
         ):
             yield rename(
                 structure,

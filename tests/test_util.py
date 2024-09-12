@@ -1,6 +1,7 @@
 import pytest
 from load_atoms.utils import (
     LazyMapping,
+    freeze_dict,
     generate_checksum,
     intersect,
     k_fold_split,
@@ -147,3 +148,40 @@ def test_split_keeping_ratio():
     assert len(x) == 16
     assert len(y) == 8
     assert proportions(x) == proportions(y) == proportions(things)
+
+
+def test_frozen_dict():
+    d = dict(a=1, b=2, c=3)
+    fd = freeze_dict(d)
+
+    with pytest.raises(ValueError, match="read-only"):
+        fd["a"] = 3
+    assert fd["a"] == 1
+
+    with pytest.raises(ValueError, match="read-only"):
+        del fd["a"]
+    assert "a" in fd
+
+    with pytest.raises(ValueError, match="read-only"):
+        fd.clear()
+    assert len(fd) == 3
+
+    with pytest.raises(ValueError, match="read-only"):
+        fd.update({"a": 1})
+    assert fd["a"] == 1
+
+    with pytest.raises(ValueError, match="read-only"):
+        fd.setdefault("a", 1)
+    assert fd["a"] == 1
+
+    with pytest.raises(ValueError, match="read-only"):
+        fd.pop("a")
+    assert fd["a"] == 1
+
+    with pytest.raises(ValueError, match="read-only"):
+        fd.popitem()
+    assert fd["a"] == 1
+
+    assert list(fd.keys()) == list(d.keys())
+    assert list(fd.values()) == list(d.values())
+    assert list(fd.items()) == list(d.items())
