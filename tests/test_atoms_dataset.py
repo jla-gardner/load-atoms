@@ -112,10 +112,19 @@ def test_can_load_from_id(tmp_path, dataset):
 )
 def test_summarise(dataset):
     summary = summarise_dataset(STRUCTURES)
-    assert "Dataset" in summary, "The summary should contain the dataset name"
+    assert summary.startswith(
+        "Dataset"
+    ), "Unknown datasets should start like this"
 
     summary = repr(dataset)
     assert "energy" in summary, "The summary should contain the property names"
+    assert summary.startswith(
+        "C-GAP-17"
+    ), "The summary should contain the dataset name"
+
+
+def test_appears_equal():
+    assert str(GAP17) == str(GAP17_LMDB)
 
 
 def test_useful_error_message():
@@ -267,3 +276,21 @@ def test_read_only():
         atoms.info["test"] = 1
     with pytest.raises(ValueError, match="arrays"):
         atoms.arrays["test"] = np.zeros((1, 3))
+
+
+@pytest.mark.parametrize(
+    "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
+)
+def test_filtering(dataset: AtomsDataset):
+    assert len(dataset) == 4530
+
+    # filter out all but the first 10 structures
+    filtered = dataset.filter_by(config_type="bulk_amo")
+    assert len(filtered) == 3410
+
+    bool_idx = [
+        structure.info["config_type"] == "bulk_amo" for structure in dataset
+    ]
+    indexed = dataset[bool_idx]
+    assert len(indexed) == 3410
+    assert np.all(indexed.info["energy"] == filtered.info["energy"])

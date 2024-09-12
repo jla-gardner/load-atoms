@@ -177,7 +177,7 @@ class AtomsDataset(ABC, Sequence[Atoms]):
         name = "Dataset" if not self.description else self.description.name
         per_atom_properties = (
             "("
-            + ",".join(
+            + ", ".join(
                 sorted(
                     set(self.arrays.keys())
                     - {
@@ -189,7 +189,7 @@ class AtomsDataset(ABC, Sequence[Atoms]):
             + ")"
         )
         per_structure_properties = (
-            "(" + ",".join(sorted(self.info.keys())) + ")"
+            "(" + ", ".join(sorted(self.info.keys())) + ")"
         )
         species_counts = self.species_counts()
         species_percentages = {
@@ -210,7 +210,9 @@ class AtomsDataset(ABC, Sequence[Atoms]):
                         "per structure": per_structure_properties,
                     },
                 }
-            }
+            },
+            sort_keys=False,
+            indent=4,
         )
 
     @property
@@ -665,7 +667,7 @@ class LmdbAtomsDataset(AtomsDataset):
 
         # TODO: add warnings to loaders about potential slowness
         self._info: LazyMapping[str, Any] = LazyMapping(
-            self.metadata.per_structure_properties + ["numbers", "positions"],
+            self.metadata.per_structure_properties,
             lambda key: np.array([structure.info[key] for structure in self]),
         )
         self._arrays: LazyMapping[str, np.ndarray] = LazyMapping(
@@ -770,8 +772,8 @@ class LmdbAtomsDataset(AtomsDataset):
         with env.begin(write=True) as txn:
             structure_sizes = []
             species_per_structure = []
-            per_atom_properties = set()
-            per_structure_properties = set()
+            per_atom_properties: list[set[str]] = []
+            per_structure_properties: list[set[str]] = []
 
             for idx, structure in enumerate(structures):
                 # Save structure
@@ -787,17 +789,19 @@ class LmdbAtomsDataset(AtomsDataset):
                         for Z in np.unique(structure.arrays["numbers"])
                     }
                 )
-                per_atom_properties.update(
-                    structure.arrays.keys() - {"numbers", "positions"}
+                per_atom_properties.append(
+                    set(structure.arrays.keys()) - {"numbers", "positions"}
                 )
-                per_structure_properties.update(structure.info.keys())
+                per_structure_properties.append(set(structure.info.keys()))
 
             # Save metadata
             metadata = LmdbMetadata(
                 structure_sizes=np.array(structure_sizes),
                 species_per_structure=species_per_structure,
-                per_atom_properties=sorted(per_atom_properties),
-                per_structure_properties=sorted(per_structure_properties),
+                per_atom_properties=sorted(intersect(per_atom_properties)),
+                per_structure_properties=sorted(
+                    intersect(per_structure_properties)
+                ),
             )
             txn.put("metadata".encode("ascii"), pickle.dumps(metadata))
 
@@ -841,42 +845,6 @@ def summarise_dataset(
     if isinstance(structures, AtomsDataset):
         return str(structures)
     return str(InMemoryAtomsDataset(structures, description))
-
-    # species = sorted(
-    #     union(structure.get_chemical_symbols() for structure in structures)
-    # )
-    # species_counts = {
-    #     s: sum(
-    #         [
-    #             structure.get_chemical_symbols().count(s)
-    #             for structure in structures
-    #         ]
-    #     )
-    #     for s in species
-    # }
-    # species_counts = {
-    #     k: f"{v / number_atoms:.2%}"
-    #     for k, v in sorted(
-    #         species_counts.items(), key=lambda item: item[1], reverse=True
-    #     )
-    # }
-
-    # if N >= 1000:
-    #     N = f"{N:,}"
-    # if number_atoms >= 1000:
-    #     number_atoms = f"{number_atoms:,}"
-
-    # fields = {
-    #     "structures": N,
-    #     "atoms": number_atoms,
-    #     "species": species_counts,
-    #     "properties": {
-    #         "per atom": "(" + ", ".join(per_atom_properties) + ")",
-    #         "per structure": "(" + ", ".join(per_structure_properties) + ")",
-    #     },
-    # }
-
-    # return dump({name: fields}, sort_keys=False, indent=4)
 
 
 def get_file_extension_and_dataset_class(
