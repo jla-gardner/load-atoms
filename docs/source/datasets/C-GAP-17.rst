@@ -28,7 +28,7 @@ C-GAP-17
         structures: 4,530
         atoms: 284,965
         species:
-            C: 100.00%
+            C: ' 100.00%'
         properties:
             per atom: (forces)
             per structure: (config_type, detailed_ct, energy, split)
@@ -110,6 +110,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``C-GAP-17`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`C-GAP-17`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/c_gap_17.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`C-GAP-17`
 
@@ -161,9 +173,3 @@ Properties
         files:
              - name: C-GAP-17.extxyz
                hash: 8dd037b59c88
-
-
-.. dropdown:: Importer script for :code:`C-GAP-17`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/c_gap_17.py
-       :language: python

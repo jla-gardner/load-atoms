@@ -29,8 +29,8 @@ SiOx-ACE-24
         structures: 11,428
         atoms: 1,258,198
         species:
-            O: 55.82%
-            Si: 44.18%
+            O: '  55.82%'
+            Si: '  44.18%'
         properties:
             per atom: (charge_bader, forces)
             per structure: (config_type, energy, free_energy, stress, virial)
@@ -124,6 +124,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``SiOx-ACE-24`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`SiOx-ACE-24`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/siox_ace_24.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`SiOx-ACE-24`
 
@@ -197,9 +209,3 @@ Properties
                 dft_free_energy: free_energy
                 dft_stress: stress
                 dft_virials: virial
-
-
-.. dropdown:: Importer script for :code:`SiOx-ACE-24`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/siox_ace_24.py
-       :language: python

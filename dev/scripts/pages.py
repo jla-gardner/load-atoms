@@ -301,6 +301,24 @@ Properties
 
 
 @register_component
+def importer_code(dataset: AtomsDataset) -> str:
+    assert dataset.description is not None
+    name = dataset.description.name
+    return f"""\
+Miscellaneous information
+-------------------------
+
+``{dataset.description.name}`` is imported as an 
+:class:`~load_atoms.atoms_dataset.{type(dataset).__name__}`:
+
+.. dropdown:: Importer script for :code:`{name}`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/{DatabaseEntry.importer_file_stem(name)}.py
+       :language: python
+"""  # noqa: E501
+
+
+@register_component
 def database_entry(dataset: AtomsDataset) -> str:
     assert dataset.description is not None
     name = dataset.description.name
@@ -314,18 +332,6 @@ def database_entry(dataset: AtomsDataset) -> str:
 
 {entry}
 """
-
-
-@register_component
-def importer_code(dataset: AtomsDataset) -> str:
-    assert dataset.description is not None
-    name = dataset.description.name
-    return f"""\
-.. dropdown:: Importer script for :code:`{name}`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/{DatabaseEntry.importer_file_stem(name)}.py
-       :language: python
-"""  # noqa: E501
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

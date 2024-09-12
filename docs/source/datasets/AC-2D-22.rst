@@ -28,7 +28,7 @@ AC-2D-22
         structures: '150'
         atoms: 30,000
         species:
-            C: 100.00%
+            C: ' 100.00%'
         properties:
             per atom: (forces, local_energy, nn_local_energy)
             per structure: (beta, config, criterion)
@@ -116,6 +116,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``AC-2D-22`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`AC-2D-22`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/ac_2d_22.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`AC-2D-22`
 
@@ -173,9 +185,3 @@ Properties
                    id: AC-2D-22
         
         
-
-
-.. dropdown:: Importer script for :code:`AC-2D-22`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/ac_2d_22.py
-       :language: python

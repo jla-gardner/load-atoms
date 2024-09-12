@@ -28,8 +28,8 @@ SiO2-GAP-22
         structures: 3,074
         atoms: 268,118
         species:
-            O: 66.47%
-            Si: 33.53%
+            O: '  66.47%'
+            Si: '  33.53%'
         properties:
             per atom: (forces)
             per structure: (config_type, energy, free_energy, virial)
@@ -117,6 +117,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``SiO2-GAP-22`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`SiO2-GAP-22`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/sio2_gap_22.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`SiO2-GAP-22`
 
@@ -180,9 +192,3 @@ Properties
             - ReadASE
             - Rename:
                 virials: virial
-
-
-.. dropdown:: Importer script for :code:`SiO2-GAP-22`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/sio2_gap_22.py
-       :language: python

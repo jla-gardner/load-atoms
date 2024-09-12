@@ -29,7 +29,7 @@ Si-GAP-18
         structures: 2,475
         atoms: 171,815
         species:
-            Si: 100.00%
+            Si: ' 100.00%'
         properties:
             per atom: (forces)
             per structure: (config_type, cutoff, energy, nneightol)
@@ -105,6 +105,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``Si-GAP-18`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`Si-GAP-18`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/si_gap_18.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`Si-GAP-18`
 
@@ -165,9 +177,3 @@ Properties
                    dft_force: forces
                    DFT_energy: energy
                    dft_energy: energy
-
-
-.. dropdown:: Importer script for :code:`Si-GAP-18`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/si_gap_18.py
-       :language: python

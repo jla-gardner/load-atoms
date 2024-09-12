@@ -28,7 +28,7 @@ C-GAP-20U
         structures: 6,088
         atoms: 400,275
         species:
-            C: 100.00%
+            C: ' 100.00%'
         properties:
             per atom: (forces)
             per structure: (config_type, energy, free_energy, stress, virial)
@@ -116,6 +116,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``C-GAP-20U`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`C-GAP-20U`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/c_gap_20u.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`C-GAP-20U`
 
@@ -170,9 +182,3 @@ Properties
         files:
              - name: C-GAP-20U.xyz
                hash: da0462802df1
-
-
-.. dropdown:: Importer script for :code:`C-GAP-20U`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/c_gap_20u.py
-       :language: python

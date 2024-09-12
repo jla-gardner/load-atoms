@@ -27,7 +27,7 @@ C-SYNTH-23M
         structures: 115,206
         atoms: 23,041,200
         species:
-            C: 100.00%
+            C: ' 100.00%'
         properties:
             per atom: (forces, local_energies)
             per structure: (anneal_T, density, energy, run_id, time)
@@ -120,6 +120,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``C-SYNTH-23M`` is imported as an 
+:class:`~load_atoms.atoms_dataset.LmdbAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`C-SYNTH-23M`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/c_synth_23m.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`C-SYNTH-23M`
 
@@ -187,9 +199,3 @@ Properties
              - Rename:
                    gap17_forces: forces
                    gap17_energy: local_energies
-
-
-.. dropdown:: Importer script for :code:`C-SYNTH-23M`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/c_synth_23m.py
-       :language: python

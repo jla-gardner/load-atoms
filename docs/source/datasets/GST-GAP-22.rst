@@ -29,9 +29,9 @@ GST-GAP-22
         structures: 2,692
         atoms: 341,132
         species:
-            Te: 54.51%
-            Ge: 23.64%
-            Sb: 21.85%
+            Te: '  54.51%'
+            Ge: '  23.64%'
+            Sb: '  21.85%'
         properties:
             per atom: (forces)
             per structure: (config_type, energy, sub_config, virial)
@@ -107,6 +107,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``GST-GAP-22`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`GST-GAP-22`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/gst_gap_22.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`GST-GAP-22`
 
@@ -155,9 +167,3 @@ Properties
         files:
              - name: refitted_GST-GAP-22_PBE.xyz
                hash: e4c467026dc0
-
-
-.. dropdown:: Importer script for :code:`GST-GAP-22`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/gst_gap_22.py
-       :language: python

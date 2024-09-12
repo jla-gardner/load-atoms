@@ -28,7 +28,7 @@ P-GAP-20
         structures: 4,798
         atoms: 140,910
         species:
-            P: 100.00%
+            P: ' 100.00%'
         properties:
             per atom: (forces)
             per structure: (energy)
@@ -100,6 +100,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``P-GAP-20`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`P-GAP-20`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/p_gap_20.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`P-GAP-20`
 
@@ -148,9 +160,3 @@ Properties
         files:
              - url: https://zenodo.org/record/4003703/files/P_GAP_20_fitting_data.xyz
                hash: ab3059018068
-
-
-.. dropdown:: Importer script for :code:`P-GAP-20`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/p_gap_20.py
-       :language: python

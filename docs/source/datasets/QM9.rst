@@ -32,11 +32,11 @@ QM9
         structures: 133,885
         atoms: 2,407,753
         species:
-            H: 51.09%
-            C: 35.16%
-            O: 7.81%
-            N: 5.80%
-            F: 0.14%
+            H: '  51.09%'
+            C: '  35.16%'
+            O: '   7.81%'
+            N: '   5.80%'
+            F: '   0.14%'
         properties:
             per atom: (partial_charges)
             per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, geometry,
@@ -227,6 +227,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``QM9`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`QM9`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/qm9.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`QM9`
 
@@ -362,9 +374,3 @@ Properties
                   steps:
                       - Custom:
                             id: read_qm9_xyz
-
-
-.. dropdown:: Importer script for :code:`QM9`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/qm9.py
-       :language: python

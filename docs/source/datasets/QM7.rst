@@ -28,11 +28,11 @@ QM7
         structures: 7,165
         atoms: 110,650
         species:
-            H: 56.00%
-            C: 32.32%
-            N: 6.01%
-            O: 5.40%
-            S: 0.27%
+            H: '  56.00%'
+            C: '  32.32%'
+            N: '   6.01%'
+            O: '   5.40%'
+            S: '   0.27%'
         properties:
             per atom: ()
             per structure: (energy)
@@ -104,6 +104,18 @@ Properties
 
 
 
+Miscellaneous information
+-------------------------
+
+``QM7`` is imported as an 
+:class:`~load_atoms.atoms_dataset.InMemoryAtomsDataset`:
+
+.. dropdown:: Importer script for :code:`QM7`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/qm7.py
+       :language: python
+
+
 
 .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`QM7`
 
@@ -164,9 +176,3 @@ Properties
         files:
              - name: QM7.extxyz
                hash: c9dcec505f4d
-
-
-.. dropdown:: Importer script for :code:`QM7`
-
-    .. literalinclude:: ../../../src/load_atoms/database/importers/qm7.py
-       :language: python

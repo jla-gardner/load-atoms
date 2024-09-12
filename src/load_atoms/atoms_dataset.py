@@ -193,7 +193,7 @@ class AtomsDataset(ABC, Sequence[Atoms]):
         )
         species_counts = self.species_counts()
         species_percentages = {
-            symbol: f"{count / self.n_atoms * 100:0.2f}%"
+            symbol: f"{count / self.n_atoms * 100:0.2f}%".rjust(8)
             for symbol, count in sorted(
                 species_counts.items(), key=lambda item: item[1], reverse=True
             )
@@ -553,7 +553,13 @@ class AtomsDataset(ABC, Sequence[Atoms]):
 
 
 class InMemoryAtomsDataset(AtomsDataset):
-    """An in-memory implementation of AtomsDataset."""
+    """
+    An in-memory implementation of :class:`AtomsDataset`.
+
+    Internally, this class wraps a :class:`list` of :class:`ase.Atoms` objects,
+    all of which are stored in RAM. Suitable for small to moderately large
+    datasets.
+    """
 
     def __init__(
         self,
@@ -638,7 +644,21 @@ class LmdbMetadata:
 
 
 class LmdbAtomsDataset(AtomsDataset):
-    """An LMDB-backed implementation of AtomsDataset."""
+    r"""
+    An LMDB-backed implementation of :class:`AtomsDataset`.
+
+    Internally, this class wraps an :class:`lmdb.Environment` object, which
+    stores the dataset in an LMDB database. Suitable for large datasets that
+    cannot fit in memory. Accessing data from this dataset type is (marginally)
+    slower than for :class:`InMemoryAtomsDataset`\ s, but allows for efficient
+    processing of extremely large datasets that cannot otherwise fit in memory.
+
+    .. warning::
+
+        The :class:`ase.Atoms` objects in an LMDB dataset are read-only.
+        Modifying the :code:`.info` or :code:`.arrays` of an :class:`ase.Atoms`
+        object will have no effect, and will instead throw an error.
+    """
 
     def __init__(self, path: Path, idx_subset: np.ndarray | None = None):
         self.path = path
