@@ -108,3 +108,62 @@ Properties
         | (:code:`train` | :code:`test`)
         
 
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`C-GAP-17`
+
+    .. code-block:: yaml
+
+        name: C-GAP-17
+        year: 2017
+        description: |
+            The complete dataset and labels used to train and test the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ 
+            interatomic potential for amorphous carbon.
+            This dataset was built in an iterative manner, and contains 4,530 structures, covering a wide range of densities, temperatures and degrees of dis/order.
+            More detail can be found in the paper's `supplementary information <https://doi.org/10.17863/CAM.7453>`__.
+        minimum_load_atoms_version: 0.2
+        category: Potential Fitting
+        citation: |
+            @article{Deringer-17,
+                title = {
+                    Machine learning based interatomic potential for amorphous carbon
+                },
+                volume = {95},
+                number = {9},
+                journal = {Physical Review B},
+                author = {Deringer, Volker L. and Cs{\'a}nyi, G{\'a}bor},    
+                year = {2017},
+                pages = {094203},
+                doi = {10.1103/PhysRevB.95.094203},
+            }
+        license: CC BY-NC-SA 4.0
+        per_atom_properties:
+            forces:
+                desc: force vectors (DFT)
+                units: eV/Å
+        per_structure_properties:
+            energy:
+                desc: total structure energy (DFT)
+                units: eV
+            config_type:
+                desc: |
+                    | category of structure 
+                    | (:code:`dimer` | :code:`bulk_amo` | :code:`bulk_cryst` | :code:`surf_amo`)
+            split:
+                desc: |
+                    | the original test/train split
+                    | (:code:`train` | :code:`test`)
+        representative_structure: 1926
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - name: C-GAP-17.extxyz
+               hash: 8dd037b59c88
+
+
+.. dropdown:: Importer script for :code:`C-GAP-17`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/c_gap_17.py
+       :language: python

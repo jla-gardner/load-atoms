@@ -102,3 +102,71 @@ Properties
       - :class:`~float64`
       - atomisation energy (DFT)
 
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`QM7`
+
+    .. code-block:: yaml
+
+        name: QM7
+        year: 2012
+        description: |
+            A collection of 7,165 saturated, small molecules containing up to 7 heavy atoms,
+            with geometries relaxed using an empirical potential. Atomisation energies were calculated similarly to a FHI-AIMS implementation of the Perdew-Burke-Ernzerhof hybrid functional (PBE0).
+            Original files were obtained from `quantum-machine.org <http://quantum-machine.org/datasets/>`_.
+            Energies have been converted from kcal/mol to eV.
+        category: Benchmarks
+        minimum_load_atoms_version: 0.2
+        per_structure_properties:
+            energy:
+                desc: atomisation energy (DFT)
+                units: eV
+        representative_structure: 6492
+        citation: |
+            @inproceedings{Montavon-12,
+                author = {
+                    Montavon, Gr\'{e}goire and Hansen, Katja 
+                    and Fazli, Siamac and Rupp, Matthias 
+                    and Biegler, Franziska and Ziehe, Andreas 
+                    and Tkatchenko, Alexandre and Lilienfeld, Anatole 
+                    and M\"{u}ller, Klaus-Robert
+                },
+                booktitle = {Advances in Neural Information Processing Systems},
+                editor = {F. Pereira and C.J. Burges and L. Bottou and K.Q. Weinberger},
+                title = {
+                    Learning Invariant Representations of Molecules 
+                    for Atomization Energy Prediction
+                },
+                volume = {25},
+                year = {2012}
+            }
+            @article{Rupp-12,
+                title = {
+                    Fast and Accurate Modeling of Molecular 
+                    Atomization Energies with Machine Learning
+                },
+                author = {
+                    Rupp, Matthias and Tkatchenko, Alexandre 
+                    and M{\"u}ller, Klaus-Robert and {von Lilienfeld}, O. Anatole
+                },
+                year = {2012},
+                journal = {Physical Review Letters},
+                volume = {108},
+                number = {5},
+                pages = {058301},
+                doi = {10.1103/PhysRevLett.108.058301}
+            }
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - name: QM7.extxyz
+               hash: c9dcec505f4d
+
+
+.. dropdown:: Importer script for :code:`QM7`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/qm7.py
+       :language: python

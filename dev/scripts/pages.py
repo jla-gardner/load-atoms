@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shutil
 from pathlib import Path
 from typing import Any, Callable, TypedDict
@@ -15,6 +16,8 @@ from load_atoms.database.database_entry import (
     PropertyDescription,
 )
 from load_atoms.utils import lpad
+
+os.environ["LOAD_ATOMS_DEBUG"] = "1"
 
 # this file is at dev/scripts/pages.py
 _PROJECT_ROOT = Path(__file__).parent.parent.parent
@@ -32,9 +35,9 @@ def build_docs_page_for(name: str):
     )
     dataset = load_dataset(name, root=_DOWNLOAD_DIR)
 
-    compute_info(dataset)  # type: ignore
+    compute_info(dataset)
 
-    raw_rst = "\n\n".join(func(dataset) for func in _page_component_generators)  # type: ignore
+    raw_rst = "\n\n".join(func(dataset) for func in _page_component_generators)
     with open(_DOC_SOURCE / "datasets" / f"{name}.rst", "w") as f:
         f.write(raw_rst)
 
@@ -297,19 +300,32 @@ Properties
 """
 
 
-# @register_component
-# def database_entry(dataset: AtomsDataset) -> str:
-#     name = dataset.description.name
-#     file = _PROJECT_ROOT / "database" / name / f"{name}.yaml"
-#     entry = lpad(file.read_text(), 8)
-#     return f"""\
+@register_component
+def database_entry(dataset: AtomsDataset) -> str:
+    assert dataset.description is not None
+    name = dataset.description.name
+    file = _PROJECT_ROOT / "database" / name / f"{name}.yaml"
+    entry = lpad(file.read_text(), 8)
+    return f"""\
 
-# .. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`{name}`
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`{name}`
 
-#     .. code-block:: yaml
+    .. code-block:: yaml
 
-# {entry}
-# """
+{entry}
+"""
+
+
+@register_component
+def importer_code(dataset: AtomsDataset) -> str:
+    assert dataset.description is not None
+    name = dataset.description.name
+    return f"""\
+.. dropdown:: Importer script for :code:`{name}`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/{DatabaseEntry.importer_file_stem(name)}.py
+       :language: python
+"""  # noqa: E501
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -347,7 +363,7 @@ def compute_info(dataset: AtomsDataset) -> ComputedInfo:
 def get_info(dataset_name: str) -> ComputedInfo:
     if not (_INFO_DIR / f"{dataset_name}-computed.yaml").exists():
         dataset = load_dataset(dataset_name, root=_DOWNLOAD_DIR)
-        return compute_info(dataset)  # type: ignore
+        return compute_info(dataset)
     else:
         with open(_INFO_DIR / f"{dataset_name}-computed.yaml") as f:
             return yaml.safe_load(f)

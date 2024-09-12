@@ -213,6 +213,10 @@ _default_error_msg = (
 
 
 class FrozenDict(dict):
+    """
+    A dictionary that raises an error when any modifications are attempted.
+    """
+
     def __init__(self, d: dict, error_msg: str = _default_error_msg):
         super().__init__(d)
         self.error_msg = error_msg

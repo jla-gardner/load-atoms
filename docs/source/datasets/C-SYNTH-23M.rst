@@ -118,3 +118,78 @@ Properties
       - :class:`~int64`
       - timestep of the structure in the trajectory
 
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`C-SYNTH-23M`
+
+    .. code-block:: yaml
+
+        name: C-SYNTH-23M
+        year: 2022
+        description: |
+            The complete "synthetic" dataset of carbon structures from `Synthetic Data Enable Experiments in Atomistic Machine Learning <https://doi.org/10.1039/D2DD00137C>`_.
+            This dataset comprises 546 uncorrelated MD trajectories, each containing 200 atoms, driven by the `C-GAP-17 <https://doi.org/10.1103/PhysRevB.95.094203>`_ interatomic potential,
+            and sampled every 1ps. The structures cover a wide range of densities, temperatures and degrees of dis/order.
+        category: Synthetic Data
+        license: MIT
+        minimum_load_atoms_version: 0.2
+        format: lmdb
+        citation: |
+            @article{Gardner-23-03,
+              title = {
+                Synthetic Data Enable Experiments in Atomistic Machine Learning
+              },
+              author = {
+                Gardner, John L. A. and Beaulieu, Zo{\'e} Faure 
+                and Deringer, Volker L.
+              },
+              year = {2023},
+              journal = {Digital Discovery},
+              doi = {10.1039/D2DD00137C},
+            }
+        representative_structure: 199
+        per_atom_properties:
+            forces:
+                desc: force vectors (C-GAP-17)
+                units: eV/Å
+            local_energies:
+                desc: local energies (C-GAP-17)
+                units: eV
+        per_structure_properties:
+            energy:
+                desc: total energy of the structure (C-GAP-17)
+                units: eV
+            anneal_T:
+                desc: annealing temperature
+                units: K
+            density:
+                desc: density of the structure
+                units: g cm\ :math:`{}^{-3}`
+            run_id:
+                desc: unique identifier for the trajectory
+            time:
+                desc: timestep of the structure in the trajectory
+                units: ps
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+             - url: https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip
+               hash: b43fc702ef6d
+        processing:
+             - UnZip
+             - ForEachFile:
+                   pattern: "**/*.extxyz"
+                   steps:
+                       - ReadASE
+             - Rename:
+                   gap17_forces: forces
+                   gap17_energy: local_energies
+
+
+.. dropdown:: Importer script for :code:`C-SYNTH-23M`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/c_synth_23m.py
+       :language: python

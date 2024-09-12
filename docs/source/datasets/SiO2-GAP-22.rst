@@ -115,3 +115,74 @@ Properties
       - :class:`~str`
       - category of structure
 
+
+
+
+.. dropdown:: :class:`~load_atoms.database.DatabaseEntry` for :code:`SiO2-GAP-22`
+
+    .. code-block:: yaml
+
+        name: SiO2-GAP-22
+        year: 2022
+        description: |
+            The training database used to fit the `GAP-22 potential for silica <https://zenodo.org/records/6353684>`_ in: 
+            `A Machine-Learned Interatomic Potential for Silica and Its Relation to Empirical Models <https://doi.org/10.1038/s41524-022-00768-w>`_.
+            The dataset was generated using an iterative approach, in some cases driven by an emprical potential. More details are available in the 
+            `supplementary information <https://static-content.springer.com/esm/art%3A10.1038%2Fs41524-022-00768-w/MediaObjects/41524_2022_768_MOESM1_ESM.pdf>`_.
+        category: Potential Fitting
+        minimum_load_atoms_version: 0.2
+        license: CC BY 4.0
+        citation: |
+            @article{Erhard-22-04,
+              title = {
+                A Machine-Learned Interatomic Potential for Silica 
+                and Its Relation to Empirical Models
+              },
+              author = {
+                Erhard, Linus C. and Rohrer, Jochen 
+                and Albe, Karsten and Deringer, Volker L.
+              },
+              year = {2022},
+              journal = {npj Computational Materials},
+              volume = {8},
+              number = {1},
+              pages = {1--12},
+            }
+        per_atom_properties:
+            forces:
+                desc: force vectors (DFT)
+                units: eV/Å
+        per_structure_properties:
+            energy:
+                desc: total structure energy (DFT)
+                units: eV
+            virial:
+                desc: virial stress tensor (DFT)
+                units: eV
+            stress:
+                desc: |
+                    | stress tensor (DFT)
+                    | (:code:`- virial / cell.volume`)
+                units: eV Å\ :math:`{}^{-3}`
+            config_type:
+                desc: category of structure
+        
+        
+        # TODO: remove after Dec 2024
+        # backwards compatability: unused as of 0.3.0
+        files:
+            - url: https://zenodo.org/records/6353684/files/sio2_potential_data.zip
+              hash: 98ea6e58f6d9
+        processing:
+            - UnZip
+            - SelectFile:
+                file: sio2_potential_data/database/dataset.scan.2.xyz
+            - ReadASE
+            - Rename:
+                virials: virial
+
+
+.. dropdown:: Importer script for :code:`SiO2-GAP-22`
+
+    .. literalinclude:: ../../../src/load_atoms/database/importers/sio2_gap_22.py
+       :language: python
