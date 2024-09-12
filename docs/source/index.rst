@@ -59,6 +59,24 @@ We provide several :doc:`dataset-level operations <api/dataset>`:
 
    >>> trainset, testset = dataset.random_split([0.9, 0.1], seed=42)
 
+``pip`` installing ``load-atoms`` also installs a command line interface for downloading datasets to
+local files that are readable by :func:`ase.io.read`:
+
+.. code-block:: bash
+
+   $ load-atoms -h
+   usage: load-atoms [-h] [--format FORMAT] [--root ROOT] dataset_id
+
+   Download a load_atoms dataset from the internet to a local, `ase.io.read`able file.
+
+   positional arguments:
+   dataset_id       ID of the dataset to download
+
+   optional arguments:
+   -h, --help       show this help message and exit
+   --format FORMAT  Format to save the dataset in. Must be one of the formats supported by `ase.io.write`.
+   --root ROOT      Root directory to save the dataset (default: current directory)
+
 
 Contributing
 ------------
