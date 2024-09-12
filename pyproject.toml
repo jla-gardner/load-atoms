@@ -51,6 +51,9 @@ dev = [
 [project.urls]
 Homepage = "https://github.com/jla-gardner/load-atoms"
 
+[project.scripts]
+load-atoms = "load_atoms.scripts.cli:main"
+
 [tool.bumpver]
 current_version = "0.3.0"
 version_pattern = "MAJOR.MINOR.PATCH"
