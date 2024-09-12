@@ -205,3 +205,39 @@ def split_keeping_ratio(
 def choose_n(things: Sequence[Y], n: int, seed: int = 42) -> list[Y]:
     idxs = np.random.RandomState(seed).permutation(len(things))
     return [things[i] for i in idxs[:n]]
+
+
+_default_error_msg = (
+    "This dictionary is read-only: any modifications are ignored."
+)
+
+
+class FrozenDict(dict):
+    def __init__(self, d: dict, error_msg: str = _default_error_msg):
+        super().__init__(d)
+        self.error_msg = error_msg
+
+    def __setitem__(self, key, value):
+        raise ValueError(self.error_msg)
+
+    def __delitem__(self, key):
+        raise ValueError(self.error_msg)
+
+    def clear(self):
+        raise ValueError(self.error_msg)
+
+    def update(self, *args, **kwargs):
+        raise ValueError(self.error_msg)
+
+    def setdefault(self, key, default=None):
+        raise ValueError(self.error_msg)
+
+    def pop(self, key, default=None):
+        raise ValueError(self.error_msg)
+
+    def popitem(self):
+        raise ValueError(self.error_msg)
+
+
+def freeze_dict(d: dict, error_msg: str = _default_error_msg) -> FrozenDict:
+    return FrozenDict(d, error_msg)

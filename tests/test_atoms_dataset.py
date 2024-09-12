@@ -1,3 +1,4 @@
+import shutil
 from pathlib import Path
 
 import numpy as np
@@ -5,12 +6,24 @@ import pytest
 from ase import Atoms
 from ase.io import read, write
 from load_atoms import load_dataset
-from load_atoms.atoms_dataset import AtomsDataset, summarise_dataset
+from load_atoms.atoms_dataset import (
+    AtomsDataset,
+    LmdbAtomsDataset,
+    summarise_dataset,
+)
 from load_atoms.utils import UnknownDatasetException
 from setup import TESTING_DIR
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
 GAP17 = load_dataset("C-GAP-17", root=TESTING_DIR)
+
+shutil.rmtree(TESTING_DIR / "gap17.lmdb", ignore_errors=True)
+LmdbAtomsDataset.save(
+    path=TESTING_DIR / "gap17.lmdb",
+    structures=GAP17,
+    description=GAP17.description,
+)
+GAP17_LMDB = LmdbAtomsDataset(TESTING_DIR / "gap17.lmdb")
 
 
 def _is_water_dataset(dataset):
@@ -84,19 +97,24 @@ def test_indexing():
     ), "Indexing should return the correct number of structures"
 
 
-def test_can_load_from_id(tmp_path):
-    assert len(GAP17) == 4530
+@pytest.mark.parametrize(
+    "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
+)
+def test_can_load_from_id(tmp_path, dataset):
+    assert len(dataset) == 4530
 
     with pytest.raises(UnknownDatasetException):
         load_dataset("made_up_dataset", root=tmp_path)
 
 
-def test_summarise():
-    dataset = load_dataset(STRUCTURES)
-    summary = summarise_dataset(dataset)
+@pytest.mark.parametrize(
+    "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
+)
+def test_summarise(dataset):
+    summary = summarise_dataset(STRUCTURES)
     assert "Dataset" in summary, "The summary should contain the dataset name"
 
-    summary = repr(GAP17)
+    summary = repr(dataset)
     assert "energy" in summary, "The summary should contain the property names"
 
 
@@ -125,12 +143,15 @@ def test_useful_warning(tmp_path):
         load_dataset(tmp_path / "test.xyz")
 
 
-def test_info_and_arrays():
-    assert "energy" in GAP17.info
-    assert isinstance(GAP17.info["energy"], np.ndarray)
+@pytest.mark.parametrize(
+    "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
+)
+def test_info_and_arrays(dataset):
+    assert "energy" in dataset.info
+    assert isinstance(dataset.info["energy"], np.ndarray)
 
-    assert "positions" in GAP17.arrays
-    assert GAP17.arrays["positions"].shape[-1] == 3
+    assert "positions" in dataset.arrays
+    assert dataset.arrays["positions"].shape[-1] == 3
 
 
 def test_properties():
@@ -145,84 +166,104 @@ def _get_proportion(config_type, dataset):
     return np.sum(dataset.info["config_type"] == config_type) / len(dataset)
 
 
-def test_random_split():
+@pytest.mark.parametrize(
+    "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
+)
+def test_random_split(dataset):
     # request integer splits
-    train, test = GAP17.random_split([100, 50])
+    train, test = dataset.random_split([100, 50])
     assert len(train) == 100
     assert len(test) == 50
 
     # request float splits
-    n = len(GAP17)
-    a, b, c = GAP17.random_split([0.5, 0.25, 0.25])
+    n = len(dataset)
+    a, b, c = dataset.random_split([0.5, 0.25, 0.25])
     assert len(a) == n // 2
     assert len(b) in [n // 4, n // 4 + 1]
     assert len(c) in [n // 4, n // 4 + 1]
 
     # test keep ratio
-    assert "config_type" in GAP17.info
-    assert "bulk_amo" in GAP17.info["config_type"]
+    assert "config_type" in dataset.info
+    assert "bulk_amo" in dataset.info["config_type"]
 
     # ... with floats
-    a, b = GAP17.random_split([0.5, 0.5], keep_ratio="config_type")
-    assert len(a) + len(b) == len(GAP17)
+    a, b = dataset.random_split([0.5, 0.5], keep_ratio="config_type")
+    assert len(a) + len(b) == len(dataset)
     assert np.isclose(
-        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", GAP17)
+        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", dataset)
     )
 
     # ... with ints
-    a, b = GAP17.random_split([500, 500], keep_ratio="config_type")
+    a, b = dataset.random_split([500, 500], keep_ratio="config_type")
     assert np.isclose(
         _get_proportion("bulk_amo", a),
-        _get_proportion("bulk_amo", GAP17),
+        _get_proportion("bulk_amo", dataset),
         atol=0.01,
     )
     assert len(a) == len(b) == 500
 
     # test error
-    assert "made_up" not in GAP17.info
+    assert "made_up" not in dataset.info
     with pytest.raises(KeyError):
-        GAP17.random_split([0.5, 0.5], keep_ratio="made_up")
+        dataset.random_split([0.5, 0.5], keep_ratio="made_up")
 
 
-def test_k_fold_split():
+@pytest.mark.parametrize(
+    "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
+)
+def test_k_fold_split(dataset):
     # error messages
     with pytest.raises(ValueError, match="k must be at least 2"):
-        GAP17.k_fold_split(k=1)
+        dataset.k_fold_split(k=1)
 
     # atoms are not hashable, so we set a unique id for each structure
-    for i, structure in enumerate(GAP17):
-        structure.info["id"] = i
+    def get_id(structure):
+        return float(
+            structure.info["energy"] + np.abs(structure.arrays["forces"]).sum()
+        )
 
-    a, b = GAP17.k_fold_split(5, fold=0, shuffle=False)
-    assert a[0] == GAP17[0]
+    a, b = dataset.k_fold_split(5, fold=0, shuffle=False)
+    assert a[0] == dataset[0]
 
-    a, b = GAP17.k_fold_split(5, fold=0)
+    a, b = dataset.k_fold_split(5, fold=0)
     assert len(a) == 3624
     assert len(b) == 906
-    assert set(a.info["id"]) & set(b.info["id"]) == set()
+    a_ids = set(map(get_id, a))
+    b_ids = set(map(get_id, b))
+    assert a_ids & b_ids == set()
 
-    c, d = GAP17.k_fold_split(5, fold=1)
-    # ensure that b is completely wihin c
-    assert set(b.info["id"]) <= set(c.info["id"])
+    c, d = dataset.k_fold_split(5, fold=1)
+    c_ids = set(map(get_id, c))
+    # ensure that b is completely within c
+    assert b_ids <= c_ids
 
     # ensure that the folds completely cover the dataset
-    all_test = []
+    all_test_ids = []
     for i in range(5):
-        _, test = GAP17.k_fold_split(5, fold=i)
-        all_test.extend(test.info["id"])
+        _, test = dataset.k_fold_split(5, fold=i)
+        all_test_ids.extend(list(map(get_id, test)))
 
-    assert len(set(all_test)) == len(GAP17)
+    assert len(set(all_test_ids)) == len(dataset)
 
     # test keep ratio
-    a, b = GAP17.k_fold_split(k=5, fold=0, keep_ratio="config_type")
+    a, b = dataset.k_fold_split(k=5, fold=0, keep_ratio="config_type")
     assert np.isclose(
-        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", GAP17)
+        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", dataset)
     )
 
     # test error
-    assert "made_up" not in GAP17.info
+    assert "made_up" not in dataset.info
     with pytest.raises(KeyError):
-        GAP17.k_fold_split(5, fold=0, keep_ratio="made_up")
+        dataset.k_fold_split(5, fold=0, keep_ratio="made_up")
 
     with pytest.raises(ValueError, match="only supported when shuffling"):
-        GAP17.k_fold_split(5, fold=0, keep_ratio="config_type", shuffle=False)
+        dataset.k_fold_split(5, fold=0, keep_ratio="config_type", shuffle=False)
+
+
+def test_read_only():
+    dataset = GAP17_LMDB
+    atoms = dataset[0]
+    with pytest.raises(ValueError, match="info"):
+        atoms.info["test"] = 1
+    with pytest.raises(ValueError, match="arrays"):
+        atoms.arrays["test"] = np.zeros((1, 3))

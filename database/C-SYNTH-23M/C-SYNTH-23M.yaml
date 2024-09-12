@@ -7,6 +7,7 @@ description: |
 category: Synthetic Data
 license: MIT
 minimum_load_atoms_version: 0.2
+format: lmdb
 citation: |
     @article{Gardner-23-03,
       title = {

@@ -21,6 +21,7 @@ import ase
 import lmdb
 import numpy as np
 from ase import Atoms
+from ase.data import chemical_symbols
 from typing_extensions import Self, override
 from yaml import dump
 
@@ -28,11 +29,11 @@ from .database import DatabaseEntry
 from .utils import (
     LazyMapping,
     choose_n,
+    freeze_dict,
     intersect,
     k_fold_split,
     random_split,
     split_keeping_ratio,
-    union,
 )
 
 
@@ -110,18 +111,19 @@ class AtomsDataset(ABC, Sequence[Atoms]):
                     per atom: ()
                     per structure: (energy)
 
-        If a list or :class:`numpy.ndarray` of :class:`int`\ s is provided, a
-        new :class:`AtomsDataset` is returned containing the structures at the
-        given indices:
+        If a :class:`list` or :class:`numpy.ndarray` of :class:`int`\ s is
+        provided, a new :class:`AtomsDataset` is returned containing the
+        structures at the given indices:
 
         .. code-block:: pycon
 
             >>> len(QM7[[0, 2, 4]])
             3
 
-        If a list or :class:`numpy.ndarray` of :class:`bool`\ s is provided
-        with the same length as the dataset, a new :class:`AtomsDataset` is
-        returned containing the structures where the boolean is :code:`True`
+        If a :class:`list` or :class:`numpy.ndarray` of :class:`bool`\ s is
+        provided with the same length as the dataset, a new
+        :class:`AtomsDataset` is returned containing the structures where the
+        boolean is :code:`True`
         (see also :func:`~load_atoms.AtomsDataset.filter_by`):
 
         .. code-block:: pycon
@@ -171,16 +173,52 @@ class AtomsDataset(ABC, Sequence[Atoms]):
     def _index_subset(self, idxs: Sequence[int]) -> Self:
         """Get a new dataset containing the structures at the given indices."""
 
-    @abstractmethod
     def __repr__(self) -> str:
-        pass
+        name = "Dataset" if not self.description else self.description.name
+        per_atom_properties = (
+            "("
+            + ",".join(
+                sorted(
+                    set(self.arrays.keys())
+                    - {
+                        "numbers",
+                        "positions",
+                    }
+                )
+            )
+            + ")"
+        )
+        per_structure_properties = (
+            "(" + ",".join(sorted(self.info.keys())) + ")"
+        )
+        species_counts = self.species_counts()
+        species_percentages = {
+            symbol: f"{count / self.n_atoms * 100:0.2f}%"
+            for symbol, count in sorted(
+                species_counts.items(), key=lambda item: item[1], reverse=True
+            )
+        }
+
+        return dump(
+            {
+                name: {
+                    "structures": f"{len(self):,}",
+                    "atoms": f"{self.n_atoms:,}",
+                    "species": species_percentages,
+                    "properties": {
+                        "per atom": per_atom_properties,
+                        "per structure": per_structure_properties,
+                    },
+                }
+            }
+        )
 
     @property
     @abstractmethod
     def info(self) -> Mapping[str, Any]:
         r"""
-        Get a mapping from keys that are shared across all structures ``.info``
-        attributes to the concatenated corresponding values.
+        Get a mapping from keys that are shared across all structures'
+        ``.info`` attributes to the concatenated corresponding values.
 
         The returned mapping conforms to:
 
@@ -243,6 +281,15 @@ class AtomsDataset(ABC, Sequence[Atoms]):
         pass
 
     # concrete methods
+
+    def species_counts(self) -> Mapping[str, int]:
+        """
+        Get the number of atoms of each species in the dataset.
+        """
+        return {
+            chemical_symbols[species]: (self.arrays["numbers"] == species).sum()
+            for species in np.unique(self.arrays["numbers"])
+        }
 
     def __contains__(self, item: Any) -> bool:
         """
@@ -557,10 +604,6 @@ class InMemoryAtomsDataset(AtomsDataset):
         return InMemoryAtomsDataset([self._index_structure(i) for i in idxs])
 
     @override
-    def __repr__(self) -> str:
-        return summarise_dataset(self._structures, self.description)
-
-    @override
     @classmethod
     def save(
         cls,
@@ -587,6 +630,7 @@ class InMemoryAtomsDataset(AtomsDataset):
 @dataclass
 class LmdbMetadata:
     structure_sizes: np.ndarray
+    species_per_structure: list[dict[str, int]]
     per_atom_properties: list[str]
     per_structure_properties: list[str]
 
@@ -604,6 +648,12 @@ class LmdbAtomsDataset(AtomsDataset):
         )
         self.txn = self.env.begin(write=False)
 
+        super().__init__(
+            description=pickle.loads(
+                self.txn.get("description".encode("ascii"))
+            )
+        )
+
         self.metadata: LmdbMetadata = pickle.loads(
             self.txn.get("metadata".encode("ascii"))
         )
@@ -613,12 +663,13 @@ class LmdbAtomsDataset(AtomsDataset):
             else np.arange(len(self.metadata.structure_sizes))
         )
 
+        # TODO: add warnings to loaders about potential slowness
         self._info: LazyMapping[str, Any] = LazyMapping(
-            self.metadata.per_structure_properties,
+            self.metadata.per_structure_properties + ["numbers", "positions"],
             lambda key: np.array([structure.info[key] for structure in self]),
         )
         self._arrays: LazyMapping[str, np.ndarray] = LazyMapping(
-            self.metadata.per_atom_properties,
+            self.metadata.per_atom_properties + ["numbers", "positions"],
             lambda key: np.concatenate(
                 [structure.arrays[key] for structure in self]
             ),
@@ -635,8 +686,16 @@ class LmdbAtomsDataset(AtomsDataset):
         self.close()
 
     def _index_structure(self, index: int) -> Atoms:
+        index = self.idx_subset[index]
         pickled_data = self.txn.get(f"{index}".encode("ascii"))
-        return pickle.loads(pickled_data)
+        atoms = pickle.loads(pickled_data)
+        error_msg = (
+            "The Atoms objects in an LMDB dataset are read-only: "
+            "modifying the {} of an Atoms object will have no effect."
+        )
+        atoms.info = freeze_dict(atoms.info, error_msg.format("info"))
+        atoms.arrays = freeze_dict(atoms.arrays, error_msg.format("arrays"))
+        return atoms
 
     @property
     @override
@@ -651,12 +710,34 @@ class LmdbAtomsDataset(AtomsDataset):
         return len(self.structure_sizes)
 
     @override
-    def _index_subset(self, idxs: Sequence[int]) -> LmdbAtomsDataset:
-        return LmdbAtomsDataset(self.path, self.idx_subset[idxs])
+    def species_counts(self) -> Mapping[str, int]:
+        to_sum: list[dict[str, int]] = []
+        all_species: set[str] = set()
+
+        for idx in self.idx_subset:
+            species_count = self.metadata.species_per_structure[idx]
+            to_sum.append(species_count)
+            all_species.update(species_count.keys())
+
+        summed = {symbol: 0 for symbol in all_species}
+        for species_count in to_sum:
+            for symbol, count in species_count.items():
+                summed[symbol] += count
+        return summed
 
     @override
-    def __repr__(self) -> str:
-        return "TODO"
+    def __contains__(self, item: Any) -> bool:
+        warnings.warn(
+            "Checking if an LMDB dataset contains a structure is slow "
+            "because it requires loading every structure into memory. "
+            "Consider using a different dataset format if possible.",
+            stacklevel=2,
+        )
+        return any(item == structure for structure in self)
+
+    @override
+    def _index_subset(self, idxs: Sequence[int]) -> LmdbAtomsDataset:
+        return LmdbAtomsDataset(self.path, self.idx_subset[idxs])
 
     @property
     @override
@@ -688,6 +769,7 @@ class LmdbAtomsDataset(AtomsDataset):
 
         with env.begin(write=True) as txn:
             structure_sizes = []
+            species_per_structure = []
             per_atom_properties = set()
             per_structure_properties = set()
 
@@ -697,6 +779,14 @@ class LmdbAtomsDataset(AtomsDataset):
 
                 # Update metadata
                 structure_sizes.append(len(structure))
+                species_per_structure.append(
+                    {
+                        chemical_symbols[Z]: (
+                            structure.arrays["numbers"] == Z
+                        ).sum()
+                        for Z in np.unique(structure.arrays["numbers"])
+                    }
+                )
                 per_atom_properties.update(
                     structure.arrays.keys() - {"numbers", "positions"}
                 )
@@ -705,6 +795,7 @@ class LmdbAtomsDataset(AtomsDataset):
             # Save metadata
             metadata = LmdbMetadata(
                 structure_sizes=np.array(structure_sizes),
+                species_per_structure=species_per_structure,
                 per_atom_properties=sorted(per_atom_properties),
                 per_structure_properties=sorted(per_structure_properties),
             )
@@ -747,53 +838,45 @@ def summarise_dataset(
     structures: list[Atoms] | AtomsDataset,
     description: DatabaseEntry | None = None,
 ) -> str:
-    name = description.name if description is not None else "Dataset"
-    N = len(structures)
-    number_atoms = sum([len(structure) for structure in structures])
+    if isinstance(structures, AtomsDataset):
+        return str(structures)
+    return str(InMemoryAtomsDataset(structures, description))
 
-    per_atom_properties = sorted(
-        intersect(structure.arrays.keys() for structure in structures)
-        - {"numbers", "positions"}
-    )
-    per_structure_properties = sorted(
-        intersect(structure.info.keys() for structure in structures)
-    )
+    # species = sorted(
+    #     union(structure.get_chemical_symbols() for structure in structures)
+    # )
+    # species_counts = {
+    #     s: sum(
+    #         [
+    #             structure.get_chemical_symbols().count(s)
+    #             for structure in structures
+    #         ]
+    #     )
+    #     for s in species
+    # }
+    # species_counts = {
+    #     k: f"{v / number_atoms:.2%}"
+    #     for k, v in sorted(
+    #         species_counts.items(), key=lambda item: item[1], reverse=True
+    #     )
+    # }
 
-    species = sorted(
-        union(structure.get_chemical_symbols() for structure in structures)
-    )
-    species_counts = {
-        s: sum(
-            [
-                structure.get_chemical_symbols().count(s)
-                for structure in structures
-            ]
-        )
-        for s in species
-    }
-    species_counts = {
-        k: f"{v / number_atoms:.2%}"
-        for k, v in sorted(
-            species_counts.items(), key=lambda item: item[1], reverse=True
-        )
-    }
+    # if N >= 1000:
+    #     N = f"{N:,}"
+    # if number_atoms >= 1000:
+    #     number_atoms = f"{number_atoms:,}"
 
-    if N >= 1000:
-        N = f"{N:,}"
-    if number_atoms >= 1000:
-        number_atoms = f"{number_atoms:,}"
+    # fields = {
+    #     "structures": N,
+    #     "atoms": number_atoms,
+    #     "species": species_counts,
+    #     "properties": {
+    #         "per atom": "(" + ", ".join(per_atom_properties) + ")",
+    #         "per structure": "(" + ", ".join(per_structure_properties) + ")",
+    #     },
+    # }
 
-    fields = {
-        "structures": N,
-        "atoms": number_atoms,
-        "species": species_counts,
-        "properties": {
-            "per atom": "(" + ", ".join(per_atom_properties) + ")",
-            "per structure": "(" + ", ".join(per_structure_properties) + ")",
-        },
-    }
-
-    return dump({name: fields}, sort_keys=False, indent=4)
+    # return dump({name: fields}, sort_keys=False, indent=4)
 
 
 def get_file_extension_and_dataset_class(
