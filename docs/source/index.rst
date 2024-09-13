@@ -102,6 +102,7 @@ suggesting a dataset or fixing a bug, please see the :doc:`developer guide <dev/
    api/dataset
    api/viz
    api/utils
+   api/configuration
 
 .. include:: datasets-index.rst
 

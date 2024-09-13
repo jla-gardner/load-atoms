@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import os
 from datetime import timedelta
+from typing import Protocol
 
 from rich.align import Align
 from rich.live import Live
@@ -15,6 +17,50 @@ from rich.progress import (
 from rich.progress import Progress as RichProgress
 from rich.table import Column, Table
 from rich.text import Text
+
+
+class Task(Protocol):
+    def update(self, **kwargs):
+        ...
+
+    def __enter__(self) -> Task:
+        ...
+
+    def __exit__(self, *args):
+        ...
+
+
+class Progress(Protocol):
+    def __init__(self, title: str):
+        ...
+
+    def new_task(
+        self,
+        description: str,
+        total: int | float | None = None,
+    ) -> Task:
+        """Add a new task to the progress bar."""
+        ...
+
+    def add_text(self, text: str):
+        """Add a text row to the progress bar."""
+
+    def refresh(self):
+        """Refresh the progress bar."""
+
+    def __enter__(self) -> Progress:
+        """Enter the context manager."""
+        ...
+
+    def __exit__(self, *args):
+        """Exit the context manager."""
+        ...
+
+
+def get_progress_for_dataset(dataset_id: str) -> Progress:
+    if os.environ.get("LOAD_ATOMS_VERBOSE") == "0":
+        return SilentProgress(dataset_id)
+    return VisibleProgress(dataset_id)
 
 
 class TimeElapsedColumn(ProgressColumn):
@@ -40,8 +86,8 @@ class PercentColumn(ProgressColumn):
         return Text(f"{task.percentage:>3.0f}%", style="black")
 
 
-class Progress:
-    def __init__(self, description: str, transient: bool = False):
+class VisibleProgress(Progress):
+    def __init__(self, title: str):
         self._progress = RichProgress(
             SpinnerColumn(
                 spinner_name="point",
@@ -63,27 +109,24 @@ class Progress:
         self._live = Live(
             Panel.fit(
                 self._table,
-                title=f"[bold]{description}",
+                title=f"[bold]{title}",
             ),
             refresh_per_second=10,
-            transient=transient,
+            transient=False,
         )
 
     def new_task(
         self,
         description: str,
-        transient: bool = False,
         total: int | float | None = None,
-        **kwargs,
-    ) -> Task:
-        return Task(
-            self._progress.add_task(description, total=total, **kwargs),
+    ) -> VisibleTask:
+        return VisibleTask(
+            self._progress.add_task(description, total=total),
             self._progress,
-            transient,
         )
 
-    def log_below(self, text: str, align: str = "center"):
-        self._table.add_row(Align(Text.from_markup(text), align=align))  # type: ignore
+    def add_text(self, text: str):
+        self._table.add_row(Align(Text.from_markup(text), align="center"))
 
     def __enter__(self):
         self._live.__enter__()
@@ -94,24 +137,56 @@ class Progress:
         self._live.refresh()
         self._live.__exit__(*args)
 
+    def refresh(self):
+        self._live.refresh()
 
-class Task:
-    def __init__(self, task: TaskID, progress: RichProgress, transient: bool):
-        self._task = task
+
+class VisibleTask:
+    def __init__(self, task_id: TaskID, progress: RichProgress):
+        self._task_id = task_id
         self._progress = progress
-        self._transient = transient
 
     def update(self, **kwargs):
-        self._progress.update(self._task, **kwargs)
-
-    def complete(self, remove: bool = False):
-        self._progress.update(self._task, completed=True, total=1)
-        if remove:
-            self._progress.remove_task(self._task)
+        self._progress.update(self._task_id, **kwargs)
 
     def __enter__(self):
         return self
 
     def __exit__(self, *args):
-        if args[0] is None:
-            self.complete(remove=self._transient)
+        self._progress.update(self._task_id, completed=True, total=1)
+
+
+class SilentTask:
+    def __init__(self, description: str, total: int | float | None = None):
+        ...
+
+    def update(self, **kwargs):
+        ...
+
+    def __enter__(self) -> Task:
+        return self
+
+    def __exit__(self, *args):
+        ...
+
+
+class SilentProgress(Progress):
+    def __init__(self, title: str):
+        ...
+
+    def new_task(
+        self, description: str, total: int | float | None = None
+    ) -> Task:
+        return SilentTask(description, total)
+
+    def add_text(self, text: str):
+        ...
+
+    def refresh(self):
+        ...
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        ...
