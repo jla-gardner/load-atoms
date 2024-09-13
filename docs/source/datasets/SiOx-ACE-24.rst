@@ -29,8 +29,8 @@ SiOx-ACE-24
         structures: 11,428
         atoms: 1,258,198
         species:
-            O: '  55.82%'
-            Si: '  44.18%'
+            O: 55.82%
+            Si: 44.18%
         properties:
             per atom: (charge_bader, forces)
             per structure: (config_type, energy, free_energy, stress, virial)

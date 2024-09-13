@@ -28,8 +28,8 @@ SiO2-GAP-22
         structures: 3,074
         atoms: 268,118
         species:
-            O: '  66.47%'
-            Si: '  33.53%'
+            O: 66.47%
+            Si: 33.53%
         properties:
             per atom: (forces)
             per structure: (config_type, energy, free_energy, virial)

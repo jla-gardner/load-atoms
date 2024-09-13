@@ -29,7 +29,7 @@ Si-GAP-18
         structures: 2,475
         atoms: 171,815
         species:
-            Si: ' 100.00%'
+            Si: 100.00%
         properties:
             per atom: (forces)
             per structure: (config_type, cutoff, energy, nneightol)

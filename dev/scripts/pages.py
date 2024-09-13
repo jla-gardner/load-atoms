@@ -28,11 +28,21 @@ _DOWNLOAD_DIR = _PROJECT_ROOT / "testing-datasets"
 def build_docs_page_for(name: str):
     # avoid downloading the dataset so that if local changes have been made,
     # they are reflected in the documentation preview
-    shutil.copytree(
-        _PROJECT_ROOT / "database" / name,
-        _DOWNLOAD_DIR / name,
-        dirs_exist_ok=True,
+    # copy over the folder if it doesn't exist
+    shutil.copy(
+        _PROJECT_ROOT / "database" / name / f"{name}.yaml",
+        _DOWNLOAD_DIR / "database-entries" / f"{name}.yaml",
     )
+    # simulate download by moving any non-yaml files to the temp folder
+    for file in (_PROJECT_ROOT / "database" / name).glob("*"):
+        if file.suffix == ".yaml":
+            continue
+        # copy file
+        relative_path = file.relative_to(_PROJECT_ROOT / "database" / name)
+        temp_folder = _DOWNLOAD_DIR / "raw-downloads" / name
+        temp_folder.mkdir(exist_ok=True, parents=True)
+        shutil.copy(file, temp_folder / relative_path)
+
     dataset = load_dataset(name, root=_DOWNLOAD_DIR)
 
     compute_info(dataset)

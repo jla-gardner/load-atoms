@@ -18,8 +18,7 @@ QM9
         being labelled with DFT. 
         For more information, see `Quantum chemistry structures and properties of 
         134 kilo molecules <https://doi.org/10.1038/sdata.2014.22>`_.
-        Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_, 
-        and using a `custom script <https://github.com/jla-gardner/load-atoms/blob/main/src/load_atoms/database/processing/read_qm9_xyz.py>`__.
+        Internally, files are downloaded from `FigShare <https://figshare.com/collections/Quantum_chemistry_structures_and_properties_of_134_kilo_molecules/978904>`_,.
         Energy labels are quoted in eV, relative to the isolated atoms of the molecule.
         
 
@@ -32,11 +31,11 @@ QM9
         structures: 133,885
         atoms: 2,407,753
         species:
-            H: '  51.09%'
-            C: '  35.16%'
-            O: '   7.81%'
-            N: '   5.80%'
-            F: '   0.14%'
+            H: 51.09%
+            C: 35.16%
+            O: 7.81%
+            N: 5.80%
+            F: 0.14%
         properties:
             per atom: (partial_charges)
             per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, geometry,

@@ -38,6 +38,6 @@ for name in AVAILABLE_DATASETS:
             continue
         # copy file
         relative_path = file.relative_to(DATABASE_ROOT / name)
-        temp_folder = TESTING_DIR / "raw-downloads"
-        (temp_folder / name).mkdir(exist_ok=True, parents=True)
-        shutil.copy(file, temp_folder / name / relative_path)
+        temp_folder = TESTING_DIR / "raw-downloads" / name
+        temp_folder.mkdir(exist_ok=True, parents=True)
+        shutil.copy(file, temp_folder / relative_path)

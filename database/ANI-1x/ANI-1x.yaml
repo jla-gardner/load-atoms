@@ -1,0 +1,44 @@
+name: ANI-1x
+year: 2018
+category: Benchmarks
+license: CC0
+minimum_load_atoms_version: 0.3
+format: lmdb
+description: |
+    The ANI-1x dataset is a comprehensive collection of labelled molecular structures designed for training machine learned potentials. 
+    ANI-1x was generated using an active learning approach to produce a diverse and useful dataset
+    covering the chemical space of organic molecules composed of C, H, N, and O atoms, 
+    Accurate energy and force labels are provided for each structure using the :math:`\omega`\ B97x/6-31G(d) level of theory.
+    Internall, files are downloaded from
+    `FigShare <https://springernature.figshare.com/collections/The_ANI-1ccx_and_ANI-1x_data_sets_coupled-cluster_and_density_functional_theory_properties_for_molecules/4712477>`__.
+citation: |
+    @article{Smith-18-05,
+        title = {
+            Less Is More: Sampling Chemical Space with Active Learning
+        },
+        author = {
+            Smith, Justin S. and Nebgen, Ben and Lubbers, Nicholas and 
+            Isayev, Olexandr and Roitberg, Adrian E.
+        },
+        year = {2018},
+        journal = {The Journal of Chemical Physics},
+        volume = {148},
+        number = {24},
+        doi = {10.1063/1.5023802},
+    }
+
+per_atom_properties:
+    forces:
+        desc: force vectors (as labelled with :math:`\omega`\ B97x/6-31G(d))
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: energy of the structure (as labelled with :math:`\omega`\ B97x/6-31G(d))
+        units: eV
+    dipole:
+        desc: dipole moment of the structure (as labelled with :math:`\omega`\ B97x/6-31G(d))
+        units: e Å
+    is_in_ccx:
+        desc: whether the structure is in the :doc:`/datasets/ANI-1ccx` subset
+representative_structure: 205_000
+

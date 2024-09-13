@@ -28,7 +28,7 @@ P-GAP-20
         structures: 4,798
         atoms: 140,910
         species:
-            P: ' 100.00%'
+            P: 100.00%
         properties:
             per atom: (forces)
             per structure: (energy)
