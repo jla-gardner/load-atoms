@@ -24,6 +24,7 @@ dependencies = [
     "rich",
     "ipywidgets",
     "lmdb",
+    "h5py",
 ]
 requires-python = ">=3.8"
 

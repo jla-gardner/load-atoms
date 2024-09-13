@@ -105,4 +105,4 @@ def load_dataset(
     # assume thing is a dataset ID, and try to load it
     if root is None:
         root = Path.home() / ".load-atoms"
-    return backend.load_dataset(thing, Path(root))
+    return backend.load_dataset_by_id(thing, Path(root))

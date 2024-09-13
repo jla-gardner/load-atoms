@@ -871,6 +871,6 @@ def get_file_extension_and_dataset_class(
     format: Literal["lmdb", "memory"]
 ) -> tuple[str, type[AtomsDataset]]:
     return {
-        "lmdb": (".lmdb", LmdbAtomsDataset),
-        "memory": (".pkl", InMemoryAtomsDataset),
+        "lmdb": ("lmdb", LmdbAtomsDataset),
+        "memory": ("pkl", InMemoryAtomsDataset),
     }[format]

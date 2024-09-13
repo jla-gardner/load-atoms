@@ -15,7 +15,15 @@ def test_correctness(name):
     DatabaseEntry.from_yaml_file(DATABASE_ROOT / name / f"{name}.yaml")
 
     # skip big tests for now
-    if name in ["QM9", "C-SYNTH-23M", "SiO2-GAP-22"]:
+    # TODO: elegant way to enable these sometimes?
+    if name in [
+        "AC-2D-22",
+        "QM9",
+        "C-SYNTH-23M",
+        "SiO2-GAP-22",
+        "ANI-1ccx",
+        "ANI-1x",
+    ]:
         return
 
     # naive test that the dataset loads without error
