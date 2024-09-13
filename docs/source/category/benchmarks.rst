@@ -10,6 +10,32 @@ Benchmarks
     .. grid-item-card::
         :class-item: info-card
     
+        .. centered:: :doc:`ANI-1ccx <../datasets/ANI-1ccx>`
+    
+        The ANI-1ccx dataset comprises an "optimally spanning" subset of the :doc:`/datasets/ANI-1x` dataset,
+        with each structure being re-labelled with the total structure energy using the 
+        "gold standard" CCSD(T)/CBS level of theory. Internall, files are downloaded from
+        `FigShare <https://springernature.figshare.com/collections/The_ANI-1ccx_and_ANI-1x_data_sets_coupled-cluster_and_density_functional_theory_properties_for_molecules/4712477>`__.
+        
+    
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
+        .. centered:: :doc:`ANI-1x <../datasets/ANI-1x>`
+    
+        The ANI-1x dataset is a comprehensive collection of labelled molecular structures designed for training machine learned potentials. 
+        ANI-1x was generated using an active learning approach to produce a diverse and useful dataset
+        covering the chemical space of organic molecules composed of C, H, N, and O atoms, 
+        Accurate energy and force labels are provided for each structure using the :math:`\omega`\ B97x/6-31G(d) level of theory.
+        Internall, files are downloaded from
+        `FigShare <https://springernature.figshare.com/collections/The_ANI-1ccx_and_ANI-1x_data_sets_coupled-cluster_and_density_functional_theory_properties_for_molecules/4712477>`__.
+        
+    
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
         .. centered:: :doc:`QM7 <../datasets/QM7>`
     
         A collection of 7,165 saturated, small molecules containing up to 7 heavy atoms,
@@ -38,6 +64,8 @@ Benchmarks
     :maxdepth: 1
     :hidden:
 
+    ../datasets/ANI-1ccx
+    ../datasets/ANI-1x
     ../datasets/QM7
     ../datasets/QM9
 

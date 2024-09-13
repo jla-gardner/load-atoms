@@ -29,9 +29,9 @@ GST-GAP-22
         structures: 2,692
         atoms: 341,132
         species:
-            Te: '  54.51%'
-            Ge: '  23.64%'
-            Sb: '  21.85%'
+            Te: 54.51%
+            Ge: 23.64%
+            Sb: 21.85%
         properties:
             per atom: (forces)
             per structure: (config_type, energy, sub_config, virial)

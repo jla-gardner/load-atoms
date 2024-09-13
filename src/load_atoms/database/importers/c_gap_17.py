@@ -1,9 +1,11 @@
-from load_atoms.database.importer import BASE_GITHUB_URL, SingleFileImporter
+from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter
+from load_atoms.database.internet import FileDownload
 
 
 class Importer(SingleFileImporter):
-    def __init__(self):
-        super().__init__(
+    @classmethod
+    def file_to_download(cls) -> FileDownload:
+        return FileDownload(
             url=f"{BASE_GITHUB_URL}/C-GAP-17/C-GAP-17.extxyz",
-            hash="8dd037b59c88",
+            expected_hash="8dd037b59c88",
         )

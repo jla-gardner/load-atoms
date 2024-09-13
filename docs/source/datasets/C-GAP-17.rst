@@ -28,7 +28,7 @@ C-GAP-17
         structures: 4,530
         atoms: 284,965
         species:
-            C: ' 100.00%'
+            C: 100.00%
         properties:
             per atom: (forces)
             per structure: (config_type, detailed_ct, energy, split)

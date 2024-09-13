@@ -27,7 +27,7 @@ C-SYNTH-23M
         structures: 115,206
         atoms: 23,041,200
         species:
-            C: ' 100.00%'
+            C: 100.00%
         properties:
             per atom: (forces, local_energies)
             per structure: (anneal_T, density, energy, run_id, time)

@@ -24,6 +24,7 @@ dependencies = [
     "rich",
     "ipywidgets",
     "lmdb",
+    "h5py",
 ]
 requires-python = ">=3.8"
 
@@ -50,6 +51,9 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/jla-gardner/load-atoms"
+
+[project.scripts]
+load-atoms = "load_atoms.scripts.cli:main"
 
 [tool.bumpver]
 current_version = "0.3.0"

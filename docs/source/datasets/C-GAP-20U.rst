@@ -28,7 +28,7 @@ C-GAP-20U
         structures: 6,088
         atoms: 400,275
         species:
-            C: ' 100.00%'
+            C: 100.00%
         properties:
             per atom: (forces)
             per structure: (config_type, energy, free_energy, stress, virial)

@@ -193,7 +193,7 @@ class AtomsDataset(ABC, Sequence[Atoms]):
         )
         species_counts = self.species_counts()
         species_percentages = {
-            symbol: f"{count / self.n_atoms * 100:0.2f}%".rjust(8)
+            symbol: f"{count / self.n_atoms:0.2%}"
             for symbol, count in sorted(
                 species_counts.items(), key=lambda item: item[1], reverse=True
             )
@@ -871,6 +871,6 @@ def get_file_extension_and_dataset_class(
     format: Literal["lmdb", "memory"]
 ) -> tuple[str, type[AtomsDataset]]:
     return {
-        "lmdb": (".lmdb", LmdbAtomsDataset),
-        "memory": (".pkl", InMemoryAtomsDataset),
+        "lmdb": ("lmdb", LmdbAtomsDataset),
+        "memory": ("pkl", InMemoryAtomsDataset),
     }[format]

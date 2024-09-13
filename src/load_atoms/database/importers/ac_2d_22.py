@@ -5,28 +5,24 @@ from typing import Iterator
 
 from ase import Atoms
 from ase.io import read
-from load_atoms.database.importer import (
-    BaseImporter,
-    FileDownload,
-    rename,
-    unzip_file,
-)
+from load_atoms.database.backend import BaseImporter, rename, unzip_file
+from load_atoms.database.internet import FileDownload
 from load_atoms.progress import Progress
 
 
 class Importer(BaseImporter):
-    def __init__(self):
-        super().__init__(
-            files_to_download=[
-                FileDownload(
-                    url="https://zenodo.org/record/7221166/files/data.tar.gz",
-                    expected_hash="023de5805f15",
-                )
-            ]
-        )
+    @classmethod
+    def files_to_download(cls) -> list[FileDownload]:
+        return [
+            FileDownload(
+                url="https://zenodo.org/record/7221166/files/data.tar.gz",
+                expected_hash="023de5805f15",
+            )
+        ]
 
+    @classmethod
     def get_structures(
-        self, tmp_dir: Path, progress: Progress
+        cls, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         # untar the file
         contents_path = unzip_file(tmp_dir / "data.tar.gz", progress)
@@ -84,18 +80,18 @@ class Importer(BaseImporter):
         ]
 
         for path, info in table:
-            structures = self.read_structures(root / path, progress)
+            structures = cls.read_structures(root / path, progress)
             for structure in structures:
                 structure.info.update(info)
-                yield self.process_structure(structure)
+                yield cls.process_structure(structure)
 
-    def read_structures(
-        self, archive_dir: Path, progress: Progress
-    ) -> list[Atoms]:
+    @staticmethod
+    def read_structures(archive_dir: Path, progress: Progress) -> list[Atoms]:
         extracted = unzip_file(archive_dir / "fin_run.tar.gz", progress)
         return [read(file) for file in sorted(extracted.glob("**/*.xyz"))]  # type: ignore
 
-    def process_structure(self, structure: Atoms) -> Atoms:
+    @staticmethod
+    def process_structure(structure: Atoms) -> Atoms:
         # Remove unwanted arrays
         if "c_1" in structure.arrays:
             del structure.arrays["c_1"]

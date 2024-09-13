@@ -1,9 +1,11 @@
-from load_atoms.database.importer import BASE_GITHUB_URL, SingleFileImporter
+from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter
+from load_atoms.database.internet import FileDownload
 
 
 class Importer(SingleFileImporter):
-    def __init__(self):
-        super().__init__(
+    @classmethod
+    def file_to_download(cls) -> FileDownload:
+        return FileDownload(
             url=f"{BASE_GITHUB_URL}/QM7/QM7.extxyz",
-            hash="c9dcec505f4d",
+            expected_hash="c9dcec505f4d",
         )

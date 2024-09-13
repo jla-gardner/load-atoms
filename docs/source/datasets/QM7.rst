@@ -28,11 +28,11 @@ QM7
         structures: 7,165
         atoms: 110,650
         species:
-            H: '  56.00%'
-            C: '  32.32%'
-            N: '   6.01%'
-            O: '   5.40%'
-            S: '   0.27%'
+            H: 56.00%
+            C: 32.32%
+            N: 6.01%
+            O: 5.40%
+            S: 0.27%
         properties:
             per atom: ()
             per structure: (energy)

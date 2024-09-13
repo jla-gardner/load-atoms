@@ -7,28 +7,25 @@ from typing import Iterator
 from ase import Atoms
 from ase.io import read
 from ase.units import Hartree, eV
-from load_atoms.database.importer import (
-    BaseImporter,
-    FileDownload,
-    unzip_file,
-)
+from load_atoms.database.backend import BaseImporter, unzip_file
+from load_atoms.database.internet import FileDownload
 from load_atoms.progress import Progress
 
 
 class Importer(BaseImporter):
-    def __init__(self):
-        super().__init__(
-            files_to_download=[
-                FileDownload(
-                    url="https://figshare.com/ndownloader/files/3195389",
-                    expected_hash="3a63848ac806",
-                    local_name="qm9.tar.bz2",
-                )
-            ]
-        )
+    @classmethod
+    def files_to_download(cls) -> list[FileDownload]:
+        return [
+            FileDownload(
+                url="https://figshare.com/ndownloader/files/3195389",
+                expected_hash="3a63848ac806",
+                local_name="qm9.tar.bz2",
+            )
+        ]
 
+    @classmethod
     def get_structures(
-        self, tmp_dir: Path, progress: Progress
+        cls, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         # Unzip the file
         contents_path = unzip_file(tmp_dir / "qm9.tar.bz2", progress)

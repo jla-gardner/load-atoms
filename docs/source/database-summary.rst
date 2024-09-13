@@ -22,6 +22,18 @@ These can be downloaded from the internet (and cached locally) using
       - 150
       - `CC BY-NC-SA 4.0 <https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en>`_
       - 2022
+    * - :doc:`ANI-1ccx <../datasets/ANI-1ccx>`
+      - H, C, N, O
+      - 6,763,288
+      - 489,571
+      - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
+      - 2019
+    * - :doc:`ANI-1x <../datasets/ANI-1x>`
+      - H, C, N, O
+      - 75,700,481
+      - 4,956,005
+      - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
+      - 2018
     * - :doc:`C-GAP-17 <../datasets/C-GAP-17>`
       - C
       - 284,965

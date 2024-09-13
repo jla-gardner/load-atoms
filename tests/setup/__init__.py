@@ -19,17 +19,18 @@ DATABASE_ROOT = PROJECT_ROOT / "database"
 AVAILABLE_DATASETS = sorted(
     [p.stem for p in sorted(DATABASE_ROOT.glob("**/*.yaml"))]
 )
+print(f"Available datasets: {AVAILABLE_DATASETS}")
 
 # simulate downloading the datasets
 TESTING_DIR = PROJECT_ROOT / "testing-datasets"
 TESTING_DIR.mkdir(exist_ok=True)
 
+(TESTING_DIR / "database-entries").mkdir(exist_ok=True)
 for name in AVAILABLE_DATASETS:
     # copy over the folder if it doesn't exist
-    (TESTING_DIR / name).mkdir(exist_ok=True)
     shutil.copy(
         DATABASE_ROOT / name / f"{name}.yaml",
-        TESTING_DIR / name / f"{name}.yaml",
+        TESTING_DIR / "database-entries" / f"{name}.yaml",
     )
     # simulate download by moving any non-yaml files to the temp folder
     for file in (DATABASE_ROOT / name).glob("*"):
@@ -37,6 +38,6 @@ for name in AVAILABLE_DATASETS:
             continue
         # copy file
         relative_path = file.relative_to(DATABASE_ROOT / name)
-        temp_folder = TESTING_DIR / "raw-downloads"
-        temp_folder.mkdir(exist_ok=True)
+        temp_folder = TESTING_DIR / "raw-downloads" / name
+        temp_folder.mkdir(exist_ok=True, parents=True)
         shutil.copy(file, temp_folder / relative_path)
