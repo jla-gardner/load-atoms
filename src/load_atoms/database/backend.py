@@ -126,6 +126,8 @@ def load_dataset_by_id(dataset_id: str, root: Path) -> AtomsDataset:
         # add the usage information to the progress bar
         log_usage_information(database_entry, progress)
 
+        progress.refresh()
+
     return dataset
 
 
