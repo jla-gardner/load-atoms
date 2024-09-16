@@ -37,7 +37,7 @@ def view(
 
     Example
     -------
-    Visualise a water molecule in a Jupyter notebook:
+    Visualise an ethanol molecule in a Jupyter notebook:
 
     .. code-block:: python
         :emphasize-lines: 5

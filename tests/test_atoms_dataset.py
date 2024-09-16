@@ -1,4 +1,5 @@
 import shutil
+from contextlib import nullcontext
 from pathlib import Path
 
 import numpy as np
@@ -156,11 +157,14 @@ def test_useful_warning(tmp_path):
     "dataset", [GAP17, GAP17_LMDB], ids=["gap17", "gap17_lmdb"]
 )
 def test_info_and_arrays(dataset):
-    assert "energy" in dataset.info
-    assert isinstance(dataset.info["energy"], np.ndarray)
+    context = nullcontext() if dataset is GAP17 else pytest.warns(UserWarning)
+    with context:
+        assert "energy" in dataset.info
+        assert isinstance(dataset.info["energy"], np.ndarray)
 
-    assert "positions" in dataset.arrays
-    assert dataset.arrays["positions"].shape[-1] == 3
+    with context:
+        assert "positions" in dataset.arrays
+        assert dataset.arrays["positions"].shape[-1] == 3
 
 
 def test_properties():
@@ -192,24 +196,26 @@ def test_random_split(dataset):
     assert len(c) in [n // 4, n // 4 + 1]
 
     # test keep ratio
-    assert "config_type" in dataset.info
-    assert "bulk_amo" in dataset.info["config_type"]
+    context = nullcontext() if dataset is GAP17 else pytest.warns(UserWarning)
+    with context:
+        assert "config_type" in dataset.info
+        assert "bulk_amo" in dataset.info["config_type"]
 
-    # ... with floats
-    a, b = dataset.random_split([0.5, 0.5], keep_ratio="config_type")
-    assert len(a) + len(b) == len(dataset)
-    assert np.isclose(
-        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", dataset)
-    )
+        # ... with floats
+        a, b = dataset.random_split([0.5, 0.5], keep_ratio="config_type")
+        assert len(a) + len(b) == len(dataset)
+        assert np.isclose(
+            _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", dataset)
+        )
 
-    # ... with ints
-    a, b = dataset.random_split([500, 500], keep_ratio="config_type")
-    assert np.isclose(
-        _get_proportion("bulk_amo", a),
-        _get_proportion("bulk_amo", dataset),
-        atol=0.01,
-    )
-    assert len(a) == len(b) == 500
+        # ... with ints
+        a, b = dataset.random_split([500, 500], keep_ratio="config_type")
+        assert np.isclose(
+            _get_proportion("bulk_amo", a),
+            _get_proportion("bulk_amo", dataset),
+            atol=0.01,
+        )
+        assert len(a) == len(b) == 500
 
     # test error
     assert "made_up" not in dataset.info
@@ -256,9 +262,11 @@ def test_k_fold_split(dataset):
 
     # test keep ratio
     a, b = dataset.k_fold_split(k=5, fold=0, keep_ratio="config_type")
-    assert np.isclose(
-        _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", dataset)
-    )
+    context = nullcontext() if dataset is GAP17 else pytest.warns(UserWarning)
+    with context:
+        assert np.isclose(
+            _get_proportion("bulk_amo", a), _get_proportion("bulk_amo", dataset)
+        )
 
     # test error
     assert "made_up" not in dataset.info
@@ -293,4 +301,6 @@ def test_filtering(dataset: AtomsDataset):
     ]
     indexed = dataset[bool_idx]
     assert len(indexed) == 3410
-    assert np.all(indexed.info["energy"] == filtered.info["energy"])
+    context = nullcontext() if dataset is GAP17 else pytest.warns(UserWarning)
+    with context:
+        assert np.all(indexed.info["energy"] == filtered.info["energy"])

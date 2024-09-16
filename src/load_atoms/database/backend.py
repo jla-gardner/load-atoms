@@ -25,7 +25,7 @@ from load_atoms.database.database_entry import (
     DatabaseEntry,
 )
 from load_atoms.database.internet import FileDownload, download, download_all
-from load_atoms.progress import Progress
+from load_atoms.progress import Progress, get_progress_for_dataset
 from load_atoms.utils import (
     UnknownDatasetException,
     debug_mode,
@@ -53,7 +53,7 @@ def load_dataset_by_id(dataset_id: str, root: Path) -> AtomsDataset:
     yaml_file_path = root / "database-entries" / f"{dataset_id}.yaml"
     yaml_file_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with Progress(f"[bold]{dataset_id}") as progress:
+    with get_progress_for_dataset(dataset_id) as progress:
         # down/load the dabase entry for the dataset
         database_entry = get_database_entry(
             dataset_id, yaml_file_path, progress
@@ -125,7 +125,8 @@ def load_dataset_by_id(dataset_id: str, root: Path) -> AtomsDataset:
 
         # add the usage information to the progress bar
         log_usage_information(database_entry, progress)
-        progress._live.refresh()
+
+        progress.refresh()
 
     return dataset
 
@@ -197,10 +198,7 @@ class SingleFileImporter(BaseImporter):
         cls, tmp_dir: Path, progress: Progress
     ) -> Iterator[Atoms]:
         file_path = tmp_dir / Path(cls.files_to_download()[0].local_name)
-        with progress.new_task(
-            f"Reading {file_path.resolve()}",
-            transient=True,
-        ):
+        with progress.new_task(f"Reading {file_path.resolve()}"):
             for atoms in cls._read_file(file_path):
                 yield cls.process_atoms(atoms)
 
@@ -287,23 +285,23 @@ def get_importer_type(
 
 
 def log_usage_information(info: DatabaseEntry, progress: Progress):
-    progress.log_below("\n")
+    progress.add_text("\n")
 
     name = f"[bold]{info.name}[/bold]"
     if info.license is not None:
         style = f"dodger_blue2 link={LICENSE_URLS[info.license]} underline"
-        progress.log_below(
+        progress.add_text(
             f"The {name} dataset is covered by the "
             f"[{style}]{info.license}[/] license."
         )
     if info.citation is not None:
-        progress.log_below(
+        progress.add_text(
             f"Please cite the {name} dataset " "if you use it in your work."
         )
-    progress.log_below(f"For more information about the {name} dataset, visit:")
+    progress.add_text(f"For more information about the {name} dataset, visit:")
     url = frontend_url(info)
     url_style = f"dodger_blue2 underline link={url}"
-    progress.log_below(f"[{url_style}]load-atoms/{info.name}")
+    progress.add_text(f"[{url_style}]load-atoms/{info.name}")
 
 
 def unzip_file(file_path: Path, progress: Progress) -> Path:
