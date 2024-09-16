@@ -577,12 +577,8 @@ class InMemoryAtomsDataset(AtomsDataset):
             )
 
         self._structures = structures
-
-        keys, loader = _get_info_loader(structures)
-        self._info: LazyMapping[str, Any] = LazyMapping(keys, loader)
-
-        keys, loader = _get_arrays_loader(structures)
-        self._arrays: LazyMapping[str, np.ndarray] = LazyMapping(keys, loader)
+        self._info = _get_info_mapping(structures)
+        self._arrays = _get_arrays_mapping(structures)
 
     @property
     @override
@@ -686,14 +682,20 @@ class LmdbAtomsDataset(AtomsDataset):
         )
 
         # TODO: add warnings to loaders about potential slowness
-        self._info: LazyMapping[str, Any] = LazyMapping(
-            self.metadata.per_structure_properties,
-            lambda key: np.array([structure.info[key] for structure in self]),
+        self._info = _get_info_mapping(
+            structures=self,
+            keys=self.metadata.per_structure_properties,
+            loader_warning=(
+                "LmdbAtomsDatasets do not hold all structure properties in "
+                "memory: accessing .info will be slow."
+            ),
         )
-        self._arrays: LazyMapping[str, np.ndarray] = LazyMapping(
-            self.metadata.per_atom_properties + ["numbers", "positions"],
-            lambda key: np.concatenate(
-                [structure.arrays[key] for structure in self]
+        self._arrays = _get_arrays_mapping(
+            structures=self,
+            keys=self.metadata.per_atom_properties + ["numbers", "positions"],
+            loader_warning=(
+                "LmdbAtomsDatasets do not hold all per-atom properties in "
+                "memory: accessing .arrays will be slow."
             ),
         )
 
@@ -834,28 +836,36 @@ class LmdbAtomsDataset(AtomsDataset):
         env.close()
 
 
-def _get_info_loader(
-    structures: list[Atoms],
-) -> tuple[list[str], Callable[[str], Any]]:
-    keys = intersect(structure.info.keys() for structure in structures)
+def _get_info_mapping(
+    structures: Iterable[Atoms],
+    keys: list[str] | None = None,
+    loader_warning: str | None = None,
+) -> LazyMapping[str, np.ndarray]:
+    if keys is None:
+        keys = list(intersect(s.info.keys() for s in structures))
 
     def loader(key: str):
-        return np.array([structure.info[key] for structure in structures])
+        if loader_warning is not None:
+            warnings.warn(loader_warning, stacklevel=2)
+        return np.array([s.info[key] for s in structures])
 
-    return list(keys), loader
+    return LazyMapping(keys, loader)
 
 
-def _get_arrays_loader(
-    structures: list[Atoms],
-) -> tuple[list[str], Callable[[str], Any]]:
-    keys = intersect(structure.arrays.keys() for structure in structures)
+def _get_arrays_mapping(
+    structures: Iterable[Atoms],
+    keys: list[str] | None = None,
+    loader_warning: str | None = None,
+) -> LazyMapping[str, np.ndarray]:
+    if keys is None:
+        keys = list(intersect(s.arrays.keys() for s in structures))
 
     def loader(key: str):
-        return np.concatenate(
-            [structure.arrays[key] for structure in structures]
-        )
+        if loader_warning is not None:
+            warnings.warn(loader_warning, stacklevel=2)
+        return np.concatenate([s.arrays[key] for s in structures])
 
-    return list(keys), loader
+    return LazyMapping(keys, loader)
 
 
 def summarise_dataset(
