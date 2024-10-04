@@ -23,6 +23,7 @@ def test_correctness(name):
         "SiO2-GAP-22",
         "ANI-1ccx",
         "ANI-1x",
+        "rMD17",
     ]:
         return
 

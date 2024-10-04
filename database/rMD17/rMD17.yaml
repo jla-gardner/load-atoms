@@ -1,0 +1,55 @@
+name: rMD17
+year: 2020
+description: |
+    A dataset composed of a single MD trajectory for each of 10 molecules.
+    Original structures are taken from Chmiela et al., with energy and force
+    labels recalculated by Christensen and von Lilienfeld using "the PBE/def2-SVP
+    level of theory [with] very tight SCF convergence and [a] very dense DFT
+    integration grid". The MD trajectories are presented one at a time, with
+    structures within each trajectory in chronological order.
+category: Benchmarks
+minimum_load_atoms_version: 0.3
+per_structure_properties:
+    energy:
+        desc: energy
+        units: eV
+    name:
+        desc: name of the molecule
+        units: str
+per_atom_properties:
+    forces:
+        desc: forces
+        units: eV/Å
+representative_structure: 0
+citation: |
+    @article{Christensen-20-10,
+        title = {
+            On the Role of Gradients for Machine 
+            Learning of Molecular Energies and Forces
+        },
+        author = {Christensen, Anders S. and von Lilienfeld, O. Anatole},
+        year = {2020},
+        journal = {Machine Learning: Science and Technology},
+        volume = {1},
+        number = {4},
+        pages = {045018},
+        doi = {10.1088/2632-2153/abba6f},
+    }
+
+    @article{Chmiela-17-05,
+        title = {
+            Machine Learning of Accurate Energy-Conserving Molecular Force Fields
+        },
+        author = {
+            Chmiela, Stefan and Tkatchenko, Alexandre 
+            and Sauceda, Huziel E. and Poltavsky, Igor 
+            and Sch{\"u}tt, Kristof T. and M{\"u}ller, Klaus-Robert
+        },
+        year = {2017},
+        journal = {Science Advances},
+        volume = {3},
+        number = {5},
+        pages = {e1603015},
+        doi = {10.1126/sciadv.1603015},
+    }
+

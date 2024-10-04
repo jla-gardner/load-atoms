@@ -59,6 +59,20 @@ Benchmarks
         Energy labels are quoted in eV, relative to the isolated atoms of the molecule.
         
     
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
+        .. centered:: :doc:`rMD17 <../datasets/rMD17>`
+    
+        A dataset composed of a single MD trajectory for each of 10 molecules.
+        Original structures are taken from Chmiela et al., with energy and force
+        labels recalculated by Christensen and von Lilienfeld using "the PBE/def2-SVP
+        level of theory [with] very tight SCF convergence and [a] very dense DFT
+        integration grid". The MD trajectories are presented one at a time, with
+        structures within each trajectory in chronological order.
+        
+    
 
 .. toctree::
     :maxdepth: 1
@@ -68,4 +82,5 @@ Benchmarks
     ../datasets/ANI-1x
     ../datasets/QM7
     ../datasets/QM9
+    ../datasets/rMD17
 

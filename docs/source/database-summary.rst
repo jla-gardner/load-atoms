@@ -94,3 +94,9 @@ These can be downloaded from the internet (and cached locally) using
       - 11,428
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
       - 2024
+    * - :doc:`rMD17 <../datasets/rMD17>`
+      - H, C, N, O
+      - 15,599,712
+      - 999,988
+      - None
+      - 2020
