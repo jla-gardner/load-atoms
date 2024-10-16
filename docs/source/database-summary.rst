@@ -98,5 +98,5 @@ These can be downloaded from the internet (and cached locally) using
       - H, C, N, O
       - 15,599,712
       - 999,988
-      - None
+      - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
       - 2020
