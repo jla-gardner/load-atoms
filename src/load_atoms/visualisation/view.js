@@ -11,10 +11,8 @@ Concretely, we:
         is interacting in a click-and-drag manner, and toggles the rotation
         when the user clicks on the scene
 
-This script is modified before use to replace all instances of the string
-"uid" with a unique (and variable-name allowable) identifier. This is to
-ensure that the script can be used multiple times on the same page without
-conflicting with itself.
+This script is modified before use to replace the config object with the
+actual configuration.
 
 See load_atoms.visualise for how exactly this is done.
 */

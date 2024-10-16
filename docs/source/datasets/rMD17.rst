@@ -147,7 +147,7 @@ Miscellaneous information
             integration grid". The MD trajectories are presented one at a time, with
             structures within each trajectory in chronological order.
         category: Benchmarks
-        minimum_load_atoms_version: 0.2
+        minimum_load_atoms_version: 0.3
         per_structure_properties:
             energy:
                 desc: energy
@@ -191,5 +191,5 @@ Miscellaneous information
                 pages = {e1603015},
                 doi = {10.1126/sciadv.1603015},
             }
-        
+        license: CC0
         
