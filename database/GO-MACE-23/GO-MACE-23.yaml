@@ -1,0 +1,45 @@
+name: GO-MACE-23
+year: 2023
+description: |
+    The complete dataset (``"iter-12-filtered"``) used for training and testing the 
+    `GO-MACE-23 <https://doi.org/10.1002/anie.202410088>`__ interatomic potential.
+    This dataset covers a wide range of graphene-oxide relevant configurations,
+    several different stoichiometries, and many different functional groups.
+    DFT labels were generated using `CASTEP <https://www.castep.org/>`__ with the PBE functional.
+    Original data were obtained from `Zenodo <https://zenodo.org/records/14066557>`__.
+    Reference energies for isolated atoms are ``{"C": -148.6811580026, "H": -12.53432584235, "O": -431.6357255604}``.
+category: Potential Fitting
+minimum_load_atoms_version: 0.2
+citation: |
+    @article{El-Machachi-24-11,
+        title = {
+            Accelerated First-Principles Exploration
+            of Structure and Reactivity in Graphene Oxide
+        },
+        author = {
+            {El-Machachi}, Zakariya and Frantzov, Damyan 
+            and Nijamudheen, A. and Zarrouk, Tigany 
+            and Caro, Miguel A. and Deringer, Volker L.
+        },
+        journal = {Angewandte Chemie International Edition},
+        volume = {n/a},
+        number = {n/a},
+        pages = {e202410088},
+        doi = {10.1002/anie.202410088},
+    }
+license: CC BY 4.0
+per_atom_properties:
+    forces:
+        desc: force vectors
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: total structure energy
+        units: eV
+    split:
+        desc: |
+            | whether the structure was used
+            | for training (``"train"``)
+            | or testing (``"test"``)
+representative_structure: 1894
+

@@ -34,6 +34,21 @@ Potential Fitting
     .. grid-item-card::
         :class-item: info-card
     
+        .. centered:: :doc:`GO-MACE-23 <../datasets/GO-MACE-23>`
+    
+        The complete dataset (``"iter-12-filtered"``) used for training and testing the 
+        `GO-MACE-23 <https://doi.org/10.1002/anie.202410088>`__ interatomic potential.
+        This dataset covers a wide range of graphene-oxide relevant configurations,
+        several different stoichiometries, and many different functional groups.
+        DFT labels were generated using `CASTEP <https://www.castep.org/>`__ with the PBE functional.
+        Original data were obtained from `Zenodo <https://zenodo.org/records/14066557>`__.
+        Reference energies for isolated atoms are ``{"C": -148.6811580026, "H": -12.53432584235, "O": -431.6357255604}``.
+        
+    
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
         .. centered:: :doc:`GST-GAP-22 <../datasets/GST-GAP-22>`
     
         The complete dataset used for training the `GST-GAP-22 <https://doi.org/10.1038/s41928-023-01030-x>`_ interatomic potential,
@@ -100,6 +115,7 @@ Potential Fitting
 
     ../datasets/C-GAP-17
     ../datasets/C-GAP-20U
+    ../datasets/GO-MACE-23
     ../datasets/GST-GAP-22
     ../datasets/P-GAP-20
     ../datasets/Si-GAP-18
