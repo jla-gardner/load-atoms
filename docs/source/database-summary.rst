@@ -52,6 +52,12 @@ These can be downloaded from the internet (and cached locally) using
       - 115,206
       - `MIT <https://opensource.org/licenses/MIT>`_
       - 2022
+    * - :doc:`GO-MACE-23 <../datasets/GO-MACE-23>`
+      - H, C, O
+      - 768,256
+      - 3,816
+      - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
+      - 2023
     * - :doc:`GST-GAP-22 <../datasets/GST-GAP-22>`
       - Ge, Sb, Te
       - 341,132
