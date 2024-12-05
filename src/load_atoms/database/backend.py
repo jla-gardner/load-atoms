@@ -287,21 +287,19 @@ def get_importer_type(
 def log_usage_information(info: DatabaseEntry, progress: Progress):
     progress.add_text("\n")
 
-    name = f"[bold]{info.name}[/bold]"
+    name = progress.bold(info.name)
     if info.license is not None:
-        style = f"dodger_blue2 link={LICENSE_URLS[info.license]} underline"
+        license = progress.link(info.license, LICENSE_URLS[info.license])
         progress.add_text(
-            f"The {name} dataset is covered by the "
-            f"[{style}]{info.license}[/] license."
+            f"The {name} dataset is covered by the {license} license."
         )
     if info.citation is not None:
         progress.add_text(
-            f"Please cite the {name} dataset " "if you use it in your work."
+            f"Please cite the {name} dataset if you use it in your work."
         )
     progress.add_text(f"For more information about the {name} dataset, visit:")
     url = frontend_url(info)
-    url_style = f"dodger_blue2 underline link={url}"
-    progress.add_text(f"[{url_style}]load-atoms/{info.name}")
+    progress.add_text(progress.link(f"load-atoms/{info.name}", url))
 
 
 def unzip_file(file_path: Path, progress: Progress) -> Path:
