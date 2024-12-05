@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import os
+import sys
+from abc import ABC, abstractmethod
 from datetime import timedelta
-from typing import Protocol
+from typing import Generic, TypeVar
 
 from rich.align import Align
 from rich.live import Live
@@ -19,28 +21,31 @@ from rich.table import Column, Table
 from rich.text import Text
 
 
-class Task(Protocol):
+class Task:
     def update(self, **kwargs):
         ...
 
     def __enter__(self) -> Task:
-        ...
+        return self
 
     def __exit__(self, *args):
         ...
 
 
-class Progress(Protocol):
+T = TypeVar("T", bound=Task)
+
+
+class Progress(Generic[T], ABC):
     def __init__(self, title: str):
         ...
 
+    @abstractmethod
     def new_task(
         self,
         description: str,
         total: int | float | None = None,
-    ) -> Task:
+    ) -> T:
         """Add a new task to the progress bar."""
-        ...
 
     def add_text(self, text: str):
         """Add a text row to the progress bar."""
@@ -50,17 +55,30 @@ class Progress(Protocol):
 
     def __enter__(self) -> Progress:
         """Enter the context manager."""
-        ...
+        return self
 
     def __exit__(self, *args):
         """Exit the context manager."""
-        ...
+
+    def bold(self, text: str) -> str:
+        """Return the text in bold."""
+        return text
+
+    def link(self, text: str, url: str) -> str:
+        """Return the text as a link."""
+        return url
 
 
 def get_progress_for_dataset(dataset_id: str) -> Progress:
     if os.environ.get("LOAD_ATOMS_VERBOSE") == "0":
         return SilentProgress(dataset_id)
-    return VisibleProgress(dataset_id)
+
+    # check if in colab notebook: rich progress bar
+    # doesn't appear to work well there
+    if "google.colab" in sys.modules:
+        return PrintedProgressBar(dataset_id)
+
+    return RichProgressBar(dataset_id)
 
 
 class TimeElapsedColumn(ProgressColumn):
@@ -86,7 +104,7 @@ class PercentColumn(ProgressColumn):
         return Text(f"{task.percentage:>3.0f}%", style="black")
 
 
-class VisibleProgress(Progress):
+class RichProgressBar(Progress):
     def __init__(self, title: str):
         self._progress = RichProgress(
             SpinnerColumn(
@@ -119,8 +137,8 @@ class VisibleProgress(Progress):
         self,
         description: str,
         total: int | float | None = None,
-    ) -> VisibleTask:
-        return VisibleTask(
+    ) -> RichProgressBarTask:
+        return RichProgressBarTask(
             self._progress.add_task(description, total=total),
             self._progress,
         )
@@ -140,8 +158,14 @@ class VisibleProgress(Progress):
     def refresh(self):
         self._live.refresh()
 
+    def bold(self, text: str) -> str:
+        return f"[bold]{text}[/bold]"
 
-class VisibleTask:
+    def link(self, text: str, url: str) -> str:
+        return f"[dodger_blue2 link={url} underline]{text}[/]"
+
+
+class RichProgressBarTask(Task):
     def __init__(self, task_id: TaskID, progress: RichProgress):
         self._task_id = task_id
         self._progress = progress
@@ -149,44 +173,57 @@ class VisibleTask:
     def update(self, **kwargs):
         self._progress.update(self._task_id, **kwargs)
 
-    def __enter__(self):
-        return self
-
     def __exit__(self, *args):
         self._progress.update(self._task_id, completed=True, total=1)
 
 
-class SilentTask:
-    def __init__(self, description: str, total: int | float | None = None):
-        ...
-
-    def update(self, **kwargs):
-        ...
-
-    def __enter__(self) -> Task:
-        return self
-
-    def __exit__(self, *args):
-        ...
-
-
-class SilentProgress(Progress):
+class PrintedProgressBar(Progress):
     def __init__(self, title: str):
-        ...
+        self._title = title
 
     def new_task(
         self, description: str, total: int | float | None = None
-    ) -> Task:
-        return SilentTask(description, total)
+    ) -> PrintedTask:
+        return PrintedTask(description, total)
 
     def add_text(self, text: str):
-        ...
-
-    def refresh(self):
-        ...
+        print(text)
 
     def __enter__(self):
+        # use terminal to underline and make title bold
+        title = f"~~ {self._title} ~~"
+        title = f"\033[4m\033[1m{title}\033[0m"
+        print(title)
+        return self
+
+    def bold(self, text: str) -> str:
+        # get terminal text in bold
+        return f"\033[1m{text}\033[0m"
+
+    def link(self, text: str, url: str) -> str:
+        # underline terminal text and make it a link
+        return f"\033[4m\033[94m{url}\033[0m"
+
+
+class PrintedTask(Task):
+    def __init__(self, description: str, total: int | float | None = None):
+        self._description = description
+        self._total = total
+
+    def __enter__(self):
+        print(f" - {self._description}...", end="")
         return self
 
     def __exit__(self, *args):
-        ...
+        print(" ✓")
+
+
+class SilentTask(Task):
+    pass
+
+
+class SilentProgress(Progress):
+    def new_task(
+        self, description: str, total: int | float | None = None
+    ) -> Task:
+        return SilentTask()
