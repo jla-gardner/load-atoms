@@ -8,7 +8,9 @@ Configuration
 
    Controls the verbosity of the ``load-atoms`` package.
 
-   If set to 1, ``load-atoms`` will print information about the dataset being loaded. (Default)
+   If set to 2, ``load-atoms`` will use a rich progress bar to show the progress of the dataset being loaded. (default)
+
+   If set to 1, ``load-atoms`` will print information about the dataset being loaded.
 
    If set to 0, ``load-atoms`` will not print any information about the dataset being loaded.
 

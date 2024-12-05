@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-import sys
 from abc import ABC, abstractmethod
 from datetime import timedelta
 from typing import Generic, TypeVar
@@ -70,14 +69,11 @@ class Progress(Generic[T], ABC):
 
 
 def get_progress_for_dataset(dataset_id: str) -> Progress:
-    if os.environ.get("LOAD_ATOMS_VERBOSE") == "0":
+    env_verbosity = os.environ.get("LOAD_ATOMS_VERBOSE", "2")
+    if env_verbosity == "0":
         return SilentProgress(dataset_id)
-
-    # check if in colab notebook: rich progress bar
-    # doesn't appear to work well there
-    if "google.colab" in sys.modules:
+    elif env_verbosity == "1":
         return PrintedProgressBar(dataset_id)
-
     return RichProgressBar(dataset_id)
 
 
