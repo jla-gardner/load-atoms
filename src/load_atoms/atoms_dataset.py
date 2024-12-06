@@ -18,6 +18,7 @@ from typing import (
 )
 
 import ase
+import ase.io
 import lmdb
 import numpy as np
 from ase import Atoms
@@ -213,6 +214,35 @@ class AtomsDataset(ABC, Sequence[Atoms]):
             },
             sort_keys=False,
             indent=4,
+        )
+
+    def write(
+        self,
+        path: Path | str,
+        format: str | None = None,
+        append: bool = False,
+        **kwargs: Any,
+    ):
+        """
+        Write the dataset to a file, using :func:`ase.io.write`.
+
+        Parameters
+        ----------
+        path
+            The path to write the dataset to.
+        format
+            The format to write the dataset in.
+        append
+            Whether to append to the file.
+        kwargs
+            Additional keyword arguments to pass to :func:`ase.io.write`.
+        """
+        ase.io.write(
+            path,
+            self,
+            format=format,  # type: ignore
+            append=append,
+            **kwargs,
         )
 
     @property

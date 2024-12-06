@@ -100,6 +100,12 @@ These can be downloaded from the internet (and cached locally) using
       - 11,428
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
       - 2024
+    * - :doc:`a-Si-24 <../datasets/a-Si-24>`
+      - Si
+      - 1,317,240
+      - 3,069
+      - None
+      - 2024
     * - :doc:`rMD17 <../datasets/rMD17>`
       - H, C, N, O
       - 15,599,712
