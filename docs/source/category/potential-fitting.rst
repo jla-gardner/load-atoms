@@ -108,6 +108,16 @@ Potential Fitting
         with new structures generated using an active-learning approach.
         
     
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
+        .. centered:: :doc:`a-Si-24 <../datasets/a-Si-24>`
+    
+        A dataset of amorphous Silicon structures, taken from
+        `Signatures of paracrystallinity in amorphous silicon <https://arxiv.org/abs/2407.16681>`__.
+        
+    
 
 .. toctree::
     :maxdepth: 1
@@ -121,4 +131,5 @@ Potential Fitting
     ../datasets/Si-GAP-18
     ../datasets/SiO2-GAP-22
     ../datasets/SiOx-ACE-24
+    ../datasets/a-Si-24
 
