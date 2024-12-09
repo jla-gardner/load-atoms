@@ -13,7 +13,8 @@ from load_atoms.atoms_dataset import (
     summarise_dataset,
 )
 from load_atoms.utils import UnknownDatasetException
-from setup import TESTING_DIR
+
+from .setup import TESTING_DIR
 
 STRUCTURES = [Atoms("H2O"), Atoms("H2O2")]
 GAP17 = load_dataset("C-GAP-17", root=TESTING_DIR)

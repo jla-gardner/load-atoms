@@ -5,6 +5,8 @@ from pathlib import Path
 import ase
 from ase.io import read
 
+from load_atoms.utils import remove_calculator
+
 from .atoms_dataset import AtomsDataset, InMemoryAtomsDataset
 from .database import backend
 from .visualisation import view
@@ -77,6 +79,14 @@ def load_dataset(
     Load a dataset from a file:
 
     >>> load_dataset("path/to/file.xyz")
+
+    .. note::
+
+        As of ``ase==3.23.0``, the ``"energy"``, ``"forces"``, and ``"stress"``
+        special keys are loaded into a
+        :class:`~ase.calculators.singlepoint.SinglePointCalculator` object,
+        and removed from the ``.info`` and ``.arrays`` dictionaries on the
+        atoms object. We reverse this process when loading a dataset from file.
     """
 
     if isinstance(thing, list) and all(isinstance(s, ase.Atoms) for s in thing):
@@ -96,6 +106,8 @@ def load_dataset(
         structures = read(Path(thing), index=":")
         if isinstance(structures, ase.Atoms):
             structures = [structures]
+        for s in structures:
+            remove_calculator(s)
         return InMemoryAtomsDataset(structures)
 
     if isinstance(thing, Path):

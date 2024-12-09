@@ -1,7 +1,8 @@
 import pytest
 from load_atoms.database import DatabaseEntry
 from pydantic import ValidationError
-from setup import PROJECT_ROOT
+
+from ..setup import PROJECT_ROOT
 
 
 def get_correct_dictionary():

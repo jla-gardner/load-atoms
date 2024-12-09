@@ -1,7 +1,8 @@
 import os
 
 from load_atoms import load_dataset
-from setup import TESTING_DIR
+
+from .setup import TESTING_DIR
 
 
 def test_verbose(capfd):

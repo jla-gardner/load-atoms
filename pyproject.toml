@@ -16,7 +16,7 @@ classifiers = [
 ]
 keywords = ["chemistry", "machine learning", "datasets"]
 dependencies = [
-    "ase==3.22.1",
+    "ase",
     "pyyaml",
     "requests",
     "numpy",
@@ -32,7 +32,7 @@ requires-python = ">=3.8"
 [project.optional-dependencies]
 dev = [
     "notebook",
-    "pytest==7.2.0",            # kept < 8 to allow for importing from test/setup
+    "pytest",
     "sphinx",
     "furo",
     "nbsphinx",

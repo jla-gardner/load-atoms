@@ -1,7 +1,8 @@
 import pytest
 from load_atoms import load_dataset
 from load_atoms.database import DatabaseEntry
-from setup import (
+
+from ..setup import (
     AVAILABLE_DATASETS,
     DATABASE_ROOT,
     PROJECT_ROOT,
