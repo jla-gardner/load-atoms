@@ -30,6 +30,7 @@ from load_atoms.utils import (
     UnknownDatasetException,
     debug_mode,
     frontend_url,
+    remove_calculator,
     testing,
 )
 
@@ -97,7 +98,7 @@ def load_dataset_by_id(dataset_id: str, root: Path) -> AtomsDataset:
                 for structure in importer_type.get_structures(
                     download_dir, progress
                 ):
-                    structure.calc = None
+                    remove_calculator(structure)
                     yield structure
 
             try:
