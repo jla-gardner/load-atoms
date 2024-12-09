@@ -79,6 +79,14 @@ def load_dataset(
     Load a dataset from a file:
 
     >>> load_dataset("path/to/file.xyz")
+
+    .. note::
+
+        As of ``ase==3.23.0``, the ``"energy"``, ``"forces"``, and ``"stress"``
+        special keys are loaded into a
+        :class:`~ase.calculators.singlepoint.SinglePointCalculator` object,
+        and removed from the ``.info`` and ``.arrays`` dictionaries on the
+        atoms object. We reverse this process when loading a dataset from file.
     """
 
     if isinstance(thing, list) and all(isinstance(s, ase.Atoms) for s in thing):

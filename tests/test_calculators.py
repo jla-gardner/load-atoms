@@ -1,4 +1,6 @@
 import ase.io
+import pytest
+from ase import Atoms
 from ase.calculators.singlepoint import SinglePointCalculator
 from load_atoms import load_dataset
 from load_atoms.utils import remove_calculator
@@ -31,3 +33,14 @@ def test_remove_calculator():
     assert "energy" in dataset.info
     assert dataset.info["energy"][0] == structures[0].info["energy"]
     assert "forces" in dataset.arrays
+
+    # test clash
+    atoms = Atoms("H2O")
+    atoms.calc = SinglePointCalculator(atoms, energy=1.0)
+    atoms.info["energy"] = 2.0
+
+    with pytest.warns(UserWarning, match='different values for "energy"'):
+        remove_calculator(atoms)
+
+    assert atoms.calc is None
+    assert atoms.info["energy"] == 2.0
