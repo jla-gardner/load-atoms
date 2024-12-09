@@ -2,11 +2,13 @@ from __future__ import annotations
 
 import hashlib
 import os
+import warnings
 from collections import defaultdict
 from pathlib import Path
 from typing import Callable, Iterable, KeysView, Mapping, Sequence, TypeVar
 
 import numpy as np
+from ase import Atoms
 
 FRONTEND_URL = "https://jla-gardner.github.io/load-atoms/datasets/"
 BASE_REMOTE_URL = "https://github.com/jla-gardner/load-atoms/raw/main/database/"
@@ -245,3 +247,39 @@ class FrozenDict(dict):
 
 def freeze_dict(d: dict, error_msg: str = _default_error_msg) -> FrozenDict:
     return FrozenDict(d, error_msg)
+
+
+def remove_calculator(atoms: Atoms) -> None:
+    """
+    Intelligently remove the atom's calculator object:
+    - get the results
+    - move them to the atoms.info/array dictionary if they are not present
+    - warn if they are present
+    """
+    calc = atoms.calc
+    if not calc:
+        return
+
+    atoms.calc = None
+    results = calc.results
+
+    mappings = {
+        "energy": atoms.info,
+        "forces": atoms.arrays,
+        "stress": atoms.info,
+    }
+    for key, result in results.items():
+        mapping = mappings.get(key, None)
+        if mapping is None:
+            continue
+
+        if key in mapping and np.any(mapping[key] != result):
+            warnings.warn(
+                f'We found different values for "{key}" on an atoms object '
+                "and its calculator. We will preserve the value already on "
+                "the atoms object and discard that from the calculator. ",
+                stacklevel=2,
+            )
+            continue
+
+        mapping[key] = result

@@ -5,6 +5,8 @@ from pathlib import Path
 import ase
 from ase.io import read
 
+from load_atoms.utils import remove_calculator
+
 from .atoms_dataset import AtomsDataset, InMemoryAtomsDataset
 from .database import backend
 from .visualisation import view
@@ -96,6 +98,8 @@ def load_dataset(
         structures = read(Path(thing), index=":")
         if isinstance(structures, ase.Atoms):
             structures = [structures]
+        for s in structures:
+            remove_calculator(s)
         return InMemoryAtomsDataset(structures)
 
     if isinstance(thing, Path):
