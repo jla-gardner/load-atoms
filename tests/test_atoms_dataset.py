@@ -1,3 +1,4 @@
+import pickle
 import shutil
 from contextlib import nullcontext
 from pathlib import Path
@@ -305,3 +306,11 @@ def test_filtering(dataset: AtomsDataset):
     context = nullcontext() if dataset is GAP17 else pytest.warns(UserWarning)
     with context:
         assert np.all(indexed.info["energy"] == filtered.info["energy"])
+
+
+def test_pickleable():
+    dataset = GAP17
+    dump = pickle.dumps(dataset)
+    assert dump
+    load = pickle.loads(dump)
+    assert load[0] == dataset[0]
