@@ -836,6 +836,28 @@ class LmdbAtomsDataset(AtomsDataset):
         env.close()
 
 
+class InfoLoader:
+    def __init__(self, structures: Iterable[Atoms], warning: str | None = None):
+        self.structures = structures
+        self.warning = warning
+
+    def __call__(self, key: str) -> np.ndarray:
+        if self.warning is not None:
+            warnings.warn(self.warning, stacklevel=2)
+        return np.array([s.info[key] for s in self.structures])
+
+
+class ArraysLoader:
+    def __init__(self, structures: Iterable[Atoms], warning: str | None = None):
+        self.structures = structures
+        self.warning = warning
+
+    def __call__(self, key: str) -> np.ndarray:
+        if self.warning is not None:
+            warnings.warn(self.warning, stacklevel=2)
+        return np.concatenate([s.arrays[key] for s in self.structures])
+
+
 def _get_info_mapping(
     structures: Iterable[Atoms],
     keys: list[str] | None = None,
@@ -843,13 +865,7 @@ def _get_info_mapping(
 ) -> LazyMapping[str, np.ndarray]:
     if keys is None:
         keys = list(intersect(s.info.keys() for s in structures))
-
-    def loader(key: str):
-        if loader_warning is not None:
-            warnings.warn(loader_warning, stacklevel=2)
-        return np.array([s.info[key] for s in structures])
-
-    return LazyMapping(keys, loader)
+    return LazyMapping(keys, InfoLoader(structures, loader_warning))
 
 
 def _get_arrays_mapping(
@@ -859,13 +875,7 @@ def _get_arrays_mapping(
 ) -> LazyMapping[str, np.ndarray]:
     if keys is None:
         keys = list(intersect(s.arrays.keys() for s in structures))
-
-    def loader(key: str):
-        if loader_warning is not None:
-            warnings.warn(loader_warning, stacklevel=2)
-        return np.concatenate([s.arrays[key] for s in structures])
-
-    return LazyMapping(keys, loader)
+    return LazyMapping(keys, ArraysLoader(structures, loader_warning))
 
 
 def summarise_dataset(
