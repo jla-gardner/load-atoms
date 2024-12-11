@@ -1,0 +1,30 @@
+name: a-Si-24
+year: 2024
+category: Potential Fitting
+minimum_load_atoms_version: 0.3
+description: |
+    A dataset of amorphous Silicon structures, taken from
+    `Signatures of paracrystallinity in amorphous silicon <https://arxiv.org/abs/2407.16681>`__.
+citation: |
+    @misc{Rosset-24-07,
+        title = {Signatures of Paracrystallinity in Amorphous Silicon},
+        author = {
+            Rosset, Louise A. M. and Drabold, David A. 
+            and Deringer, Volker L.
+        },
+        year = {2024},
+        doi = {10.48550/arXiv.2407.16681},
+    }
+
+per_atom_properties:
+    forces:
+        desc: force vectors
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: energy of the structure
+        units: eV
+    label:
+        desc: a unique identifier for each structure
+
+representative_structure: 10
