@@ -273,7 +273,12 @@ def remove_calculator(atoms: Atoms) -> None:
         if mapping is None:
             continue
 
-        if key in mapping and np.any(mapping[key] != result):
+        value_in_mapping = mapping.get(key, None)
+
+        if value_in_mapping is not None and (
+            value_in_mapping.shape != result.shape
+            or not np.allclose(value_in_mapping, result)
+        ):
             warnings.warn(
                 f'We found different values for "{key}" on an atoms object '
                 "and its calculator. We will preserve the value already on "
