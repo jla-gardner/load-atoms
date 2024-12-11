@@ -11,7 +11,7 @@ from .atoms_dataset import AtomsDataset, InMemoryAtomsDataset
 from .database import backend
 from .visualisation import view
 
-__version__ = "0.3.7"
+__version__ = "0.3.8"
 __all__ = ["load_dataset", "view"]
 
 
@@ -82,7 +82,7 @@ def load_dataset(
 
     .. note::
 
-        As of ``ase==0.3.7``, the ``"energy"``, ``"forces"``, and ``"stress"``
+        As of ``ase==0.3.8``, the ``"energy"``, ``"forces"``, and ``"stress"``
         special keys are loaded into a
         :class:`~ase.calculators.singlepoint.SinglePointCalculator` object,
         and removed from the ``.info`` and ``.arrays`` dictionaries on the
