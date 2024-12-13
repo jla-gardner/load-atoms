@@ -16,7 +16,7 @@ class Importer(BaseImporter):
         return [
             FileDownload(
                 url="https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip",
-                expected_hash="da0462802df1",
+                expected_hash="97eb063f9655",
                 local_name="zip-file.zip",
             )
         ]

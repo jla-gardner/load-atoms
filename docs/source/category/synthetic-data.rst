@@ -10,6 +10,19 @@ Synthetic Data
     .. grid-item-card::
         :class-item: info-card
     
+        .. centered:: :doc:`a-Si-24 <../datasets/a-Si-24>`
+    
+        A dataset of synthetic amorphous Silicon structures, taken from
+        `Signatures of paracrystallinity in amorphous silicon <https://arxiv.org/abs/2407.16681>`__.
+        Each structure is the final snapshot from a unique melt-quench MD trajectory. 
+        The combined dataset covers a wide range of quench rates and densities, and includes the labels 
+        from the MTP :math:`M_{16}^{''}` potential used to generate the structures.
+        
+    
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
         .. centered:: :doc:`AC-2D-22 <../datasets/AC-2D-22>`
     
         Amorphous, 2D graphene structures generated using a Monte Carlo bond-switching algorithm,
@@ -33,6 +46,7 @@ Synthetic Data
     :maxdepth: 1
     :hidden:
 
+    ../datasets/a-Si-24
     ../datasets/AC-2D-22
     ../datasets/C-SYNTH-23M
 

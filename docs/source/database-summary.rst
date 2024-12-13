@@ -16,6 +16,12 @@ These can be downloaded from the internet (and cached locally) using
       - # Structures
       - License
       - Year
+    * - :doc:`a-Si-24 <../datasets/a-Si-24>`
+      - Si
+      - 1,317,240
+      - 3,069
+      - None
+      - 2024
     * - :doc:`AC-2D-22 <../datasets/AC-2D-22>`
       - C
       - 30,000
@@ -82,6 +88,12 @@ These can be downloaded from the internet (and cached locally) using
       - 133,885
       - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
       - 2014
+    * - :doc:`rMD17 <../datasets/rMD17>`
+      - H, C, N, O
+      - 15,599,712
+      - 999,988
+      - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
+      - 2020
     * - :doc:`Si-GAP-18 <../datasets/Si-GAP-18>`
       - Si
       - 171,815
@@ -100,9 +112,3 @@ These can be downloaded from the internet (and cached locally) using
       - 11,428
       - `CC BY 4.0 <https://creativecommons.org/licenses/by/4.0/deed.en>`_
       - 2024
-    * - :doc:`rMD17 <../datasets/rMD17>`
-      - H, C, N, O
-      - 15,599,712
-      - 999,988
-      - `CC0 <https://creativecommons.org/publicdomain/zero/1.0/>`_
-      - 2020

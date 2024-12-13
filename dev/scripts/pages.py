@@ -54,7 +54,10 @@ def build_docs_page_for(name: str):
 
 def build_datasets_index():
     # load all DatabaseEntry's
-    entry_files = sorted((_PROJECT_ROOT / "database").glob("**/*.yaml"))
+    entry_files = sorted(
+        (_PROJECT_ROOT / "database").glob("**/*.yaml"),
+        key=lambda f: f.name.lower(),
+    )
     entries = [DatabaseEntry.from_yaml_file(f) for f in entry_files]
 
     # 2. create table and place in database-summary.rst

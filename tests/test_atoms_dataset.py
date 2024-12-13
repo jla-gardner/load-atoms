@@ -314,3 +314,11 @@ def test_pickleable():
     assert dump
     load = pickle.loads(dump)
     assert load[0] == dataset[0]
+
+
+def test_write(tmp_path):
+    dataset = GAP17[:5]
+    dataset.write(tmp_path / "test.xyz")
+    dataset2 = load_dataset(tmp_path / "test.xyz")
+    assert len(dataset2) == len(dataset)
+    assert dataset2[0] == dataset[0]
