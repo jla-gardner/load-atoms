@@ -1,0 +1,4507 @@
+{
+  "api/configuration": [],
+  "api/dataset": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"QM9\")\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 QM9 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502                                                                       \u2502\n\u2502   Downloading dsgdb9nsd.xyz.tar.bz2 \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:09   \u2502\n\u2502   Extracting dsgdb9nsd.xyz.tar.bz2  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:18   \u2502\n\u2502   Processing files                  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:19   \u2502\n\u2502   Caching to disk                   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:02   \u2502\n\u2502                                                                       \u2502\n\u2502            The QM9 dataset is covered by the CC0 license.             \u2502\n\u2502        Please cite the QM9 dataset if you use it in your work.        \u2502\n\u2502          For more information about the QM9 dataset, visit:           \u2502\n\u2502                            load-atoms/QM9                             \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f\n>>> dataset\nQM9:\n    structures: 133,885\n    atoms: 2,407,753\n    species:\n        H: 51.09%\n        C: 35.16%\n        O: 7.81%\n        N: 5.80%\n        F: 0.14%\n    properties:\n        per atom: (partial_charges)\n        per structure: (\n            A, B, C, Cv, G, H, U, U0, alpha,\n            frequencies, gap, geometry, homo, inchi, index,\n            lumo, mu, r2, smiles, zpve\n        )",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 42
+    },
+    {
+      "source": ">>> load_dataset(\"QM9\", root=\"./my-datasets\")",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 46
+    },
+    {
+      "source": ">>> load_dataset([Atoms(\"H2O\"), Atoms(\"H2O2\")])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 50
+    },
+    {
+      "source": ">>> load_dataset(\"path/to/file.xyz\")",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 54
+    },
+    {
+      "source": "for idx, structure in enumerate(dataset):\n    assert len(structure) == dataset.structure_sizes[idx]",
+      "names": [
+        {
+          "import_components": [
+            "enumerate"
+          ],
+          "code_str": "enumerate",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "enumerate"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 3
+    },
+    {
+      "source": ">>> QM7 = load_dataset(\"QM7\")\n>>> QM7[0]\nAtoms(symbols='CH4', pbc=False)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 6
+    },
+    {
+      "source": ">>> QM7[:5]\nDataset:\n    structures: 5\n    atoms: 32\n    species:\n        H: 68.75%\n        C: 28.12%\n        O: 3.12%\n    properties:\n        per atom: ()\n        per structure: (energy)",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 15
+    },
+    {
+      "source": ">>> len(QM7[[0, 2, 4]])\n3",
+      "names": [
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 33
+    },
+    {
+      "source": ">>> bool_idx = [\n...     len(s) > 10 for s in QM7\n... ]\n>>> len(QM7[bool_idx]) == sum(bool_idx)\nTrue",
+      "names": [
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "sum"
+          ],
+          "code_str": "sum",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "sum"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 44
+    },
+    {
+      "source": "for key, value in dataset.info.items():\n    for i, structure in enumerate(dataset):\n        assert structure.info[key] == value[i]",
+      "names": [
+        {
+          "import_components": [
+            "enumerate"
+          ],
+          "code_str": "enumerate",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "enumerate"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 6
+    },
+    {
+      "source": "for key, value in dataset.arrays.items():\n    assert value.shape[0] == dataset.n_atoms\n    assert value == np.vstack(\n        [structure.arrays[key] for structure in dataset]\n    )",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 5
+    },
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"C-GAP-17\")\n>>> dataset.filter_by(\n...     lambda structure: len(structure) < 50,\n...     lambda structure: structure.arrays[\"force\"].max() > 5,\n...     config_type=\"bulk_amo\"\n... )\nDataset:\n    structures: 609\n    atoms: 23,169\n    species:\n        C: 100.00%\n    properties:\n        per atom: (force)\n        per structure: (config_type, detailed_ct, split, energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 13
+    },
+    {
+      "source": ">>> train, test = dataset.random_split([0.8, 0.2])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 18
+    },
+    {
+      "source": ">>> train, val, test = dataset.random_split([1_000, 100, 100])",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 22
+    },
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> import numpy as np\n>>> # helper function\n>>> def ratios(thing):\n...     values, counts = np.unique(thing, return_counts=True)\n...     max_len = max(len(str(v)) for v in values)\n...     for v, c in zip(values, counts / counts.sum()):\n...         print(f\"{v:>{max_len}}: {c:>6.2%}\")\n...\n>>> dataset = load_dataset(\"C-GAP-17\")\n>>> ratios(dataset.info[\"config_type\"])\n  bulk_amo: 75.28%\nbulk_cryst:  8.83%\n     dimer:  0.66%\n  surf_amo: 15.23%\n>>> train, val, test = dataset.random_split(\n...     [0.6, 0.2, 0.2],\n...     keep_ratio=\"config_type\"\n... )\n>>> ratios(train.info[\"config_type\"])\n  bulk_amo: 75.28%\nbulk_cryst:  8.83%\n     dimer:  0.66%\n  surf_amo: 15.23%",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "numpy"
+          ],
+          "code_str": "numpy",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "numpy"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "unique"
+          ],
+          "code_str": "np.unique",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "numpy.unique"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "max"
+          ],
+          "code_str": "max",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "max"
+        },
+        {
+          "import_components": [
+            "zip"
+          ],
+          "code_str": "zip",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "none",
+          "resolved_location": "zip"
+        },
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "none",
+          "resolved_location": "print"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 10,
+          "end_lineno": 10,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 26
+    },
+    {
+      "source": ">>> for i in range(5):\n...     train, test = dataset.k_fold_split(k=5, fold=i)\n...     ...  # do something, e.g. train a model",
+      "names": [
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "range"
+        }
+      ],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 18
+    },
+    {
+      "source": ">>> train, test = dataset.k_fold_split(\n...     k=5, fold=0, keep_ratio=\"config_type\"\n... )",
+      "names": [],
+      "example": {
+        "document": "api/dataset",
+        "ref_id": "dataset",
+        "headings": [
+          "Dataset"
+        ]
+      },
+      "doc_lineno": 29
+    }
+  ],
+  "api/utils": [
+    {
+      "source": ">>> def loader(key):\n...     print(f\"Loading value for key={key}\")\n...     return key * 2\n...\n>>> mapping = LazyMapping([1, 2, 3], loader)\n>>> mapping[3]\nLoading value for key=3\n6\n>>> mapping[3]\n6\n>>> 1 in mapping\nTrue\n>>> 4 in mapping\nFalse",
+      "names": [
+        {
+          "import_components": [
+            "print"
+          ],
+          "code_str": "print",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "print"
+        }
+      ],
+      "example": {
+        "document": "api/utils",
+        "ref_id": "utilities",
+        "headings": [
+          "Utilities"
+        ]
+      },
+      "doc_lineno": 27
+    }
+  ],
+  "api/viz": [
+    {
+      "source": "from ase.build import molecule\nfrom load_atoms import view\n\nethanol = molecule(\"CH3CH2OH\")\nview(ethanol, show_bonds=True)",
+      "names": [
+        {
+          "import_components": [
+            "ase",
+            "build"
+          ],
+          "code_str": "ase.build",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "ase.build"
+        },
+        {
+          "import_components": [
+            "ase",
+            "build",
+            "molecule"
+          ],
+          "code_str": "molecule",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "ase.build.molecule"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "import_target",
+          "resolved_location": "load_atoms.view"
+        },
+        {
+          "import_components": [
+            "ase",
+            "build",
+            "molecule"
+          ],
+          "code_str": "molecule",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "ase.build.molecule"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "none",
+          "resolved_location": "load_atoms.view"
+        }
+      ],
+      "example": {
+        "document": "api/viz",
+        "ref_id": "visualise",
+        "headings": [
+          "Visualise"
+        ]
+      },
+      "doc_lineno": 12
+    },
+    {
+      "source": "from pathlib import Path\n\nviz = view(ethanol, show_bonds=True)\nPath(\"ethanol.html\").write_text(viz.data)",
+      "names": [
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()",
+            "write_text"
+          ],
+          "code_str": "write_text",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "after_call",
+          "resolved_location": "pathlib.Path.write_text"
+        }
+      ],
+      "example": {
+        "document": "api/viz",
+        "ref_id": "visualise",
+        "headings": [
+          "Visualise"
+        ]
+      },
+      "doc_lineno": 26
+    }
+  ],
+  "category/benchmarks": [],
+  "category/potential-fitting": [],
+  "category/synthetic-data": [],
+  "database-summary": [],
+  "datasets-index": [],
+  "datasets/AC-2D-22": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"AC-2D-22\")\nAC-2D-22:\n    structures: '150'\n    atoms: 30,000\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces, local_energy, nn_local_energy)\n        per structure: (beta, config, criterion)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/AC-2D-22",
+        "ref_id": "ac-2d-22",
+        "headings": [
+          "AC-2D-22"
+        ]
+      },
+      "doc_lineno": 22
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nfrom ase import Atoms\nfrom ase.io import read\nfrom load_atoms.database.backend import BaseImporter, rename, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://zenodo.org/record/7221166/files/data.tar.gz\",\n                expected_hash=\"023de5805f15\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        # untar the file\n        contents_path = unzip_file(tmp_dir / \"data.tar.gz\", progress)\n        root = contents_path / \"data/fig_3\"\n\n        table = [\n            (\n                \"loc_run_fig_3a/Final_structures\",\n                {\n                    \"config\": \"continuous random network\",\n                    \"beta\": 2.0,\n                    \"criterion\": \"local energy\",\n                },\n            ),\n            (\n                \"NN_run_fig_3b/Final_structures_pristine\",\n                {\n                    \"config\": \"paracrystalline\",\n                    \"beta\": 2.0,\n                    \"criterion\": \"nearest-neighbour energy\",\n                },\n            ),\n            (\n                \"NN_run_fig_3b/Final_structures_thermal\",\n                {\n                    \"config\": \"paracrystalline\",\n                    \"beta\": 2.0,\n                    \"criterion\": \"nearest-neighbour energy\",\n                },\n            ),\n            (\n                \"loc_run_fig_3c/beta_50/Final_structures\",\n                {\n                    \"config\": \"paracrystalline\",\n                    \"beta\": 50.0,\n                    \"criterion\": \"local energy\",\n                },\n            ),\n            (\n                \"loc_run_fig_3c/beta_60/Final_structures\",\n                {\n                    \"config\": \"paracrystalline\",\n                    \"beta\": 60.0,\n                    \"criterion\": \"local energy\",\n                },\n            ),\n            (\n                \"fig_3d/total_beta_0.8/Final_structures\",\n                {\n                    \"config\": \"paracrystalline\",\n                    \"beta\": 0.8,\n                    \"criterion\": \"total energy\",\n                },\n            ),\n        ]\n\n        for path, info in table:\n            structures = cls.read_structures(root / path, progress)\n            for structure in structures:\n                structure.info.update(info)\n                yield cls.process_structure(structure)\n\n    @staticmethod\n    def read_structures(archive_dir: Path, progress: Progress) -> list[Atoms]:\n        extracted = unzip_file(archive_dir / \"fin_run.tar.gz\", progress)\n        return [read(file) for file in sorted(extracted.glob(\"**/*.xyz\"))]  # type: ignore\n\n    @staticmethod\n    def process_structure(structure: Atoms) -> Atoms:\n        # Remove unwanted arrays\n        if \"c_1\" in structure.arrays:\n            del structure.arrays[\"c_1\"]\n\n        # Rotate 90 degrees around the x-axis\n        structure.rotate(90, \"x\", center=\"COU\", rotate_cell=True)\n\n        return rename(\n            structure,\n            {\n                \"Forces\": \"forces\",\n                \"Energy_per_atom\": \"local_energy\",\n                \"NN_Energy_per_atom\": \"nn_local_energy\",\n            },\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "read"
+          ],
+          "code_str": "read",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.io.read"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents_path",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents_path",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "staticmethod"
+          ],
+          "code_str": "staticmethod",
+          "lineno": 88,
+          "end_lineno": 88,
+          "context": "none",
+          "resolved_location": "staticmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 89,
+          "end_lineno": 89,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 89,
+          "end_lineno": 89,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 89,
+          "end_lineno": 89,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "archive_dir",
+          "lineno": 89,
+          "end_lineno": 89,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "archive_dir",
+          "lineno": 90,
+          "end_lineno": 90,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "extracted",
+          "lineno": 90,
+          "end_lineno": 90,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()",
+            "glob"
+          ],
+          "code_str": "extracted.glob",
+          "lineno": 91,
+          "end_lineno": 91,
+          "context": "none",
+          "resolved_location": "pathlib.Path.glob"
+        },
+        {
+          "import_components": [
+            "sorted"
+          ],
+          "code_str": "sorted",
+          "lineno": 91,
+          "end_lineno": 91,
+          "context": "none",
+          "resolved_location": "sorted"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "read"
+          ],
+          "code_str": "read",
+          "lineno": 91,
+          "end_lineno": 91,
+          "context": "none",
+          "resolved_location": "ase.io.read"
+        },
+        {
+          "import_components": [
+            "staticmethod"
+          ],
+          "code_str": "staticmethod",
+          "lineno": 93,
+          "end_lineno": 93,
+          "context": "none",
+          "resolved_location": "staticmethod"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 94,
+          "end_lineno": 94,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 94,
+          "end_lineno": 94,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 94,
+          "end_lineno": 94,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 103,
+          "end_lineno": 103,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        }
+      ],
+      "example": {
+        "document": "datasets/AC-2D-22",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "AC-2D-22",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 126
+    }
+  ],
+  "datasets/ANI-1ccx": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"ANI-1ccx\")\nANI-1ccx:\n    structures: 489,571\n    atoms: 6,763,288\n    species:\n        H: 45.52%\n        C: 29.58%\n        N: 15.30%\n        O: 9.60%\n    properties:\n        per atom: (dft_forces)\n        per structure: (1x_idx, cc_energy, dft_dipole, dft_energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/ANI-1ccx",
+        "ref_id": "ani-1ccx",
+        "headings": [
+          "ANI-1ccx"
+        ]
+      },
+      "doc_lineno": 23
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport h5py\nimport numpy as np\nfrom ase import Atoms\nfrom load_atoms.database.backend import BaseImporter, FileDownload\nfrom load_atoms.progress import Progress\n\nHa_to_eV = 27.2114079527\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def permanent_download_dirname(cls) -> str | None:\n        return \"ANI\"  # ensure same as ANI-1x to avoid re-downloading\n\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://springernature.figshare.com/ndownloader/files/18112775\",\n                expected_hash=\"fe0ba06198ee\",\n                local_name=\"ani1x-release.h5\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        with h5py.File(tmp_dir / \"ani1x-release.h5\", \"r\") as f:\n            n_structures = sum(\n                (~np.isnan(data[\"ccsd(t)_cbs.energy\"][()])).sum()\n                for data in f.values()\n            )\n            task = progress.new_task(\n                \"Processing 500k structures\",\n                total=n_structures,\n            )\n            ani1x_idx = -1\n\n            # iterate over each chemical formula in the dataset:\n            for data in f.values():\n                Zs = data[\"atomic_numbers\"]\n                coords = data[\"coordinates\"][()]\n                cc_energy = data[\"ccsd(t)_cbs.energy\"][()]\n                dft_energy = data[\"wb97x_dz.energy\"][()]\n                dft_forces = data[\"wb97x_dz.forces\"][()]\n                dft_dipole = data[\"wb97x_dz.dipole\"][()]\n\n                for i in range(len(cc_energy)):\n                    ani1x_idx += 1\n\n                    if np.isnan(cc_energy[i]):\n                        continue\n\n                    structure = Atoms(\n                        positions=coords[i],\n                        numbers=Zs,\n                    )\n                    # see: https://www.nature.com/articles/s41597-020-0473-z/tables/2\n                    # energy is in hartree, convert to eV\n                    structure.info[\"dft_energy\"] = dft_energy[i] * Ha_to_eV\n                    structure.info[\"cc_energy\"] = cc_energy[i] * Ha_to_eV\n                    # units of e * angstrom\n                    structure.info[\"dft_dipole\"] = dft_dipole[i]\n                    structure.info[\"1x_idx\"] = ani1x_idx\n                    # forces are in hartree/angstrom, convert to eV/angstrom\n                    structure.arrays[\"dft_forces\"] = dft_forces[i] * Ha_to_eV\n\n                    task.update(advance=1)\n                    yield structure\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "numpy"
+          ],
+          "code_str": "numpy",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "numpy"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 17,
+          "end_lineno": 17,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 20,
+          "end_lineno": 20,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 21,
+          "end_lineno": 21,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 30,
+          "end_lineno": 30,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 33,
+          "end_lineno": 33,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 33,
+          "end_lineno": 33,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 32,
+          "end_lineno": 32,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 32,
+          "end_lineno": 32,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 34,
+          "end_lineno": 34,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "isnan"
+          ],
+          "code_str": "np.isnan",
+          "lineno": 36,
+          "end_lineno": 36,
+          "context": "none",
+          "resolved_location": "numpy.isnan"
+        },
+        {
+          "import_components": [
+            "sum"
+          ],
+          "code_str": "sum",
+          "lineno": 35,
+          "end_lineno": 35,
+          "context": "none",
+          "resolved_location": "sum"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 54,
+          "end_lineno": 54,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 54,
+          "end_lineno": 54,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "isnan"
+          ],
+          "code_str": "np.isnan",
+          "lineno": 57,
+          "end_lineno": 57,
+          "context": "none",
+          "resolved_location": "numpy.isnan"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 60,
+          "end_lineno": 60,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 60,
+          "end_lineno": 60,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 75,
+          "end_lineno": 75,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        }
+      ],
+      "example": {
+        "document": "datasets/ANI-1ccx",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "ANI-1ccx",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 165
+    }
+  ],
+  "datasets/ANI-1x": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"ANI-1x\")\nANI-1x:\n    structures: 4,956,005\n    atoms: 75,700,481\n    species:\n        H: 47.63%\n        C: 30.30%\n        N: 13.32%\n        O: 8.75%\n    properties:\n        per atom: (forces)\n        per structure: (dipole, energy, is_in_ccx)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/ANI-1x",
+        "ref_id": "ani-1x",
+        "headings": [
+          "ANI-1x"
+        ]
+      },
+      "doc_lineno": 25
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport h5py\nimport numpy as np\nfrom ase import Atoms\nfrom load_atoms.database.backend import (\n    BaseImporter,\n    FileDownload,\n)\nfrom load_atoms.progress import Progress\n\nHa_to_eV = 27.2114079527\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://springernature.figshare.com/ndownloader/files/18112775\",\n                expected_hash=\"fe0ba06198ee\",\n                local_name=\"ani1x-release.h5\",\n            )\n        ]\n\n    @classmethod\n    def permanent_download_dirname(cls) -> str | None:\n        # ensure this file download is persisted so that we don't\n        # have to re-download the same file for the ANI-1ccx dataset\n        return \"ANI\"\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        with h5py.File(tmp_dir / \"ani1x-release.h5\", \"r\") as f:\n            n_structures = sum(\n                data[\"coordinates\"].shape[0] for data in f.values()\n            )\n            task = progress.new_task(\n                \"Processing 5M structures\",\n                total=n_structures,\n            )\n\n            # iterate over each chemical formula in the dataset:\n            for data in f.values():\n                Zs = data[\"atomic_numbers\"]\n                coords = data[\"coordinates\"][()]\n                dft_energy = data[\"wb97x_dz.energy\"][()]\n                dft_dipole = data[\"wb97x_dz.dipole\"][()]\n                dft_forces = data[\"wb97x_dz.forces\"][()]\n                cc_energy = data[\"ccsd(t)_cbs.energy\"][()]\n\n                for i in range(data[\"coordinates\"].shape[0]):\n                    structure = Atoms(positions=coords[i], numbers=Zs)\n                    # see: https://www.nature.com/articles/s41597-020-0473-z/tables/2\n                    # energy is in hartree, convert to eV\n                    structure.info[\"energy\"] = dft_energy[i] * Ha_to_eV\n                    # units of e * angstrom\n                    structure.info[\"dipole\"] = dft_dipole[i]\n                    structure.info[\"is_in_ccx\"] = not np.isnan(cc_energy[i])\n                    # forces are in hartree/angstrom, convert to eV/angstrom\n                    structure.arrays[\"forces\"] = dft_forces[i] * Ha_to_eV\n                    task.update(advance=1)\n                    yield structure\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "numpy"
+          ],
+          "code_str": "numpy",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "numpy"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 19,
+          "end_lineno": 19,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 20,
+          "end_lineno": 20,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "str"
+          ],
+          "code_str": "str",
+          "lineno": 30,
+          "end_lineno": 30,
+          "context": "none",
+          "resolved_location": "str"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 35,
+          "end_lineno": 35,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 38,
+          "end_lineno": 38,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 38,
+          "end_lineno": 38,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 37,
+          "end_lineno": 37,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 37,
+          "end_lineno": 37,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 39,
+          "end_lineno": 39,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "sum"
+          ],
+          "code_str": "sum",
+          "lineno": 40,
+          "end_lineno": 40,
+          "context": "none",
+          "resolved_location": "sum"
+        },
+        {
+          "import_components": [
+            "range"
+          ],
+          "code_str": "range",
+          "lineno": 57,
+          "end_lineno": 57,
+          "context": "none",
+          "resolved_location": "range"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 58,
+          "end_lineno": 58,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 58,
+          "end_lineno": 58,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "isnan"
+          ],
+          "code_str": "np.isnan",
+          "lineno": 64,
+          "end_lineno": 64,
+          "context": "none",
+          "resolved_location": "numpy.isnan"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 68,
+          "end_lineno": 68,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        }
+      ],
+      "example": {
+        "document": "datasets/ANI-1x",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "ANI-1x",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 124
+    }
+  ],
+  "datasets/C-GAP-17": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"C-GAP-17\")\nC-GAP-17:\n    structures: 4,530\n    atoms: 284,965\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, detailed_ct, energy, split)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-GAP-17",
+        "ref_id": "c-gap-17",
+        "headings": [
+          "C-GAP-17"
+        ]
+      },
+      "doc_lineno": 23
+    },
+    {
+      "source": "from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter\nfrom load_atoms.database.internet import FileDownload\n\n\nclass Importer(SingleFileImporter):\n    @classmethod\n    def file_to_download(cls) -> FileDownload:\n        return FileDownload(\n            url=f\"{BASE_GITHUB_URL}/C-GAP-17/C-GAP-17.extxyz\",\n            expected_hash=\"8dd037b59c88\",\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "classmethod"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-GAP-17",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "C-GAP-17",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 121
+    }
+  ],
+  "datasets/C-GAP-20U": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"C-GAP-20U\")\nC-GAP-20U:\n    structures: 6,088\n    atoms: 400,275\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, energy, free_energy, stress, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-GAP-20U",
+        "ref_id": "c-gap-20u",
+        "headings": [
+          "C-GAP-20U"
+        ]
+      },
+      "doc_lineno": 23
+    },
+    {
+      "source": "from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter\nfrom load_atoms.database.internet import FileDownload\n\n\nclass Importer(SingleFileImporter):\n    @classmethod\n    def file_to_download(cls) -> FileDownload:\n        return FileDownload(\n            url=f\"{BASE_GITHUB_URL}/C-GAP-20U/C-GAP-20U.xyz\",\n            expected_hash=\"da0462802df1\",\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "classmethod"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-GAP-20U",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "C-GAP-20U",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 127
+    }
+  ],
+  "datasets/C-SYNTH-23M": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"C-SYNTH-23M\")\nC-SYNTH-23M:\n    structures: 115,206\n    atoms: 23,041,200\n    species:\n        C: 100.00%\n    properties:\n        per atom: (forces, local_energies)\n        per structure: (anneal_T, density, energy, run_id, time)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-SYNTH-23M",
+        "ref_id": "c-synth-23m",
+        "headings": [
+          "C-SYNTH-23M"
+        ]
+      },
+      "doc_lineno": 22
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport ase.io\nfrom ase import Atoms\nfrom load_atoms.database.backend import BaseImporter, rename, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://zenodo.org/records/7704087/files/jla-gardner/carbon-data-v1.0.zip\",\n                expected_hash=\"b43fc702ef6d\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        # Unzip the file\n        contents_path = unzip_file(tmp_dir / \"carbon-data-v1.0.zip\", progress)\n\n        extxyz_files = sorted(contents_path.glob(\"**/*.extxyz\"))\n        task = progress.new_task(\n            f\"Processing {len(extxyz_files)} .extxyz files\",\n            total=len(extxyz_files),\n        )\n\n        # iterate through all .extxyz files\n        for file_path in extxyz_files:\n            structures = ase.io.read(file_path, index=\":\")\n            assert isinstance(structures, list)\n            for structure in structures:\n                yield process_structure(structure)\n\n            task.update(advance=1)\n\n\ndef process_structure(structure: Atoms) -> Atoms:\n    structure = rename(\n        structure,\n        {\n            \"gap17_forces\": \"forces\",\n            \"gap17_energy\": \"local_energies\",\n        },\n    )\n    structure.info[\"energy\"] = structure.arrays[\"local_energies\"].sum()\n    return structure\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents_path",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()",
+            "glob"
+          ],
+          "code_str": "contents_path.glob",
+          "lineno": 30,
+          "end_lineno": 30,
+          "context": "none",
+          "resolved_location": "pathlib.Path.glob"
+        },
+        {
+          "import_components": [
+            "sorted"
+          ],
+          "code_str": "sorted",
+          "lineno": 30,
+          "end_lineno": 30,
+          "context": "none",
+          "resolved_location": "sorted"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 32,
+          "end_lineno": 32,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 33,
+          "end_lineno": 33,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "read"
+          ],
+          "code_str": "ase.io.read",
+          "lineno": 38,
+          "end_lineno": 38,
+          "context": "none",
+          "resolved_location": "ase.io.read"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 39,
+          "end_lineno": 39,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "isinstance"
+          ],
+          "code_str": "isinstance",
+          "lineno": 39,
+          "end_lineno": 39,
+          "context": "none",
+          "resolved_location": "isinstance"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 46,
+          "end_lineno": 46,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 46,
+          "end_lineno": 46,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 46,
+          "end_lineno": 46,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 48,
+          "end_lineno": 48,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "rename",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 47,
+          "end_lineno": 47,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "rename",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 55,
+          "end_lineno": 55,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        }
+      ],
+      "example": {
+        "document": "datasets/C-SYNTH-23M",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "C-SYNTH-23M",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 131
+    }
+  ],
+  "datasets/GO-MACE-23": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"GO-MACE-23\")\nGO-MACE-23:\n    structures: 3,816\n    atoms: 768,256\n    species:\n        C: 69.86%\n        O: 19.54%\n        H: 10.60%\n    properties:\n        per atom: (forces)\n        per structure: (energy, split)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/GO-MACE-23",
+        "ref_id": "go-mace-23",
+        "headings": [
+          "GO-MACE-23"
+        ]
+      },
+      "doc_lineno": 26
+    },
+    {
+      "source": "from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter\nfrom load_atoms.database.internet import FileDownload\n\n\nclass Importer(SingleFileImporter):\n    @classmethod\n    def file_to_download(cls) -> FileDownload:\n        return FileDownload(\n            url=f\"{BASE_GITHUB_URL}/GO-MACE-23/GO-MACE-23.extxyz\",\n            expected_hash=\"aeb61b35a44b\",\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "classmethod"
+        }
+      ],
+      "example": {
+        "document": "datasets/GO-MACE-23",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "GO-MACE-23",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 124
+    }
+  ],
+  "datasets/GST-GAP-22": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"GST-GAP-22\")\nGST-GAP-22:\n    structures: 2,692\n    atoms: 341,132\n    species:\n        Te: 54.51%\n        Ge: 23.64%\n        Sb: 21.85%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, energy, sub_config, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/GST-GAP-22",
+        "ref_id": "gst-gap-22",
+        "headings": [
+          "GST-GAP-22"
+        ]
+      },
+      "doc_lineno": 24
+    },
+    {
+      "source": "from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter\nfrom load_atoms.database.internet import FileDownload\n\n\nclass Importer(SingleFileImporter):\n    @classmethod\n    def file_to_download(cls) -> FileDownload:\n        return FileDownload(\n            url=f\"{BASE_GITHUB_URL}/GST-GAP-22/refitted_GST-GAP-22_PBE.xyz\",\n            expected_hash=\"e4c467026dc0\",\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "classmethod"
+        }
+      ],
+      "example": {
+        "document": "datasets/GST-GAP-22",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "GST-GAP-22",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 118
+    }
+  ],
+  "datasets/P-GAP-20": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"P-GAP-20\")\nP-GAP-20:\n    structures: 4,798\n    atoms: 140,910\n    species:\n        P: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/P-GAP-20",
+        "ref_id": "p-gap-20",
+        "headings": [
+          "P-GAP-20"
+        ]
+      },
+      "doc_lineno": 23
+    },
+    {
+      "source": "from load_atoms.database.backend import SingleFileImporter\nfrom load_atoms.database.internet import FileDownload\n\n\nclass Importer(SingleFileImporter):\n    @classmethod\n    def file_to_download(cls) -> FileDownload:\n        return FileDownload(\n            url=\"https://zenodo.org/record/4003703/files/P_GAP_20_fitting_data.xyz\",\n            expected_hash=\"ab3059018068\",\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "classmethod"
+        }
+      ],
+      "example": {
+        "document": "datasets/P-GAP-20",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "P-GAP-20",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 111
+    }
+  ],
+  "datasets/QM7": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"QM7\")\nQM7:\n    structures: 7,165\n    atoms: 110,650\n    species:\n        H: 56.00%\n        C: 32.32%\n        N: 6.01%\n        O: 5.40%\n        S: 0.27%\n    properties:\n        per atom: ()\n        per structure: (energy)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/QM7",
+        "ref_id": "qm7",
+        "headings": [
+          "QM7"
+        ]
+      },
+      "doc_lineno": 23
+    },
+    {
+      "source": "from load_atoms.database.backend import BASE_GITHUB_URL, SingleFileImporter\nfrom load_atoms.database.internet import FileDownload\n\n\nclass Importer(SingleFileImporter):\n    @classmethod\n    def file_to_download(cls) -> FileDownload:\n        return FileDownload(\n            url=f\"{BASE_GITHUB_URL}/QM7/QM7.extxyz\",\n            expected_hash=\"c9dcec505f4d\",\n        )\n",
+      "names": [
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "none",
+          "resolved_location": "classmethod"
+        }
+      ],
+      "example": {
+        "document": "datasets/QM7",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "QM7",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 115
+    }
+  ],
+  "datasets/QM9": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"QM9\")\nQM9:\n    structures: 133,885\n    atoms: 2,407,753\n    species:\n        H: 51.09%\n        C: 35.16%\n        O: 7.81%\n        N: 5.80%\n        F: 0.14%\n    properties:\n        per atom: (partial_charges)\n        per structure: (A, B, C, Cv, G, H, U, U0, alpha, frequencies, gap, geometry,\n            homo, inchi, index, lumo, mu, r2, smiles, zpve)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/QM9",
+        "ref_id": "qm9",
+        "headings": [
+          "QM9"
+        ]
+      },
+      "doc_lineno": 26
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom io import StringIO\nfrom pathlib import Path\nfrom typing import Iterator\n\nfrom ase import Atoms\nfrom ase.io import read\nfrom ase.units import Hartree, eV\nfrom load_atoms.database.backend import BaseImporter, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://figshare.com/ndownloader/files/3195389\",\n                expected_hash=\"3a63848ac806\",\n                local_name=\"qm9.tar.bz2\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        # Unzip the file\n        contents_path = unzip_file(tmp_dir / \"qm9.tar.bz2\", progress)\n\n        # Process each XYZ file\n        xyz_files = sorted(contents_path.glob(\"*.xyz\"))\n        total_files = len(xyz_files)\n\n        with progress.new_task(\n            \"Processing QM9 structures\", total=total_files\n        ) as task:\n            for xyz_file in xyz_files:\n                yield read_qm9(xyz_file)\n                task.update(advance=1)\n\n\nPROPERTY_KEYS = \"index A B C mu alpha homo lumo gap r2 zpve U0 U H G Cv\".split()\nassert len(PROPERTY_KEYS) == 16\nRESCALINGS = [1.0] * 16\nfor property in \"homo lumo gap zpve U0 U H G\".split():\n    # convert from Hartree to eV\n    RESCALINGS[PROPERTY_KEYS.index(property)] = Hartree / eV\n\n# taken from https://figshare.com/ndownloader/files/3195395\nOFFSET_COLUMNS = \"U0 U H G\".split()\nOFFSETS = {\n    \"H\": [-0.5002730, -0.4988570, -0.4979120, -0.5109270],\n    \"C\": [-37.846772, -37.845355, -37.844411, -37.861317],\n    \"N\": [-54.583861, -54.582445, -54.581501, -54.598897],\n    \"O\": [-75.064579, -75.063163, -75.062219, -75.079532],\n    \"F\": [-99.718730, -99.717314, -99.716370, -99.733544],\n}\n\n# taken from https://figshare.com/ndownloader/files/3195404\nBAD_IDS = [\n    int(id)\n    for id in (Path(__file__).parent.resolve() / \"bad_qm9.txt\")\n    .read_text()\n    .splitlines()\n]\n\n\ndef read_qm9(file: Path) -> Atoms:\n    \"\"\"\n    Read in a single XYZ file from the QM9 dataset, and return it\n    as a list of a single Atoms object.\n\n    See the original README for a specification of the format used:\n    https://figshare.com/files/3195392\n    \"\"\"\n    (\n        n,\n        property_values,\n        *content,\n        frequencies,\n        smiles,\n        inchi,\n    ) = file.read_text().replace(\"*^\", \"e\").splitlines()\n\n    # fake an extxyz file and get ase to read it\n    header = 'Properties=species:S:1:pos:R:3:partial_charges:R:1 pbc=\"F F F\"'\n    with StringIO(\"\\n\".join([n, header, *content])) as extxyz:\n        atoms: Atoms = read(extxyz, 0, format=\"extxyz\")  # type: ignore\n\n    # ignore first \"gdb\" property\n    property_values = [float(v) for v in property_values.split()[1:]]\n    property_values[0] = int(property_values[0])\n\n    assert len(property_values) == 16\n    properties: dict = dict(zip(PROPERTY_KEYS, property_values))\n\n    for name in properties:\n        if name in OFFSET_COLUMNS:\n            for atom in atoms:\n                properties[name] -= OFFSETS[atom.symbol][  # type: ignore\n                    OFFSET_COLUMNS.index(name)\n                ]\n        properties[name] *= RESCALINGS[PROPERTY_KEYS.index(name)]\n\n    properties[\"frequencies\"] = list(map(float, frequencies.split()))\n\n    # molecule characterisation\n    properties[\"smiles\"] = smiles.split()[-1]\n    properties[\"inchi\"] = inchi.split()[-1]\n    properties[\"geometry\"] = property_values[0] not in BAD_IDS\n\n    atoms.info = properties\n\n    return atoms\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "io"
+          ],
+          "code_str": "io",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "io"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 5,
+          "end_lineno": 5,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_from",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "read"
+          ],
+          "code_str": "read",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "ase.io.read"
+        },
+        {
+          "import_components": [
+            "ase",
+            "units"
+          ],
+          "code_str": "ase.units",
+          "lineno": 9,
+          "end_lineno": 9,
+          "context": "import_from",
+          "resolved_location": "ase.units"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 17,
+          "end_lineno": 17,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 31,
+          "end_lineno": 31,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents_path",
+          "lineno": 31,
+          "end_lineno": 31,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()",
+            "glob"
+          ],
+          "code_str": "contents_path.glob",
+          "lineno": 34,
+          "end_lineno": 34,
+          "context": "none",
+          "resolved_location": "pathlib.Path.glob"
+        },
+        {
+          "import_components": [
+            "sorted"
+          ],
+          "code_str": "sorted",
+          "lineno": 34,
+          "end_lineno": 34,
+          "context": "none",
+          "resolved_location": "sorted"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 35,
+          "end_lineno": 35,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 46,
+          "end_lineno": 46,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 65,
+          "end_lineno": 65,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 64,
+          "end_lineno": 64,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 71,
+          "end_lineno": 71,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 71,
+          "end_lineno": 71,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "file",
+          "lineno": 71,
+          "end_lineno": 71,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()",
+            "read_text"
+          ],
+          "code_str": "file.read_text",
+          "lineno": 86,
+          "end_lineno": 86,
+          "context": "none",
+          "resolved_location": "pathlib.Path.read_text"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "read"
+          ],
+          "code_str": "read",
+          "lineno": 91,
+          "end_lineno": 91,
+          "context": "none",
+          "resolved_location": "ase.io.read"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 91,
+          "end_lineno": 91,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "atoms",
+          "lineno": 91,
+          "end_lineno": 91,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "float"
+          ],
+          "code_str": "float",
+          "lineno": 94,
+          "end_lineno": 94,
+          "context": "none",
+          "resolved_location": "float"
+        },
+        {
+          "import_components": [
+            "int"
+          ],
+          "code_str": "int",
+          "lineno": 95,
+          "end_lineno": 95,
+          "context": "none",
+          "resolved_location": "int"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 97,
+          "end_lineno": 97,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "zip"
+          ],
+          "code_str": "zip",
+          "lineno": 98,
+          "end_lineno": 98,
+          "context": "none",
+          "resolved_location": "zip"
+        },
+        {
+          "import_components": [
+            "dict"
+          ],
+          "code_str": "dict",
+          "lineno": 98,
+          "end_lineno": 98,
+          "context": "none",
+          "resolved_location": "dict"
+        },
+        {
+          "import_components": [
+            "dict"
+          ],
+          "code_str": "dict",
+          "lineno": 98,
+          "end_lineno": 98,
+          "context": "none",
+          "resolved_location": "dict"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "atoms",
+          "lineno": 102,
+          "end_lineno": 102,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "float"
+          ],
+          "code_str": "float",
+          "lineno": 108,
+          "end_lineno": 108,
+          "context": "none",
+          "resolved_location": "float"
+        },
+        {
+          "import_components": [
+            "map"
+          ],
+          "code_str": "map",
+          "lineno": 108,
+          "end_lineno": 108,
+          "context": "none",
+          "resolved_location": "map"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 108,
+          "end_lineno": 108,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "atoms",
+          "lineno": 117,
+          "end_lineno": 117,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        }
+      ],
+      "example": {
+        "document": "datasets/QM9",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "QM9",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 237
+    }
+  ],
+  "datasets/Si-GAP-18": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"Si-GAP-18\")\nSi-GAP-18:\n    structures: 2,475\n    atoms: 171,815\n    species:\n        Si: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, cutoff, energy, nneightol)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/Si-GAP-18",
+        "ref_id": "si-gap-18",
+        "headings": [
+          "Si-GAP-18"
+        ]
+      },
+      "doc_lineno": 24
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport ase.io\nfrom ase import Atoms\nfrom load_atoms.database.backend import BaseImporter, rename, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://zenodo.org/record/1250555/files/libAtoms/silicon-testing-framework-v1.0.zip\",\n                expected_hash=\"97eb063f9655\",\n                local_name=\"zip-file.zip\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        contents_path = unzip_file(tmp_dir / \"zip-file.zip\", progress)\n\n        for structure in ase.io.iread(\n            contents_path\n            / \"libAtoms-silicon-testing-framework-fc252cb/models/GAP/gp_iter6_sparse9k.xml.xyz\"  # noqa: E501\n        ):\n            yield rename(\n                structure,\n                {\n                    \"DFT_force\": \"forces\",\n                    \"dft_force\": \"forces\",\n                    \"DFT_energy\": \"energy\",\n                    \"dft_energy\": \"energy\",\n                },\n            )\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 24,
+          "end_lineno": 24,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents_path",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents_path",
+          "lineno": 31,
+          "end_lineno": 31,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "iread"
+          ],
+          "code_str": "ase.io.iread",
+          "lineno": 30,
+          "end_lineno": 30,
+          "context": "none",
+          "resolved_location": "ase.io.iread"
+        }
+      ],
+      "example": {
+        "document": "datasets/Si-GAP-18",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "Si-GAP-18",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 116
+    }
+  ],
+  "datasets/SiO2-GAP-22": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"SiO2-GAP-22\")\nSiO2-GAP-22:\n    structures: 3,074\n    atoms: 268,118\n    species:\n        O: 66.47%\n        Si: 33.53%\n    properties:\n        per atom: (forces)\n        per structure: (config_type, energy, free_energy, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/SiO2-GAP-22",
+        "ref_id": "sio2-gap-22",
+        "headings": [
+          "SiO2-GAP-22"
+        ]
+      },
+      "doc_lineno": 23
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport ase.io\nfrom ase import Atoms\nfrom load_atoms.database.backend import BaseImporter, rename, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://zenodo.org/records/6353684/files/sio2_potential_data.zip\",\n                expected_hash=\"98ea6e58f6d9\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        contents = unzip_file(tmp_dir / \"sio2_potential_data.zip\", progress)\n\n        for structure in ase.io.iread(\n            contents / \"sio2_potential_data/database/dataset.scan.2.xyz\"\n        ):\n            yield rename(structure, {\"virials\": \"virial\"})\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents",
+          "lineno": 30,
+          "end_lineno": 30,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "iread"
+          ],
+          "code_str": "ase.io.iread",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "ase.io.iread"
+        }
+      ],
+      "example": {
+        "document": "datasets/SiO2-GAP-22",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "SiO2-GAP-22",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 128
+    }
+  ],
+  "datasets/SiOx-ACE-24": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"SiOx-ACE-24\")\nSiOx-ACE-24:\n    structures: 11,428\n    atoms: 1,258,198\n    species:\n        O: 55.82%\n        Si: 44.18%\n    properties:\n        per atom: (charge_bader, forces)\n        per structure: (config_type, energy, free_energy, stress, virial)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/SiOx-ACE-24",
+        "ref_id": "siox-ace-24",
+        "headings": [
+          "SiOx-ACE-24"
+        ]
+      },
+      "doc_lineno": 24
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport ase.io\nfrom ase import Atoms\nfrom load_atoms.database.backend import BaseImporter, rename, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://zenodo.org/records/10419194/files/database.zip\",\n                expected_hash=\"42eb5808b0aa\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        contents = unzip_file(tmp_dir / \"database.zip\", progress)\n        for structure in ase.io.iread(\n            contents / \"database/training.general_purpose.SiOx.xyz\"\n        ):\n            yield rename(\n                structure,\n                {\n                    \"dft_forces\": \"forces\",\n                    \"dft_energy\": \"energy\",\n                    \"dft_free_energy\": \"free_energy\",\n                    \"dft_stress\": \"stress\",\n                    \"dft_virials\": \"virial\",\n                },\n            )\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 14,
+          "end_lineno": 14,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 26,
+          "end_lineno": 26,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "database",
+            "backend",
+            "unzip_file",
+            "()"
+          ],
+          "code_str": "contents",
+          "lineno": 29,
+          "end_lineno": 29,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "iread"
+          ],
+          "code_str": "ase.io.iread",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "ase.io.iread"
+        }
+      ],
+      "example": {
+        "document": "datasets/SiOx-ACE-24",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "SiOx-ACE-24",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 135
+    }
+  ],
+  "datasets/a-Si-24": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"a-Si-24\")\na-Si-24:\n    structures: 3,069\n    atoms: 1,317,240\n    species:\n        Si: 100.00%\n    properties:\n        per atom: (forces)\n        per structure: (energy, label)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/a-Si-24",
+        "ref_id": "a-si-24",
+        "headings": [
+          "a-Si-24"
+        ]
+      },
+      "doc_lineno": 24
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport ase\nimport ase.io\nfrom ase import Atoms\nfrom load_atoms.database.backend import BaseImporter\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n_HASHES = {\n    64: \"25627b8c50d9\",\n    216: \"da49808517c3\",\n    512: \"654e2e1d1349\",\n    1000: \"ae52f05f2231\",\n}\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        _base_url = (\n            \"https://github.com/lamr18/aSi-data/raw/refs/heads/main/data/xyz/\"\n        )\n\n        return [\n            FileDownload(\n                url=f\"{_base_url}{n}-atoms.xyz\",\n                expected_hash=hash,\n            )\n            for n, hash in _HASHES.items()\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        with progress.new_task(\"Parsing files\", total=len(_HASHES)) as task:\n            for n in _HASHES:\n                path = tmp_dir / f\"{n}-atoms.xyz\"\n                for atoms in ase.io.iread(path, index=\":\"):\n                    del atoms.info[\"cell_origin\"], atoms.info[\"config_type\"]\n                    yield atoms\n\n                task.update(advance=1)\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io"
+          ],
+          "code_str": "ase.io",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.io"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 22,
+          "end_lineno": 22,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 23,
+          "end_lineno": 23,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "hash"
+          ],
+          "code_str": "hash",
+          "lineno": 31,
+          "end_lineno": 31,
+          "context": "none",
+          "resolved_location": "hash"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 36,
+          "end_lineno": 36,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 39,
+          "end_lineno": 39,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 39,
+          "end_lineno": 39,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 38,
+          "end_lineno": 38,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 38,
+          "end_lineno": 38,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 40,
+          "end_lineno": 40,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 42,
+          "end_lineno": 42,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "ase",
+            "io",
+            "iread"
+          ],
+          "code_str": "ase.io.iread",
+          "lineno": 43,
+          "end_lineno": 43,
+          "context": "none",
+          "resolved_location": "ase.io.iread"
+        }
+      ],
+      "example": {
+        "document": "datasets/a-Si-24",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "a-Si-24",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 106
+    }
+  ],
+  "datasets/rMD17": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> load_dataset(\"rMD17\")\nrMD17:\n    structures: 999,988\n    atoms: 15,599,712\n    species:\n        H: 44.23%\n        C: 43.59%\n        O: 8.97%\n        N: 3.21%\n    properties:\n        per atom: (forces)\n        per structure: (energy, name)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        }
+      ],
+      "example": {
+        "document": "datasets/rMD17",
+        "ref_id": "rmd17",
+        "headings": [
+          "rMD17"
+        ]
+      },
+      "doc_lineno": 25
+    },
+    {
+      "source": "from __future__ import annotations\n\nfrom pathlib import Path\nfrom typing import Iterator\n\nimport numpy as np\nfrom ase import Atoms\nfrom ase.units import eV, kcal, mol\nfrom load_atoms.database.backend import BaseImporter, unzip_file\nfrom load_atoms.database.internet import FileDownload\nfrom load_atoms.progress import Progress\n\n\nclass Importer(BaseImporter):\n    @classmethod\n    def files_to_download(cls) -> list[FileDownload]:\n        return [\n            FileDownload(\n                url=\"https://figshare.com/ndownloader/files/23950376\",\n                expected_hash=\"cddeea2ec2c4\",\n                local_name=\"rmd17.tar.bz2\",\n            )\n        ]\n\n    @classmethod\n    def get_structures(\n        cls, tmp_dir: Path, progress: Progress\n    ) -> Iterator[Atoms]:\n        # Unzip the file\n        contents_path = (\n            unzip_file(tmp_dir / \"rmd17.tar.bz2\", progress) / \"rmd17/npz_data\"\n        )\n\n        # Process each npz archive\n        structure_names = \"aspirin benzene ethanol malonaldehyde naphthalene paracetamol salicylic toluene uracil azobenzene\".split()  # noqa: E501\n        assert len(structure_names) == 10\n\n        for structure_name in structure_names:\n            archive_path = contents_path / f\"rmd17_{structure_name}.npz\"\n            archive = np.load(archive_path)\n            Z = archive[\"nuclear_charges\"]\n            coords = archive[\"coords\"]\n            energy = archive[\"energies\"]\n            forces = archive[\"forces\"]\n\n            for idx in np.argsort(archive[\"old_indices\"]):\n                structure = Atoms(numbers=Z, positions=coords[idx])\n                structure.info[\"name\"] = structure_name\n                structure.info[\"energy\"] = energy[idx] / (kcal / mol) * eV\n                structure.arrays[\"forces\"] = forces[idx] / (kcal / mol) * eV\n                yield structure\n",
+      "names": [
+        {
+          "import_components": [
+            "__future__"
+          ],
+          "code_str": "__future__",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_from",
+          "resolved_location": "__future__"
+        },
+        {
+          "import_components": [
+            "pathlib"
+          ],
+          "code_str": "pathlib",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_from",
+          "resolved_location": "pathlib"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 3,
+          "end_lineno": 3,
+          "context": "import_target",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "typing"
+          ],
+          "code_str": "typing",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_from",
+          "resolved_location": "typing"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 4,
+          "end_lineno": 4,
+          "context": "import_target",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "numpy"
+          ],
+          "code_str": "numpy",
+          "lineno": 6,
+          "end_lineno": 6,
+          "context": "import_target",
+          "resolved_location": "numpy"
+        },
+        {
+          "import_components": [
+            "ase"
+          ],
+          "code_str": "ase",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_from",
+          "resolved_location": "ase"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 7,
+          "end_lineno": 7,
+          "context": "import_target",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "units"
+          ],
+          "code_str": "ase.units",
+          "lineno": 8,
+          "end_lineno": 8,
+          "context": "import_from",
+          "resolved_location": "ase.units"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 15,
+          "end_lineno": 15,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "list"
+          ],
+          "code_str": "list",
+          "lineno": 16,
+          "end_lineno": 16,
+          "context": "none",
+          "resolved_location": "list"
+        },
+        {
+          "import_components": [
+            "classmethod"
+          ],
+          "code_str": "classmethod",
+          "lineno": 25,
+          "end_lineno": 25,
+          "context": "none",
+          "resolved_location": "classmethod"
+        },
+        {
+          "import_components": [
+            "typing",
+            "Iterator"
+          ],
+          "code_str": "Iterator",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "typing.Iterator"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 28,
+          "end_lineno": 28,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path"
+          ],
+          "code_str": "Path",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 27,
+          "end_lineno": 27,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "pathlib",
+            "Path",
+            "()"
+          ],
+          "code_str": "tmp_dir",
+          "lineno": 31,
+          "end_lineno": 31,
+          "context": "none",
+          "resolved_location": "pathlib.Path"
+        },
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 36,
+          "end_lineno": 36,
+          "context": "none",
+          "resolved_location": "len"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "load"
+          ],
+          "code_str": "np.load",
+          "lineno": 40,
+          "end_lineno": 40,
+          "context": "none",
+          "resolved_location": "numpy.load"
+        },
+        {
+          "import_components": [
+            "numpy",
+            "argsort"
+          ],
+          "code_str": "np.argsort",
+          "lineno": 46,
+          "end_lineno": 46,
+          "context": "none",
+          "resolved_location": "numpy.argsort"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms"
+          ],
+          "code_str": "Atoms",
+          "lineno": 47,
+          "end_lineno": 47,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 47,
+          "end_lineno": 47,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        },
+        {
+          "import_components": [
+            "ase",
+            "Atoms",
+            "()"
+          ],
+          "code_str": "structure",
+          "lineno": 51,
+          "end_lineno": 51,
+          "context": "none",
+          "resolved_location": "ase.atoms.Atoms"
+        }
+      ],
+      "example": {
+        "document": "datasets/rMD17",
+        "ref_id": "miscellaneous-information",
+        "headings": [
+          "rMD17",
+          "Miscellaneous information"
+        ]
+      },
+      "doc_lineno": 131
+    }
+  ],
+  "dev/building-the-docs": [],
+  "dev/dataset-loading": [],
+  "dev/developer-guide": [],
+  "index": [
+    {
+      "source": ">>> from load_atoms import load_dataset\n>>> dataset = load_dataset(\"QM9\")\n\u256d\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 QM9 \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256e\n\u2502                                                                       \u2502\n\u2502   Downloading dsgdb9nsd.xyz.tar.bz2 \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:09   \u2502\n\u2502   Extracting dsgdb9nsd.xyz.tar.bz2  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:18   \u2502\n\u2502   Processing files                  \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:19   \u2502\n\u2502   Caching to disk                   \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 100% 00:02   \u2502\n\u2502                                                                       \u2502\n\u2502            The QM9 dataset is covered by the CC0 license.             \u2502\n\u2502        Please cite the QM9 dataset if you use it in your work.        \u2502\n\u2502          For more information about the QM9 dataset, visit:           \u2502\n\u2502                            load-atoms/QM9                             \u2502\n\u2570\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u256f",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset"
+          ],
+          "code_str": "load_dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.load_dataset"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "load_dataset",
+            "()"
+          ],
+          "code_str": "dataset",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.atoms_dataset.AtomsDataset"
+        }
+      ],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> dataset[0]\nAtoms(symbols='CH4', pbc=False, partial_charges=...)",
+      "names": [],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> from load_atoms import view\n>>> view(dataset[23_810], show_bonds=True)",
+      "names": [
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "import_target",
+          "resolved_location": "load_atoms.view"
+        },
+        {
+          "import_components": [
+            "load_atoms",
+            "view"
+          ],
+          "code_str": "view",
+          "lineno": 2,
+          "end_lineno": 2,
+          "context": "none",
+          "resolved_location": "load_atoms.view"
+        }
+      ],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> small_structures = dataset.filter_by(lambda atoms: len(atoms) < 10)",
+      "names": [
+        {
+          "import_components": [
+            "len"
+          ],
+          "code_str": "len",
+          "lineno": 1,
+          "end_lineno": 1,
+          "context": "none",
+          "resolved_location": "len"
+        }
+      ],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> dataset.info[\"energy\"]\narray([-10.5498, -6.9933,  ...,  -5.7742, -6.3021])",
+      "names": [],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    },
+    {
+      "source": ">>> trainset, testset = dataset.random_split([0.9, 0.1], seed=42)",
+      "names": [],
+      "example": {
+        "document": "index",
+        "ref_id": "quickstart",
+        "headings": [
+          "load-atoms",
+          "Quickstart"
+        ]
+      },
+      "doc_lineno": null
+    }
+  ]
+}

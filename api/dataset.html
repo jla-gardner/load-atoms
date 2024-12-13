@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html class="no-js" data-content_root="" lang="en">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="light dark" name="color-scheme"/><meta content="width=device-width, initial-scale=1" name="viewport">
+<meta content="Dataset" property="og:title"/>
+<meta content="website" property="og:type"/>
+<meta content="api/dataset.html" property="og:url"/>
+<meta content="load-atoms" property="og:site_name"/>
+<meta content="The main entry point of load-atoms is the load_dataset function:" property="og:description"/>
+<meta content="_static/homepage-grab.png" property="og:image"/>
+<meta content="load-atoms" property="og:image:alt"/>
+<meta content="The main entry point of load-atoms is the load_dataset function:" name="description"/>
+<link href="../genindex.html" rel="index" title="Index"/><link href="../search.html" rel="search" title="Search"/><link href="viz.html" rel="next" title="Visualise"/><link href="../index.html" rel="prev" title="load-atoms"/>
+<link href="../_static/favicon.svg" rel="shortcut icon"/><!-- Generated with Sphinx 7.1.2 and Furo 2024.08.06 -->
+<title>Dataset - load-atoms</title>
+<link href="../_static/pygments.css?v=a746c00c" rel="stylesheet" type="text/css"/>
+<link href="../_static/styles/furo.css?v=354aac6f" rel="stylesheet" type="text/css"/>
+<link href="../_static/copybutton.css?v=76b2166b" rel="stylesheet" type="text/css"/>
+<link href="../_static/sphinx-codeautolink.css?v=125d5c1c" rel="stylesheet" type="text/css"/>
+<link href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" rel="stylesheet" type="text/css"/>
+<link href="../_static/styles/furo-extensions.css?v=302659d7" rel="stylesheet" type="text/css"/>
+<link href="../_static/custom.css?v=afd88a32" rel="stylesheet" type="text/css"/>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #272822;
+  --color-code-foreground: #f8f8f2;
+  --color-brand-primary: #5599ff;
+  --color-brand-content: #5599ff;
+  --color-problematic: #ff5555;
+  
+      }
+    }
+  }
+</style></meta></head>
+<body>
+<script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+<svg style="display: none;" xmlns="http://www.w3.org/2000/svg">
+<symbol id="svg-toc" viewbox="0 0 24 24">
+<title>Contents</title>
+<svg fill="currentColor" stroke="currentColor" stroke-width="0" viewbox="0 0 1024 1024">
+<path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"></path>
+</svg>
+</symbol>
+<symbol id="svg-menu" viewbox="0 0 24 24">
+<title>Menu</title>
+<svg class="feather-menu" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<line x1="3" x2="21" y1="12" y2="12"></line>
+<line x1="3" x2="21" y1="6" y2="6"></line>
+<line x1="3" x2="21" y1="18" y2="18"></line>
+</svg>
+</symbol>
+<symbol id="svg-arrow-right" viewbox="0 0 24 24">
+<title>Expand</title>
+<svg class="feather-chevron-right" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<polyline points="9 18 15 12 9 6"></polyline>
+</svg>
+</symbol>
+<symbol id="svg-sun" viewbox="0 0 24 24">
+<title>Light mode</title>
+<svg class="feather-sun" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="5"></circle>
+<line x1="12" x2="12" y1="1" y2="3"></line>
+<line x1="12" x2="12" y1="21" y2="23"></line>
+<line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line>
+<line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line>
+<line x1="1" x2="3" y1="12" y2="12"></line>
+<line x1="21" x2="23" y1="12" y2="12"></line>
+<line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line>
+<line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+</svg>
+</symbol>
+<symbol id="svg-moon" viewbox="0 0 24 24">
+<title>Dark mode</title>
+<svg class="icon-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"></path>
+</svg>
+</symbol>
+<symbol id="svg-sun-with-moon" viewbox="0 0 24 24">
+<title>Auto light/dark, in light mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z" style="opacity: 50%"></path>
+<line x1="14.5" x2="14.5" y1="3.25" y2="1.25"></line>
+<line x1="14.5" x2="14.5" y1="15.85" y2="17.85"></line>
+<line x1="10.044" x2="8.63" y1="5.094" y2="3.68"></line>
+<line x1="19" x2="20.414" y1="14.05" y2="15.464"></line>
+<line x1="8.2" x2="6.2" y1="9.55" y2="9.55"></line>
+<line x1="20.8" x2="22.8" y1="9.55" y2="9.55"></line>
+<line x1="10.044" x2="8.63" y1="14.006" y2="15.42"></line>
+<line x1="19" x2="20.414" y1="5.05" y2="3.636"></line>
+<circle cx="14.5" cy="9.55" r="3.6"></circle>
+</svg>
+</symbol>
+<symbol id="svg-moon-with-sun" viewbox="0 0 24 24">
+<title>Auto light/dark, in dark mode</title>
+<svg class="icon-custom-derived-from-feather-sun-and-tabler-moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"></path>
+<line style="opacity: 50%" x1="18" x2="18" y1="3.705" y2="2.5"></line>
+<line style="opacity: 50%" x1="18" x2="18" y1="11.295" y2="12.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="4.816" y2="3.964"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="10.212" y2="11.063"></line>
+<line style="opacity: 50%" x1="14.205" x2="13.001" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="21.795" x2="23" y1="7.5" y2="7.5"></line>
+<line style="opacity: 50%" x1="15.316" x2="14.464" y1="10.184" y2="11.036"></line>
+<line style="opacity: 50%" x1="20.711" x2="21.563" y1="4.789" y2="3.937"></line>
+<circle cx="18" cy="7.5" r="2.169" style="opacity: 50%"></circle>
+</svg>
+</symbol>
+<symbol id="svg-pencil" viewbox="0 0 24 24">
+<svg class="icon-tabler-pencil-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"></path>
+<path d="M13.5 6.5l4 4"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+<symbol id="svg-eye" viewbox="0 0 24 24">
+<svg class="icon-tabler-eye-code" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" fill="none" stroke="none"></path>
+<path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+<path d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008"></path>
+<path d="M20 21l2 -2l-2 -2"></path>
+<path d="M17 17l-2 2l2 2"></path>
+</svg>
+</symbol>
+</svg>
+<input class="sidebar-toggle" id="__navigation" name="__navigation" type="checkbox"/>
+<input class="sidebar-toggle" id="__toc" name="__toc" type="checkbox"/>
+<label class="overlay sidebar-overlay" for="__navigation">
+<div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+<div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+<div class="page">
+<header class="mobile-header">
+<div class="header-left">
+<label class="nav-overlay-icon" for="__navigation">
+<div class="visually-hidden">Toggle site navigation sidebar</div>
+<i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+</label>
+</div>
+<div class="header-center">
+<a href="../index.html"><div class="brand">load-atoms</div></a>
+</div>
+<div class="header-right">
+<div class="theme-toggle-container theme-toggle-header">
+<button class="theme-toggle">
+<div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-header-icon" for="__toc">
+<div class="visually-hidden">Toggle table of contents sidebar</div>
+<i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+</label>
+</div>
+</header>
+<aside class="sidebar-drawer">
+<div class="sidebar-container">
+<div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+<div class="sidebar-logo-container">
+<img alt="Logo" class="sidebar-logo" src="../_static/logo.svg"/>
+</div>
+</a><form action="../search.html" class="sidebar-search-container" method="get" role="search">
+<input aria-label="Search" class="sidebar-search" name="q" placeholder="Search"/>
+<input name="check_keywords" type="hidden" value="yes"/>
+<input name="area" type="hidden" value="default"/>
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Quickstart</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="viz.html">Visualise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Datasets</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../database-summary.html">Summary</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../category/benchmarks.html">Benchmarks</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of Benchmarks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/ANI-1ccx.html">ANI-1ccx</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/ANI-1x.html">ANI-1x</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/QM7.html">QM7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/QM9.html">QM9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/rMD17.html">rMD17</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../category/potential-fitting.html">Potential Fitting</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of Potential Fitting</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/C-GAP-17.html">C-GAP-17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/C-GAP-20U.html">C-GAP-20U</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/GO-MACE-23.html">GO-MACE-23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/GST-GAP-22.html">GST-GAP-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/P-GAP-20.html">P-GAP-20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/Si-GAP-18.html">Si-GAP-18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/SiO2-GAP-22.html">SiO2-GAP-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/SiOx-ACE-24.html">SiOx-ACE-24</a></li>
+</ul>
+</input></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../category/synthetic-data.html">Synthetic Data</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of Synthetic Data</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/a-Si-24.html">a-Si-24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/AC-2D-22.html">AC-2D-22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets/C-SYNTH-23M.html">C-SYNTH-23M</a></li>
+</ul>
+</input></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Contributing</span></p>
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../dev/developer-guide.html">Development</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of Development</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../dev/dataset-loading.html">Dataset Loading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../dev/building-the-docs.html">Building the Docs</a></li>
+</ul>
+</input></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<div class="main">
+<div class="content">
+<div class="article-container">
+<a class="back-to-top muted-link" href="#">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+</svg>
+<span>Back to top</span>
+</a>
+<div class="content-icon-container">
+<div class="view-this-page">
+<a class="muted-link" href="../_sources/api/dataset.rst.txt" title="View this page">
+<svg><use href="#svg-eye"></use></svg>
+<span class="visually-hidden">View this page</span>
+</a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+<button class="theme-toggle">
+<div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+<svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+<svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+<svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+<svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+</button>
+</div>
+<label class="toc-overlay-icon toc-content-icon" for="__toc">
+<div class="visually-hidden">Toggle table of contents sidebar</div>
+<i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+</label>
+</div>
+<article id="furo-main-content" role="main">
+<section id="dataset">
+<h1>Dataset<a class="headerlink" href="#dataset" title="Permalink to this heading">¶</a></h1>
+<p>The main entry point of <code class="code docutils literal notranslate"><span class="pre">load-atoms</span></code> is the <a class="reference internal" href="#load_atoms.load_dataset" title="load_atoms.load_dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_dataset</span></code></a> function:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="load_atoms.load_dataset">
+<span class="sig-prename descclassname"><span class="pre">load_atoms.</span></span><span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><span class="pre">ase.Atoms</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">root</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference internal" href="#load_atoms.AtomsDataset" title="load_atoms.AtomsDataset"><span class="pre">AtomsDataset</span></a></span></span><a class="reference internal" href="../_modules/load_atoms.html#load_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.load_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a dataset by name or from a list of structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>thing</strong> – A dataset id, a list of structures, or a path to a file.</p></li>
+<li><p><strong>root</strong> – The root directory to use when loading a dataset by id. If not
+provided, the default root directory (<code class="code docutils literal notranslate"><span class="pre">~/.load-atoms</span></code>)
+will be used.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Load a dataset by id:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">load_atoms</span> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><span class="n">load_dataset</span></a>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.AtomsDataset" title="load_atoms.atoms_dataset.AtomsDataset"><span class="n">dataset</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><span class="n">load_dataset</span></a><span class="p">(</span><span class="s2">"QM9"</span><span class="p">)</span>
+<span class="go">╭───────────────────────────────── QM9 ─────────────────────────────────╮</span>
+<span class="go">│                                                                       │</span>
+<span class="go">│   Downloading dsgdb9nsd.xyz.tar.bz2 ━━━━━━━━━━━━━━━━━━━━ 100% 00:09   │</span>
+<span class="go">│   Extracting dsgdb9nsd.xyz.tar.bz2  ━━━━━━━━━━━━━━━━━━━━ 100% 00:18   │</span>
+<span class="go">│   Processing files                  ━━━━━━━━━━━━━━━━━━━━ 100% 00:19   │</span>
+<span class="go">│   Caching to disk                   ━━━━━━━━━━━━━━━━━━━━ 100% 00:02   │</span>
+<span class="go">│                                                                       │</span>
+<span class="go">│            The QM9 dataset is covered by the CC0 license.             │</span>
+<span class="go">│        Please cite the QM9 dataset if you use it in your work.        │</span>
+<span class="go">│          For more information about the QM9 dataset, visit:           │</span>
+<span class="go">│                            load-atoms/QM9                             │</span>
+<span class="go">╰───────────────────────────────────────────────────────────────────────╯</span>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.AtomsDataset" title="load_atoms.atoms_dataset.AtomsDataset"><span class="n">dataset</span></a>
+<span class="go">QM9:</span>
+<span class="go">    structures: 133,885</span>
+<span class="go">    atoms: 2,407,753</span>
+<span class="go">    species:</span>
+<span class="go">        H: 51.09%</span>
+<span class="go">        C: 35.16%</span>
+<span class="go">        O: 7.81%</span>
+<span class="go">        N: 5.80%</span>
+<span class="go">        F: 0.14%</span>
+<span class="go">    properties:</span>
+<span class="go">        per atom: (partial_charges)</span>
+<span class="go">        per structure: (</span>
+<span class="go">            A, B, C, Cv, G, H, U, U0, alpha,</span>
+<span class="go">            frequencies, gap, geometry, homo, inchi, index,</span>
+<span class="go">            lumo, mu, r2, smiles, zpve</span>
+<span class="go">        )</span>
+</pre></div>
+</div>
+<p>Optionally save a dataset to an explicit root directory:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">"QM9"</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="s2">"./my-datasets"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Wrap a list of structures in a dataset:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">load_dataset</span><span class="p">([</span><span class="n">Atoms</span><span class="p">(</span><span class="s2">"H2O"</span><span class="p">),</span> <span class="n">Atoms</span><span class="p">(</span><span class="s2">"H2O2"</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Load a dataset from a file:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">"path/to/file.xyz"</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As of <code class="docutils literal notranslate"><span class="pre">ase==0.3.9</span></code>, the <code class="docutils literal notranslate"><span class="pre">"energy"</span></code>, <code class="docutils literal notranslate"><span class="pre">"forces"</span></code>, and <code class="docutils literal notranslate"><span class="pre">"stress"</span></code>
+special keys are loaded into a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">SinglePointCalculator</span></code> object,
+and removed from the <code class="docutils literal notranslate"><span class="pre">.info</span></code> and <code class="docutils literal notranslate"><span class="pre">.arrays</span></code> dictionaries on the
+atoms object. We reverse this process when loading a dataset from file.</p>
+</div>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">load_atoms.</span></span><span class="sig-name descname"><span class="pre">AtomsDataset</span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>An abstract base class for datasets of <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ase.Atoms</span></code></a> objects.</p>
+<p>This class provides a common interface for interacting with datasets of
+atomic structures, abstracting over the underlying storage mechanism.</p>
+<p>The two current concrete implementations are
+<a class="reference internal" href="#load_atoms.atoms_dataset.InMemoryAtomsDataset" title="load_atoms.atoms_dataset.InMemoryAtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">InMemoryAtomsDataset</span></code></a>
+and <a class="reference internal" href="#load_atoms.atoms_dataset.LmdbAtomsDataset" title="load_atoms.atoms_dataset.LmdbAtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">LmdbAtomsDataset</span></code></a>.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.structure_sizes">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">structure_sizes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></em><a class="headerlink" href="#load_atoms.AtomsDataset.structure_sizes" title="Permalink to this definition">¶</a></dt>
+<dd><p>An array containing the number of atoms in each structure, such that:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">structure</span> <span class="ow">in</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#enumerate" title="enumerate"><span class="nb">enumerate</span></a><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+    <span class="k">assert</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#len" title="len"><span class="nb">len</span></a><span class="p">(</span><span class="n">structure</span><span class="p">)</span> <span class="o">==</span> <span class="n">dataset</span><span class="o">.</span><span class="n">structure_sizes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.__len__">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.__len__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>The number of structures in the dataset.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><span class="pre">Atoms</span></a></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.__getitem__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">np.ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><span class="pre">slice</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span></dt>
+<dd><p>Get the structure(s) at the given index(es).</p>
+<p>If a single <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a> is provided, the corresponding structure is
+returned:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">QM7</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"QM7"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">QM7</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">Atoms(symbols='CH4', pbc=False)</span>
+</pre></div>
+</div>
+<p>If a <a class="reference external" href="https://docs.python.org/3/library/functions.html#slice" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">slice</span></code></a> is provided, a new <a class="reference internal" href="#load_atoms.AtomsDataset" title="load_atoms.AtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomsDataset</span></code></a> is returned
+containing the structures in the slice:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">QM7</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+<span class="go">Dataset:</span>
+<span class="go">    structures: 5</span>
+<span class="go">    atoms: 32</span>
+<span class="go">    species:</span>
+<span class="go">        H: 68.75%</span>
+<span class="go">        C: 28.12%</span>
+<span class="go">        O: 3.12%</span>
+<span class="go">    properties:</span>
+<span class="go">        per atom: ()</span>
+<span class="go">        per structure: (energy)</span>
+</pre></div>
+</div>
+<p>If a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>s is
+provided, a new <a class="reference internal" href="#load_atoms.AtomsDataset" title="load_atoms.AtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomsDataset</span></code></a> is returned containing the
+structures at the given indices:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#len" title="len"><span class="nb">len</span></a><span class="p">(</span><span class="n">QM7</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>If a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> of <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></a>s is
+provided with the same length as the dataset, a new
+<a class="reference internal" href="#load_atoms.AtomsDataset" title="load_atoms.AtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomsDataset</span></code></a> is returned containing the structures where the
+boolean is <code class="code docutils literal notranslate"><span class="pre">True</span></code>
+(see also <a class="reference internal" href="#load_atoms.AtomsDataset.filter_by" title="load_atoms.AtomsDataset.filter_by"><code class="xref py py-func docutils literal notranslate"><span class="pre">filter_by()</span></code></a>):</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bool_idx</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#len" title="len"><span class="nb">len</span></a><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">QM7</span>
+<span class="gp">... </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#len" title="len"><span class="nb">len</span></a><span class="p">(</span><span class="n">QM7</span><span class="p">[</span><span class="n">bool_idx</span><span class="p">])</span> <span class="o">==</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#sum" title="sum"><span class="nb">sum</span></a><span class="p">(</span><span class="n">bool_idx</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> – The index(es) to get the structure(s) at.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">append</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the dataset to a file, using <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/io/io.html#ase.io.write" title="(in ASE)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ase.io.write()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – The path to write the dataset to.</p></li>
+<li><p><strong>format</strong> – The format to write the dataset in.</p></li>
+<li><p><strong>append</strong> – Whether to append to the file.</p></li>
+<li><p><strong>kwargs</strong> – Additional keyword arguments to pass to <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/io/io.html#ase.io.write" title="(in ASE)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ase.io.write()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.info">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">info</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.13)"><span class="pre">Mapping</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#load_atoms.AtomsDataset.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a mapping from keys that are shared across all structures’
+<code class="docutils literal notranslate"><span class="pre">.info</span></code> attributes to the concatenated corresponding values.</p>
+<p>The returned mapping conforms to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">structure</span> <span class="ow">in</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#enumerate" title="enumerate"><span class="nb">enumerate</span></a><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">structure</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.arrays">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arrays</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.13)"><span class="pre">Mapping</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#load_atoms.AtomsDataset.arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a mapping from each structure’s <code class="code docutils literal notranslate"><span class="pre">.arrays</span></code> keys to arrays.</p>
+<p>The returned mapping conforms to:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">arrays</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">dataset</span><span class="o">.</span><span class="n">n_atoms</span>
+    <span class="k">assert</span> <span class="n">value</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">structure</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">structure</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.save">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structures</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Atoms</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../dev/dataset-loading.html#load_atoms.database.DatabaseEntry" title="load_atoms.database.DatabaseEntry"><span class="pre">DatabaseEntry</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.save"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the dataset to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – The path to save the dataset to.</p></li>
+<li><p><strong>structures</strong> – The structures to save to the dataset.</p></li>
+<li><p><strong>description</strong> – The description of the dataset.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.load">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.13)"><span class="pre">Path</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the dataset from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> – The path to load the dataset from.</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.species_counts">
+<span class="sig-name descname"><span class="pre">species_counts</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.13)"><span class="pre">Mapping</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.species_counts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.species_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the number of atoms of each species in the dataset.</p>
+</dd></dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.n_atoms">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">n_atoms</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#load_atoms.AtomsDataset.n_atoms" title="Permalink to this definition">¶</a></dt>
+<dd><p>The total number of atoms in the dataset.</p>
+<p>This is equivalent to the sum of the number of atoms in each structure.</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.filter_by">
+<span class="sig-name descname"><span class="pre">filter_by</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">functions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><span class="pre">Callable</span></a><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><span class="pre">Atoms</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">info_kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">Self</span></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.filter_by"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.filter_by" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new dataset containing only the structures that match the
+given criteria.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>functions</strong> – Functions to filter the dataset by. Each function should take an
+ASE Atoms object as input and return a boolean.</p></li>
+<li><p><strong>info_kwargs</strong> – Keyword arguments to filter the dataset by. Only atoms objects with
+matching info keys and values will be returned.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Get small, amorphous structures with large forces:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">load_atoms</span> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><span class="n">load_dataset</span></a>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.AtomsDataset" title="load_atoms.atoms_dataset.AtomsDataset"><span class="n">dataset</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><span class="n">load_dataset</span></a><span class="p">(</span><span class="s2">"C-GAP-17"</span><span class="p">)</span>
+<span class="hll"><span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span><span class="o">.</span><span class="n">filter_by</span><span class="p">(</span>
+</span><span class="hll"><span class="gp">... </span>    <span class="k">lambda</span> <span class="n">structure</span><span class="p">:</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#len" title="len"><span class="nb">len</span></a><span class="p">(</span><span class="n">structure</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">,</span>
+</span><span class="hll"><span class="gp">... </span>    <span class="k">lambda</span> <span class="n">structure</span><span class="p">:</span> <span class="n">structure</span><span class="o">.</span><span class="n">arrays</span><span class="p">[</span><span class="s2">"force"</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">,</span>
+</span><span class="hll"><span class="gp">... </span>    <span class="n">config_type</span><span class="o">=</span><span class="s2">"bulk_amo"</span>
+</span><span class="hll"><span class="gp">... </span><span class="p">)</span>
+</span><span class="go">Dataset:</span>
+<span class="go">    structures: 609</span>
+<span class="go">    atoms: 23,169</span>
+<span class="go">    species:</span>
+<span class="go">        C: 100.00%</span>
+<span class="go">    properties:</span>
+<span class="go">        per atom: (force)</span>
+<span class="go">        per structure: (config_type, detailed_ct, split, energy)</span>
+</pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.random_split">
+<span class="sig-name descname"><span class="pre">random_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">splits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.random_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.random_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly split the dataset into multiple, disjoint parts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>splits</strong> – The number of structures to put in each split.
+If a list of <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>s, the splits will be
+calculated as a fraction of the dataset size.</p></li>
+<li><p><strong>seed</strong> – The random seed to use for shuffling the dataset.</p></li>
+<li><p><strong>keep_ratio</strong> – If not <code class="code docutils literal notranslate"><span class="pre">None</span></code>, splits will be generated to maintain the
+ratio of structures in each split with the specified <code class="code docutils literal notranslate"><span class="pre">.info</span></code>
+value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of new datasets, each containing a subset of the original</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[Self]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p>Split a <code class="code docutils literal notranslate"><span class="pre">dataset</span></code> into 80% training and 20% test sets:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">random_split</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Split a <code class="code docutils literal notranslate"><span class="pre">dataset</span></code> into 3 parts:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">random_split</span><span class="p">([</span><span class="mi">1_000</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Maintain the ratio of <code class="code docutils literal notranslate"><span class="pre">config_type</span></code> values in each split:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">load_atoms</span> <span class="kn">import</span> <a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><span class="n">load_dataset</span></a>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <a class="sphinx-codeautolink-a" href="https://numpy.org/doc/stable/reference/index.html#module-numpy" title="numpy"><span class="nn">numpy</span></a> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># helper function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ratios</span><span class="p">(</span><span class="n">thing</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">values</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="https://numpy.org/doc/stable/reference/generated/numpy.unique.html#numpy.unique" title="numpy.unique"><span class="n">np</span><span class="o">.</span><span class="n">unique</span></a><span class="p">(</span><span class="n">thing</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">max_len</span> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#max" title="max"><span class="nb">max</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#len" title="len"><span class="nb">len</span></a><span class="p">(</span><a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#str" title="str"><span class="nb">str</span></a><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#zip" title="zip"><span class="nb">zip</span></a><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">counts</span> <span class="o">/</span> <span class="n">counts</span><span class="o">.</span><span class="n">sum</span><span class="p">()):</span>
+<span class="gp">... </span>        <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/functions.html#print" title="print"><span class="nb">print</span></a><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">v</span><span class="si">:</span><span class="s2">&gt;</span><span class="si">{</span><span class="n">max_len</span><span class="si">}}</span><span class="s2">: </span><span class="si">{</span><span class="n">c</span><span class="si">:</span><span class="s2">&gt;6.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.AtomsDataset" title="load_atoms.atoms_dataset.AtomsDataset"><span class="n">dataset</span></a> <span class="o">=</span> <a class="sphinx-codeautolink-a" href="../api/dataset.html#load_atoms.load_dataset" title="load_atoms.load_dataset"><span class="n">load_dataset</span></a><span class="p">(</span><span class="s2">"C-GAP-17"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ratios</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"config_type"</span><span class="p">])</span>
+<span class="go">  bulk_amo: 75.28%</span>
+<span class="go">bulk_cryst:  8.83%</span>
+<span class="go">     dimer:  0.66%</span>
+<span class="go">  surf_amo: 15.23%</span>
+<span class="hll"><span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">random_split</span><span class="p">(</span>
+</span><span class="hll"><span class="gp">... </span>    <span class="p">[</span><span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+</span><span class="hll"><span class="gp">... </span>    <span class="n">keep_ratio</span><span class="o">=</span><span class="s2">"config_type"</span>
+</span><span class="hll"><span class="gp">... </span><span class="p">)</span>
+</span><span class="gp">&gt;&gt;&gt; </span><span class="n">ratios</span><span class="p">(</span><span class="n">train</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s2">"config_type"</span><span class="p">])</span>
+<span class="go">  bulk_amo: 75.28%</span>
+<span class="go">bulk_cryst:  8.83%</span>
+<span class="go">     dimer:  0.66%</span>
+<span class="go">  surf_amo: 15.23%</span>
+</pre></div>
+</div>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="load_atoms.AtomsDataset.k_fold_split">
+<span class="sig-name descname"><span class="pre">k_fold_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shuffle</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><span class="pre">Self</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Self</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#AtomsDataset.k_fold_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.AtomsDataset.k_fold_split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate (an optionally shuffled) train/test split for cross-validation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> – The number of folds to use.</p></li>
+<li><p><strong>fold</strong> – The fold to use for testing.</p></li>
+<li><p><strong>shuffle</strong> – Whether to shuffle the dataset before splitting.</p></li>
+<li><p><strong>seed</strong> – The random seed to use for shuffling the dataset.</p></li>
+<li><p><strong>keep_ratio</strong> – If not <code class="code docutils literal notranslate"><span class="pre">None</span></code>, splits will be generated to maintain the
+ratio of structures in each split with the specified <code class="code docutils literal notranslate"><span class="pre">.info</span></code>
+value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The train and test datasets.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[Self, Self]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<p>Basic usage:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <a class="sphinx-codeautolink-a" href="https://docs.python.org/3/library/stdtypes.html#range" title="range"><span class="nb">range</span></a><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+<span class="hll"><span class="gp">... </span>    <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">k_fold_split</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">fold</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
+</span><span class="gp">... </span>    <span class="o">...</span>  <span class="c1"># do something, e.g. train a model</span>
+</pre></div>
+</div>
+<p>Maintain the ratio of <code class="code docutils literal notranslate"><span class="pre">config_type</span></code> values in each split
+(see also <a class="reference internal" href="#load_atoms.AtomsDataset.random_split" title="load_atoms.AtomsDataset.random_split"><code class="xref py py-func docutils literal notranslate"><span class="pre">random_split()</span></code></a> for a more
+detailed example of this feature):</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">k_fold_split</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">fold</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">keep_ratio</span><span class="o">=</span><span class="s2">"config_type"</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="load_atoms.atoms_dataset.InMemoryAtomsDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">load_atoms.atoms_dataset.</span></span><span class="sig-name descname"><span class="pre">InMemoryAtomsDataset</span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#InMemoryAtomsDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.atoms_dataset.InMemoryAtomsDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>An in-memory implementation of <a class="reference internal" href="#load_atoms.AtomsDataset" title="load_atoms.atoms_dataset.AtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomsDataset</span></code></a>.</p>
+<p>Internally, this class wraps a <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a> of <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ase.Atoms</span></code></a> objects,
+all of which are stored in RAM. Suitable for small to moderately large
+datasets.</p>
+</dd></dl>
+<dl class="py class">
+<dt class="sig sig-object py" id="load_atoms.atoms_dataset.LmdbAtomsDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">load_atoms.atoms_dataset.</span></span><span class="sig-name descname"><span class="pre">LmdbAtomsDataset</span></span><a class="reference internal" href="../_modules/load_atoms/atoms_dataset.html#LmdbAtomsDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#load_atoms.atoms_dataset.LmdbAtomsDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>An LMDB-backed implementation of <a class="reference internal" href="#load_atoms.AtomsDataset" title="load_atoms.atoms_dataset.AtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">AtomsDataset</span></code></a>.</p>
+<p>Internally, this class wraps an <a class="reference external" href="https://lmdb.readthedocs.io/en/release/index.html#lmdb.Environment" title="(in lmdb v1.4.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">lmdb.Environment</span></code></a> object, which
+stores the dataset in an LMDB database. Suitable for large datasets that
+cannot fit in memory. Accessing data from this dataset type is (marginally)
+slower than for <a class="reference internal" href="#load_atoms.atoms_dataset.InMemoryAtomsDataset" title="load_atoms.atoms_dataset.InMemoryAtomsDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">InMemoryAtomsDataset</span></code></a>s, but allows for efficient
+processing of extremely large datasets that cannot otherwise fit in memory.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ase.Atoms</span></code></a> objects in an LMDB dataset are read-only.
+Modifying the <code class="code docutils literal notranslate"><span class="pre">.info</span></code> or <code class="code docutils literal notranslate"><span class="pre">.arrays</span></code> of an <a class="reference external" href="https://wiki.fysik.dtu.dk/ase/ase/atoms.html#ase.Atoms" title="(in ASE)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ase.Atoms</span></code></a>
+object will have no effect, and will instead throw an error.</p>
+</div>
+</dd></dl>
+</section>
+</article>
+</div>
+<footer>
+<div class="related-pages">
+<a class="next-page" href="viz.html">
+<div class="page-info">
+<div class="context">
+<span>Next</span>
+</div>
+<div class="title">Visualise</div>
+</div>
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+</a>
+<a class="prev-page" href="../index.html">
+<svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+<div class="page-info">
+<div class="context">
+<span>Previous</span>
+</div>
+<div class="title">Home</div>
+</div>
+</a>
+</div>
+<div class="bottom-of-page">
+<div class="left-details">
+<div class="copyright">
+                Copyright © 2024, John Gardner
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+</div>
+<div class="right-details">
+</div>
+</div>
+</footer>
+</div>
+<aside class="toc-drawer">
+<div class="toc-sticky toc-scroll">
+<div class="toc-title-container">
+<span class="toc-title">
+            On this page
+          </span>
+</div>
+<div class="toc-tree-container">
+<div class="toc-tree">
+<ul>
+<li><a class="reference internal" href="#">Dataset</a><ul>
+<li><a class="reference internal" href="#load_atoms.load_dataset"><code class="docutils literal notranslate"><span class="pre">load_dataset()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset"><code class="docutils literal notranslate"><span class="pre">AtomsDataset</span></code></a><ul>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.structure_sizes"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.structure_sizes</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.__len__"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.__len__()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.__getitem__"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.__getitem__()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.write"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.write()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.info"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.info</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.arrays"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.arrays</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.save"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.save()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.load"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.load()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.species_counts"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.species_counts()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.n_atoms"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.n_atoms</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.filter_by"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.filter_by()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.random_split"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.random_split()</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.AtomsDataset.k_fold_split"><code class="docutils literal notranslate"><span class="pre">AtomsDataset.k_fold_split()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#load_atoms.atoms_dataset.InMemoryAtomsDataset"><code class="docutils literal notranslate"><span class="pre">InMemoryAtomsDataset</span></code></a></li>
+<li><a class="reference internal" href="#load_atoms.atoms_dataset.LmdbAtomsDataset"><code class="docutils literal notranslate"><span class="pre">LmdbAtomsDataset</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=47c8b7cb"></script>
+<script src="../_static/doctools.js?v=888ff710"></script>
+<script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+<script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+<script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+<script src="../_static/copybutton.js?v=f281be69"></script>
+<script src="../_static/design-tabs.js?v=36754332"></script>
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+</body>
+</html>
