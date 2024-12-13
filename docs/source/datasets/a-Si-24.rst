@@ -13,8 +13,11 @@ a-Si-24
     .. grid-item::
         :class: info-card
 
-        A dataset of amorphous Silicon structures, taken from
+        A dataset of synthetic amorphous Silicon structures, taken from
         `Signatures of paracrystallinity in amorphous silicon <https://arxiv.org/abs/2407.16681>`__.
+        Each structure is the final snapshot from a unique melt-quench MD trajectory. 
+        The combined dataset covers a wide range of quench rates and densities, and includes the labels 
+        from the MTP :math:`M_{16}^{''}` potential used to generate the structures.
         
 
 
@@ -68,7 +71,7 @@ Properties
     * - :code:`forces`
       - eV/Å
       - :class:`ndarray(N, 3) <numpy.ndarray>`
-      - force vectors
+      - force vectors (as labelled by MTP)
 
 
 **Per-structure**:
@@ -83,7 +86,7 @@ Properties
     * - :code:`energy`
       - eV
       - :class:`~float64`
-      - energy of the structure
+      - energy of the structure (as labelled by MTP)
 
     * - :code:`label`
       - 
