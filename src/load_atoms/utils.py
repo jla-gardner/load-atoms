@@ -249,6 +249,12 @@ def freeze_dict(d: dict, error_msg: str = _default_error_msg) -> FrozenDict:
     return FrozenDict(d, error_msg)
 
 
+def matches(thing1: float | np.ndarray, thing2: float | np.ndarray) -> bool:
+    shape1 = thing1.shape if isinstance(thing1, np.ndarray) else ()
+    shape2 = thing2.shape if isinstance(thing2, np.ndarray) else ()
+    return shape1 == shape2 and np.allclose(thing1, thing2)
+
+
 def remove_calculator(atoms: Atoms) -> None:
     """
     Intelligently remove the atom's calculator object:
@@ -275,7 +281,7 @@ def remove_calculator(atoms: Atoms) -> None:
 
         value_in_mapping = mapping.get(key, None)
 
-        if value_in_mapping is not None and not np.allclose(
+        if value_in_mapping is not None and not matches(
             value_in_mapping, result
         ):
             warnings.warn(
