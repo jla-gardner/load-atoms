@@ -12,6 +12,7 @@
 <div align="center">
     
 [![PyPI](https://img.shields.io/pypi/v/load-atoms)](https://pypi.org/project/load-atoms/)
+[![Conda-forge](https://img.shields.io/conda/vn/conda-forge/load-atoms.svg)](https://anaconda.org/conda-forge/load-atoms)
 [![GitHub](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![](https://github.com/jla-gardner/load-atoms/actions/workflows/tests.yaml/badge.svg?branch=main)](https://github.com/jla-gardner/load-atoms/actions/workflows/tests.yaml)
 [![codecov](https://codecov.io/gh/jla-gardner/load-atoms/branch/main/graph/badge.svg)](https://codecov.io/gh/jla-gardner/load-atoms)
@@ -29,7 +30,18 @@ See the [documentation](https://jla-gardner.github.io/load-atoms/) for more info
 
 ## Installation
 
-`pip install load-atoms`
+This package can be installed from PyPI with
+
+```
+pip install load-atoms
+```
+
+Or alternatively from conda-forge using
+
+```
+mamba install load-atoms -c conda-forge
+```
+
 
 ## Usage
 
