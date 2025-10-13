@@ -6,6 +6,7 @@ from typing import Iterator
 import numpy as np
 from ase import Atoms
 from ase.units import eV, kcal, mol
+
 from load_atoms.database.backend import BaseImporter, unzip_file
 from load_atoms.database.internet import FileDownload
 from load_atoms.progress import Progress
@@ -32,7 +33,18 @@ class Importer(BaseImporter):
         )
 
         # Process each npz archive
-        structure_names = "aspirin benzene ethanol malonaldehyde naphthalene paracetamol salicylic toluene uracil azobenzene".split()  # noqa: E501
+        structure_names = [
+            "aspirin",
+            "benzene",
+            "ethanol",
+            "malonaldehyde",
+            "naphthalene",
+            "paracetamol",
+            "salicylic",
+            "toluene",
+            "uracil",
+            "azobenzene",
+        ]
         assert len(structure_names) == 10
 
         for structure_name in structure_names:
@@ -46,6 +58,6 @@ class Importer(BaseImporter):
             for idx in np.argsort(archive["old_indices"]):
                 structure = Atoms(numbers=Z, positions=coords[idx])
                 structure.info["name"] = structure_name
-                structure.info["energy"] = energy[idx] / (kcal / mol) * eV
-                structure.arrays["forces"] = forces[idx] / (kcal / mol) * eV
+                structure.info["energy"] = energy[idx] * (kcal / mol) / eV
+                structure.arrays["forces"] = forces[idx] * (kcal / mol) / eV
                 yield structure

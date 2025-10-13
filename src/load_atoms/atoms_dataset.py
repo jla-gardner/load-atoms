@@ -70,14 +70,12 @@ class AtomsDataset(ABC, Sequence[Atoms]):
         """The number of structures in the dataset."""
 
     @overload
-    def __getitem__(self, index: int) -> Atoms:
-        ...
+    def __getitem__(self, index: int) -> Atoms: ...
 
     @overload
     def __getitem__(
         self, index: list[int] | list[bool] | np.ndarray | slice
-    ) -> Self:
-        ...
+    ) -> Self: ...
 
     def __getitem__(  # type: ignore
         self,
@@ -146,7 +144,7 @@ class AtomsDataset(ABC, Sequence[Atoms]):
             return self._index_subset(idxs)
 
         if isinstance(index, list):
-            if all(isinstance(i, bool) for i in index):
+            if index and all(isinstance(i, bool) for i in index):
                 if len(index) != len(self):
                     raise ValueError(
                         "Boolean index list must be the same length as the "
@@ -918,7 +916,7 @@ def summarise_dataset(
 
 
 def get_file_extension_and_dataset_class(
-    format: Literal["lmdb", "memory"]
+    format: Literal["lmdb", "memory"],
 ) -> tuple[str, type[AtomsDataset]]:
     return {
         "lmdb": ("lmdb", LmdbAtomsDataset),

@@ -1,5 +1,5 @@
 """
-Set up the test environment by copying across the database to 
+Set up the test environment by copying across the database to
 a `testing-datasets` folder and simulating a download by moving
 all non-yaml files to a `temp` folder.
 

@@ -112,9 +112,8 @@ class DatabaseEntry(BaseModel):
     @classmethod
     def from_yaml_file(cls, path: Union[Path, str]) -> "DatabaseEntry":
         path = Path(path).resolve()
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
-
         try:
             return cls(**data)
         except Exception as e:

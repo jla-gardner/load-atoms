@@ -21,22 +21,19 @@ from rich.text import Text
 
 
 class Task:
-    def update(self, **kwargs):
-        ...
+    def update(self, **kwargs): ...
 
     def __enter__(self) -> Task:
         return self
 
-    def __exit__(self, *args):
-        ...
+    def __exit__(self, *args): ...
 
 
 T = TypeVar("T", bound=Task)
 
 
 class Progress(Generic[T], ABC):
-    def __init__(self, title: str):
-        ...
+    def __init__(self, title: str): ...
 
     @abstractmethod
     def new_task(

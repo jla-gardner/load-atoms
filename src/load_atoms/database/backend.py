@@ -1,5 +1,5 @@
 """
-The :code:`backend` module is responsible for down/loading datasets by name, 
+The :code:`backend` module is responsible for down/loading datasets by name,
 storing them locally, and serving them to :code:`load-atoms` via the
 :func:`~load_atoms.load_dataset` function.
 """
@@ -186,8 +186,7 @@ class BaseImporter(ABC):
 class SingleFileImporter(BaseImporter):
     @classmethod
     @abstractmethod
-    def file_to_download(cls) -> FileDownload:
-        ...
+    def file_to_download(cls) -> FileDownload: ...
 
     @classmethod
     def files_to_download(cls) -> list[FileDownload]:

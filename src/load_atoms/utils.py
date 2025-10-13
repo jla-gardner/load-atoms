@@ -275,7 +275,7 @@ def remove_calculator(atoms: Atoms) -> None:
         "stress": atoms.info,
     }
     for key, result in results.items():
-        mapping = mappings.get(key, None)
+        mapping = mappings.get(key)
         if mapping is None:
             continue
 

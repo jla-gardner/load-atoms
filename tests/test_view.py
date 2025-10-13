@@ -27,6 +27,6 @@ def test_unique_variable_name():
     for name in names:
         assert name.isidentifier(), "Name should be a valid identifier"
         assert name[0].isalpha(), "Name should start with a letter"
-        assert all(
-            c.isalnum() or c == "_" for c in name
-        ), "Name should only contain letters, numbers, or underscores"
+        assert all(c.isalnum() or c == "_" for c in name), (
+            "Name should only contain letters, numbers, or underscores"
+        )
