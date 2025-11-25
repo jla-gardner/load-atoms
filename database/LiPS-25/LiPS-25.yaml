@@ -1,0 +1,29 @@
+name: LiPS-25
+year: 2025
+category: Benchmarks
+minimum_load_atoms_version: 0.3
+description: |
+    A dataset of solid-state electrolyte structures along the :math:`\text{Li}_2\text{S}\  \rightarrow \text{P}_2\text{S}_5` psuedo-binary compositional line, labelled with PBESol, taken from `Li-P-S Electrolyte Materials as a Benchmark for Machine-Learned Interatomic Potentials <https://arxiv.org/abs/2511.16569>`__.
+    The dataset covers both crystalline and amorphous configurations, and was created with an two-stage iterative process. More details are available in the paper's supplementary information.
+citation: |
+    @misc{Fragapane-25-11,
+        title = {Li-P-S Electrolyte Materials as a Benchmark for Machine-Learned Interatomic Potentials},
+        author = {
+            Fragapane, Natascia L. and Deringer, Volker L.
+        },
+        year = {2025},
+        doi = {10.48550/arXiv.2511.16569},
+    }
+
+per_atom_properties:
+    forces:
+        desc: force vectors (PBESol DFT)
+        units: eV/Å
+per_structure_properties:
+    energy:
+        desc: energy of the structure (PBESol DFT)
+        units: eV
+    label:
+        desc: category of structure
+
+representative_structure: 19

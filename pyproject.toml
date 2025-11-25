@@ -69,7 +69,7 @@ push = false
 "docs/source/conf.py" = ['release = "{version}"']
 
 [tool.pytest]
-norecursedirs = "tests/setup"
+norecursedirs = ["tests/setup"]
 
 [tool.ruff]
 include = ["dev/**/*.py", "src/**/*.py", "tests/**/*.py"]

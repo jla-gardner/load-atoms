@@ -36,6 +36,16 @@ Benchmarks
     .. grid-item-card::
         :class-item: info-card
     
+        .. centered:: :doc:`LiPS-25 <../datasets/LiPS-25>`
+    
+        A dataset of solid-state electrolyte structures along the :math:`\text{Li}_2\text{S}\  \rightarrow \text{P}_2\text{S}_5` psuedo-binary compositional line, labelled with PBESol, taken from `Li-P-S Electrolyte Materials as a Benchmark for Machine-Learned Interatomic Potentials <https://arxiv.org/abs/2511.16569>`__.
+        The dataset covers both crystalline and amorphous configurations, and was created with an two-stage iterative process. More details are available in the paper's supplementary information.
+        
+    
+    
+    .. grid-item-card::
+        :class-item: info-card
+    
         .. centered:: :doc:`QM7 <../datasets/QM7>`
     
         A collection of 7,165 saturated, small molecules containing up to 7 heavy atoms,
@@ -80,6 +90,7 @@ Benchmarks
 
     ../datasets/ANI-1ccx
     ../datasets/ANI-1x
+    ../datasets/LiPS-25
     ../datasets/QM7
     ../datasets/QM9
     ../datasets/rMD17
