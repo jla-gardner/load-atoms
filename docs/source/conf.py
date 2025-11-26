@@ -23,7 +23,7 @@ extensions = [
 
 
 intersphinx_mapping = {
-    "ase": ("https://wiki.fysik.dtu.dk/ase/", None),
+    "ase": ("https://ase-lib.org", None),
     "python": ("https://docs.python.org/3", None),
     "numpy": ("https://numpy.org/doc/stable/", None),
     "lmdb": ("https://lmdb.readthedocs.io/en/release/", None),

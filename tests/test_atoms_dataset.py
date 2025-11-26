@@ -57,47 +57,47 @@ def test_indexing():
     dataset = load_dataset(STRUCTURES)
 
     structure = dataset[0]
-    assert isinstance(
-        structure, Atoms
-    ), "Indexing should return an Atoms object"
-    assert (
-        structure is STRUCTURES[0]
-    ), "Indexing should return the same structure"
+    assert isinstance(structure, Atoms), (
+        "Indexing should return an Atoms object"
+    )
+    assert structure is STRUCTURES[0], (
+        "Indexing should return the same structure"
+    )
 
     sub_dataset = dataset[1:]
-    assert isinstance(
-        sub_dataset, AtomsDataset
-    ), "Slicing should return a dataset"
-    assert (
-        len(sub_dataset) == 1
-    ), "Slicing should return the correct number of structures"
+    assert isinstance(sub_dataset, AtomsDataset), (
+        "Slicing should return a dataset"
+    )
+    assert len(sub_dataset) == 1, (
+        "Slicing should return the correct number of structures"
+    )
 
     indices = np.array([0, 1, 0, 1])
     sub_dataset = dataset[indices]
-    assert isinstance(
-        sub_dataset, AtomsDataset
-    ), "Indexing should return a dataset"
-    assert (
-        len(sub_dataset) == 4
-    ), "Indexing should return the correct number of structures"
+    assert isinstance(sub_dataset, AtomsDataset), (
+        "Indexing should return a dataset"
+    )
+    assert len(sub_dataset) == 4, (
+        "Indexing should return the correct number of structures"
+    )
 
     indices = np.array([True, False])
     sub_dataset = dataset[indices]
-    assert isinstance(
-        sub_dataset, AtomsDataset
-    ), "Indexing should return a dataset"
-    assert (
-        len(sub_dataset) == 1
-    ), "Indexing should return the correct number of structures"
+    assert isinstance(sub_dataset, AtomsDataset), (
+        "Indexing should return a dataset"
+    )
+    assert len(sub_dataset) == 1, (
+        "Indexing should return the correct number of structures"
+    )
 
     indices = [0, 1, 1]
     sub_dataset = dataset[indices]
-    assert isinstance(
-        sub_dataset, AtomsDataset
-    ), "Indexing should return a dataset"
-    assert (
-        len(sub_dataset) == 3
-    ), "Indexing should return the correct number of structures"
+    assert isinstance(sub_dataset, AtomsDataset), (
+        "Indexing should return a dataset"
+    )
+    assert len(sub_dataset) == 3, (
+        "Indexing should return the correct number of structures"
+    )
 
 
 @pytest.mark.parametrize(
@@ -115,15 +115,15 @@ def test_can_load_from_id(tmp_path, dataset):
 )
 def test_summarise(dataset):
     summary = summarise_dataset(STRUCTURES)
-    assert summary.startswith(
-        "Dataset"
-    ), "Unknown datasets should start like this"
+    assert summary.startswith("Dataset"), (
+        "Unknown datasets should start like this"
+    )
 
     summary = repr(dataset)
     assert "energy" in summary, "The summary should contain the property names"
-    assert summary.startswith(
-        "C-GAP-17"
-    ), "The summary should contain the dataset name"
+    assert summary.startswith("C-GAP-17"), (
+        "The summary should contain the dataset name"
+    )
 
 
 def test_appears_equal():
